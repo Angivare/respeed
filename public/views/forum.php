@@ -11,6 +11,7 @@ $regex = '#<tr class=".*" data-id=".+">.+' .
          '<img src="/img/forums/topic-(?P<label>.+)\.png".+' .
          '<a href="/forums/(?P<mode>.+)-.+-(?P<topic>.+)-1-0-1-0-(?P<topic_slug>.+)\.htm" title="(?P<title>.+)">.+' .
          '(?P<pseudo_span><span .+>)\s*(?P<pseudo>\S.*)\s*</span>.+' .
+         '<td class="nb-reponse-topic">\s+(?P<nb_reponses>.+)\s+</td>.+' .
          '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
          '.+</tr>#Usi';
 preg_match_all($regex, $got, $matches);
@@ -33,6 +34,7 @@ if ($pos) {
 }
 ?>
     <td><?= $matches['pseudo'][$i] ?> <?= $pseudo_status ? "<sup>{$pseudo_status}</sup>" : '' ?>
+    <td><?= $matches['nb_reponses'][$i] ?>
     <td><?= $matches['date'][$i] ?>
 <?php endfor ?>
 </table>
