@@ -1,0 +1,11 @@
+server {
+  server_name respeed2.dev respeed2.192.168.1.2.xip.io;
+  root /home/alex/respeed2/public;
+
+  index index.php;
+
+  location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    include fastcgi_params;
+  }
+}
