@@ -15,8 +15,6 @@ $regex = '#<tr class=".*" data-id=".+">.+' .
          '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
          '.+</tr>#Usi';
 preg_match_all($regex, $got, $matches);
-# 
-#print_r($matches);
 ?>
 <body class="liste-topics">
 <table>
