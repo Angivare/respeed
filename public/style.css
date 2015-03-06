@@ -3,10 +3,14 @@ body {
 }
 
 a {
-  color: #0080FF;
+  color: #0A77B8;
   text-decoration: none;
 }
 
-a:visited {
-  color: #8080FF;
+.liste-topics a:visited {
+  color: #888;
+}
+
+a:active {
+  color: #F50;
 }

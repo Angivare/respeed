@@ -18,6 +18,7 @@ preg_match_all($regex, $got, $matches);
 # 
 #print_r($matches);
 ?>
+<body class="liste-topics">
 <table>
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
   <tr>
