@@ -16,12 +16,23 @@ $regex = '#<tr class=".*" data-id=".+">.+' .
          '.+</tr>#Usi';
 preg_match_all($regex, $got, $matches);
 ?>
-<body class="liste-topics">
-<table>
+<header class="header">
+  <h1>Respeed</h1>
+</header>
+  
+<div class="container">
+
+  <div class="sheet">
+    <h2 class="sheet-title"><a href="/">Accueil</a></h2>
+
+    <div class="sheet sheet-last">
+      <h1 class="sheet-title"><a href="#"><?= $title ?></a></h1>
+      <div class="content">
+<table class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
   <tr>
     <td><div class="label label-<?= $matches['label'][$i] ?>"></div>
-    <td><a href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old' : '' ?>&amp;topic_slug=<?= $matches['topic_slug'][$i] ?>"><?= $matches['title'][$i] ?></a>
+    <td><a class="title" href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old' : '' ?>&amp;topic_slug=<?= $matches['topic_slug'][$i] ?>"><?= $matches['title'][$i] ?></a>
 <?php
 $pseudo_status = '';
 $pos = strpos($matches['pseudo_span'][$i], ' text-');
@@ -32,8 +43,21 @@ if ($pos) {
   }
 }
 ?>
-    <td class="status-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?>
+    <td class="pseudo pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?>
     <td><?= $matches['nb_reponses'][$i] ?>
     <td><?= $matches['date'][$i] ?>
 <?php endfor ?>
 </table>
+      </div>
+      <aside class="aside">
+        <div class="menu">
+          <h3 class="title">Menu</h3>
+          <div class="menu-content">
+            Un menu.
+          </div>
+        </div>
+      </aside>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
