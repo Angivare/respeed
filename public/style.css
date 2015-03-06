@@ -14,3 +14,48 @@ a {
 a:active {
   color: #F50;
 }
+
+.label {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: grey;
+}
+
+.label-dossier1 {
+  background: #ffcc00;
+}
+
+.label-dossier2 {
+  background: #e36254;
+}
+
+.label-lock {
+  background: #333;
+}
+
+.label-marque-on, .label-marque-off {
+  width: 6px;
+  height: 6px;
+  margin-left: 1px;
+  border-radius: 0;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.label-marque-on {
+  background: #7cac37;
+}
+
+.label-marque-off {
+  background: #b72a2a;
+}
+
+.label-resolu {
+  background: #5aa02c;
+}
+
+.label-ghost {
+  background: #0cf;
+}
+

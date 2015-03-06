@@ -22,7 +22,7 @@ preg_match_all($regex, $got, $matches);
 <table>
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
   <tr>
-    <td><?= $matches['label'][$i] ?>
+    <td><div class="label label-<?= $matches['label'][$i] ?>"></div>
     <td><a href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old' : '' ?>&amp;topic_slug=<?= $matches['topic_slug'][$i] ?>"><?= $matches['title'][$i] ?></a>
 <?php
 $pseudo_status = '';
