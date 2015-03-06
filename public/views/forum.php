@@ -34,7 +34,7 @@ if ($pos) {
   }
 }
 ?>
-    <td><?= $matches['pseudo'][$i] ?> <?= $pseudo_status ? "<sup>{$pseudo_status}</sup>" : '' ?>
+    <td class="status-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?>
     <td><?= $matches['nb_reponses'][$i] ?>
     <td><?= $matches['date'][$i] ?>
 <?php endfor ?>

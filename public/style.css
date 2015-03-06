@@ -15,6 +15,8 @@ a:active {
   color: #F50;
 }
 
+/* Dossiers sur la liste des topics */
+
 .label {
   width: 8px;
   height: 8px;
@@ -59,3 +61,12 @@ a:active {
   background: #0cf;
 }
 
+/* Couleurs pseudos modos/admins */
+
+.status-modo {
+  color: #080;
+}
+
+.status-admin {
+  color: #c00;
+}
