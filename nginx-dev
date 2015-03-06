@@ -1,6 +1,6 @@
 server {
-  server_name respeed2.dev respeed2.192.168.1.2.xip.io;
-  root /home/alex/respeed2/public;
+  server_name respeed.dev respeed.192.168.1.2.xip.io;
+  root /home/alex/respeed/website/public;
 
   index index.php;
 
