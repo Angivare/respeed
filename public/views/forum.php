@@ -28,26 +28,23 @@ preg_match_all($regex, $got, $matches);
     <div class="sheet sheet-last">
       <h1 class="sheet-title"><a href="#"><?= $title ?></a></h1>
       <div class="content">
-<table class="liste-topics">
+        <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-  <tr>
-    <td><div class="label label-<?= $matches['label'][$i] ?>"></div>
-    <td><a class="title" href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old' : '' ?>&amp;topic_slug=<?= $matches['topic_slug'][$i] ?>"><?= $matches['title'][$i] ?></a>
+          <a class="label-<?= $matches['label'][$i] ?>" href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old=o' : '' ?>&amp;topic_slug=<?= $matches['topic_slug'][$i] ?>">
+            <div class="title"><?= $matches['title'][$i] ?></div>
 <?php
 $pseudo_status = '';
-$pos = strpos($matches['pseudo_span'][$i], ' text-');
-if ($pos) {
+if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $pseudo_status = trim(substr($matches['pseudo_span'][$i], $pos + 6, 5), '"');
-  if ($pseudo_status == 'user') {
-    $pseudo_status = '';
-  }
 }
 ?>
-    <td class="pseudo pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?>
-    <td><?= $matches['nb_reponses'][$i] ?>
-    <td><?= $matches['date'][$i] ?>
+            <div class="author pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?></div>
+            <div class="nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?> rép</div>
+            <div class="date"><?= $matches['date'][$i] ?></div>
+            <div class="border"></div>
+          </a>
 <?php endfor ?>
-</table>
+        </div>
       </div>
       <aside class="aside">
         <div class="menu">

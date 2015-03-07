@@ -20,8 +20,8 @@ a {
   color: #888;
 }
 
-a:active, .liste-topics a:active {
-  color: #F50;
+a:hover, a:active {
+  color: #F50 !important;
 }
 
 h1, h2, h3 {
@@ -31,9 +31,12 @@ h1, h2, h3 {
 /* Header */
 
 .header {
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,.4);
+  background: -webkit-linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5));
+  background:         linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5));
   margin-bottom: 20px;
   padding: 5px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.25);
 }
 
 .header h1 {
@@ -110,68 +113,92 @@ h1, h2, h3 {
 
 /* Liste des topics */
 
-.liste-topics {
-  width: 100%;
-  border: 1px solid rgba(0,0,0,.1);
-  border-spacing: 1px;
-}
-
-.liste-topics tr {
+.liste-topics a {
   background: #E9EFFA;
+  display: block;
+  border-left: grey 5px solid;
+  display: table;
+  width: 100%;
 }
 
-.liste-topics tr:nth-child(even) {
+.liste-topics a:nth-child(even) {
   background: #f5f5f5;
 }
 
+.liste-topics .title, .liste-topics .author, .liste-topics .nb-answers, .liste-topics .date {
+  _float: left;
+  display: table-cell;
+  vertical-align: middle;
+}
+
 .liste-topics .title {
-  font-weight: bold;
+  width: 60%;
+  font-size: 14px;
+  padding-left: 8px;
+  padding-top: 4px;
+}
+
+.liste-topics .author {
+  width: 15%;
+  font-size: 14px;
+}
+
+.liste-topics .nb-answers {
+  width: 10%;
+  font-size: 14px;
+  text-align: right;
+}
+
+.liste-topics .date {
+  width: 20%;
+  font-size: 14px;
+  text-align: center;
+}
+
+.liste-topics .border {
+  height: 1px;
+  background: white;
+  margin-top: 4px;
+  clear: both;
+}
+
+.liste-topics a:last-child .border {
+  background: #E9EFFA;
+  margin-top: 3px;
+}
+
+.liste-topics a:nth-child(even):last-child .border {
+  background: #f5f5f5;
 }
 
 /* Dossiers sur la liste des topics */
 
-.label {
-  width: 8px;
-  height: 8px;
-  border-radius: 99px;
-  background: grey;
+.liste-topics .label-dossier1 {
+  border-color: #ffcc00;
 }
 
-.label-dossier1 {
-  background: #ffcc00;
+.liste-topics .label-dossier2 {
+  border-color: #e36254;
 }
 
-.label-dossier2 {
-  background: #e36254;
+.liste-topics .label-lock {
+  border-color: #333;
 }
 
-.label-lock {
-  background: #333;
+.liste-topics .label-marque-on {
+  border-color: #7cac37;
 }
 
-.label-marque-on, .label-marque-off {
-  width: 6px;
-  height: 6px;
-  margin-left: 1px;
-  border-radius: 0;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+.liste-topics .label-marque-off {
+  border-color: #b72a2a;
 }
 
-.label-marque-on {
-  background: #7cac37;
+.liste-topics .label-resolu {
+  border-color: #5aa02c;
 }
 
-.label-marque-off {
-  background: #b72a2a;
-}
-
-.label-resolu {
-  background: #5aa02c;
-}
-
-.label-ghost {
-  background: #0cf;
+.liste-topics .label-ghost {
+  border-color: #0cf;
 }
 
 /* Couleurs pseudos modos/admins */
