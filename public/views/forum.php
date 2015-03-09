@@ -2,14 +2,14 @@
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HEADER, true);
-curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$forum_slug}.htm");
+curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$slug}.htm");
 $got = curl_exec($ch);
 
 $title = 'Communauté';
 
 $regex = '#<tr class=".*" data-id=".+">.+' .
          '<img src="/img/forums/topic-(?P<label>.+)\.png".+' .
-         '<a href="/forums/(?P<mode>.+)-.+-(?P<topic>.+)-1-0-1-0-(?P<topic_slug>.+)\.htm" title="(?P<title>.+)">.+' .
+         '<a href="/forums/(?P<mode>.+)-.+-(?P<topic>.+)-1-0-1-0-(?P<slug>.+)\.htm" title="(?P<title>.+)">.+' .
          '(?P<pseudo_span><span .+>)\s*(?P<pseudo>\S.*)\s*</span>.+' .
          '<td class="nb-reponse-topic">\s+(?P<nb_reponses>.+)\s+</td>.+' .
          '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
@@ -30,7 +30,7 @@ preg_match_all($regex, $got, $matches);
       <div class="content">
         <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-          <a class="label-<?= $matches['label'][$i] ?>" href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old=o' : '' ?>&amp;topic_slug=<?= $matches['topic_slug'][$i] ?>">
+          <a class="label-<?= $matches['label'][$i] ?>" href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old=o' : '' ?>&amp;slug=<?= $matches['slug'][$i] ?>">
             <div class="title"><?= $matches['title'][$i] ?></div>
 <?php
 $pseudo_status = '';

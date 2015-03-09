@@ -2,13 +2,19 @@
 
 html {
   height: 100%;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 body {
   font: 16px/1.4 sans-serif;
-  background: #313444 no-repeat fixed;
+  background: #535362 no-repeat;
   background-image: linear-gradient(#313444, #535362);
   margin: 0;
+  overflow-y: scroll;
 }
 
 a {
@@ -31,7 +37,7 @@ h1, h2, h3 {
 /* Header */
 
 .header {
-  background: rgba(0,0,0,.4);
+  background: rgba(0,0,0,.45);
   background: -webkit-linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5));
   background:         linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5));
   margin-bottom: 20px;
@@ -57,7 +63,7 @@ h1, h2, h3 {
   border-width: 1px 0;
   border-radius: 15px;
   box-shadow: 0 -1px 10px rgba(0,0,0,.1);
-  padding: 10px 0 0;
+  padding: 0;
 }
 
 .sheet-last {
@@ -66,7 +72,7 @@ h1, h2, h3 {
 
 .sheet-title {
   padding: 0 20px;
-  margin-bottom: 10px;
+  margin: 5px 0;
 }
 
 .sheet-last .sheet-title {
@@ -78,13 +84,13 @@ h1, h2, h3 {
   padding: 10px;
 }
 
-.content {
+.sheet > .content {
   width: calc(80% - 15px);
   margin-right: 15px;
   float: left;
 }
 
-.aside {
+.sheet > .aside {
   width: 20%;
   float: left;
 }
@@ -209,4 +215,59 @@ h1, h2, h3 {
 
 .pseudo-admin {
   color: #c00;
+}
+
+/* Messages */
+
+.message {
+  font-size: 14px;
+}
+
+.message .meta-author {
+  width: 10%;
+  float: left;
+  text-align: center;
+}
+
+.message .meta-author .author {
+  display: block;
+  font-size: 110%;
+  font-weight: bold;
+}
+
+.message .meta-author .avatar img {
+  max-width: 70px;
+  max-height: 70px;
+  border-radius: 3px;
+}
+
+.message .content {
+  width: 75%;
+  float: left;
+  border: 1px solid #d1d1d1;
+  background: #F9F9F9;
+  min-height: 80px;
+  margin-bottom: 12px;
+  padding: 0 .5em;
+}
+
+.message:nth-child(even) .content {
+  background: #EFF4FC;
+  border-color: #C0D7ED;
+}
+
+.message .meta-actions {
+  width: 13.5%;
+  margin-left: 1.5%;
+  float: right;
+  font-size: 12px;
+  overflow: hidden;
+}
+
+.message .meta-actions span {
+  display: block;
+}
+
+.message .meta-actions .meta-permalink {
+  white-space: nowrap;
 }
