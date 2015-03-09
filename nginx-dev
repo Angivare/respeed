@@ -17,6 +17,8 @@ server {
   rewrite ^/mp/([0-9]+)$ /index.php?mp=$1;
   rewrite ^/mp/([0-9]+)/([0-9]+)$ /index.php?mp=$1&id=$2;
 
+  rewrite ^/style-([0-9]+)\.css$ /style.css;
+
   location ~ \.php$ {
     fastcgi_pass unix:/var/run/php5-fpm.sock;
     include fastcgi_params;
