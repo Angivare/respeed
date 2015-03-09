@@ -40,7 +40,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 ?>
             <div class="author pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?></div>
             <div class="nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?> rép</div>
-            <div class="date"><?= $matches['date'][$i] ?></div>
+            <div class="date"><?= relative_date_topic($matches['date'][$i]) ?></div>
             <div class="border"></div>
           </a>
 <?php endfor ?>
