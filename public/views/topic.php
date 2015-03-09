@@ -1,5 +1,5 @@
 <?php
-$topic_mode = $topic_old ? 1 : 42;
+$topic_mode = $_GET['topic'][0] === '0' ? 1 : 42;
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HEADER, true);
@@ -50,7 +50,7 @@ preg_match_all($regex, $got, $matches);
                 <span class="meta-ignore">Ignorer</span>
                 <span class="meta-report">Dénoncer</span>
               </div>
-              <div class="content"><?= $matches['message'][$i] ?></div>
+              <div class="content"><?= adapt_html($matches['message'][$i]) ?></div>
               <div class="clearfix"></div>
             </div>
 <?php endfor ?>

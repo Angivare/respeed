@@ -251,6 +251,21 @@ h1, h2, h3 {
   padding: 0 .5em;
 }
 
+.message .blockquote-jv {
+  margin: 1em 0;
+  border-left: 4px solid rgba(0,0,64,.4);
+  padding: 1px 5px;
+  background: rgba(0,0,64,.025);
+}
+
+.message > .blockquote-jv {
+  font-size: 95%;
+}
+
+.message .blockquote-jv > p {
+  margin: .5em 0;
+}
+
 .message:nth-child(even) .content {
   background: #EFF4FC;
   border-color: #C0D7ED;
