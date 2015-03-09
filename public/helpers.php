@@ -35,10 +35,10 @@ function relative_date_timestamp($timestamp) {
     return floor($diff / 60 / 60) . ' h ' . floor(($diff % (60 * 60)) / 60) . ' m';
   // De cette année
   if (date('Y', $timestamp) == date('Y')) {
-    return $jours[date('N', $timestamp)] . ' ' . date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) + 1];
+    return $jours[date('N', $timestamp) - 1] . ' ' . date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) + 1];
   }
   return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
-  
+
   return '??';
 }
 
