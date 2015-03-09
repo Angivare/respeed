@@ -3,6 +3,19 @@ server {
   root /home/alex/respeed/website/public;
 
   index index.php;
+  
+  rewrite ^/([0-9]+)$ /index.php?forum=$1;
+  rewrite ^/([0-9]+)-([a-z0-9-]+)$ /index.php?forum=$1&slug=$2;
+  rewrite ^/([0-9]+)-([a-z0-9-]+)/([0-9]+)$ /index.php?forum=$1&slug=$2&page=$3;
+  
+  rewrite ^/([0-9]+)/([0-9]+)-([a-z0-9-]+)$ /index.php?forum=$1&topic=$2&slug=$3;
+  rewrite ^/([0-9]+)/([0-9]+)-([a-z0-9-]+)/([0-9]+)$ /index.php?forum=$1&topic=$2&slug=$3&page=4;
+  
+  rewrite ^/se_connecter$ /index.php?login;
+  
+  rewrite ^/mp$ /index.php?mp;
+  rewrite ^/mp/([0-9]+)$ /index.php?mp=$1;
+  rewrite ^/mp/([0-9]+)/([0-9]+)$ /index.php?mp=$1&id=$2;
 
   location ~ \.php$ {
     fastcgi_pass unix:/var/run/php5-fpm.sock;

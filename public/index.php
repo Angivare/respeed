@@ -2,7 +2,6 @@
 $forum = isset($_GET['forum']) ? (int)$_GET['forum'] : false;
 $topic = isset($_GET['topic']) ? (int)$_GET['topic'] : false;
 $slug = isset($_GET['slug']) ? $_GET['slug'] : false;
-$topic_old = isset($_GET['old']);
 
 ob_start();
 if ($forum && $topic && $slug)

@@ -26,11 +26,11 @@ preg_match_all($regex, $got, $matches);
     <h2 class="sheet-title"><a href="/">Accueil</a></h2>
 
     <div class="sheet sheet-last">
-      <h1 class="sheet-title"><a href="#"><?= $title ?></a></h1>
+      <h1 class="sheet-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
       <div class="content">
         <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-          <a class="label-<?= $matches['label'][$i] ?>" href="?forum=<?= $forum ?>&amp;topic=<?= $matches['topic'][$i] ?><?= $matches['mode'][$i] == 1 ? '&amp;old=o' : '' ?>&amp;slug=<?= $matches['slug'][$i] ?>">
+          <a class="label-<?= $matches['label'][$i] ?>" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
             <div class="title"><?= $matches['title'][$i] ?></div>
 <?php
 $pseudo_status = '';
