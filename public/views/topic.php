@@ -41,7 +41,7 @@ preg_match_all($regex, $got, $matches);
 <?php endif ?>
               </div>
               <div class="meta-actions">
-                <span class="meta-permalink"><?= $matches['date'][$i] ?></span>
+                <span class="meta-permalink"><?= relative_date_messages($matches['date'][$i]) ?></span>
                 <span class="meta-quote">Citer</span>
                 <span class="meta-ignore">Ignorer</span>
                 <span class="meta-report">Dénoncer</span>
