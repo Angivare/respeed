@@ -16,10 +16,7 @@ $regex = '#<tr class=".*" data-id=".+">.+' .
          '.+</tr>#Usi';
 preg_match_all($regex, $got, $matches);
 ?>
-<header class="header">
-  <h1>Respeed</h1>
-</header>
-  
+
 <div class="container">
 
   <div class="sheet">

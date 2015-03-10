@@ -20,10 +20,6 @@ $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+' .
          '.+</div>#Usi';
 preg_match_all($regex, $got, $matches);
 ?>
-<header class="header">
-  <h1>Respeed</h1>
-</header>
-  
 <div class="container">
 
   <div class="sheet">
