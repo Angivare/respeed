@@ -55,6 +55,7 @@ h1, h2, h3 {
 .container {
   max-width: 1400px;
   margin: auto;
+  padding: 0 10px;
 }
 
 .sheet {
