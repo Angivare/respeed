@@ -2,6 +2,7 @@
 $forum = isset($_GET['forum']) ? (int)$_GET['forum'] : false;
 $topic = isset($_GET['topic']) ? (int)$_GET['topic'] : false;
 $slug = isset($_GET['slug']) ? $_GET['slug'] : false;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 require 'helpers.php';
 

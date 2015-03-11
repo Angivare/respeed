@@ -202,6 +202,58 @@ h1, h2, h3 {
   color: #c00;
 }
 
+/* Liste des pages */
+
+.pages {
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.pages-container {
+  display: inline-block;
+}
+
+.pages .faketable {
+  display: table;
+  height: 45px;
+  width: 45px;
+  float: left;
+  margin-left: 5px;
+}
+
+.pages .link {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  border-radius: 99px;
+  font-size: 15px;
+  padding: 2px;
+}
+
+.pages .link.sign {
+  font-size: 32px;
+  line-height: 16px;
+}
+
+.pages :visited {
+  color: #888;
+}
+
+.pages a:hover {
+  background: #eee;
+}
+
+.pages .active {
+  background: #f60;
+  color: white;
+  font-weight: bold;
+}
+
+.pages .active:hover {
+  background: #f60;
+  color: white !important;
+}
+
 /* Messages */
 
 .message {
