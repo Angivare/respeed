@@ -94,22 +94,24 @@ class Jvc {
   }
 
   /**
-   * Envoie un message
+   * Prépare un formulaire pour l'envoi d'un message
    * @param string $url url du topic 
-   * @param string $msg message à envoyer 
-   * @return mixed TRUE si le message est envoyé, FALSE s'il y a
-   * eu une erreur, un tableau représentant le formulaire si un code
-   * de confirmation est demandé.
+   * @return mixed FALSE si une erreur a eu lieu, le formulaire
+   * sinon
    */
-  public function post_msg($url, $msg) {
-    //faire cette étape avant le post?
+  public function post_msg_req($url) {
     $form = self::parse_form($this->get($url));
-    sleep(1);
+    return $form;
+  }
 
-    if(isset($form['fs_signature'])) {
-      return $form;
-    }
-
+  /**
+   * Finalise l'envoi d'un message
+   * @param string $url url du topic 
+   * @param string $msg message à envoyer
+   * @param array $form  
+   * @return boolean TRUE si le message est envoyé, FALSE sinon
+   */
+  public function post_msg_finish($url, $msg, $form) {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
       '&form_alias_rang=1' .
@@ -232,6 +234,11 @@ class Jvc {
     $ret = substr($ret, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
     curl_close($ch);
     return $ret;
+  }
+
+  private function _err($err) {
+    $this->err = $err;
+    return FALSE;
   }
 
   private static function get_cookie($rep) {
