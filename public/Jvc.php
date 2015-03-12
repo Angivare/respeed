@@ -16,9 +16,19 @@ class Jvc {
     foreach($_COOKIE as $k => $v)
       if(substr($k, 0, strlen(self::CK_PREFIX)) === self::CK_PREFIX)
         $this->cookie[substr($k, strlen(self::CK_PREFIX))] = $v;
+
+    $this->err = NULL;
   }
 
   public function __destruct() {
+  }
+
+  /**
+   * Récupère les détails sur la dernière erreur qui a eu lieu
+   * @return string erreur
+   */
+  public function err() {
+    return $this->err;
   }
 
   /**
@@ -34,7 +44,8 @@ class Jvc {
    * Effectue la première étape de la connexion
    * @param string $nick 
    * @param string $pass 
-   * @return array formulaire à réutiliser dans connect_finish()
+   * @return mixed FALSE si la requête a échoué, formulaire à réutiliser
+   * dans connect_finish() sinon
    */
   public function connect_request($nick, $pass) {
     $url = 'http://www.jeuxvideo.com/login';
@@ -68,10 +79,8 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    echo $rep;
-    var_dump($this->cookie);
-
     //TODO: vérifier la réponse
+    return TRUE;
   }
 
   /**
