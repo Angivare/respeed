@@ -42,6 +42,15 @@ class Jvc {
   }
 
   /**
+   * Déconnecte le client de JVC
+   */
+  public function disconnect() {
+    foreach($this->cookie as $k => $v)
+      setcookie(self::CK_PREFIX.$k, '', time()-1, '', '', FALSE, TRUE);
+    $this->cookie = array();
+  }
+
+  /**
    * A utiliser avant une requête de connexion pour avoir
    * un cookie de session
    */
@@ -259,7 +268,7 @@ class Jvc {
 
   private function set_cookie() {
     foreach($this->cookie as $k => $v)
-      setcookie('_JVC_' . $k, $v, 0, '', '', FALSE, TRUE);
+      setcookie(self::CK_PREFIX.$k, $v, time()+3600*24, '', '', FALSE, TRUE);
   }
 
   private function cookie() {
