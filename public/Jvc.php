@@ -1,8 +1,15 @@
 <?php
 
+/**
+ * Représente la session sur JVC du client.
+ * @package default
+ */
 class Jvc {
   const CK_PREFIX = '_JVC_';
 
+  /**
+   * Retourne la session sur JVC du client depuis les cookies
+   */
   public function __construct() {
     $this->cookie = array();
     var_dump($_COOKIE);
@@ -10,14 +17,25 @@ class Jvc {
       if(substr($k, 0, strlen(self::CK_PREFIX)) === self::CK_PREFIX)
         $this->cookie[substr($k, strlen(self::CK_PREFIX))] = $v;
   }
-  
+
   public function __destruct() {
   }
 
+  /**
+   * A utiliser avant une requête de connexion pour avoir
+   * un cookie de session
+   */
   public function connect_init() {
-    $this->get('http://www.jeuxvideo.com/login');
+    if(!count($this->cookie))
+      $this->get('http://www.jeuxvideo.com/login');
   }
 
+  /**
+   * Effectue la première étape de la connexion
+   * @param string $nick 
+   * @param string $pass 
+   * @return array formulaire à réutiliser dans connect_finish()
+   */
   public function connect_request($nick, $pass) {
     $url = 'http://www.jeuxvideo.com/login';
 
@@ -32,6 +50,14 @@ class Jvc {
     return self::parse_form($rep);
   }
 
+  /**
+   * Finalise la connexion
+   * @param string $nick 
+   * @param string $pass 
+   * @param array $form 
+   * @param int $ccode 
+   * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
+   */
   public function connect_finish($nick, $pass, $form, $ccode = '') {
     $url = 'http://www.jeuxvideo.com/login';
 
@@ -48,6 +74,14 @@ class Jvc {
     //TODO: vérifier la réponse
   }
 
+  /**
+   * Envoie un message
+   * @param string $url url du topic 
+   * @param string $msg message à envoyer 
+   * @return mixed TRUE si le message est envoyé, FALSE s'il y a
+   * eu une erreur, un tableau représentant le formulaire si un code
+   * de confirmation est demandé.
+   */
   public function post_msg($url, $msg) {
     //faire cette étape avant le post?
     $form = self::parse_form($this->get($url));
@@ -69,6 +103,13 @@ class Jvc {
     return TRUE;
   }
 
+  /**
+   * Finalise l'envoi du message dans le cas d'un code de confirmation
+   * @param array $form 
+   * @param string $msg 
+   * @param int $ccode 
+   * @return boolean TRUE si le message est envoyé, FALSE sinon
+   */
   public function post_msg_captcha($form, $msg, $ccode) {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
@@ -81,16 +122,35 @@ class Jvc {
     return TRUE;
   }
 
+  /**
+   * Retourne la boîte de réception
+   * @param int $folder # du dossier
+   * @param int $page # de la page
+   * @return string la page retournée
+   */
   public function get_mailbox($folder = 0, $page = 1) {
     return $this->get('http://www.jeuxvideo.com/messages-prives/boite-reception.php',
       "folder=$folder&page=$page");
   }  
 
-  public function get_private_message($folder = 0, $id = 0)  {
+  /**
+   * Retourne la page d'un message privé
+   * @param int $folder # du dossier 
+   * @param int $id # du mp
+   * @param int $offset
+   * @return string la page retournée
+   */
+  public function get_private_message($folder = 0, $id = 0, $offset = 1)  {
     return $this->get('http://www.jeuxvideo.com/messages-prives/message.php',
-      "id=$id&folder=$folder");
+      "id=$id&folder=$folder&offset=$offset");
   }
 
+  /**
+   * Ajoute un pseudo à la blacklist
+   * @param int $id id d'un post appartenant à la personne
+   * @param string $rep page où le post apparaît
+   * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
+   */
   public function blacklist_add($id, $rep) {
     $tk = self::parse_ajax_tk($rep, "preference_user");
     $get_data = 'id_alias_msg=' . urlencode($id) .
@@ -99,6 +159,12 @@ class Jvc {
     return count($ret->erreur) ? FALSE : TRUE;
   }
 
+  /**
+   * Retourne la citation d'un texte
+   * @param int $id id du post à citer
+   * @param string $rep page où le post apparaît
+   * @return mixed FALSE si la citation a échoué, la citation sinon
+   */
   public function quote($id, $rep) {
     $tk = self::parse_ajax_tk($rep, 'liste_messages');
     $post_data = 'id_message=' . urlencode($id) .
@@ -108,6 +174,14 @@ class Jvc {
     return count($ret->erreur) ? FALSE : $ret->txt;
   }
 
+  /**
+   * Effectue une requête POST
+   * @param string $url 
+   * @param mixed $data champ à envoyer, urlencodé ou un tableau associatif 
+   * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
+   * en tant qu'utilisateur connecté, FALSE sinon
+   * @return string réponse du serveur
+   */
   public function post($url, $data, $connected = TRUE) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -115,6 +189,14 @@ class Jvc {
     return $this->finish_req($ch, $url, $connected);
   }
 
+  /**
+   * Effectue une requête GET
+   * @param string $url 
+   * @param string $query paramètres à envoyer, urlencodé 
+   * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
+   * en tant qu'utilisateur connecté, FALSE sinon
+   * @return string réponse du serveur
+   */
   public function get($url, $query = '', $connected = TRUE) {
     $query = $query ? "?$query" : '';
     return $this->finish_req(curl_init(), $url . $query, $connected);
