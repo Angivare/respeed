@@ -19,10 +19,21 @@ class Jvc {
       if(substr($k, 0, strlen(self::CK_PREFIX)) === self::CK_PREFIX)
         $this->cookie[substr($k, strlen(self::CK_PREFIX))] = $v;
 
+    if(!isset($this->cookie['dlrowolleh']))
+      $this->init();
+
     $this->err = NULL;
   }
 
   public function __destruct() {
+  }
+
+  /**
+   * Requête fantôme pour obtenir un cookie de session
+   * TODO: la rendre asynchrone?
+   */
+  private function init() {
+    $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
   }
 
   /**
@@ -48,15 +59,6 @@ class Jvc {
     foreach($this->cookie as $k => $v)
       setcookie(self::CK_PREFIX.$k, '', time()-1, '', '', FALSE, TRUE);
     $this->cookie = array();
-  }
-
-  /**
-   * A utiliser avant une requête de connexion pour avoir
-   * un cookie de session
-   */
-  public function connect_init() {
-    if(!count($this->cookie))
-      $this->get('http://www.jeuxvideo.com/login');
   }
 
   /**

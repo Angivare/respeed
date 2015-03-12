@@ -8,8 +8,6 @@ $form = isset($_POST['form']) ? $_POST['form'] : NULL;
 
 if($ccode === NULL || $form === NULL):
   $jvc->disconnect();
-  $jvc->connect_init();
-  sleep(1);
   $form = $jvc->connect_request("code_grivois", "evRP4");
   var_dump($form);
 ?>
