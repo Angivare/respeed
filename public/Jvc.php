@@ -2,6 +2,9 @@
 
 /**
  * Représente la session sur JVC du client.
+ * 
+ * Tous les appels à JVC doivent être effectués avant la moindre
+ * sortie (pour pouvoir mettre à jour le header Set-Cookie)
  * @package default
  */
 class Jvc {
@@ -12,7 +15,6 @@ class Jvc {
    */
   public function __construct() {
     $this->cookie = array();
-    var_dump($_COOKIE);
     foreach($_COOKIE as $k => $v)
       if(substr($k, 0, strlen(self::CK_PREFIX)) === self::CK_PREFIX)
         $this->cookie[substr($k, strlen(self::CK_PREFIX))] = $v;
@@ -29,6 +31,14 @@ class Jvc {
    */
   public function err() {
     return $this->err;
+  }
+
+  /**
+   * Vérifie si le client est connecté sur JVC
+   * @return boolean TRUE si le client est connecté, FALSE sinon
+   */
+  public function is_connected() {
+    return isset($this->cookie['coniuncto']);
   }
 
   /**
@@ -106,7 +116,6 @@ class Jvc {
       '&ccode=';
 
     $rep = $this->post($url, $post_data);
-    echo $rep;
 
     //TODO: vérifier la réponse
     return TRUE;
@@ -217,7 +226,6 @@ class Jvc {
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
     if(count($this->cookie) && $connected !== FALSE)
       curl_setopt($ch, CURLOPT_COOKIE, $this->cookie());
-    echo 'cookies:'; var_dump($this->cookie);
     $ret = curl_exec($ch);
     $this->cookie = self::get_cookie($ret);
     $this->set_cookie();
