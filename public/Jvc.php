@@ -73,13 +73,13 @@ class Jvc {
 
     $rep = $this->get($url);
 
-    $form = self::parse_form($rep);
+    $form = self::parse_form($rep['body']);
     $post_data = 'login_pseudo=' . urlencode($nick) .
                  '&login_password=' . urlencode($pass) .
                  '&' . http_build_query($form);
 
     $rep = $this->post($url, $post_data);
-    return self::parse_form($rep);
+    return self::parse_form($rep['body']);
   }
 
   /**
@@ -111,7 +111,8 @@ class Jvc {
    * sinon
    */
   public function post_msg_req($url) {
-    $form = self::parse_form($this->get($url));
+    $rep = $this->get($url);
+    $form = self::parse_form($rep['body']);
     return $form;
   }
 
@@ -179,11 +180,11 @@ class Jvc {
   /**
    * Ajoute un pseudo à la blacklist
    * @param int $id id d'un post appartenant à la personne
-   * @param string $rep page où le post apparaît
+   * @param string $bdy page où le post apparaît
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
-  public function blacklist_add($id, $rep) {
-    $tk = self::parse_ajax_tk($rep, "preference_user");
+  public function blacklist_add($id, $bdy) {
+    $tk = self::parse_ajax_tk($bdy, "preference_user");
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
     $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data));
@@ -193,11 +194,11 @@ class Jvc {
   /**
    * Retourne la citation d'un texte
    * @param int $id id du post à citer
-   * @param string $rep page où le post apparaît
+   * @param string $bdy page où le post apparaît
    * @return mixed FALSE si la citation a échoué, la citation sinon
    */
-  public function quote($id, $rep) {
-    $tk = self::parse_ajax_tk($rep, 'liste_messages');
+  public function quote($id, $bdy) {
+    $tk = self::parse_ajax_tk($bdy, 'liste_messages');
     $post_data = 'id_message=' . urlencode($id) .
       '&' . http_build_query($tk);
     $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
@@ -238,12 +239,14 @@ class Jvc {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
     if(count($this->cookie) && $connected !== FALSE)
-      curl_setopt($ch, CURLOPT_COOKIE, $this->cookie());
-    $ret = curl_exec($ch);
-    $this->cookie = self::get_cookie($ret);
-    $this->set_cookie();
-    $ret = substr($ret, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+      curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string());
+    $rep = curl_exec($ch);
+    $ret = array(
+      'header' => substr($rep, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
+      'body' => substr($rep, curl_getinfo($ch, CURLINFO_HEADER_SIZE))
+    );
     curl_close($ch);
+    $this->refresh_cookie($ret['header']);
     return $ret;
   }
 
@@ -252,28 +255,24 @@ class Jvc {
     return FALSE;
   }
 
-  private static function get_cookie($rep) {
-    preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $rep, $match);
+  private function refresh_cookie($hdr) {
+    preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $hdr, $match);
     $str = '';
     foreach($match[1] as $v)
       $str .= $v . '; ';
     $str = substr($str, 0, -2);
     $cookies = explode('; ', $str);
-    $ret = array();
     foreach($cookies as $c) {
       $pair = explode('=', $c);
       if(!isset($pair[1])) continue;
-      $ret[$pair[0]] = $pair[1];
+      $this->cookie[$pair[0]] = $pair[1];
     }
-    return $ret;
-  }
 
-  private function set_cookie() {
     foreach($this->cookie as $k => $v)
       setcookie(self::CK_PREFIX.$k, $v, time()+3600*24, '', '', FALSE, TRUE);
   }
 
-  private function cookie() {
+  private function cookie_string() {
     $ret = '';
     foreach($this->cookie as $k => $v)
       $ret .= $k . '=' . $v . '; ';
