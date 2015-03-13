@@ -184,7 +184,7 @@ class Jvc {
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
   public function blacklist_add($id, $bdy) {
-    $tk = self::parse_ajax_tk($bdy, "preference_user");
+    $tk = self::parse_ajax_tk($bdy, 'preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
     $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data));
@@ -207,12 +207,91 @@ class Jvc {
   }
 
   /**
+   * Retourne la liste des sujets & topics préférés
+   * @return array Tableau associatif contenant les sujets et topics favoris
+   */
+  public function favorites() {
+    $rep = $this->get('http://www.jeuxvideo.com/forums.htm');
+
+    $lim = strpos($rep['body'], '<ul id="liste-sujet-prefere"');
+
+    $before = substr($rep['body'], 0, $lim);
+    $after = substr($rep['body'], $lim);
+
+    $regex =  '/<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">.+' .
+              '<a .+>[\r\n\s]*?(?P<human>.+)[\r\n\s]*<\/a>.+' .
+              '<\/li>/Usi';
+
+    preg_match_all($regex, $before, $forums);
+    preg_match_all($regex, $after, $topics);
+
+    $t_forums = [];
+    for($i = 0; $i < count($forums[0]); $i++)
+      $t_forums[] = ['id' => $forums['id'][$i], 'human' => $forums['human'][$i]];
+    $t_topics = [];
+    for($i = 0; $i < count($topics[0]); $i++)
+      $t_topics[] = ['id' => $topics['id'][$i], 'human' => $topics['human'][$i]];
+
+    return [ 'forums' => $t_forums, 'topics' => $t_topics ];
+  }
+
+  /**
+   * Prépare l'édition d'un message
+   * @param string $url 
+   * @param int $id 
+   * @return mixed FALSE s'il y a eu une erreur, le formulaire à renvoyer sinon
+   */
+  public function edit_request($url, $id) {
+    $rep = $this->get($url);
+
+    $tk = self::parse_ajax_tk($rep['body'], 'liste_messages');
+
+    $get_data = http_build_query($tk) .
+      '&id_message=' . urlencode($id) .
+      '&action=get';
+
+    $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $get_data);
+    $rep = json_decode($rep['body']);
+
+    if(!empty($rep->erreur))
+      return $this->_err($rep->erreur);
+
+    return array_merge(
+      self::parse_form($rep->html),
+      $tk
+    );
+  }
+
+  /**
+   * Finalise l'édition d'un message
+   * @param string $url 
+   * @param int $id 
+   * @param string $msg 
+   * @param array $form 
+   * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
+   */
+  public function edit_finish($url, $id, $msg, $form) {
+    $post_data = http_build_query($form) .
+      '&id_message=' . urlencode($id) .
+      '&message_topic=' . urlencode($msg) .
+      '&action=post';
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $post_data);
+    $rep = json_decode($rep['body']);
+
+    if(!empty($rep->erreur))
+      return $this->_err($rep->erreur);
+
+    return TRUE;
+  }
+
+  /**
    * Effectue une requête POST
    * @param string $url 
    * @param mixed $data champ à envoyer, urlencodé ou un tableau associatif 
    * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
    * en tant qu'utilisateur connecté, FALSE sinon
-   * @return string réponse du serveur
+   * @return array réponse du serveur, séparé en 'header' et 'body'
    */
   public function post($url, $data, $connected = TRUE) {
     $ch = curl_init();
@@ -227,7 +306,7 @@ class Jvc {
    * @param string $query paramètres à envoyer, urlencodé 
    * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
    * en tant qu'utilisateur connecté, FALSE sinon
-   * @return string réponse du serveur
+   * @return array réponse du serveur, séparé en 'header' et 'body'
    */
   public function get($url, $query = '', $connected = TRUE) {
     $query = $query ? "?$query" : '';
@@ -269,7 +348,7 @@ class Jvc {
     }
 
     foreach($this->cookie as $k => $v)
-      setcookie(self::CK_PREFIX.$k, $v, time()+3600*24, '', '', FALSE, TRUE);
+      setcookie(self::CK_PREFIX.$k, $v, time()+3600*24, '/', 'respeed.dev', FALSE, TRUE);
   }
 
   private function cookie_string() {
@@ -279,18 +358,18 @@ class Jvc {
     return substr($ret, 0, -2);
   }
 
-  private static function parse_form($rep) {
+  private static function parse_form($bdy) {
     $regex = '<input type="hidden" name="fs_(.+?)" value="(.+?)"/>';
-    preg_match_all($regex, $rep, $matches);
+    preg_match_all($regex, $bdy, $matches);
     $ret = array();
     for($i = 0; $i < count($matches[0]); $i++)
       $ret['fs_'.$matches[1][$i]] = $matches[2][$i];
     return $ret;
   }
 
-  private static function parse_ajax_tk($rep, $type) {
+  private static function parse_ajax_tk($bdy, $type) {
     $regex = '<input type="hidden" name="(.+?)_'.$type.'" .+? value="(.+?)" />';
-    preg_match_all($regex, $rep, $matches);
+    preg_match_all($regex, $bdy, $matches);
     $ret = array();
     for($i = 0; $i < count($matches[0]); $i++)
       $ret[$matches[1][$i]] = $matches[2][$i];
