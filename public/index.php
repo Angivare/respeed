@@ -7,7 +7,6 @@ $login = isset($_GET['login']) ? true : false;
 
 require 'helpers.php';
 require 'Jvc.php';
-session_start();
 
 ob_start();
 if ($login)
