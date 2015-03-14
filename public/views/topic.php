@@ -6,6 +6,8 @@ curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm");
 $got = curl_exec($ch);
 
+$jvc = new Jvc();
+
 $title = 'Topic';
 if (preg_match('#<span id="bloc-title-forum">(.+)</span>#Usi', $got, $matches)) {
     $title = $matches[1];
@@ -129,6 +131,14 @@ $is_sign = (int)$number != $i;
           </div>
         </aside>
         <div class="clearfix"></div>
+<?php if($jvc->is_connected()): ?>
+        <div class="post-form">
+          <form>
+            <textarea id="message"></textarea>
+            <input type="submit" id="send-message">
+          </form>
+        </div>
+<?php endif; ?>
       </div>
     </div>
   </div>

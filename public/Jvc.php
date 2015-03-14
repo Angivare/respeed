@@ -38,7 +38,6 @@ class Jvc {
    * @return boolean TRUE si le client est connecté, FALSE sinon
    */
   public function is_connected() {
-    var_dump($this->cookie);
     return isset($this->cookie['coniunctio']);
   }
 
@@ -162,7 +161,7 @@ class Jvc {
     $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $get_data);
     $rep = json_decode($rep['body']);
 
-    if(!empty($rep->erreur))
+    if($rep->erreur)
       return $this->_err($rep->erreur);
 
     return array_merge(
@@ -185,13 +184,13 @@ class Jvc {
       '&id_message=' . urlencode($id) .
       '&message_topic=' . urlencode($msg) .
       '&action=post';
-    if(!empty($ccode))
+    if($ccode)
       $post_data .= '&fs_ccode=' . urlencode($ccode);
 
     $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $post_data);
     $rep = json_decode($rep['body']);
 
-    if(!empty($rep->erreur))
+    if($rep->erreur)
       return $this->_err($rep->erreur);
 
     return TRUE;
@@ -209,7 +208,7 @@ class Jvc {
       '&' . http_build_query($tk);
     $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
       $post_data));
-    return !empty($ret->erreur) ? $this->_err($ret->erreur) : $ret->txt;
+    return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
   }
 
   /**
@@ -246,7 +245,7 @@ class Jvc {
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
     $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data));
-    return !empty($ret->erreur) ? $this->_err($ret->erreur) : TRUE;
+    return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
   /**
