@@ -20,20 +20,9 @@ class Jvc {
         $this->cookie[substr($k, strlen(self::CK_PREFIX))] = $v;
 
     if(!isset($this->cookie['dlrowolleh']))
-      $this->init();
+      $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
 
-    $this->err = NULL;
-  }
-
-  public function __destruct() {
-  }
-
-  /**
-   * Requête fantôme pour obtenir un cookie de session
-   * TODO: la rendre asynchrone?
-   */
-  private function init() {
-    $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
+    $this->err = 'Indéfinie';
   }
 
   /**
@@ -49,7 +38,8 @@ class Jvc {
    * @return boolean TRUE si le client est connecté, FALSE sinon
    */
   public function is_connected() {
-    return isset($this->cookie['coniuncto']);
+    var_dump($this->cookie);
+    return isset($this->cookie['coniunctio']);
   }
 
   /**
@@ -68,7 +58,7 @@ class Jvc {
    * @return mixed FALSE si la requête a échoué, formulaire à réutiliser
    * dans connect_finish() sinon
    */
-  public function connect_request($nick, $pass) {
+  public function connect_req($nick, $pass) {
     $url = 'http://www.jeuxvideo.com/login';
 
     $rep = $this->get($url);
@@ -79,7 +69,12 @@ class Jvc {
                  '&' . http_build_query($form);
 
     $rep = $this->post($url, $post_data);
-    return self::parse_form($rep['body']);
+    $ret = self::parse_form($rep['body']);
+
+    if(count($ret))
+      return $ret;
+
+    return $this->_err('Impossible de préparer le formulaire');
   }
 
   /**
@@ -100,20 +95,29 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    //TODO: vérifier la réponse
-    return TRUE;
+    if($this->is_connected()) return TRUE;
+
+    if(preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match))
+      return $this->_err($match[1]);
+
+    return $this->_err('Indéfinie');
   }
 
   /**
    * Prépare un formulaire pour l'envoi d'un message
+   * 
+   * Le formulaire contient 'fs_signature' si un captcha est présent
    * @param string $url url du topic 
    * @return mixed FALSE si une erreur a eu lieu, le formulaire
    * sinon
    */
   public function post_msg_req($url) {
-    $rep = $this->get($url);
-    $form = self::parse_form($rep['body']);
-    return $form;
+    $form = self::parse_form($this->get($url)['body']);
+
+    if(count($form))
+      return $form;
+
+    return $this->_err('Impossible de préparer le formulaire');
   }
 
   /**
@@ -121,28 +125,10 @@ class Jvc {
    * @param string $url url du topic 
    * @param string $msg message à envoyer
    * @param array $form  
+   * @param int $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
-  public function post_msg_finish($url, $msg, $form) {
-    $post_data = http_build_query($form) .
-      '&message_topic=' . urlencode($msg) .
-      '&form_alias_rang=1' .
-      '&ccode=';
-
-    $rep = $this->post($url, $post_data);
-
-    //TODO: vérifier la réponse
-    return TRUE;
-  }
-
-  /**
-   * Finalise l'envoi du message dans le cas d'un code de confirmation
-   * @param array $form 
-   * @param string $msg 
-   * @param int $ccode 
-   * @return boolean TRUE si le message est envoyé, FALSE sinon
-   */
-  public function post_msg_captcha($form, $msg, $ccode) {
+  public function post_msg_finish($url, $msg, $form, $ccode='') {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
       '&form_alias_rang=1' .
@@ -150,8 +136,80 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    //TODO: vérifier la réponse
+    if(self::redirects($rep['header']))
+      return TRUE;
+
+    return $this->_err('Erreur lors de l\'envoi du message');
+  }
+
+  /**
+   * Prépare un formulaire pour l'édition d'un message
+   * 
+   * Le formulaire contient 'fs_signature' si un captcha est présent
+   * @param string $url 
+   * @param int $id 
+   * @return mixed FALSE s'il y a eu une erreur, le formulaire à renvoyer sinon
+   */
+  public function edit_req($url, $id) {
+    $rep = $this->get($url);
+
+    $tk = self::parse_ajax_tk($rep['body'], 'liste_messages');
+
+    $get_data = http_build_query($tk) .
+      '&id_message=' . urlencode($id) .
+      '&action=get';
+
+    $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $get_data);
+    $rep = json_decode($rep['body']);
+
+    if(!empty($rep->erreur))
+      return $this->_err($rep->erreur);
+
+    return array_merge(
+      self::parse_form($rep->html),
+      $tk
+    );
+  }
+
+  /**
+   * Finalise l'édition d'un message
+   * @param string $url 
+   * @param int $id 
+   * @param string $msg 
+   * @param array $form 
+   * @param int $ccode code de confirmation
+   * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
+   */
+  public function edit_finish($url, $id, $msg, $form, $ccode='') {
+    $post_data = http_build_query($form) .
+      '&id_message=' . urlencode($id) .
+      '&message_topic=' . urlencode($msg) .
+      '&action=post';
+    if(!empty($ccode))
+      $post_data .= '&fs_ccode=' . urlencode($ccode);
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $post_data);
+    $rep = json_decode($rep['body']);
+
+    if(!empty($rep->erreur))
+      return $this->_err($rep->erreur);
+
     return TRUE;
+  }
+
+  /**
+   * Retourne la citation d'un texte
+   * @param int $id id du post à citer
+   * @param string $bdy page où le post apparaît
+   * @return mixed FALSE si la citation a échoué, la citation sinon
+   */
+  public function quote($id, $bdy) {
+    $tk = self::parse_ajax_tk($bdy, 'liste_messages');
+    $post_data = 'id_message=' . urlencode($id) .
+      '&' . http_build_query($tk);
+    $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
+      $post_data));
+    return !empty($ret->erreur) ? $this->_err($ret->erreur) : $ret->txt;
   }
 
   /**
@@ -188,22 +246,25 @@ class Jvc {
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
     $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data));
-    return count($ret->erreur) ? FALSE : TRUE;
+    return !empty($ret->erreur) ? $this->_err($ret->erreur) : TRUE;
   }
 
   /**
-   * Retourne la citation d'un texte
-   * @param int $id id du post à citer
-   * @param string $bdy page où le post apparaît
-   * @return mixed FALSE si la citation a échoué, la citation sinon
+   * Retourne la liste des utilisateurs ignorés
+   * @return mixed Tableau contenant les utilisateurs ignorés, chaque
+   * utilisateur est représenté par un tableau associatif contenant
+   * une valeur 'id' et 'human'. FALSE si une erreur est survenue
    */
-  public function quote($id, $bdy) {
-    $tk = self::parse_ajax_tk($bdy, 'liste_messages');
-    $post_data = 'id_message=' . urlencode($id) .
-      '&' . http_build_query($tk);
-    $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
-      $post_data));
-    return count($ret->erreur) ? FALSE : $ret->txt;
+  public function blacklist() {
+    $rep = $this->get('http://www.jeuxvideo.com/sso/blacklist.php');
+
+    $regex =  '#<li data-id-alias="(?P<id>[0-9]+)">.+' .
+              '<span>(?P<human>.+)</span>.+'  .
+              '</li>#Usi';
+
+    preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER);
+
+    return count($matches) ? $matches : $this->_err('Indéfinie');
   }
 
   /**
@@ -218,71 +279,35 @@ class Jvc {
     $before = substr($rep['body'], 0, $lim);
     $after = substr($rep['body'], $lim);
 
-    $regex =  '/<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">.+' .
-              '<a .+>[\r\n\s]*?(?P<human>.+)[\r\n\s]*<\/a>.+' .
-              '<\/li>/Usi';
+    $regex =  '#<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">.+' .
+              '<a .+>[\r\n\s]*?(?P<human>.+)[\r\n\s]*</a>.+' .
+              '</li>#Usi';
 
-    preg_match_all($regex, $before, $forums);
-    preg_match_all($regex, $after, $topics);
+    preg_match_all($regex, $before, $forums, PREG_SET_ORDER);
+    preg_match_all($regex, $after, $topics, PREG_SET_ORDER);
 
-    $t_forums = [];
-    for($i = 0; $i < count($forums[0]); $i++)
-      $t_forums[] = ['id' => $forums['id'][$i], 'human' => $forums['human'][$i]];
-    $t_topics = [];
-    for($i = 0; $i < count($topics[0]); $i++)
-      $t_topics[] = ['id' => $topics['id'][$i], 'human' => $topics['human'][$i]];
-
-    return [ 'forums' => $t_forums, 'topics' => $t_topics ];
+    return [ 'forums' => $forums, 'topics' => $topics ];
   }
 
   /**
-   * Prépare l'édition d'un message
-   * @param string $url 
-   * @param int $id 
-   * @return mixed FALSE s'il y a eu une erreur, le formulaire à renvoyer sinon
+   * Fait une recherche sur la liste des forums 
+   * @param string $name 
+   * @return array Tableau de tableaux associatifs contenant 'id', 'slug' et 'human'
    */
-  public function edit_request($url, $id) {
-    $rep = $this->get($url);
-
-    $tk = self::parse_ajax_tk($rep['body'], 'liste_messages');
-
-    $get_data = http_build_query($tk) .
-      '&id_message=' . urlencode($id) .
-      '&action=get';
-
-    $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $get_data);
-    $rep = json_decode($rep['body']);
-
-    if(!empty($rep->erreur))
-      return $this->_err($rep->erreur);
-
-    return array_merge(
-      self::parse_form($rep->html),
-      $tk
+  public function forum_search($name) {
+    $rep = $this->get(
+      'http://m.jeuxvideo.com/forums/search_forum.php',
+      'input_search_forum='.urlencode($name)
     );
-  }
 
-  /**
-   * Finalise l'édition d'un message
-   * @param string $url 
-   * @param int $id 
-   * @param string $msg 
-   * @param array $form 
-   * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
-   */
-  public function edit_finish($url, $id, $msg, $form) {
-    $post_data = http_build_query($form) .
-      '&id_message=' . urlencode($id) .
-      '&message_topic=' . urlencode($msg) .
-      '&action=post';
+    $regex =  '#<li>.+' .
+              '<a href="//m.jeuxvideo.com/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm".+>.+' .
+              '<h2 class="lib">(?P<human>.+)</h2>' .
+              '#Usi';
 
-    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $post_data);
-    $rep = json_decode($rep['body']);
+    preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER);
 
-    if(!empty($rep->erreur))
-      return $this->_err($rep->erreur);
-
-    return TRUE;
+    return $matches;
   }
 
   /**
@@ -327,6 +352,10 @@ class Jvc {
     curl_close($ch);
     $this->refresh_cookie($ret['header']);
     return $ret;
+  }
+
+  private function redirects($hdr) {
+    return FALSE !== stripos($hdr, "\nLocation:");
   }
 
   private function _err($err) {

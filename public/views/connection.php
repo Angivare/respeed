@@ -8,7 +8,7 @@ $form = isset($_POST['form']) ? $_POST['form'] : NULL;
 
 if($ccode === NULL || $form === NULL):
   $jvc->disconnect();
-  $form = $jvc->connect_request("code_grivois", "evRP4");
+  $form = $jvc->connect_req("code_grivois", "evRP4");
   var_dump($form);
 ?>
   <img src="data:image/png;base64,<?php echo base64_encode(
@@ -23,10 +23,12 @@ if($ccode === NULL || $form === NULL):
   $form = unserialize(urldecode($form));
   if(is_array($form) && ctype_digit($ccode)) {
     $url = 'http://www.jeuxvideo.com/forums/42-1000021-38431092-949-0-1-0-actu-un-blabla-est-ne.htm';
-    $jvc->connect_finish("code_grivois", "evRP4", $form, $ccode);
+    var_dump($jvc->connect_finish("code_grivois", "evRP4", $form, $ccode));
+    var_dump($jvc->err());
     $form = $jvc->post_msg_req($url);
-    sleep(1);
-    var_dump($jvc->post_msg_finish($url, 'coucou', $form));
+  //  sleep(1);
+  //  var_dump($jvc->post_msg_finish($url, 'coucou', $form));
+  //  var_dump($jvc->err());
   }
 endif
 ?>

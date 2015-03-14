@@ -1,9 +1,12 @@
-Installez uWamp (c'est un serveur wamp portable)
+Installation avec UwAmp (windows)
+=================================
 
-Téléchargez votre repo git dans uWamp/www/
-Vous aurez ainsi ce genre de répertoires: uWamp/www/respeed/public
+Installez UwAmp http://www.uwamp.com/
 
-Pour configurer le vhost, cliquez sur 'Apache Config' dans la fenêtre de uWamp,
+Téléchargez votre repo git dans UwAmp/www/
+Vous aurez normalement ce répertoire: UwAmp/www/respeed/public
+
+Pour configurer le vhost, cliquez sur 'Apache Config' dans la fenêtre de UwAmp,
 ajoutez un virtual server à gauche (bouton '+'), mettez 'respeed.dev' en server
 name et '{DOCUMENTPATH}/respeed/public' en document root. Validez en cliqant sur OK
 
