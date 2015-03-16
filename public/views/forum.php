@@ -21,7 +21,10 @@ preg_match_all($regex, $got, $matches);
 <div class="container">
 
   <div class="sheet">
-    <h2 class="sheet-title"><a href="/">Accueil</a></h2>
+    <div class="sheet-navbar">
+      <h2 class="sheet-title"><a href="/">Respeed</a></h2>
+      <a href="/se_connecter" class="login-link">Connexion</a>
+    </div>
 
     <div class="sheet sheet-last">
       <h1 class="sheet-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>

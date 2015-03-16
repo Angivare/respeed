@@ -17,25 +17,56 @@ if($nick && $pass && $form && $ccode):
     else
       header('Location: /');
   endif;
-elseif($nick && $pass):
-  $jvc->disconnect();
-  $form = $jvc->connect_req($nick, $pass);
+else: ?>
+<div class="container">
+
+  <div class="sheet">
+    <div class="sheet-navbar">
+      <h2 class="sheet-title"><a href="/">Respeed</a></h2>
+      <a href="/se_connecter" class="login-link">Connexion</a>
+    </div>
+
+    <div class="sheet sheet-last">
+      <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
+      <div class="content">
+        <div class="form-container">
+          <div class="sell">Connectez-vous pour poster des messages via Respeed.</div>
+<?php if($nick && $pass):
+    $jvc->disconnect();
+    $form = $jvc->connect_req($nick, $pass);
 ?>
-  <form action="" method="post">
-    <input type="hidden" name="form" value="<?php echo urlencode(serialize($form)) ?>">
-    <input type="text" name="nick" placeholder="Pseudo" value="<?= $nick?>">
-    <input type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
-    <img src="data:image/png;base64,<?php echo base64_encode(
-      file_get_contents('http://www.jeuxvideo.com/captcha/ccode.php?' .
-      $form['fs_signature']
-      )) ?>">
-    <input type="text" name="ccode" placeholder="Code de confirmation">
-    <input type="submit">
-  </form>
+          <form action="/se_connecter" method="post">
+            <input type="hidden" name="form" value="<?php echo urlencode(serialize($form)) ?>">
+            <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick?>">
+            <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
+            <p><img src="data:image/png;base64,<?php echo base64_encode(
+              file_get_contents('http://www.jeuxvideo.com/captcha/ccode.php?' .
+              $form['fs_signature']
+              )) ?>" class="captcha">
+            <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus>
+            <p><input class="submit" type="submit" value="Se connecter">
+          </form>
 <?php else: ?>
-  <form action="" method="post">
-    <input type="text" name="nick" placeholder="Pseudo">
-    <input type="password" name="pass" placeholder="Mot de passe">
-    <input type="submit">
-  </form>
+          <form action="/se_connecter" method="post">
+            <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
+            <p><input class="input" type="password" name="pass" placeholder="Mot de passe">
+            <p><input class="submit" type="submit" value="Se connecter">
+          </form>
 <?php endif; ?>
+        </div>
+        <aside class="aside-form">
+          <h2>Qu’apporte Respeed ?</h2>
+          <ul>
+            <li><strong>Instantanéité</strong> d’affichage des pages</li>
+            <li><strong>Moins de scroll</strong> sur les grands écrans</li>
+            <li><strong>Version mobile complète</strong></li>
+            <li><strong>Rafraîchissement automatique</strong> des topics</li>
+            <li><strong><a href="https://github.com/dieulot/respeed" target="_blank">Open source</a></strong>, tout développeur web peut participer</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+<?php endif;

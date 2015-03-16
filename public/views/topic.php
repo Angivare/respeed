@@ -58,7 +58,10 @@ for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
 <div class="container">
 
   <div class="sheet">
-    <h2 class="sheet-title"><a href="/">Accueil</a></h2>
+    <div class="sheet-navbar">
+      <h2 class="sheet-title"><a href="/">Respeed</a></h2>
+      <a href="/se_connecter" class="login-link">Connexion</a>
+    </div>
 
     <div class="sheet">
       <h2 class="sheet-title"><a href="/<?= $forum ?>-communaute">Communauté</a></h2>

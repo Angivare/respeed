@@ -51,6 +51,16 @@ h1, h2, h3 {
   padding: 0;
 }
 
+.sheet-navbar {
+  position: relative;
+}
+
+.sheet-navbar .login-link {
+  position: absolute;
+  right: 20px;
+  top: 6px;
+}
+
 .sheet-last {
   padding: 10px 30px;
 }
@@ -62,6 +72,7 @@ h1, h2, h3 {
 
 .sheet-last .sheet-title {
   padding: 0;
+  margin: 5px 0 10px;
 }
 
 .sheet-title a {
@@ -322,4 +333,50 @@ h1, h2, h3 {
 
 .message .meta-actions .meta-permalink {
   white-space: nowrap;
+}
+
+/* Connexion */
+
+.form-container {
+  padding: 0 60px 0 10px;
+  float: left;
+}
+
+.input {
+  font-size: 1.5em;
+  border: 1px solid hsl(209, 56%, 63%);
+  border-radius: 1px;
+  padding: 2px 5px;
+}
+
+.input:focus {
+  border-color: hsl(209, 56%, 43%);
+  background: hsl(209, 56%, 98.5%);
+}
+
+.submit {
+  border: 1px solid #ccc;
+  background: #d0d0d0;
+  background: linear-gradient(#f4f4f4 0%, #dedede 50%, #c5c5c5 50%);
+  color: #333;
+  font-weight: bold;
+  border-radius: 0 5px 0 5px;
+  font-size: 1em;
+  padding: 5px 15px;
+  text-shadow: 0 1px 10px white;
+  cursor: pointer;
+}
+
+.captcha {
+  border-radius: 3px;
+}
+
+.input-captcha {
+  font-size: 2em;
+  width: 240px;
+}
+
+.aside-form {
+  float: left;
+  width: 450px;
 }
