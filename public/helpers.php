@@ -38,12 +38,9 @@ function relative_date_timestamp($timestamp) {
   // Moins d’une minute
   if ($diff < 60)
     return $diff . ' s';
-  // Moins de dix minutes
-  if ($diff < 60 * 10)
-    return floor($diff / 60) . ' m ' . ($diff % 60) . ' s';
   // Moins d’une heure
   if ($diff < 60 * 60)
-    return floor($diff / 60) . ' m';
+    return floor($diff / 60) . ' m ' . ($diff % 60) . ' s';
   // Moins d’un jour
   if ($diff < 60 * 60 * 24)
     return floor($diff / 60 / 60) . ' h ' . floor(($diff % (60 * 60)) / 60) . ' m';
