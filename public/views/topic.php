@@ -1,5 +1,6 @@
 <?php
 $topic_mode = $_GET['topic'][0] === '0' ? 1 : 42;
+$url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HEADER, true);
@@ -165,7 +166,8 @@ $is_sign = (int)$number != $i;
             <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
             <div class="form-post-inner">
               <p><textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
-              <br><input class="submit submit-main submit-big" type="submit" value="Poster"></p>
+              <span id="captcha-container"></span>
+              <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
             </div>
           </div>
 <?php endif; ?>
@@ -184,3 +186,7 @@ $is_sign = (int)$number != $i;
     </div>
   </div>
 </div>
+
+<script>
+var url = '<?= $url ?>'
+</script>

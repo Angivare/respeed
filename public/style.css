@@ -404,6 +404,7 @@ h1, h2, h3 {
 
 .form-post-inner {
   padding: 0 10px;
+  position: relative;
 }
 
 .input.textarea {
@@ -425,4 +426,9 @@ h1, h2, h3 {
 .submit-big {
   font-size: 1.2em;
   padding: 6px 20px;
+}
+
+.form-post-inner .captcha {
+  position: absolute;
+  margin-left: 20px;
 }
