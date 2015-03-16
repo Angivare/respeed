@@ -73,7 +73,11 @@ for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
   <div class="sheet">
     <div class="sheet-navbar">
       <h2 class="sheet-title"><a href="/">Respeed</a></h2>
+<?php if($jvc->is_connected()): ?>
+      <a href="/se_deconnecter" class="login-link">Déconnexion</a>
+<?php else: ?>
       <a href="/se_connecter" class="login-link">Connexion</a>
+<?php endif ?>
     </div>
 
     <div class="sheet">

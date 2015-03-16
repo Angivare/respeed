@@ -46,7 +46,7 @@ class Jvc {
    */
   public function disconnect() {
     foreach($this->cookie as $k => $v)
-      setcookie(self::CK_PREFIX.$k, '', time()-1, '', '', FALSE, TRUE);
+      setcookie(self::CK_PREFIX.$k, '', time()-1, '/', 'respeed.dev', FALSE, TRUE);
     $this->cookie = array();
   }
 

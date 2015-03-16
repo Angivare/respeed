@@ -5,6 +5,8 @@ curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$slug}.htm");
 $got = curl_exec($ch);
 
+$jvc = new Jvc();
+
 // Nom du forum
 $title = 'Communauté';
 if (preg_match('#<h1 class="highlight">Forum (.+)</h1>#Usi', $got, $matches)) {
@@ -28,7 +30,11 @@ preg_match_all($regex, $got, $matches);
   <div class="sheet">
     <div class="sheet-navbar">
       <h2 class="sheet-title"><a href="/">Respeed</a></h2>
+<?php if($jvc->is_connected()): ?>
+      <a href="/se_deconnecter" class="login-link">Déconnexion</a>
+<?php else: ?>
       <a href="/se_connecter" class="login-link">Connexion</a>
+<?php endif ?>
     </div>
 
     <div class="sheet sheet-last">
