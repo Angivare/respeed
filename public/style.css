@@ -349,6 +349,7 @@ h1, h2, h3 {
   border: 1px solid hsl(209, 56%, 63%);
   border-radius: 1px;
   padding: 2px 5px;
+  font-family: sans-serif;
 }
 
 .input:focus {
@@ -381,4 +382,47 @@ h1, h2, h3 {
 .aside-form {
   float: left;
   width: 450px;
+}
+
+/* Formulaire de post */
+
+.form-post {
+  border: 1px solid #9c0;
+  border-radius: 1px 8px 1px 5px;
+}
+
+.form-post .titre-bloc {
+  background: #9c0;
+  border-radius: 0 7px 0 0;
+  color: white;
+  padding: 2px 11px;
+  font-weight: bold;
+  font-size: 1.1em;
+  display: block;
+  cursor: pointer;
+}
+
+.form-post-inner {
+  padding: 0 10px;
+}
+
+.input.textarea {
+  font-size: 1.2em;
+  width: 100%;
+  resize: vertical;
+  height: 200px;
+  padding: 4px 6px;
+}
+
+.submit-main {
+  border-color: #666;
+  color: white;
+  background: #d0d0d0;
+  background: linear-gradient(#adadad 0%, #8c8c8c 50%, #666 50%);
+  text-shadow: 0 1px 10px black;
+}
+
+.submit-big {
+  font-size: 1.2em;
+  padding: 6px 20px;
 }

@@ -160,6 +160,16 @@ $is_sign = (int)$number != $i;
             <div class="clearfix"></div>
           </div>
 
+<?php if($jvc->is_connected()): ?>
+          <div class="form-post">
+            <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
+            <div class="form-post-inner">
+              <p><textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
+              <br><input class="submit submit-main submit-big" type="submit" value="Poster"></p>
+            </div>
+          </div>
+<?php endif; ?>
+
         </div>
         <aside class="aside">
           <div class="menu">
@@ -170,14 +180,6 @@ $is_sign = (int)$number != $i;
           </div>
         </aside>
         <div class="clearfix"></div>
-<?php if($jvc->is_connected()): ?>
-        <div class="post-form">
-          <form>
-            <textarea id="message"></textarea>
-            <input type="submit" id="send-message">
-          </form>
-        </div>
-<?php endif; ?>
       </div>
     </div>
   </div>
