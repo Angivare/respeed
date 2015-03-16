@@ -23,4 +23,7 @@ server {
     fastcgi_pass unix:/var/run/php5-fpm.sock;
     include fastcgi_params;
   }
+
+  access_log /var/log/nginx/respeed.access.log;
+  error_log /var/log/nginx/respeed.error.log;
 }
