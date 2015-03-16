@@ -124,6 +124,42 @@ $is_sign = (int)$number != $i;
             </div>
 <?php endfor ?>
           </div>
+
+          <div class="pages">
+            <div class="pages-container">
+<?php foreach ($pages as $i): ?>
+<?php if ($i == ' '): ?>
+              <span class="faketable">
+                <span class="link"></span>
+              </span>
+<?php continue; endif ?>
+<?php
+$number = $i;
+if ($i == $last_page) {
+  $number = '»';
+}
+if ($i == 1) {
+  $number = '«';
+}
+if ($i == $page - 1) {
+  $number = '‹';
+}
+if ($i == $page + 1) {
+  $number = '›';
+}
+if ($i == $page) {
+  $number = $i;
+}
+$is_sign = (int)$number != $i;
+?>
+              <span class="faketable">
+                <a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?><?= $i > 1 ? "/{$i}" : '' ?>" class="link <?= $i == $page ? 'active' : '' ?> <?= $is_sign ? 'sign' : '' ?>"><?= $number ?></a>
+              </span>
+<?php endforeach ?>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
         </div>
         <aside class="aside">
           <div class="menu">
