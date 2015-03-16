@@ -5,8 +5,13 @@ curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$slug}.htm");
 $got = curl_exec($ch);
 
+// Nom du forum
 $title = 'Communauté';
+if (preg_match('#<h1 class="highlight">Forum (.+)</h1>#Usi', $got, $matches)) {
+    $title = $matches[1];
+}
 
+// Topics
 $regex = '#<tr class=".*" data-id=".+">.+' .
          '<img src="/img/forums/topic-(?P<label>.+)\.png".+' .
          '<a href="/forums/(?P<mode>.+)-.+-(?P<topic>.+)-1-0-1-0-(?P<slug>.+)\.htm" title="(?P<title>.+)">.+' .

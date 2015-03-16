@@ -9,11 +9,21 @@ $got = curl_exec($ch);
 
 $jvc = new Jvc();
 
+// Titre du topic
 $title = 'Topic';
 if (preg_match('#<span id="bloc-title-forum">(.+)</span>#Usi', $got, $matches)) {
     $title = $matches[1];
 }
 
+// Slug et nom du forum
+$forum_slug = 'slug';
+$forum_name = 'Forum';
+if (preg_match('#<span><a href="/forums/0-' . $forum . '-0-1-0-1-0-(.+)\.htm">Forum (.+)</a></span>#Usi', $got, $matches)) {
+    $forum_slug = $matches[1];
+    $forum_name = $matches[2];
+}
+
+// Messages
 $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+' .
          '<img src="(?P<avatar>.+)".+' .
          '<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)".+' .
@@ -23,6 +33,8 @@ $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+' .
          '.+</div>#Usi';
 preg_match_all($regex, $got, $matches);
 
+
+// Pagination
 $last_page = 1;
 if (preg_match_all('#<span><a href="/forums/[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9a-z-]+\.htm" class="lien-jv">([0-9]+)</a></span>#Usi', $got, $matches2)) {
   $last_page = array_pop($matches2[1]);
@@ -65,7 +77,7 @@ for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
     </div>
 
     <div class="sheet">
-      <h2 class="sheet-title"><a href="/<?= $forum ?>-communaute">Communauté</a></h2>
+      <h2 class="sheet-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
 
       <div class="sheet sheet-last">
         <h1 class="sheet-title"><a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
