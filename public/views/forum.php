@@ -10,6 +10,7 @@ $location = JVc::redirects($header);
 if($location) {
   preg_match('#/forums/0-(?P<forum>.+)-0-1-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
   header("Location: /{$matches['forum']}-{$matches['slug']}");
+  exit;
 }
 
 $jvc = new Jvc();
