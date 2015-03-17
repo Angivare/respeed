@@ -116,6 +116,11 @@ h1, h2, h3 {
 
 /* Liste des topics */
 
+.sheet-title .reload-sign {
+  font-size: .8em;
+  margin-left: 10px;
+}
+
 .liste-topics a {
   background: #E9EFFA;
   display: block;

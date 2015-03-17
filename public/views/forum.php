@@ -38,7 +38,7 @@ preg_match_all($regex, $got, $matches);
     </div>
 
     <div class="sheet sheet-last">
-      <h1 class="sheet-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
+      <h1 class="sheet-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?> <span class="reload-sign">↻</span></a></h1>
       <div class="content">
         <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
