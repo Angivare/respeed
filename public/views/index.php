@@ -4,7 +4,7 @@ $jvc = new Jvc();
 ?>
 <div class="container">
 
-  <div class="sheet">
+  <div class="sheet sheet-last">
     <div class="sheet-navbar">
       <h1 class="sheet-title"><a href="/">Respeed</a></h1>
 <?php if($jvc->is_connected()): ?>
