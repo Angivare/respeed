@@ -113,6 +113,11 @@ class Jvc {
   public function post_msg_req($url) {
     $form = self::parse_form($this->get($url)['body']);
 
+    if(isset($form['fs_signature']))
+      $form['captcha'] = base64_encode(file_get_contents(
+        'http://www.jeuxvideo.com/captcha/ccode.php?'.$form['fs_signature']
+      ));
+
     if(count($form))
       return $form;
 
@@ -131,14 +136,16 @@ class Jvc {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
       '&form_alias_rang=1' .
-      '&ccode=' . urlencode($ccode);
+      '&fs_ccode=' . urlencode($ccode);
 
     $rep = $this->post($url, $post_data);
 
     if(self::redirects($rep['header']))
       return TRUE;
-
-    return $this->_err('Erreur lors de l\'envoi du message');
+    else if(preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match))
+      return $this->_err($match[1]);
+    else
+      return $this->_err('Erreur lors de l\'envoi du message');
   }
 
   /**
@@ -310,6 +317,19 @@ class Jvc {
   }
 
   /**
+   * Retourne le header "location"
+   * @param string $hdr 
+   * @return mixed Le header "location" ou FALSE
+   */
+  public static function redirects($hdr) {
+    $beg = stripos($hdr, "\nLocation:");
+    if($beg === FALSE) return FALSE;
+    else $beg += strlen("\nLocation:");
+    $end = strpos($hdr, "\n", $beg);
+    return trim(substr($hdr, $beg, $end-$beg));
+  }
+
+  /**
    * Effectue une requête POST
    * @param string $url 
    * @param mixed $data champ à envoyer, urlencodé ou un tableau associatif 
@@ -351,10 +371,6 @@ class Jvc {
     curl_close($ch);
     $this->refresh_cookie($ret['header']);
     return $ret;
-  }
-
-  private function redirects($hdr) {
-    return FALSE !== stripos($hdr, "\nLocation:");
   }
 
   private function _err($err) {
