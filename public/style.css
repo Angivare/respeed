@@ -287,6 +287,11 @@ h1, h2, h3 {
   color: #111;
 }
 
+.message .meta-author .avatar {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
 .message .meta-author .avatar img {
   max-width: 70px;
   max-height: 70px;
