@@ -282,6 +282,14 @@ h1, h2, h3 {
   display: block;
   font-size: 110%;
   font-weight: bold;
+  line-height: 1;
+  margin-bottom: 2px;
+  color: #111;
+}
+
+.message .meta-author .avatar {
+  display: inline-block;
+  margin-bottom: 5px;
 }
 
 .message .meta-author .avatar img {
@@ -325,7 +333,6 @@ h1, h2, h3 {
   width: 13.5%;
   margin-left: 1.5%;
   float: right;
-  font-size: 12px;
   overflow: hidden;
 }
 
@@ -333,8 +340,45 @@ h1, h2, h3 {
   display: block;
 }
 
+.message .meta-actions span, .ignored-message span {
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.message .meta-actions span:hover, .ignored-message span:hover {
+  color: #111;
+}
+
 .message .meta-actions .meta-permalink {
   white-space: nowrap;
+}
+
+.message .ignored-message {
+  display: none;
+}
+
+.message.ignored .meta-author, .message.ignored .meta-actions, .message.ignored .content {
+  display: none;
+}
+
+.message.ignored .ignored-message {
+  display: block;
+  border: 1px solid #d1d1d1;
+  background: #F9F9F9;
+  margin-bottom: 12px;
+  padding: 0 .5em;
+  width: 75%;
+  margin-left: 10%;
+}
+
+.message:nth-child(even).ignored .ignored-message {
+  background: #EFF4FC;
+  border-color: #C0D7ED;
+}
+
+.message.ignored .ignored-message .meta-unignore {
+  float: right;
+  margin-top: 2px;
 }
 
 /* Connexion */
