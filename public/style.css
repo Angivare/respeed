@@ -282,6 +282,9 @@ h1, h2, h3 {
   display: block;
   font-size: 110%;
   font-weight: bold;
+  line-height: 1;
+  margin-bottom: 2px;
+  color: #111;
 }
 
 .message .meta-author .avatar img {
