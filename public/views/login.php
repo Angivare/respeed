@@ -30,7 +30,16 @@ else: ?>
       <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
       <div class="content">
         <div class="form-container">
-          <div class="sell">Connectez-vous pour poster des messages via Respeed.</div>
+<?php
+$pour = 'poster des messages';
+if (isset($_GET['pour'])) {
+  if ($_GET['pour'] == 'ignorer') {
+    $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un pseudo';
+    $pour = 'ignorer ' . $qui;
+  }
+}
+?>
+          <div class="sell">Connectez-vous pour <?= $pour ?> via Respeed.</div>
 <?php if($nick && $pass):
     $jvc->disconnect();
     $form = $jvc->connect_req($nick, $pass);
