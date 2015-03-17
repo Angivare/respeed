@@ -42,7 +42,7 @@ preg_match_all($regex, $got, $matches);
       <div class="content">
         <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-          <a class="label-<?= $matches['label'][$i] ?>" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
+          <a class="label-<?= $matches['label'][$i] ?>" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
             <div class="title"><?= $matches['title'][$i] ?></div>
 <?php
 $pseudo_status = '';

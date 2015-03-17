@@ -133,8 +133,11 @@ h1, h2, h3 {
   background: #f5f5f5;
 }
 
+.liste-topics a.ignored {
+  color: transparent;
+}
+
 .liste-topics .title, .liste-topics .author, .liste-topics .nb-answers, .liste-topics .date {
-  _float: left;
   display: table-cell;
   vertical-align: middle;
 }
