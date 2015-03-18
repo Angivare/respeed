@@ -12,7 +12,11 @@ $location = JVc::redirects($header);
 if($location) {
   preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
   if($matches['topic_mode'] == '1') $matches['topic'] = '0' . $matches['topic'];
-  header("Location: /{$matches['forum']}/{$matches['topic']}-{$matches['slug']}/{$matches['page']}");
+  $location = "/{$matches['forum']}/{$matches['topic']}-{$matches['slug']}";
+  if ($matches['page'] > 1) {
+    $location .= "/{$matches['page']}";
+  }
+  header("Location: {$location}");
   exit;
 }
 
