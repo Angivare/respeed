@@ -5,6 +5,14 @@ curl_setopt($ch, CURLOPT_HEADER, true);
 curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$slug}.htm");
 $got = curl_exec($ch);
 
+$header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+$location = JVc::redirects($header);
+if($location) {
+  preg_match('#/forums/0-(?P<forum>.+)-0-1-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
+  header("Location: /{$matches['forum']}-{$matches['slug']}");
+  exit;
+}
+
 $jvc = new Jvc();
 
 // Nom du forum

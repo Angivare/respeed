@@ -1,7 +1,7 @@
 <?php
 $forum = isset($_GET['forum']) ? (int)$_GET['forum'] : false;
 $topic = isset($_GET['topic']) ? (int)$_GET['topic'] : false;
-$slug = isset($_GET['slug']) ? $_GET['slug'] : false;
+$slug = isset($_GET['slug']) ? $_GET['slug'] : '0';
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $login = isset($_GET['login']) ? true : false;
 $logout = isset($_GET['logout']) ? true : false;
@@ -15,9 +15,9 @@ if ($login)
   require 'views/login.php';
 elseif ($logout)
   require 'views/logout.php';
-elseif ($forum && $topic && $slug)
+elseif ($forum && $topic)
   require 'views/topic.php';
-elseif ($forum && $slug)
+elseif ($forum)
   require 'views/forum.php';
 else
   require 'views/index.php';
