@@ -116,3 +116,23 @@ function superlatif() {
   global $superlatifs;
   return $superlatifs[mt_rand(0, count($superlatifs) - 1)];
 }
+
+function wbr_pseudo($pseudo) {
+  $wbr_pseudo = '<wbr>';
+  for ($i = 0; $i < strlen($pseudo); $i++) {
+    $char = $pseudo[$i];
+    if ($i > 0) {
+      $old_char = $pseudo[$i - 1];
+      if (
+        (($char >= 'a' && $char <= 'z') && !($old_char >= 'a' && $old_char <= 'z') && !($old_char >= 'A' && $old_char <= 'Z')) ||
+        (($char >= 'A' && $char <= 'Z') && !($old_char >= 'A' && $old_char <= 'Z')) ||
+        (($char >= '0' && $char <= '9') && !($old_char >= '0' && $old_char <= '9')) ||
+        (strpos('-_[]', $char) !== false && strpos('-_[]', $old_char) === false)) {
+        $wbr_pseudo .= '</wbr><wbr>';
+      }
+    }
+    $wbr_pseudo .= $char;
+  }
+  $wbr_pseudo .= '</wbr>';
+  return $wbr_pseudo;
+}

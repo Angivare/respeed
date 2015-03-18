@@ -138,7 +138,7 @@ $is_sign = (int)$number != $i;
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
             <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>">
               <div class="meta-author">
-                <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= trim($matches['pseudo'][$i]) ?></span>
+                <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></span>
 <?php if (strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
                 <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span>
 <?php endif ?>
