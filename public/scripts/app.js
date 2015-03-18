@@ -75,7 +75,11 @@ $('#post').click(function(e) {
   $.post('/ajax/post_msg.php', params, function(data, status, xhr) {
     data = JSON.parse(data)
 
+    $('#captcha-container').html('')
+    form_data = null
+
     if (!data.err) {
+      $('.form-error').hide()
       $('#newmessage').val('')
       return
     }
