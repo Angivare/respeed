@@ -455,6 +455,15 @@ h1, h2, h3 {
   cursor: pointer;
 }
 
+.form-post.locked {
+  border-color: #333;
+}
+
+.form-post.locked .titre-bloc {
+  background: #333;
+  cursor: default;
+}
+
 .form-post-inner {
   padding: 0 10px;
   position: relative;

@@ -191,7 +191,14 @@ $is_sign = (int)$number != $i;
             <div class="clearfix"></div>
           </div>
 
-<?php if($jvc->is_connected()): ?>
+<?php if (preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches)): ?>
+          <div class="form-post locked">
+            <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
+            <div class="form-post-inner">
+              <p><?= $matches['raison'] ?>
+            </div>
+          </div>
+<?php elseif($jvc->is_connected()): ?>
           <div class="form-post">
             <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
             <div class="form-post-inner">
