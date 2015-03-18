@@ -263,9 +263,10 @@ class Jvc {
               '<span>(?P<human>.+)</span>.+'  .
               '</li>#Usi';
 
-    preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER);
-
-    return count($matches) ? $matches : $this->_err('Indéfinie');
+    if(FALSE === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
+      return $this->_err('Indéfinie');
+    else
+      return $matches;
   }
 
   /**
