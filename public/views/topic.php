@@ -8,7 +8,7 @@ curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/{$topic_mode}-{$f
 $got = curl_exec($ch);
 
 $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-$location = JVc::redirects($header);
+$location = Jvc::redirects($header);
 if($location) {
   preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
   if($matches['topic_mode'] == '1') $matches['topic'] = '0' . $matches['topic'];
@@ -21,6 +21,9 @@ if($location) {
 }
 
 $jvc = new Jvc();
+
+if(time() - $jvc->tokens_last_update() >= 3600/2)
+  $jvc->refresh_tokens($got);
 
 // Titre du topic
 $title = 'Topic';
@@ -228,4 +231,6 @@ $is_sign = (int)$number != $i;
 <script>
 var url = '<?= $url ?>'
   , is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
+  , tokens = <?= json_encode($jvc->tokens()) ?>
+  , tokens_last_update = <?= $jvc->tokens_last_update() ?>
 </script>
