@@ -11,10 +11,10 @@ $jvc = new Jvc();
 if($url && $msg && $form)
   echo json_encode([
     'rep' => $jvc->post_msg_finish($url, $msg, $form, $ccode),
-    'err' => $jvc->err()
+    'err' => $jvc->err() == 'Indéfinie' ? false : $jvc->err()
   ]);
 else if($url)
   echo json_encode([
     'rep' => $jvc->post_msg_req($url),
-    'err' => $jvc->err()
+    'err' => $jvc->err() == 'Indéfinie' ? false : $jvc->err()
   ]);

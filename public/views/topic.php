@@ -201,6 +201,7 @@ $is_sign = (int)$number != $i;
 <?php elseif($jvc->is_connected()): ?>
           <div class="form-post">
             <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
+            <div class="form-error"><p></p></div>
             <div class="form-post-inner">
               <p><textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
               <span id="captcha-container"></span>

@@ -73,7 +73,16 @@ $('#post').click(function(e) {
     params.ccode = $('#ccode').val()
   }
   $.post('/ajax/post_msg.php', params, function(data, status, xhr) {
-    console.log('done')
+    data = JSON.parse(data)
+
+    if (!data.err) {
+      $('#newmessage').val('')
+      return
+    }
+
+    $('.form-error p').html(data.err)
+    $('.form-error').show()
+    $('#newmessage').focus()
   })
 })
 

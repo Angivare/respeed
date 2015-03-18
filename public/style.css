@@ -469,6 +469,23 @@ h1, h2, h3 {
   position: relative;
 }
 
+.form-error {
+  margin: 10px;
+  background: #fdfdf0;
+  border: 1px solid #fbd4ad;
+  display: none;
+  border-radius: 1px;
+}
+
+.form-error.show {
+  display: initial;
+}
+
+.form-error p {
+  margin: 1em 1.5em;
+  color: #e50a09;
+}
+
 .input.textarea {
   font-size: 1.2em;
   width: 100%;
