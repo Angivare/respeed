@@ -113,11 +113,6 @@ class Jvc {
   public function post_msg_req($url) {
     $form = self::parse_form($this->get($url)['body']);
 
-    if(isset($form['fs_signature']))
-      $form['captcha'] = base64_encode(file_get_contents(
-        'http://www.jeuxvideo.com/captcha/ccode.php?'.$form['fs_signature']
-      ));
-
     if(count($form))
       return $form;
 

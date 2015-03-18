@@ -96,8 +96,7 @@ $('#newmessage').focus(function(e) {
       data = JSON.parse(data)
       form_data = data.rep
       if (form_data.fs_signature) {
-        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="data:image/png;base64,' + form_data.captcha + '" class="captcha">')
-        delete form_data.captcha
+        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha.php?signature=' + form_data.fs_signature + '" class="captcha">')
       }
     })
   }

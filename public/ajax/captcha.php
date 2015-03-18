@@ -6,6 +6,8 @@ if (!$signature) {
 
 header('Content-Type: image/jpeg');
 
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/captcha/ccode.php?{$signature}");
-$got = curl_exec($ch);
+require '../Jvc.php';
+
+$jvc = new Jvc();
+$x = $jvc->get("http://www.jeuxvideo.com/captcha/ccode.php", $signature, true);
+echo $x['body'];
