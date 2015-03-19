@@ -82,11 +82,3 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
     </div>
   </div>
 </div>
-
-<?php
-function closed($body) {
-  //à recopier inline là où ça va bien
-  $regex =  '#<div class="alert-row"> Vous ne pouvez pas créer un nouveau sujet sur ce forum car il est fermé. </div>#i';
-  return preg_match($regex, $body, $m) ? TRUE : FALSE;
-}
-?>

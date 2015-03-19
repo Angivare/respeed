@@ -46,6 +46,20 @@ if (preg_match('#<span><a href="/forums/0-' . $forum . '-0-1-0-1-0-(.+)\.htm">Fo
     $forum_name = $matches[2];
 }
 
+//Sondages
+$question = '';
+if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches))
+  $question = $matches[1];
+$regex = '#<tr>.+' .
+         '<td class="result-pourcent">.+' .
+         '<div class="pourcent">(?P<pourcent>[0-9]{1,3})\s*%</div>.+' .
+         '</td>.+<td class="reponse">(?P<human>.+)</td>.+' .
+         '</tr>#Usi';
+$answers = [];
+if(preg_match_all($regex, $got, $matches))
+  for($i = 0; $i < count($matches[0]); $i++)
+    $answers[] = ['pourcent' => $matches['pourcent'][$i], 'human' => $matches['human'][$i] ];
+
 // Messages
 $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+>\s+<div class="conteneur-message">\s+' .
          '(<div class="bloc-avatar-msg">\s+<div class="back-img-msg">\s+<div>\s+<span[^>]+>\s+<img src="(?P<avatar>.+)"[^>]+>\s+</span>\s+</div>\s+</div>\s+</div>\s+)?' .
