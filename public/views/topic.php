@@ -147,12 +147,25 @@ $is_sign = (int)$number != $i;
 <?php endif ?>
               </div>
               <div class="meta-actions">
-                <span class="meta-permalink" title="<?= strip_tags(trim($matches['date'][$i])) ?>"><?= relative_date_messages(strip_tags($matches['date'][$i])) ?></span>
+<?php
+$date = strip_tags(trim($matches['date'][$i]));
+?>
+                <span class="meta-permalink" title="<?= $date ?>"><?= relative_date_messages($date) ?></span>
                 <span class="meta-quote">Citer</span>
                 <span class="meta-ignore">Ignorer</span>
                 <span class="meta-report">Dénoncer</span>
               </div>
-              <div class="content"><?= adapt_html($matches['message'][$i]) ?></div>
+<?php
+$message = $matches['message'][$i];
+preg_match('#</div><div class="info-edition-msg">\s+Message édité le (?P<date>.+) par\s+<a href="//www.jeuxvideo.com/profil/(?P<pseudo>.+)\?mode=infos" target="_blank">[^<]+</a>#Usi', $message, $matches_edit);
+if ($matches_edit) {
+  $message = str_replace($matches_edit[0], '', $message);
+  $message .= '<p class="edit-mention">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</p>';
+  #echo 'lol';
+}
+$message = adapt_html($message);
+?>
+              <div class="content"><?= $message ?></div>
               <div class="clearfix"></div>
               <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
             </div>

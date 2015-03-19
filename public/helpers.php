@@ -112,6 +112,17 @@ function relative_date_messages($str_date) {
   return relative_date_timestamp(strtotime($str_date));
 }
 
+function edit_date_difference($post_date, $edit_date) {
+  global $mois_jvc;
+  // Convertir en format US pour strtotime
+  $array_date = explode(' ', $post_date);
+  $post_date = $mois_jvc[$array_date[1]] . '/' . $array_date[0] . '/' . $array_date[2] . ' ' . $array_date[4];
+  $array_date = explode(' ', $edit_date);
+  $edit_date = $mois_jvc[$array_date[1]] . '/' . $array_date[0] . '/' . $array_date[2] . ' ' . $array_date[4];
+
+  return relative_date_timestamp(time() - (strtotime($edit_date) - strtotime($post_date)));
+}
+
 function superlatif() {
   global $superlatifs;
   return $superlatifs[mt_rand(0, count($superlatifs) - 1)];

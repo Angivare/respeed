@@ -319,6 +319,11 @@ h1, h2, h3 {
   word-wrap: break-word;
 }
 
+.message .edit-mention {
+  font-size: .8em;
+  color: rgba(0,0,0,.5);
+}
+
 .message .blockquote-jv {
   margin: 1em 0;
   border-left: 4px solid rgba(0,0,64,.4);
