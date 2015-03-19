@@ -45,8 +45,8 @@ $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+' .
          '<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)".+' .
          '>\s+(?P<pseudo>.+)\s+<.+' .
          'lien-jv" target="_blank">(?P<date>.+)</span>.+' .
-         '<div class="txt-msg  text-enrichi-forum ">(?P<message>.+)\n                                            </div>.+' .
-         '.+</div>#Usi';
+         '<div class="txt-msg  text-enrichi-forum ">(?P<message>.+)</div>' .
+         '</div>\s+</div>\s+</div>\s+</div>#Usi';
 preg_match_all($regex, $got, $matches);
 
 
