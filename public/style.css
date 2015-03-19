@@ -50,9 +50,6 @@ h1, h2, h3 {
   border-radius: 15px;
   box-shadow: 0 -1px 10px rgba(0,0,0,.1);
   padding: 0;
-}
-
-.sheet-navbar {
   position: relative;
 }
 
@@ -114,6 +111,22 @@ h1, h2, h3 {
   clear: both;
 }
 
+.ouvrir-jvc {
+  display: block;
+  position: absolute;
+  right: 30px;
+  border: 1px solid #ddd;
+  padding: 4px 10px;
+  border-radius: 5px;
+  top: 20px;
+  color: #333;
+}
+
+.ouvrir-jvc:hover {
+  border-color: #bbb;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+
 /* Liste des topics */
 
 .sheet-title .reload-sign {
@@ -121,65 +134,68 @@ h1, h2, h3 {
   margin-left: 10px;
 }
 
-.liste-topics a {
+.topic {
   background: #E9EFFA;
-  display: block;
   border-left: grey 5px solid;
-  display: table;
-  width: 100%;
 }
 
-.liste-topics a:nth-child(even) {
+/*.liste-topics a {
+  
+  display: block;
+  display: table;
+  width: 100%;
+}*/
+
+.topic:nth-child(even) {
   background: #f5f5f5;
 }
 
-.liste-topics a.ignored {
-  color: transparent;
+.liste-topics .title, .liste-topics .author, .liste-topics .nb-answers, .liste-topics .date {
+  display: inline-block;
 }
 
-.liste-topics .title, .liste-topics .author, .liste-topics .nb-answers, .liste-topics .date {
-  display: table-cell;
-  vertical-align: middle;
+.topic-main-link {
+  display: inline-block;
+  width: 75%;
+  padding-bottom: 2px;
+}
+
+.topic-last-page {
+  display: inline-block;
+  width: 24%;
+  padding-bottom: 2px;
 }
 
 .liste-topics .title {
-  width: 60%;
+  width: 80%;
   font-size: 14px;
   padding-left: 8px;
   padding-top: 4px;
 }
 
 .liste-topics .author {
-  width: 15%;
+  width: 19%;
   font-size: 14px;
 }
 
 .liste-topics .nb-answers {
-  width: 10%;
+  width: 38%;
   font-size: 14px;
   text-align: right;
 }
 
 .liste-topics .date {
-  width: 20%;
+  width: 60%;
   font-size: 14px;
   text-align: center;
 }
 
-.liste-topics .border {
-  height: 1px;
-  background: white;
-  margin-top: 4px;
-  clear: both;
+.topic.ignored a {
+  opacity: 0;
 }
 
-.liste-topics a:last-child .border {
-  background: #E9EFFA;
-  margin-top: 3px;
-}
-
-.liste-topics a:nth-child(even):last-child .border {
-  background: #f5f5f5;
+.topic.ignored:hover a {
+  opacity: 1;
 }
 
 /* Dossiers sur la liste des topics */
@@ -395,6 +411,10 @@ h1, h2, h3 {
 .message.ignored .ignored-message .meta-unignore {
   float: right;
   margin-top: 2px;
+}
+
+.message:target {
+  background: rgba(255, 85, 0, .07);
 }
 
 /* Connexion */

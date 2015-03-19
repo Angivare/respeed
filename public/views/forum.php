@@ -46,23 +46,27 @@ preg_match_all($regex, $got, $matches);
     </div>
 
     <div class="sheet sheet-last">
+      <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
       <h1 class="sheet-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?> <span class="reload-sign">↻</span></a></h1>
       <div class="content">
         <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-          <a class="label-<?= $matches['label'][$i] ?>" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
-            <div class="title"><?= $matches['title'][$i] ?></div>
+          <div class="topic label-<?= $matches['label'][$i] ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
+            <a class="topic-main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
+              <div class="title"><?= $matches['title'][$i] ?></div>
 <?php
 $pseudo_status = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $pseudo_status = trim(substr($matches['pseudo_span'][$i], $pos + 6, 5), '"');
 }
 ?>
-            <div class="author pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?></div>
-            <div class="nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?> rép</div>
-            <div class="date" title="<?= trim($matches['date'][$i]) ?>"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
-            <div class="border"></div>
-          </a>
+              <div class="author pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?></div>
+            </a>
+            <a class="topic-last-page" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
+              <div class="nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?> rép</div>
+              <div class="date" title="<?= trim($matches['date'][$i]) ?>"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
+            </a>
+          </div>
 <?php endfor ?>
         </div>
       </div>
