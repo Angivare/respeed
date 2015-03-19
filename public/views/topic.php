@@ -40,11 +40,11 @@ if (preg_match('#<span><a href="/forums/0-' . $forum . '-0-1-0-1-0-(.+)\.htm">Fo
 }
 
 // Messages
-$regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+' .
-         '<img src="(?P<avatar>.+)".+' .
-         '<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)".+' .
+$regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+>\s+<div class="conteneur-message">\s+' .
+         '(<div class="bloc-avatar-msg">\s+<div class="back-img-msg">\s+<div>\s+<span[^>]+>\s+<img src="(?P<avatar>.+)"[^>]+>\s+</span>\s+</div>\s+</div>\s+</div>\s+)?' .
+         '<div class="inner-head-content">.+(<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)"|<div class="bloc-pseudo-msg").+' .
          '>\s+(?P<pseudo>.+)\s+<.+' .
-         'lien-jv" target="_blank">(?P<date>.+)</span>.+' .
+         '<div class="bloc-date-msg">\s+(<span[^>]+>)?(?P<date>[0-9].+)</div>.+' .
          '<div class="txt-msg  text-enrichi-forum ">(?P<message>.+)</div>' .
          '</div>\s+</div>\s+</div>\s+</div>#Usi';
 preg_match_all($regex, $got, $matches);
@@ -142,12 +142,12 @@ $is_sign = (int)$number != $i;
             <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>">
               <div class="meta-author">
                 <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></span>
-<?php if (strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
+<?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
                 <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span>
 <?php endif ?>
               </div>
               <div class="meta-actions">
-                <span class="meta-permalink" title="<?= $matches['date'][$i] ?>"><?= relative_date_messages($matches['date'][$i]) ?></span>
+                <span class="meta-permalink" title="<?= strip_tags(trim($matches['date'][$i])) ?>"><?= relative_date_messages(strip_tags($matches['date'][$i])) ?></span>
                 <span class="meta-quote">Citer</span>
                 <span class="meta-ignore">Ignorer</span>
                 <span class="meta-report">Dénoncer</span>
