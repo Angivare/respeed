@@ -12,14 +12,14 @@ function updateLocalBlacklist() {
   }
 }
 
-function addToBlacklist(pseudo) {
+function addToBlacklist(pseudo, id_message) {
   pseudo = pseudo.toLowerCase()
   if ($.inArray(pseudo, blacklist) >= 0) {
     return
   }
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
   updateLocalBlacklist()
-  //TODO: ajax sync JVC
+  $.get('/ajax/blacklist_add.php', {id_message: id_message})
 }
 
 function removeFromBlacklist(pseudo) {
@@ -58,7 +58,7 @@ function updateRemoteBlacklist() {
   var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
   var now = +new Date
   if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
-    $.getJSON('/ajax/get_blacklist.php', function(data) {
+    $.getJSON('/ajax/blacklist_get.php', function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
         addToBlacklist(remoteBlacklist[i])
@@ -129,7 +129,7 @@ $('.meta-ignore').click(function(e, a, c) {
     return
   }
 
-  addToBlacklist(pseudo)
+  addToBlacklist(pseudo, id)
   applyBlacklist()
 })
 
