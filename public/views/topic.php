@@ -153,7 +153,7 @@ $is_sign = (int)$number != $i;
 <?php
 $date = strip_tags(trim($matches['date'][$i]));
 ?>
-                <span class="meta-permalink" title="<?= $date ?>"><?= relative_date_messages($date) ?></span>
+                <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
                 <span class="meta-quote">Citer</span>
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
                 <span class="meta-ignore">Ignorer</span>
