@@ -2,6 +2,8 @@
 
 var form_data
   , blacklist
+  , favoritesForums = []
+  , favoritesTopics = []
 
 /*** Helpers ***/
 
@@ -68,12 +70,48 @@ function updateRemoteBlacklist() {
   }
 }
 
+function updateFavorites() {
+  if (!is_connected) {
+    return
+  }
+  if (localStorage.favoritesForums) {
+    favoritesForums = JSON.parse(localStorage.favoritesForums)
+  }
+  if (localStorage.favoritesTopics) {
+    favoritesTopics = JSON.parse(localStorage.favoritesTopics)
+  }
+  var favoritesLastUpdate = localStorage.favoritesLastUpdate || 0
+  var now = +new Date
+  if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
+    return
+  }
+  $.getJSON('/ajax/favorite_get.php', function(data) {
+    favoritesForums = favoritesTopics = []
+    $.each(data.rep.forums, function(index, value) {
+      favoritesForums.push({
+        lien: value.lien,
+        titre: value.titre,
+      })
+    })
+    $.each(data.rep.forums, function(index, value) {
+      favoritesForums.push({
+        lien: value.lien,
+        titre: value.titre,
+      })
+    })
+    localStorage.favoritesForums = JSON.stringify(favoritesForums)
+    localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
+    localStorage.favoritesLastUpdate = now
+  })
+}
+
 /*** App ***/
 
 $(function() {
   updateLocalBlacklist()
   updateRemoteBlacklist()
   applyBlacklist()
+  updateFavorites()
 })
 
 $('#post').click(function(e) {

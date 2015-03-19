@@ -307,11 +307,26 @@ class Jvc {
     $after = substr($rep['body'], $lim);
 
     $regex =  '#<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">.+' .
-              '<a .+>[\r\n\s]*?(?P<human>.+)[\r\n\s]*</a>.+' .
+              '<a href="//www.jeuxvideo.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-1-0-1-0-(?P<slug>.+)\.htm" class="lien-jv">[\r\n\s]*?(?P<titre>.+)[\r\n\s]*</a>.+' .
               '</li>#Usi';
 
-    preg_match_all($regex, $before, $forums, PREG_SET_ORDER);
-    preg_match_all($regex, $after, $topics, PREG_SET_ORDER);
+    $forums = $topics = [];
+
+    preg_match_all($regex, $before, $matches, PREG_SET_ORDER);
+    for ($i = 0; $i < count($matches); $i++) {
+      $forums[$matches[$i]['id']] = [
+        'lien' => '/' . $matches[$i]['forum'] . '-' . $matches[$i]['slug'],
+        'titre' => $matches[$i]['titre'],
+      ];
+    }
+
+    preg_match_all($regex, $after, $matches, PREG_SET_ORDER);
+    for ($i = 0; $i < count($matches); $i++) {
+      $topics[$matches[$i]['id']] = [
+        'lien' => '/' . $matches[$i]['forum'] . '/' . ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'] . '-' . $matches[$i]['slug'],
+        'titre' => $matches[$i]['titre'],
+      ];
+    }
 
     return [ 'forums' => $forums, 'topics' => $topics ];
   }
