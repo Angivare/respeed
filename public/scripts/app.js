@@ -158,7 +158,7 @@ $('#newmessage').focus(function(e) {
   }
 })
 
-$('.meta-ignore').click(function(e, a, c) {
+$('.meta-ignore').click(function(e) {
   var id = e.target.parentNode.parentNode.id
     , pseudo = $('#' + id).data('pseudo')
 
@@ -171,10 +171,38 @@ $('.meta-ignore').click(function(e, a, c) {
   applyBlacklist()
 })
 
-$('.meta-unignore').click(function(e, a, c) {
+$('.meta-unignore').click(function(e) {
   var id = e.target.parentNode.parentNode.id
     , pseudo = $('#' + id).data('pseudo')
 
   removeFromBlacklist(pseudo)
   applyBlacklist()
+})
+
+$('.meta-quote').click(function(e) {
+  var id = e.target.parentNode.parentNode.id
+    , pseudo = $('#' + id).data('pseudo')
+    , date = $('#' + id + ' .meta-permalink').html()
+
+  if (!is_connected) {
+    location.href = '/se_connecter?pour=citer&qui=' + pseudo
+    return
+  }
+
+  $.getJSON('/ajax/quote.php', {id: id}, function(data) {
+    if (!data.rep) {
+      alert('Erreur avec la citation : ' + data.err)
+      return
+    }
+    var citation = ""
+    if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
+      citation += "\n\n"
+    }
+    citation += "> '''" + pseudo + "''', " + date + " http://jvrespeed.com" + location.pathname + "#" + id + "\n"
+    citation += "> \n"
+    citation += "> " + $.trim(data.rep).split("\n").join("\n> ")
+    citation += "\n\n"
+    
+    $('#newmessage').val($('#newmessage').val() + citation).focus()
+  })
 })
