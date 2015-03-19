@@ -8,16 +8,24 @@
  * @package default
  */
 class Jvc {
-  const CK_PREFIX = '_JVC_';
+  const JV_PREFIX = '_JVC_';
+  const TK_PREFIX = '_TOK_';
 
   /**
    * Retourne la session sur JVC du client depuis les cookies
    */
   public function __construct() {
-    $this->cookie = array();
+    $this->cookie = [];
     foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen(self::CK_PREFIX)) === self::CK_PREFIX)
-        $this->cookie[substr($k, strlen(self::CK_PREFIX))] = $v;
+      if(substr($k, 0, strlen(self::JV_PREFIX)) === self::JV_PREFIX)
+        $this->cookie[substr($k, strlen(self::JV_PREFIX))] = $v;
+
+    $this->tk = [];
+    foreach($_COOKIE as $k => $v)
+      if(substr($k, 0, strlen(self::TK_PREFIX)) === self::TK_PREFIX)
+        $this->tk[substr($k, strlen(self::TK_PREFIX))] = $v;
+
+    $this->tk_update = isset($_COOKIE['tk_update']) ? $_COOKIE['tk_update'] : 0;
 
     if(!isset($this->cookie['dlrowolleh']))
       $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
@@ -46,8 +54,8 @@ class Jvc {
    */
   public function disconnect() {
     foreach($this->cookie as $k => $v)
-      setcookie(self::CK_PREFIX.$k, '', time()-1, '/', 'respeed.dev', FALSE, TRUE);
-    $this->cookie = array();
+      setcookie(self::JV_PREFIX.$k, '', time()-1, '/', 'respeed.dev', FALSE, TRUE);
+    $this->cookie = [];
   }
 
   /**
@@ -144,18 +152,33 @@ class Jvc {
   }
 
   /**
+   * Rafraîchit les tokens ajax
+   * @param string $body Le contenu d'un topic
+   * @return boolean TRUE s'il n'y a pas eu d'erreur, FALSE sinon
+   */
+  public function refresh_tokens($body) {
+    $this->tk = self::parse_ajax_tk($body, '.+?', TRUE);
+    if(!$this->tk) return $this->_err('Indéfinie');
+    $this->tk_update = time();
+    foreach($this->tk as $k => $v)
+      setcookie(self::TK_PREFIX.$k, $v, time()+3600/2, '/', 'respeed.dev', FALSE, TRUE);
+    setcookie('tk_update', $this->tk_update, time()+3600/2, '/', 'respeed.dev', FALSE, TRUE);
+    return TRUE;
+  }
+
+  public function tokens() { return $this->tk; }
+  public function tokens_last_update() { return $this->tk_update; }
+
+  /**
    * Prépare un formulaire pour l'édition d'un message
    * 
    * Le formulaire contient 'fs_signature' si un captcha est présent
    * @param string $url 
    * @param int $id 
+   * @param array $tk Tableau associatif contenant 'ajax_timestamp' et 'ajax_hash'
    * @return mixed FALSE s'il y a eu une erreur, le formulaire à renvoyer sinon
    */
-  public function edit_req($url, $id) {
-    $rep = $this->get($url);
-
-    $tk = self::parse_ajax_tk($rep['body'], 'liste_messages');
-
+  public function edit_req($id, $tk) {
     $get_data = http_build_query($tk) .
       '&id_message=' . urlencode($id) .
       '&action=get';
@@ -174,14 +197,13 @@ class Jvc {
 
   /**
    * Finalise l'édition d'un message
-   * @param string $url 
    * @param int $id 
    * @param string $msg 
    * @param array $form 
    * @param int $ccode code de confirmation
    * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
    */
-  public function edit_finish($url, $id, $msg, $form, $ccode='') {
+  public function edit_finish($id, $msg, $form, $ccode='') {
     $post_data = http_build_query($form) .
       '&id_message=' . urlencode($id) .
       '&message_topic=' . urlencode($msg) .
@@ -201,11 +223,10 @@ class Jvc {
   /**
    * Retourne la citation d'un texte
    * @param int $id id du post à citer
-   * @param string $bdy page où le post apparaît
+   * @param array $tk Tableau associatif contenant 'ajax_timestamp' et 'ajax_hash'
    * @return mixed FALSE si la citation a échoué, la citation sinon
    */
-  public function quote($id, $bdy) {
-    $tk = self::parse_ajax_tk($bdy, 'liste_messages');
+  public function quote($id, $tk) {
     $post_data = 'id_message=' . urlencode($id) .
       '&' . http_build_query($tk);
     $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
@@ -242,8 +263,7 @@ class Jvc {
    * @param string $bdy page où le post apparaît
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
-  public function blacklist_add($id, $bdy) {
-    $tk = self::parse_ajax_tk($bdy, 'preference_user');
+  public function blacklist_add($id, $tk) {
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
     $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data));
@@ -263,9 +283,10 @@ class Jvc {
               '<span>(?P<human>.+)</span>.+'  .
               '</li>#Usi';
 
-    preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER);
-
-    return count($matches) ? $matches : $this->_err('Indéfinie');
+    if(FALSE === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
+      return $this->_err('Indéfinie');
+    else
+      return $matches;
   }
 
   /**
@@ -387,7 +408,7 @@ class Jvc {
     }
 
     foreach($this->cookie as $k => $v)
-      setcookie(self::CK_PREFIX.$k, $v, time()+3600*24, '/', 'respeed.dev', FALSE, TRUE);
+      setcookie(self::JV_PREFIX.$k, $v, time()+3600*24, '/', 'respeed.dev', FALSE, TRUE);
   }
 
   private function cookie_string() {
@@ -400,18 +421,21 @@ class Jvc {
   private static function parse_form($bdy) {
     $regex = '<input type="hidden" name="fs_(.+?)" value="(.+?)"/>';
     preg_match_all($regex, $bdy, $matches);
-    $ret = array();
+    $ret = [];
     for($i = 0; $i < count($matches[0]); $i++)
       $ret['fs_'.$matches[1][$i]] = $matches[2][$i];
     return $ret;
   }
 
-  private static function parse_ajax_tk($bdy, $type) {
-    $regex = '<input type="hidden" name="(.+?)_'.$type.'" .+? value="(.+?)" />';
+  private static function parse_ajax_tk($bdy, $type, $leave_tk_type = FALSE) {
+    $regex = '<input type="hidden" name="(.+?)_('.$type.')" .+? value="(.+?)" />';
     preg_match_all($regex, $bdy, $matches);
-    $ret = array();
+    $ret = [];
     for($i = 0; $i < count($matches[0]); $i++)
-      $ret[$matches[1][$i]] = $matches[2][$i];
+      if($leave_tk_type)
+        $ret[$matches[1][$i].'_'.$matches[2][$i]] = $matches[3][$i];
+      else
+        $ret[$matches[1][$i]] = $matches[3][$i];
     return $ret;
   }
 }

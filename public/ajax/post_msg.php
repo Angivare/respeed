@@ -1,5 +1,4 @@
 <?php
-session_start();
 require '../Jvc.php';
 
 $url = isset($_POST['url']) ? $_POST['url'] : FALSE;
