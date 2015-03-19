@@ -285,8 +285,13 @@ class Jvc {
 
     if(FALSE === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
       return $this->_err('Indéfinie');
-    else
-      return $matches;
+    else {
+      $retour = [];
+      for ($i = 0; $i < count($matches[0]); $i++) {
+        $retour[] = $matches[$i]['human'];
+      }
+      return $retour;
+    }
   }
 
   /**

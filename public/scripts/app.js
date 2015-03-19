@@ -5,7 +5,7 @@ var form_data
 
 /*** Helpers ***/
 
-function updateBlacklist() {
+function updateLocalBlacklist() {
   blacklist = (localStorage.blacklist || '').split(' ')
   if (!blacklist[blacklist.length - 1]) {
     blacklist.pop()
@@ -18,12 +18,12 @@ function addToBlacklist(pseudo) {
     return
   }
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
-  updateBlacklist()
+  updateLocalBlacklist()
   //TODO: ajax sync JVC
 }
 
 function removeFromBlacklist(pseudo) {
-  updateBlacklist()
+  updateLocalBlacklist()
   pseudo = pseudo.toLowerCase()
   var index = $.inArray(pseudo, blacklist)
   if (index == -1) {
@@ -51,10 +51,28 @@ function applyBlacklist() {
   })
 }
 
+function updateRemoteBlacklist() {
+  if (!is_connected) {
+    return
+  }
+  var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
+  var now = +new Date
+  if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
+    $.getJSON('/ajax/get_blacklist.php', function(data) {
+      var remoteBlacklist = data.rep
+      for (var i = 0; i < remoteBlacklist.length; i++) {
+        addToBlacklist(remoteBlacklist[i])
+      }
+      localStorage.remoteBlacklistLastUpdate = now
+    })
+  }
+}
+
 /*** App ***/
 
 $(function() {
-  updateBlacklist()
+  updateLocalBlacklist()
+  updateRemoteBlacklist()
   applyBlacklist()
 })
 

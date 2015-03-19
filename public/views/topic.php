@@ -230,7 +230,6 @@ $is_sign = (int)$number != $i;
 
 <script>
 var url = '<?= $url ?>'
-  , is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
   , tokens = <?= json_encode($jvc->tokens()) ?>
   , tokens_last_update = <?= $jvc->tokens_last_update() ?>
 </script>
