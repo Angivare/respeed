@@ -54,7 +54,7 @@ class Jvc {
    */
   public function disconnect() {
     foreach($this->cookie as $k => $v)
-      setcookie(self::JV_PREFIX.$k, '', time()-1, '/', 'respeed.dev', FALSE, TRUE);
+      setcookie(self::JV_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
     $this->cookie = [];
   }
 
@@ -161,8 +161,8 @@ class Jvc {
     if(!$this->tk) return $this->_err('Indéfinie');
     $this->tk_update = time();
     foreach($this->tk as $k => $v)
-      setcookie(self::TK_PREFIX.$k, $v, time()+3600/2, '/', 'respeed.dev', FALSE, TRUE);
-    setcookie('tk_update', $this->tk_update, time()+3600/2, '/', 'respeed.dev', FALSE, TRUE);
+      setcookie(self::TK_PREFIX.$k, $v, time()+3600/2, '/', null, FALSE, TRUE);
+    setcookie('tk_update', $this->tk_update, time()+3600/2, '/', null, FALSE, TRUE);
     return TRUE;
   }
 
@@ -428,7 +428,7 @@ class Jvc {
     }
 
     foreach($this->cookie as $k => $v)
-      setcookie(self::JV_PREFIX.$k, $v, time()+3600*24, '/', 'respeed.dev', FALSE, TRUE);
+      setcookie(self::JV_PREFIX.$k, $v, time()+3600*24, '/', null, FALSE, TRUE);
   }
 
   private function cookie_string() {
