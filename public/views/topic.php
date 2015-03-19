@@ -1,11 +1,21 @@
 <?php
 $topic_mode = $_GET['topic'][0] === '0' ? 1 : 42;
 $url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HEADER, true);
-curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm");
-$got = curl_exec($ch);
+
+$jvc = new Jvc();
+
+$got = '';
+if(time() - $jvc->tokens_last_update() >= 3600/2) {
+  $got = $jvc->get($url);
+  $jvc->refresh_tokens($got['body']);
+  $got = $got['header'] . $got['body'];
+} else {
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HEADER, true);
+  curl_setopt($ch, CURLOPT_URL, $url);
+  $got = curl_exec($ch);
+}
 
 $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
 $location = Jvc::redirects($header);
@@ -19,11 +29,6 @@ if($location) {
   header("Location: {$location}");
   exit;
 }
-
-$jvc = new Jvc();
-
-if(time() - $jvc->tokens_last_update() >= 3600/2)
-  $jvc->refresh_tokens($got);
 
 // Titre du topic
 $title = 'Topic';

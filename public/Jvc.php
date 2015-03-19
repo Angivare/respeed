@@ -57,6 +57,12 @@ class Jvc {
       setcookie(self::JV_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('pseudo', '', time()-1, '/', null, FALSE, TRUE);
     $this->cookie = [];
+
+    foreach($this->tk as $k => $v)
+      setcookie(self::TK_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
+    setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
+    $this->tk = [];
+    $this->last_update = 0;
   }
 
   /**
@@ -179,10 +185,10 @@ class Jvc {
    * Le formulaire contient 'fs_signature' si un captcha est présent
    * @param string $url 
    * @param int $id 
-   * @param array $tk Tableau associatif contenant 'ajax_timestamp' et 'ajax_hash'
    * @return mixed FALSE s'il y a eu une erreur, le formulaire à renvoyer sinon
    */
-  public function edit_req($id, $tk) {
+  public function edit_req($id) {
+    $tk = $this->ajax_array('liste_messages');
     $get_data = http_build_query($tk) .
       '&id_message=' . urlencode($id) .
       '&action=get';
@@ -227,14 +233,15 @@ class Jvc {
   /**
    * Retourne la citation d'un texte
    * @param int $id id du post à citer
-   * @param array $tk Tableau associatif contenant 'ajax_timestamp' et 'ajax_hash'
    * @return mixed FALSE si la citation a échoué, la citation sinon
    */
-  public function quote($id, $tk) {
+  public function quote($id) {
+    $tk = $this->ajax_array('liste_messages');
     $post_data = 'id_message=' . urlencode($id) .
       '&' . http_build_query($tk);
+    var_dump($post_data);
     $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
-      $post_data));
+      $post_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
   }
 
@@ -263,14 +270,26 @@ class Jvc {
 
   /**
    * Ajoute un pseudo à la blacklist
-   * @param int $id id d'un post appartenant à la personne
+   * @param int $id id du post à blacklist
    * @param string $bdy page où le post apparaît
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
-  public function blacklist_add($id, $tk) {
+  public function blacklist_add($id) {
+    $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data));
+    $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data)['body']);
+    return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
+  }
+
+  /**
+   * Enlève un pseudo de la blacklist
+   * @param int $id id correspondant à la personne, reçu par Jvc::blacklist()
+   * @return boolean TRUE si le pseudo est enlevé, FALSE sinon
+   */
+  public function blacklist_remove($id) {
+    $get_data = 'id_alias_unblacklist=' . urlencode($id);
+    $ret = json_decode(self::get('http://www.jeuxvideo.com/sso/ajax_delete_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
@@ -290,11 +309,12 @@ class Jvc {
     if(FALSE === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
       return $this->_err('Indéfinie');
     else {
-      $retour = [];
-      for ($i = 0; $i < count($matches[0]); $i++) {
-        $retour[] = $matches[$i]['human'];
+      $ret = [];
+      var_dump($matches);
+      for($i = 0; $i < count($matches); $i++) {
+        $ret[] = ['id' => $matches[$i]['id'], 'human' => $matches[$i]['human'] ];
       }
-      return $retour;
+      return $ret;
     }
   }
 
@@ -440,6 +460,15 @@ class Jvc {
     foreach($this->cookie as $k => $v)
       $ret .= $k . '=' . $v . '; ';
     return substr($ret, 0, -2);
+  }
+
+  private function ajax_array($type) {
+    if(!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
+      return $this->_err('Pas de token valide disponible');
+    return [
+      'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],
+      'ajax_hash' => $this->tk["ajax_hash_$type"]
+    ];
   }
 
   private static function parse_form($bdy) {
