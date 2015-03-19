@@ -55,6 +55,7 @@ class Jvc {
   public function disconnect() {
     foreach($this->cookie as $k => $v)
       setcookie(self::JV_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
+    setcookie('pseudo', '', time()-1, '/', null, FALSE, TRUE);
     $this->cookie = [];
   }
 
@@ -102,7 +103,10 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    if($this->is_connected()) return TRUE;
+    if($this->is_connected()) {
+      setcookie('pseudo', $nick, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+      return TRUE;
+    }
 
     if(preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match))
       return $this->_err($match[1]);

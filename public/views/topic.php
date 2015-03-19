@@ -83,6 +83,9 @@ if ($page != $last_page) {
 for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
   $pages[] = ' ';
 }
+
+
+$pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 ?>
 <div class="container">
 
@@ -152,8 +155,13 @@ $date = strip_tags(trim($matches['date'][$i]));
 ?>
                 <span class="meta-permalink" title="<?= $date ?>"><?= relative_date_messages($date) ?></span>
                 <span class="meta-quote">Citer</span>
+<?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
                 <span class="meta-ignore">Ignorer</span>
                 <span class="meta-report">Dénoncer</span>
+<?php else: ?>
+                <span class="meta-edit">Modifier</span>
+                <span class="meta-delete">Supprimer</span>
+<?php endif ?>
               </div>
 <?php
 $message = $matches['message'][$i];
