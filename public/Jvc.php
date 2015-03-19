@@ -166,9 +166,14 @@ class Jvc {
    * @return mixed FALSE si une erreur a eu lieu, le formulaire sinon
    */
   public function post_topic_req($url) {
-    $form = self::parse_form($this->get($url)['body']);
+    $rep = $this->get($url)['body'];
+    $form = self::parse_form($rep);
     if(count($form)) return $form;
-    return $this->_err('Impossible de préparer le formulaire');
+    else if(NULL !== strpos($rep,
+      '<div class="alert-row"> Vous ne pouvez pas créer un nouveau sujet sur ce forum car il est fermé. </div>'))
+      return $this->_err('Forum fermé');
+    else
+      return $this->_err('Impossible de préparer le formulaire');
   }
 
   /**
