@@ -326,7 +326,7 @@ class Jvc {
    * @return boolean TRUE/FALSE
    */
   public function favorites_update($id, $type, $action) {
-    $tk = ajax_array('preference_user');
+    $tk = $this->ajax_array('preference_user');
     $id_forum = $type === 'forum' ? $id : '0';
     $id_topic = $type === 'topic' ? $id : '0';
     $get_data = http_build_query($tk) .

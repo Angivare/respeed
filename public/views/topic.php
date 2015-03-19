@@ -4,10 +4,12 @@ $url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-
 
 $jvc = new Jvc();
 
+$header = '';
 $got = '';
 if(time() - $jvc->tokens_last_update() >= 3600/2) {
   $got = $jvc->get($url);
   $jvc->refresh_tokens($got['body']);
+  $header = $got['header'];
   $got = $got['header'] . $got['body'];
 } else {
   $ch = curl_init();
@@ -15,9 +17,9 @@ if(time() - $jvc->tokens_last_update() >= 3600/2) {
   curl_setopt($ch, CURLOPT_HEADER, true);
   curl_setopt($ch, CURLOPT_URL, $url);
   $got = curl_exec($ch);
+  $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
 }
 
-$header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
 $location = Jvc::redirects($header);
 if($location) {
   preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
