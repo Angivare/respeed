@@ -96,7 +96,7 @@ class Jvc {
    * @param string $nick 
    * @param string $pass 
    * @param array $form 
-   * @param int $ccode 
+   * @param string $ccode 
    * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
    */
   public function connect_finish($nick, $pass, $form, $ccode = '') {
@@ -130,10 +130,7 @@ class Jvc {
    */
   public function post_msg_req($url) {
     $form = self::parse_form($this->get($url)['body']);
-
-    if(count($form))
-      return $form;
-
+    if(count($form)) return $form;
     return $this->_err('Impossible de préparer le formulaire');
   }
 
@@ -142,7 +139,7 @@ class Jvc {
    * @param string $url url du topic 
    * @param string $msg message à envoyer
    * @param array $form  
-   * @param int $ccode code de confirmation
+   * @param string $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
   public function post_msg_finish($url, $msg, $form, $ccode='') {
@@ -159,6 +156,48 @@ class Jvc {
       return $this->_err($match[1]);
     else
       return $this->_err('Erreur lors de l\'envoi du message');
+  }
+
+  /**
+   * Prépare un formulaire pour la création d'un topic
+   * 
+   * Le formulaire contient 'fs_signature' si un captcha est présent
+   * @param string $url url du forum
+   * @return mixed FALSE si une erreur a eu lieu, le formulaire sinon
+   */
+  public function post_topic_req($url) {
+    $form = self::parse_form($this->get($url)['body']);
+    if(count($form)) return $form;
+    return $this->_err('Impossible de préparer le formulaire');
+  }
+
+  /**
+   * Finalise la création d'un topic
+   * @param string $url 
+   * @param string $title 
+   * @param string $msg 
+   * @param array $form 
+   * @param string $ccode 
+   * @return boolean TRUE si le topic est créé, FALSE sinon
+   */
+  public function post_topic_finish($url, $title, $msg, $form, $ccode='') {
+    $post_data = http_build_query($form) .
+      '&titre_topic=' . urlencode($title) .
+      '&message_topic=' . urlencode($msg) .
+      '&fs_ccode=' . urlencode($ccode) .
+      '&submit_sondage=0' .
+      '&reponse_sondage%5B%5D=' .
+      '&reponse_sondage%5B%5D=' .
+      '&form_alias_rang=1';
+
+    $rep = $this->post($url, $post_data);
+
+    if(self::redirects($rep['header']))
+      return TRUE;
+    else if(preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match))
+      return $this->_err($match[1]);
+    else
+      return $this->_err('Erreur lors de la création du topic');
   }
 
   /**
@@ -210,7 +249,7 @@ class Jvc {
    * @param int $id 
    * @param string $msg 
    * @param array $form 
-   * @param int $ccode code de confirmation
+   * @param string $ccode code de confirmation
    * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
    */
   public function edit_finish($id, $msg, $form, $ccode='') {
