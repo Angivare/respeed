@@ -319,6 +319,26 @@ class Jvc {
   }
 
   /**
+   * Ajoute/enlève un forum/topic aux favoris
+   * @param int $id 
+   * @param string $type 'forum' ou 'topic'
+   * @param string $action 'add' ou 'delete'
+   * @return boolean TRUE/FALSE
+   */
+  public function favorites_update($id, $type, $action) {
+    $tk = ajax_array('preference_user');
+    $id_forum = $type === 'forum' ? $id : '0';
+    $id_topic = $type === 'topic' ? $id : '0';
+    $get_data = http_build_query($tk) .
+      '&id_forum=' . urlencode($id_forum) .
+      '&id_topic=' . urlencode($id_topic) .
+      '&action=' . urlencode($action) .
+      '&type=' . urlencode($type);
+    $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_forum_prefere.php', $get_data);
+    return TRUE;
+  }
+
+  /**
    * Retourne la liste des sujets & topics préférés
    * @return array Tableau associatif contenant les sujets et topics favoris
    */
