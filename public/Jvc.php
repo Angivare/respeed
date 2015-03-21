@@ -206,6 +206,45 @@ class Jvc {
   }
 
   /**
+   * Récupère des infos sur le sondage
+   * @param string $url 
+   * @return mixed FALSE si une erreur a eu lieu, les infos sur le sondage sinon
+   */
+  public function ans_poll_req($url) {
+    $rep = $this->get($url);
+    $regex = '#<tr>.+<td class="reponse">.+' .
+             '<a .+ data-id-sondage="(?P<question>.+)" data-id-reponse="(?P<answer>.+)".*>' .
+             '(?P<human>.+)</a>.+</td>.+</tr>#Usi';
+    if(preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
+      return $matches;
+    else
+      return $this->_err('Pas de formulaire');
+  }
+
+  /**
+   * Répond à un sondage
+   * @param int $id_topic 
+   * @param int $id_question 
+   * @param int $id_answer 
+   * @return mixed TRUE/FALSE
+   */
+  public function ans_poll_finish($id_topic, $id_question, $id_answer) {
+    $tk = $this->ajax_array('liste_messages');
+    $post_data = http_build_query($tk) .
+      '&id_topic=' . urlencode($id_topic) .
+      '&id_sondage=' . urlencode($id_question) .
+      '&id_sondage_reponse=' . urlencode($id_answer);
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_topic_sondage_vote.php', $post_data);
+    $rep = json_decode($rep['body']);
+
+    if($rep->erreur)
+      return $this->_err($rep->erreur);
+    else
+      return TRUE;
+  }
+
+  /**
    * Rafraîchit les tokens ajax
    * @param string $body Le contenu d'un topic
    * @return boolean TRUE s'il n'y a pas eu d'erreur, FALSE sinon
