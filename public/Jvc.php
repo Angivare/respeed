@@ -185,15 +185,16 @@ class Jvc {
    * @param string $ccode 
    * @return boolean TRUE si le topic est créé, FALSE sinon
    */
-  public function post_topic_finish($url, $title, $msg, $form, $ccode='') {
+  public function post_topic_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='') {
     $post_data = http_build_query($form) .
       '&titre_topic=' . urlencode($title) .
       '&message_topic=' . urlencode($msg) .
       '&fs_ccode=' . urlencode($ccode) .
-      '&submit_sondage=0' .
-      '&reponse_sondage%5B%5D=' .
-      '&reponse_sondage%5B%5D=' .
+      '&submit_sondage=' . ($poll_question ? '1' : '0') .
+      '&question_sondage=' . urlencode($poll_question) .
       '&form_alias_rang=1';
+    foreach($poll_answers as $v)
+      $post_data .= '&reponse_sondage%5B%5D=' . urlencode($v);
 
     $rep = $this->post($url, $post_data);
 
