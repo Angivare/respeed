@@ -275,6 +275,27 @@ class Jvc {
   }
 
   /**
+   * Édite le titre d'un topic
+   * @param int $id id du topic
+   * @param string $title nouveau titre
+   * @return boolean TRUE/FALSE
+   */
+  public function edit_title($id, $title) {
+    $tk = $this->ajax_array('liste_messages');
+    $post_data = http_build_query($tk) .
+      '&id_topic=' . urlencode($id) .
+      '&titre_topic=' . urlencode($title);
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_title.php', $post_data);
+    $rep = json_decode($rep['body']);
+
+    if($rep->erreur)
+      return $this->_err($rep->erreur);
+    else
+      return TRUE;
+  }
+
+  /**
    * Retourne la citation d'un texte
    * @param int $id id du post à citer
    * @return mixed FALSE si la citation a échoué, la citation sinon
