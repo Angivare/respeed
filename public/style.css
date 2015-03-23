@@ -88,6 +88,8 @@ h1, h2, h3 {
   float: left;
 }
 
+/* Menu */
+
 .sheet > .aside {
   width: 20%;
   float: left;
@@ -96,6 +98,7 @@ h1, h2, h3 {
 .aside .menu {
   background: #ededed;
   margin-left: 15px;
+  margin-bottom: 15px;
   border-radius: 0 10px 0 10px;
 }
 
@@ -137,6 +140,17 @@ h1, h2, h3 {
   color: white !important;
   background: #59AAC6;
 }
+
+#forums_pref {
+  display: none;
+}
+
+#topics_pref {
+  display: none;
+}
+
+
+/* Misc */
 
 .clearfix {
   clear: both;

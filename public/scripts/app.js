@@ -86,15 +86,16 @@ function updateFavorites() {
     return
   }
   $.getJSON('/ajax/favorite_get.php', function(data) {
-    favoritesForums = favoritesTopics = []
+    favoritesForums = []
+    favoritesTopics = []
     $.each(data.rep.forums, function(index, value) {
       favoritesForums.push({
         lien: value.lien,
         titre: value.titre,
       })
     })
-    $.each(data.rep.forums, function(index, value) {
-      favoritesForums.push({
+    $.each(data.rep.topics, function(index, value) {
+      favoritesTopics.push({
         lien: value.lien,
         titre: value.titre,
       })
@@ -103,6 +104,22 @@ function updateFavorites() {
     localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
     localStorage.favoritesLastUpdate = now
   })
+}
+
+function displayFavorites() {
+  if (!is_connected) {
+    return
+  }
+  if (!$('#forums_pref')) {
+    return
+  }
+  $.each(favoritesForums, function (index, value) {
+    $('#forums_pref .menu-content').append('<li><a href="' + value.lien + '">' + value.titre + '</a></li>')
+  })
+  $.each(favoritesTopics, function (index, value) {
+    $('#topics_pref .menu-content').append('<li><a href="' + value.lien + '">' + value.titre + '</a></li>')
+  })
+  $('#forums_pref, #topics_pref').show()
 }
 
 function request_form_data() {
@@ -131,6 +148,7 @@ $(function() {
   updateRemoteBlacklist()
   applyBlacklist()
   updateFavorites()
+  displayFavorites()
 })
 
 $('#post').click(function(e) {

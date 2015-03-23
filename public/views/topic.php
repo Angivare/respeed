@@ -107,6 +107,10 @@ for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
 
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
+
+
+preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $has_parent);
+$sous_forums = $jvc->sub_forums($got);
 ?>
 <div class="container">
 
@@ -257,12 +261,34 @@ $is_sign = (int)$number != $i;
 
         </div>
         <aside class="aside">
-          <div class="menu">
-            <h3 class="title">Menu</h3>
-            <div class="menu-content">
-              Un menu.
-            </div>
+          <div class="menu" id="forums_pref">
+            <h3 class="title">Mes forums préférés</h3>
+              <ul class="menu-content">
+              </ul>
           </div>
+
+          <div class="menu" id="topics_pref">
+            <h3 class="title">Mes topics préférés</h3>
+              <ul class="menu-content">
+              </ul>
+          </div>
+
+<?php if ($sous_forums): ?>
+        <div class="menu">
+          <h3 class="title">Sous-forums</h3>
+            <ul class="menu-content">
+<?php if ($has_parent): ?>
+              <li><a href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a></li>
+<?php else: ?>
+              <li class="active"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $forum_name ?></a></li>
+<?php endif ?>
+<?php foreach ($sous_forums as $sous_forum): ?>
+              <li class="<?= $forum == $sous_forum['id'] ? 'active' : '' ?>"><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
+<?php endforeach ?>
+            </ul>
+        </div>
+<?php endif ?>
+
         </aside>
         <div class="clearfix"></div>
       </div>

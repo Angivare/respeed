@@ -158,6 +158,18 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 <?php endif; ?>
       </div>
       <aside class="aside">
+        <div class="menu" id="forums_pref">
+          <h3 class="title">Mes forums préférés</h3>
+            <ul class="menu-content">
+            </ul>
+        </div>
+
+        <div class="menu" id="topics_pref">
+          <h3 class="title">Mes topics préférés</h3>
+            <ul class="menu-content">
+            </ul>
+        </div>
+
 <?php if ($sous_forums): ?>
         <div class="menu">
           <h3 class="title">Sous-forums</h3>
@@ -173,6 +185,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
             </ul>
         </div>
 <?php endif ?>
+
       </aside>
       <div class="clearfix"></div>
     </div>
