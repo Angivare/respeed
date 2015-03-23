@@ -242,8 +242,19 @@ h1, h2, h3 {
   text-align: center;
 }
 
+.pages-forum {
+  text-align: right;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.pages-left {
+  float: left;
+}
+
 .pages-container {
   display: inline-block;
+  text-align: center;
 }
 
 .pages .faketable {
