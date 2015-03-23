@@ -96,19 +96,46 @@ h1, h2, h3 {
 .aside .menu {
   background: #ededed;
   margin-left: 15px;
+  border-radius: 0 10px 0 10px;
 }
 
 .aside .menu .title {
   font-size: 1em;
   padding: 2px 8px;
-  background: #2f4f5c;
-  background-image: linear-gradient(#2f4f5c 0, #3b6272 40%, #335462 40%, #2f4f5c 100%);
+  background: #0da0ca;
+  background-image: linear-gradient(#0ebbed 0, #0da0ca 50%, #0382a6 50%, #0382a6 100%);
   color: white;
   text-transform: uppercase;
+  border-radius: 0 10px 0 0;
+  font-size: 15px;
 }
 
 .aside .menu .menu-content {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 10px;
+  list-style: none;
+  background: #C7E3F1;
+  background-image: linear-gradient(#97cce5 0, #C7E3F1 60px);
+  border-radius: 0 0 0 10px;
+}
+
+.aside .menu .menu-content a {
+  color: #014F65;
+  display: block;
   padding: 2px 8px;
+  font-weight: bold;
+  font-size: 14px;
+  border-bottom: 1px solid #72b4c9;
+}
+
+.aside .menu .menu-content .active a {
+  color: white;
+}
+
+.aside .menu .menu-content a:hover {
+  color: white !important;
+  background: #59AAC6;
 }
 
 .clearfix {
