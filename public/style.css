@@ -132,10 +132,6 @@ h1, h2, h3 {
   border-bottom: 1px solid #72b4c9;
 }
 
-.aside .menu .menu-content .active a {
-  color: white;
-}
-
 .aside .menu .menu-content a:hover {
   color: white !important;
   background: #59AAC6;

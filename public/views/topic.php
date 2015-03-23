@@ -280,10 +280,10 @@ $is_sign = (int)$number != $i;
 <?php if ($has_parent): ?>
               <li><a href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a></li>
 <?php else: ?>
-              <li class="active"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $forum_name ?></a></li>
+              <li><a href="/<?= $forum ?>-<?= $slug ?>"><?= $forum_name ?></a></li>
 <?php endif ?>
 <?php foreach ($sous_forums as $sous_forum): ?>
-              <li class="<?= $forum == $sous_forum['id'] ? 'active' : '' ?>"><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
+              <li><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
 <?php endforeach ?>
             </ul>
         </div>
