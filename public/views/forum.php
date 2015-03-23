@@ -36,6 +36,7 @@ preg_match_all($regex, $got, $matches);
 
 $has_next_page = strpos($got, '<div class="pagi-after"></div>') === false;
 
+$sous_forums = $jvc->sub_forums($got);
 ?>
 
 <div class="container">
@@ -157,9 +158,13 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
       </div>
       <aside class="aside">
         <div class="menu">
-          <h3 class="title">Menu</h3>
+          <h3 class="title">Sous-forums</h3>
           <div class="menu-content">
-            Un menu.
+            <ul>
+<?php foreach ($sous_forums as $sous_forum): ?>
+              <li><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
+<?php endforeach ?>
+            </ul>
           </div>
         </div>
       </aside>
