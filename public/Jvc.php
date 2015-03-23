@@ -382,7 +382,7 @@ class Jvc {
     $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get('http://www.jeuxvideo.com/forums/ajax_forum_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
@@ -393,7 +393,7 @@ class Jvc {
    */
   public function blacklist_remove($id) {
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
-    $ret = json_decode(self::get('http://www.jeuxvideo.com/sso/ajax_delete_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get('http://www.jeuxvideo.com/sso/ajax_delete_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
