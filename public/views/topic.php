@@ -66,7 +66,7 @@ $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+>\s+<div cla
          '<div class="inner-head-content">.+(<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)"|<div class="bloc-pseudo-msg").+' .
          '>\s+(?P<pseudo>.+)\s+<.+' .
          '<div class="bloc-date-msg">\s+(<span[^>]+>)?(?P<date>[0-9].+)</div>.+' .
-         '<div class="txt-msg  text-enrichi-forum ">(?P<message>.+)</div>' .
+         '<div class="txt-msg  text-enrichi-forum ">(?P<message>.*)</div>' .
          '</div>\s+</div>\s+</div>\s+</div>#Usi';
 preg_match_all($regex, $got, $matches);
 
