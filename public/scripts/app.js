@@ -24,7 +24,7 @@ function addToBlacklist(pseudo, id_message) {
   $.get('/ajax/blacklist_add.php', {id_message: id_message})
 }
 
-function removeFromBlacklist(pseudo) {
+function removeFromBlacklist(pseudo, id_message) {
   updateLocalBlacklist()
   pseudo = pseudo.toLowerCase()
   var index = $.inArray(pseudo, blacklist)
@@ -34,7 +34,7 @@ function removeFromBlacklist(pseudo) {
   var blacklistString = ''
   blacklist.splice(index, 1)
   localStorage.blacklist = blacklist.join(' ')
-  //TODO: ajax sync JVC
+  $.get('/ajax/blacklist_remove.php', {id_message: id_message})
 }
 
 function applyBlacklist() {
@@ -193,7 +193,7 @@ $('.meta-unignore').click(function(e) {
   var id = e.target.parentNode.parentNode.id
     , pseudo = $('#' + id).data('pseudo')
 
-  removeFromBlacklist(pseudo)
+  removeFromBlacklist(pseudo, id)
   applyBlacklist()
 })
 
