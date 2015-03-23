@@ -56,7 +56,11 @@ h1, h2, h3 {
 .sheet-navbar .login-link {
   position: absolute;
   right: 20px;
-  top: 6px;
+  top: 10px;
+}
+
+.sheet-last .sheet-navbar .login-link {
+  top: 20px;
 }
 
 .sheet-last {
@@ -234,12 +238,23 @@ h1, h2, h3 {
 /* Liste des pages */
 
 .pages {
-  padding-bottom: 10px;
+  margin-bottom: 10px;
   text-align: center;
+}
+
+.pages-forum {
+  text-align: right;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.pages-left {
+  float: left;
 }
 
 .pages-container {
   display: inline-block;
+  text-align: center;
 }
 
 .pages .faketable {
@@ -460,6 +475,7 @@ h1, h2, h3 {
 /* Formulaire de post */
 
 .form-post {
+  margin-top: 10px;
   border: 1px solid #9c0;
   border-radius: 1px 8px 1px 5px;
 }
@@ -504,6 +520,12 @@ h1, h2, h3 {
 .form-error p {
   margin: 1em 1.5em;
   color: #e50a09;
+}
+
+.input.newsujet {
+  font-size: 1.2em;
+  width: 100%;
+  padding: 3px 5px;
 }
 
 .input.textarea {

@@ -2,7 +2,9 @@
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HEADER, true);
-curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$slug}.htm");
+$page_url = ($page - 1) * 25 + 1;
+$url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
+curl_setopt($ch, CURLOPT_URL, $url);
 $got = curl_exec($ch);
 
 $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
@@ -31,6 +33,9 @@ $regex = '#<tr class=".*" data-id=".+">.+' .
          '.+</tr>#Usi';
 preg_match_all($regex, $got, $matches);
 
+
+$has_next_page = strpos($got, '<div class="pagi-after"></div>') === false;
+
 ?>
 
 <div class="container">
@@ -49,6 +54,40 @@ preg_match_all($regex, $got, $matches);
       <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
       <h1 class="sheet-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?> <span class="reload-sign">↻</span></a></h1>
       <div class="content">
+
+<?php if ($page > 1): ?>
+        <div class="pages pages-forum pages-left">
+          <div class="pages-container">
+            <span class="faketable">
+              <a href="/<?= $forum ?>-<?= $slug ?>" class="link sign">«</a>
+            </span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+<?php if ($page > 2): ?>
+        <div class="pages pages-forum pages-left">
+          <div class="pages-container">
+            <span class="faketable">
+              <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page - 1 ?>" class="link sign">‹</a>
+            </span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+<?php endif ?>
+<?php if ($has_next_page): ?>
+        <div class="pages pages-forum">
+          <div class="pages-container">
+            <span class="faketable">
+              <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page + 1 ?>" class="link sign">›</a>
+            </span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+<?php else: ?>
+        <div class="clearfix"></div>
+<?php endif ?>
+<?php endif ?>
+
         <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
           <div class="topic label-<?= $matches['label'][$i] ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
@@ -69,6 +108,52 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
           </div>
 <?php endfor ?>
         </div>
+
+<?php if ($page > 1): ?>
+        <div class="pages pages-forum pages-left">
+          <div class="pages-container">
+            <span class="faketable">
+              <a href="/<?= $forum ?>-<?= $slug ?>" class="link sign">«</a>
+            </span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+<?php endif ?>
+<?php if ($page > 2): ?>
+        <div class="pages pages-forum pages-left">
+          <div class="pages-container">
+            <span class="faketable">
+              <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page - 1 ?>" class="link sign">‹</a>
+            </span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+<?php endif ?>
+<?php if ($has_next_page): ?>
+        <div class="pages pages-forum">
+          <div class="pages-container">
+            <span class="faketable">
+              <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page + 1 ?>" class="link sign">›</a>
+            </span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+<?php else: ?>
+        <div class="clearfix"></div>
+<?php endif ?>
+
+<?php if($jvc->is_connected()): ?>
+        <div class="form-post">
+          <label class="titre-bloc" for="newsujet">Créer un nouveau sujet</label>
+          <div class="form-error"><p></p></div>
+          <div class="form-post-inner">
+            <p><input class="input newsujet" type="text" name="newsujet" id="newsujet" maxlength="100" placeholder="Titre">
+            <p><textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
+            <span id="captcha-container"></span>
+            <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
+          </div>
+        </div>
+<?php endif; ?>
       </div>
       <aside class="aside">
         <div class="menu">
@@ -82,3 +167,9 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
     </div>
   </div>
 </div>
+
+<script>
+var url = '<?= $url ?>'
+  , tokens = <?= json_encode($jvc->tokens()) ?>
+  , tokens_last_update = <?= $jvc->tokens_last_update() ?>
+</script>

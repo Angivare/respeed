@@ -105,6 +105,25 @@ function updateFavorites() {
   })
 }
 
+function request_form_data() {
+  if (!form_data) {
+    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', {url: url}, function(data, status, xhr) {
+      data = JSON.parse(data)
+      if (data.err == 'Forum fermé') {
+        $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
+        $('#newsujet').attr('disabled', '')
+        $('#newmessage').attr('disabled', '')
+        $('.form-error').show()
+        return
+      }
+      form_data = data.rep
+      if (form_data.fs_signature) {
+        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha.php?signature=' + form_data.fs_signature + '" class="captcha">')
+      }
+    })
+  }
+}
+
 /*** App ***/
 
 $(function() {
@@ -128,7 +147,10 @@ $('#post').click(function(e) {
   if ($('#ccode').val()) {
     params.ccode = $('#ccode').val()
   }
-  $.post('/ajax/post_msg.php', params, function(data, status, xhr) {
+  if ($('#newsujet')) {
+    params.title = $('#newsujet').val()
+  }
+  $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', params, function(data, status, xhr) {
     data = JSON.parse(data)
 
     $('#captcha-container').html('')
@@ -146,16 +168,12 @@ $('#post').click(function(e) {
   })
 })
 
-$('#newmessage').focus(function(e) {
-  if (!form_data) {
-    $.post('/ajax/post_msg.php', {url: url}, function(data, status, xhr) {
-      data = JSON.parse(data)
-      form_data = data.rep
-      if (form_data.fs_signature) {
-        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha.php?signature=' + form_data.fs_signature + '" class="captcha">')
-      }
-    })
-  }
+$('#newsujet').focus(function(e) {
+  request_form_data()
+})
+
+$('#newmessage').focus(function() {
+  request_form_data()
 })
 
 $('.meta-ignore').click(function(e) {
