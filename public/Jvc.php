@@ -344,7 +344,6 @@ class Jvc {
     $tk = $this->ajax_array('liste_messages');
     $post_data = 'id_message=' . urlencode($id) .
       '&' . http_build_query($tk);
-    var_dump($post_data);
     $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
       $post_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
@@ -415,7 +414,6 @@ class Jvc {
       return $this->_err('Indéfinie');
     else {
       $ret = [];
-      var_dump($matches);
       for($i = 0; $i < count($matches); $i++) {
         $ret[] = ['id' => $matches[$i]['id'], 'human' => $matches[$i]['human'] ];
       }
