@@ -33,11 +33,12 @@ else: ?>
 <?php
 $pour = 'poster des messages';
 if (isset($_GET['pour'])) {
-  $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un pseudo';
   if ($_GET['pour'] == 'ignorer') {
+    $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un pseudo';
     $pour = 'ignorer ' . $qui;
   }
   elseif ($_GET['pour'] == 'citer') {
+    $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un message';
     $pour = 'citer ' . $qui;
   }
 }
