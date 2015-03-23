@@ -515,6 +515,19 @@ class Jvc {
   }
 
   /**
+   * Retourne la liste des sous-forums
+   * @param string $body 
+   * @return array contient, pour chaque forum, 'id' 'slug' et 'human'
+   */
+  public static function sub_forums($body) {
+    $re = '#<li class="line-ellipsis">.+' .
+          '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
+          '\s*?(?P<human>.+)\s*?</a>#Usi';
+    preg_match_all($re, $body, $matches, PREG_SET_ORDER);
+    return $matches;
+  }
+
+  /**
    * Effectue une requête POST
    * @param string $url 
    * @param mixed $data champ à envoyer, urlencodé ou un tableau associatif 
