@@ -374,7 +374,7 @@ class Jvc {
 
   /**
    * Ajoute un pseudo à la blacklist
-   * @param int $id id du post à blacklist
+   * @param int $id id à blacklist
    * @param string $bdy page où le post apparaît
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
@@ -523,7 +523,7 @@ class Jvc {
   	$body = substr($body, $beg, $end-$beg);
     $re = '#<li class="line-ellipsis">.+' .
           '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
-          '(?:.+<span style="color: \#fff;">)??' .
+          '(?:\s+<span .+>)??' .
           '\s*?(?P<human>.+)\s*?' .
           '(?:</span>.+)??</a>.+</li>#Usi';
     preg_match_all($re, $body, $matches, PREG_SET_ORDER);
