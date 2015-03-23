@@ -56,7 +56,11 @@ h1, h2, h3 {
 .sheet-navbar .login-link {
   position: absolute;
   right: 20px;
-  top: 6px;
+  top: 10px;
+}
+
+.sheet-last .sheet-navbar .login-link {
+  top: 20px;
 }
 
 .sheet-last {
