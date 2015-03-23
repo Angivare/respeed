@@ -57,6 +57,12 @@ class Jvc {
       setcookie(self::JV_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('pseudo', '', time()-1, '/', null, FALSE, TRUE);
     $this->cookie = [];
+
+    foreach($this->tk as $k => $v)
+      setcookie(self::TK_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
+    setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
+    $this->tk = [];
+    $this->last_update = 0;
   }
 
   /**
@@ -90,7 +96,7 @@ class Jvc {
    * @param string $nick 
    * @param string $pass 
    * @param array $form 
-   * @param int $ccode 
+   * @param string $ccode 
    * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
    */
   public function connect_finish($nick, $pass, $form, $ccode = '') {
@@ -124,10 +130,7 @@ class Jvc {
    */
   public function post_msg_req($url) {
     $form = self::parse_form($this->get($url)['body']);
-
-    if(count($form))
-      return $form;
-
+    if(count($form)) return $form;
     return $this->_err('Impossible de préparer le formulaire');
   }
 
@@ -136,7 +139,7 @@ class Jvc {
    * @param string $url url du topic 
    * @param string $msg message à envoyer
    * @param array $form  
-   * @param int $ccode code de confirmation
+   * @param string $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
   public function post_msg_finish($url, $msg, $form, $ccode='') {
@@ -153,6 +156,93 @@ class Jvc {
       return $this->_err($match[1]);
     else
       return $this->_err('Erreur lors de l\'envoi du message');
+  }
+
+  /**
+   * Prépare un formulaire pour la création d'un topic
+   * 
+   * Le formulaire contient 'fs_signature' si un captcha est présent
+   * @param string $url url du forum
+   * @return mixed FALSE si une erreur a eu lieu, le formulaire sinon
+   */
+  public function post_topic_req($url) {
+    $rep = $this->get($url)['body'];
+    $form = self::parse_form($rep);
+    if(count($form)) return $form;
+    else if(NULL !== strpos($rep,
+      '<div class="alert-row"> Vous ne pouvez pas créer un nouveau sujet sur ce forum car il est fermé. </div>'))
+      return $this->_err('Forum fermé');
+    else
+      return $this->_err('Impossible de préparer le formulaire');
+  }
+
+  /**
+   * Finalise la création d'un topic
+   * @param string $url 
+   * @param string $title 
+   * @param string $msg 
+   * @param array $form 
+   * @param string $ccode 
+   * @return boolean TRUE si le topic est créé, FALSE sinon
+   */
+  public function post_topic_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='') {
+    $post_data = http_build_query($form) .
+      '&titre_topic=' . urlencode($title) .
+      '&message_topic=' . urlencode($msg) .
+      '&fs_ccode=' . urlencode($ccode) .
+      '&submit_sondage=' . ($poll_question ? '1' : '0') .
+      '&question_sondage=' . urlencode($poll_question) .
+      '&form_alias_rang=1';
+    foreach($poll_answers as $v)
+      $post_data .= '&reponse_sondage%5B%5D=' . urlencode($v);
+
+    $rep = $this->post($url, $post_data);
+
+    if(self::redirects($rep['header']))
+      return TRUE;
+    else if(preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match))
+      return $this->_err($match[1]);
+    else
+      return $this->_err('Erreur lors de la création du topic');
+  }
+
+  /**
+   * Récupère des infos sur le sondage
+   * @param string $url 
+   * @return mixed FALSE si une erreur a eu lieu, les infos sur le sondage sinon
+   */
+  public function ans_poll_req($url) {
+    $rep = $this->get($url);
+    $regex = '#<tr>.+<td class="reponse">.+' .
+             '<a .+ data-id-sondage="(?P<question>.+)" data-id-reponse="(?P<answer>.+)".*>' .
+             '(?P<human>.+)</a>.+</td>.+</tr>#Usi';
+    if(preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
+      return $matches;
+    else
+      return $this->_err('Pas de formulaire');
+  }
+
+  /**
+   * Répond à un sondage
+   * @param int $id_topic 
+   * @param int $id_question 
+   * @param int $id_answer 
+   * @return mixed TRUE/FALSE
+   */
+  public function ans_poll_finish($id_topic, $id_question, $id_answer) {
+    $tk = $this->ajax_array('liste_messages');
+    $post_data = http_build_query($tk) .
+      '&id_topic=' . urlencode($id_topic) .
+      '&id_sondage=' . urlencode($id_question) .
+      '&id_sondage_reponse=' . urlencode($id_answer);
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_topic_sondage_vote.php', $post_data);
+    $rep = json_decode($rep['body']);
+
+    if($rep->erreur)
+      return $this->_err($rep->erreur);
+    else
+      return TRUE;
   }
 
   /**
@@ -179,10 +269,10 @@ class Jvc {
    * Le formulaire contient 'fs_signature' si un captcha est présent
    * @param string $url 
    * @param int $id 
-   * @param array $tk Tableau associatif contenant 'ajax_timestamp' et 'ajax_hash'
    * @return mixed FALSE s'il y a eu une erreur, le formulaire à renvoyer sinon
    */
-  public function edit_req($id, $tk) {
+  public function edit_req($id) {
+    $tk = $this->ajax_array('liste_messages');
     $get_data = http_build_query($tk) .
       '&id_message=' . urlencode($id) .
       '&action=get';
@@ -204,7 +294,7 @@ class Jvc {
    * @param int $id 
    * @param string $msg 
    * @param array $form 
-   * @param int $ccode code de confirmation
+   * @param string $ccode code de confirmation
    * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
    */
   public function edit_finish($id, $msg, $form, $ccode='') {
@@ -225,16 +315,38 @@ class Jvc {
   }
 
   /**
+   * Édite le titre d'un topic
+   * @param int $id id du topic
+   * @param string $title nouveau titre
+   * @return boolean TRUE/FALSE
+   */
+  public function edit_title($id, $title) {
+    $tk = $this->ajax_array('liste_messages');
+    $post_data = http_build_query($tk) .
+      '&id_topic=' . urlencode($id) .
+      '&titre_topic=' . urlencode($title);
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_title.php', $post_data);
+    $rep = json_decode($rep['body']);
+
+    if($rep->erreur)
+      return $this->_err($rep->erreur);
+    else
+      return TRUE;
+  }
+
+  /**
    * Retourne la citation d'un texte
    * @param int $id id du post à citer
-   * @param array $tk Tableau associatif contenant 'ajax_timestamp' et 'ajax_hash'
    * @return mixed FALSE si la citation a échoué, la citation sinon
    */
-  public function quote($id, $tk) {
+  public function quote($id) {
+    $tk = $this->ajax_array('liste_messages');
     $post_data = 'id_message=' . urlencode($id) .
       '&' . http_build_query($tk);
+    var_dump($post_data);
     $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
-      $post_data));
+      $post_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
   }
 
@@ -263,14 +375,26 @@ class Jvc {
 
   /**
    * Ajoute un pseudo à la blacklist
-   * @param int $id id d'un post appartenant à la personne
+   * @param int $id id du post à blacklist
    * @param string $bdy page où le post apparaît
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
-  public function blacklist_add($id, $tk) {
+  public function blacklist_add($id) {
+    $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data));
+    $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data)['body']);
+    return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
+  }
+
+  /**
+   * Enlève un pseudo de la blacklist
+   * @param int $id id correspondant à la personne, reçu par Jvc::blacklist()
+   * @return boolean TRUE si le pseudo est enlevé, FALSE sinon
+   */
+  public function blacklist_remove($id) {
+    $get_data = 'id_alias_unblacklist=' . urlencode($id);
+    $ret = json_decode(self::get('http://www.jeuxvideo.com/sso/ajax_delete_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
@@ -290,12 +414,33 @@ class Jvc {
     if(FALSE === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
       return $this->_err('Indéfinie');
     else {
-      $retour = [];
-      for ($i = 0; $i < count($matches[0]); $i++) {
-        $retour[] = $matches[$i]['human'];
+      $ret = [];
+      var_dump($matches);
+      for($i = 0; $i < count($matches); $i++) {
+        $ret[] = ['id' => $matches[$i]['id'], 'human' => $matches[$i]['human'] ];
       }
-      return $retour;
+      return $ret;
     }
+  }
+
+  /**
+   * Ajoute/enlève un forum/topic aux favoris
+   * @param int $id 
+   * @param string $type 'forum' ou 'topic'
+   * @param string $action 'add' ou 'delete'
+   * @return boolean TRUE/FALSE
+   */
+  public function favorites_update($id, $type, $action) {
+    $tk = $this->ajax_array('preference_user');
+    $id_forum = $type === 'forum' ? $id : '0';
+    $id_topic = $type === 'topic' ? $id : '0';
+    $get_data = http_build_query($tk) .
+      '&id_forum=' . urlencode($id_forum) .
+      '&id_topic=' . urlencode($id_topic) .
+      '&action=' . urlencode($action) .
+      '&type=' . urlencode($type);
+    $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_forum_prefere.php', $get_data);
+    return TRUE;
   }
 
   /**
@@ -440,6 +585,15 @@ class Jvc {
     foreach($this->cookie as $k => $v)
       $ret .= $k . '=' . $v . '; ';
     return substr($ret, 0, -2);
+  }
+
+  private function ajax_array($type) {
+    if(!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
+      return $this->_err('Pas de token valide disponible');
+    return [
+      'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],
+      'ajax_hash' => $this->tk["ajax_hash_$type"]
+    ];
   }
 
   private static function parse_form($bdy) {

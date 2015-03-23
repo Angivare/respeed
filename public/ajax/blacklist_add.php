@@ -4,9 +4,18 @@ if (!$message_id) {
   exit;
 }
 
-// Todo : Faire une requête connectée vers le lien permanent du message ( http://www.jeuxvideo.com/respeed/forums/message/{$message_id} ) en suivant les redirections
-// Récupérer <span class="picto-msg-tronche" title="Blacklister" data-id-alias="(?P<id)>">, et mettre à jour tokens
-// $jvc->blacklist($matches['id'], $tk)  (Mais pk ne pas prendre le token direct depuis les cookies au lieu de le passer en argument ?)
-
 require '../Jvc.php';
 $jvc = new Jvc();
+
+$rep = $jvc->get("http://www.jeuxvideo.com/respeed/forums/message/{$message_id}");
+$location = Jvc::redirects($rep['header']);
+if($location) {
+  $rep = $jvc->get("http://www.jeuxvideo.com{$location}");
+
+  if(preg_match('#<span class="picto-msg-tronche" title="Blacklister" data-id-alias="(?P<id>.+?)">#si', $rep, $matches))
+    echo json_encode(
+      $jvc->blacklist_add($matches['id']),
+      $jvc->err()
+    );
+}
+echo json_encode(['rep' => FALSE, 'err' => 'Message inexistant']);

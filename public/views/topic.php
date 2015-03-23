@@ -1,13 +1,25 @@
 <?php
 $topic_mode = $_GET['topic'][0] === '0' ? 1 : 42;
 $url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HEADER, true);
-curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm");
-$got = curl_exec($ch);
 
-$header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+$jvc = new Jvc();
+
+$header = '';
+$got = '';
+if(time() - $jvc->tokens_last_update() >= 3600/2) {
+  $got = $jvc->get($url);
+  $jvc->refresh_tokens($got['body']);
+  $header = $got['header'];
+  $got = $got['header'] . $got['body'];
+} else {
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_HEADER, true);
+  curl_setopt($ch, CURLOPT_URL, $url);
+  $got = curl_exec($ch);
+  $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+}
+
 $location = Jvc::redirects($header);
 if($location) {
   preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
@@ -19,11 +31,6 @@ if($location) {
   header("Location: {$location}");
   exit;
 }
-
-$jvc = new Jvc();
-
-if(time() - $jvc->tokens_last_update() >= 3600/2)
-  $jvc->refresh_tokens($got);
 
 // Titre du topic
 $title = 'Topic';
@@ -38,6 +45,20 @@ if (preg_match('#<span><a href="/forums/0-' . $forum . '-0-1-0-1-0-(.+)\.htm">Fo
     $forum_slug = $matches[1];
     $forum_name = $matches[2];
 }
+
+//Sondages
+$question = '';
+if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches))
+  $question = $matches[1];
+$regex = '#<tr>.+' .
+         '<td class="result-pourcent">.+' .
+         '<div class="pourcent">(?P<pourcent>[0-9]{1,3})\s*%</div>.+' .
+         '</td>.+<td class="reponse">(?P<human>.+)</td>.+' .
+         '</tr>#Usi';
+$answers = [];
+if(preg_match_all($regex, $got, $matches))
+  for($i = 0; $i < count($matches[0]); $i++)
+    $answers[] = ['pourcent' => $matches['pourcent'][$i], 'human' => $matches['human'][$i] ];
 
 // Messages
 $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+>\s+<div class="conteneur-message">\s+' .
