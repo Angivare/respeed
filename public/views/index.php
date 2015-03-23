@@ -14,11 +14,17 @@ $jvc = new Jvc();
 <?php endif ?>
 
       <div class="content">
-        <h3>Forums préférés</h3>
-        <ul>
-          <li><a href="/1000021-communaute">Communauté</a>
-        </ul>
-      </div>
+        <div class="menu" id="forums_pref">
+          <h3 class="title">Mes forums préférés</h3>
+            <ul class="menu-content">
+            </ul>
+        </div>
+
+        <div class="menu" id="topics_pref">
+          <h3 class="title">Mes topics préférés</h3>
+            <ul class="menu-content">
+            </ul>
+        </div>
       <aside class="aside"></aside>
     </div>
   </div>
