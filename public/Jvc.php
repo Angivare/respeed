@@ -382,7 +382,7 @@ class Jvc {
     $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode(self::get('http://www.jeuxvideo.com/ajax_forum_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get('http://www.jeuxvideo.com/forums/ajax_forum_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
@@ -393,7 +393,7 @@ class Jvc {
    */
   public function blacklist_remove($id) {
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
-    $ret = json_decode(self::get('http://www.jeuxvideo.com/sso/ajax_delete_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get('http://www.jeuxvideo.com/sso/ajax_delete_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
@@ -518,9 +518,14 @@ class Jvc {
    * @return array contient, pour chaque forum, 'id' 'slug' et 'human'
    */
   public static function sub_forums($body) {
+  	$beg = strpos($body, '<ul class="liste-sous-forums">');
+  	$end = strpos($body, '<div class="panel panel-jv-forum">');
+  	$body = substr($body, $beg, $end-$beg);
     $re = '#<li class="line-ellipsis">.+' .
           '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
-          '\s*?(?P<human>.+)\s*?</a>#Usi';
+          '(?:.+<span style="color: \#fff;">)??' .
+          '\s*?(?P<human>.+)\s*?' .
+          '(?:</span>.+)??</a>.+</li>#Usi';
     preg_match_all($re, $body, $matches, PREG_SET_ORDER);
     return $matches;
   }
