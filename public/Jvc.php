@@ -344,7 +344,6 @@ class Jvc {
     $tk = $this->ajax_array('liste_messages');
     $post_data = 'id_message=' . urlencode($id) .
       '&' . http_build_query($tk);
-    var_dump($post_data);
     $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
       $post_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
@@ -415,7 +414,6 @@ class Jvc {
       return $this->_err('Indéfinie');
     else {
       $ret = [];
-      var_dump($matches);
       for($i = 0; $i < count($matches); $i++) {
         $ret[] = ['id' => $matches[$i]['id'], 'human' => $matches[$i]['human'] ];
       }
@@ -512,6 +510,19 @@ class Jvc {
     else $beg += strlen("\nLocation:");
     $end = strpos($hdr, "\n", $beg);
     return trim(substr($hdr, $beg, $end-$beg));
+  }
+
+  /**
+   * Retourne la liste des sous-forums
+   * @param string $body 
+   * @return array contient, pour chaque forum, 'id' 'slug' et 'human'
+   */
+  public static function sub_forums($body) {
+    $re = '#<li class="line-ellipsis">.+' .
+          '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
+          '\s*?(?P<human>.+)\s*?</a>#Usi';
+    preg_match_all($re, $body, $matches, PREG_SET_ORDER);
+    return $matches;
   }
 
   /**
