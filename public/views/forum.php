@@ -2,7 +2,8 @@
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HEADER, true);
-curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$slug}.htm");
+$url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-1-0-{$slug}.htm";
+curl_setopt($ch, CURLOPT_URL, $url);
 $got = curl_exec($ch);
 
 $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
@@ -69,6 +70,18 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
           </div>
 <?php endfor ?>
         </div>
+<?php if($jvc->is_connected()): ?>
+        <div class="form-post">
+          <label class="titre-bloc" for="newsujet">Créer un nouveau sujet</label>
+          <div class="form-error"><p></p></div>
+          <div class="form-post-inner">
+            <p><input class="input newsujet" type="text" name="newsujet" id="newsujet" maxlength="100" placeholder="Votre <?= superlatif() ?> titre.">
+            <p><textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
+            <span id="captcha-container"></span>
+            <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
+          </div>
+        </div>
+<?php endif; ?>
       </div>
       <aside class="aside">
         <div class="menu">
@@ -82,3 +95,9 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
     </div>
   </div>
 </div>
+
+<script>
+var url = '<?= $url ?>'
+  , tokens = <?= json_encode($jvc->tokens()) ?>
+  , tokens_last_update = <?= $jvc->tokens_last_update() ?>
+</script>

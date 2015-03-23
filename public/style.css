@@ -238,7 +238,7 @@ h1, h2, h3 {
 /* Liste des pages */
 
 .pages {
-  padding-bottom: 10px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -464,6 +464,7 @@ h1, h2, h3 {
 /* Formulaire de post */
 
 .form-post {
+  margin-top: 10px;
   border: 1px solid #9c0;
   border-radius: 1px 8px 1px 5px;
 }
@@ -508,6 +509,12 @@ h1, h2, h3 {
 .form-error p {
   margin: 1em 1.5em;
   color: #e50a09;
+}
+
+.input.newsujet {
+  font-size: 1.2em;
+  width: 100%;
+  padding: 3px 5px;
 }
 
 .input.textarea {
