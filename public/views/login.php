@@ -28,7 +28,7 @@ else: ?>
 
     <div class="sheet sheet-last">
       <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
-      <div class="content">
+      <div class="content no-menu login-fake-table">
         <div class="form-container">
 <?php
 $pour = 'poster des messages';
@@ -67,18 +67,19 @@ if (isset($_GET['pour'])) {
           </form>
 <?php endif; ?>
         </div>
-        <aside class="aside-form">
-          <h2>Qu’apporte Respeed ?</h2>
-          <ul>
-            <li><strong>Instantanéité</strong> d’affichage des pages</li>
-            <li><strong>Moins de scroll</strong> sur les grands écrans</li>
-            <li><strong>Version mobile complète</strong></li>
-            <li><strong>Rafraîchissement automatique</strong> des topics</li>
-            <li><strong><a href="https://github.com/dieulot/respeed" target="_blank">Open source</a></strong>, tout développeur web peut participer</li>
-          </ul>
+        <aside class="why-respeed">
+          <div>
+            <h2>Qu’apporte Respeed ?</h2>
+            <ul>
+              <li><strong>Instantanéité</strong> d’affichage des pages</li>
+              <li><strong>Moins de scroll</strong> sur les grands écrans</li>
+              <li><strong>Version mobile complète</strong></li>
+              <li><strong>Rafraîchissement automatique</strong> des topics</li>
+              <li><strong><a href="https://github.com/dieulot/respeed" target="_blank">Open source</a></strong>, tout développeur web peut participer</li>
+            </ul>
+          </div>
         </aside>
       </div>
-      <div class="clearfix"></div>
     </div>
   </div>
 </div>
