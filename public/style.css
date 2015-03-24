@@ -123,16 +123,17 @@ h1, h2, h3 {
   border-radius: 0 0 0 10px;
 }
 
-.aside .menu .menu-content a {
+.aside .menu .menu-content a, .aside .menu .menu-content span {
   color: #014F65;
   display: block;
   padding: 2px 8px;
   font-weight: bold;
   font-size: 14px;
   border-bottom: 1px solid #72b4c9;
+  cursor: pointer;
 }
 
-.aside .menu .menu-content a:hover {
+.aside .menu .menu-content a:hover, .aside .menu .menu-content span:hover {
   color: white !important;
   background: #59AAC6;
 }

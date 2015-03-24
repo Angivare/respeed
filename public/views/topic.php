@@ -111,6 +111,11 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
 preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $has_parent);
 $sous_forums = $jvc->sub_forums($got);
+
+preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
+if ($matches_id) {
+  $topicNew = $matches_id['id_topic'];
+}
 ?>
 <div class="container">
 

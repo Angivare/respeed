@@ -463,6 +463,7 @@ class Jvc {
     for ($i = 0; $i < count($matches); $i++) {
       $forums[$matches[$i]['id']] = [
         'lien' => '/' . $matches[$i]['forum'] . '-' . $matches[$i]['slug'],
+        'id' => $matches[$i]['forum'],
         'titre' => $matches[$i]['titre'],
       ];
     }
@@ -471,6 +472,7 @@ class Jvc {
     for ($i = 0; $i < count($matches); $i++) {
       $topics[$matches[$i]['id']] = [
         'lien' => '/' . $matches[$i]['forum'] . '/' . ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'] . '-' . $matches[$i]['slug'],
+        'id' => ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'],
         'titre' => $matches[$i]['titre'],
       ];
     }

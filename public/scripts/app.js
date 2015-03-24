@@ -54,7 +54,7 @@ function applyBlacklist() {
 }
 
 function updateRemoteBlacklist() {
-  if (!is_connected) {
+  if (!$is_connected) {
     return
   }
   var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
@@ -71,7 +71,7 @@ function updateRemoteBlacklist() {
 }
 
 function updateFavorites() {
-  if (!is_connected) {
+  if (!$is_connected) {
     return
   }
   if (localStorage.favoritesForums) {
@@ -89,16 +89,10 @@ function updateFavorites() {
     favoritesForums = []
     favoritesTopics = []
     $.each(data.rep.forums, function(index, value) {
-      favoritesForums.push({
-        lien: value.lien,
-        titre: value.titre,
-      })
+      favoritesForums.push(value)
     })
     $.each(data.rep.topics, function(index, value) {
-      favoritesTopics.push({
-        lien: value.lien,
-        titre: value.titre,
-      })
+      favoritesTopics.push(value)
     })
     localStorage.favoritesForums = JSON.stringify(favoritesForums)
     localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
@@ -107,19 +101,64 @@ function updateFavorites() {
 }
 
 function displayFavorites() {
-  if (!is_connected) {
+  displayFavoritesForums()
+  displayFavoritesTopics()
+}
+
+function displayFavoritesForums() {
+  if (!$is_connected) {
     return
   }
   if (!$('#forums_pref')) {
     return
   }
-  $.each(favoritesForums, function (index, value) {
-    $('#forums_pref .menu-content').append('<li><a href="' + value.lien + '">' + value.titre + '</a></li>')
+
+  var hasThisForum = false
+  $.each(favoritesForums, function (_, forum) {
+    $('#forums_pref .menu-content').append('<li><a href="' + forum.lien + '">' + forum.titre + '</a></li>')
+    if ($forum == forum.id) {
+      hasThisForum = true
+    }
   })
-  $.each(favoritesTopics, function (index, value) {
-    $('#topics_pref .menu-content').append('<li><a href="' + value.lien + '">' + value.titre + '</a></li>')
+  if ($forum) {
+    if (hasThisForum) {
+      $('#forums_pref .menu-content').append('<li><span id="del_forum"><small>− Retirer ce forum</small></span></li>')
+      $('#del_forum').click(delForum)
+    }
+    else {
+      $('#forums_pref .menu-content').append('<li><span id="add_forum"><small>+ Ajouter ce forum</small></span></li>')
+      $('#add_forum').click(addForum)
+    }
+  }
+  $('#forums_pref').show()
+}
+
+function displayFavoritesTopics() {
+  if (!$is_connected) {
+    return
+  }
+  if (!$('#topics_pref')) {
+    return
+  }
+
+  var hasThisTopic = false
+  $.each(favoritesTopics, function (_, topic) {
+    $('#topics_pref .menu-content').append('<li><a href="' + topic.lien + '">' + topic.titre + '</a></li>')
+    if ($topic == topic.id) {
+      hasThisTopic = true
+    }
   })
-  $('#forums_pref, #topics_pref').show()
+  if ($topic) {
+    if (hasThisTopic) {
+      $('#topics_pref .menu-content').append('<li><span id="del_topic"><small>− Retirer ce topic</small></span></li>')
+      $('#del_topic').click(delTopic)
+    }
+    else {
+      $('#topics_pref .menu-content').append('<li><span id="add_topic"><small>+ Ajouter ce topic</small></span></li>')
+      $('#add_topic').click(addTopic)
+    }
+  }
+  $('#topics_pref').show()
 }
 
 function request_form_data() {
@@ -139,6 +178,78 @@ function request_form_data() {
       }
     })
   }
+}
+
+function addForum() {
+  favoritesForums.push({
+    lien: '/' + $forum + '-' + $slug,
+    id: $forum,
+    titre: $title,
+  })
+  localStorage.favoritesForums = JSON.stringify(favoritesForums)
+  $('#forums_pref .menu-content').html('')
+  displayFavoritesForums()
+
+  $.get('/ajax/favorites_update.php', {
+    id: $forum,
+    type: 'forum',
+    action: 'add',
+  })
+}
+
+function delForum() {
+  var newFavoritesForums = []
+  $.each(favoritesForums, function(_, forum) {
+    if (forum.id != $forum) {
+      newFavoritesForums.push(forum)
+    }
+  })
+  favoritesForums = newFavoritesForums
+  localStorage.favoritesForums = JSON.stringify(favoritesForums)
+  $('#forums_pref .menu-content').html('')
+  displayFavoritesForums()
+
+  $.get('/ajax/favorites_update.php', {
+    id: $forum,
+    type: 'forum',
+    action: 'delete',
+  })
+}
+
+function addTopic() {
+  favoritesTopics.push({
+    lien: '/' + $forum + '/' + $topic + '-' + $slug,
+    id: $topic,
+    titre: $title,
+  })
+  localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
+  $('#topics_pref .menu-content').html('')
+  displayFavoritesTopics()
+
+  $.get('/ajax/favorites_update.php', {
+    id: $topicNew,
+    type: 'topic',
+    action: 'add',
+  })
+}
+
+function delTopic() {
+  var newFavoritesTopics = []
+  $.each(favoritesTopics, function(_, topic) {
+    if (topic.id != $topic) {
+      newFavoritesTopics.push(topic)
+    }
+  })
+  favoritesTopics = newFavoritesTopics
+  localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
+  $('#topics_pref .menu-content').html('')
+  displayFavoritesTopics()
+
+  $.get('/ajax/favorites_update.php', {
+    id: $topicNew,
+    type: 'topic',
+    action: 'delete',
+  })
 }
 
 /*** App ***/
@@ -198,7 +309,7 @@ $('.meta-ignore').click(function(e) {
   var id = e.target.parentNode.parentNode.id
     , pseudo = $('#' + id).data('pseudo')
 
-  if (!is_connected) {
+  if (!$is_connected) {
     location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
     return
   }
@@ -220,7 +331,7 @@ $('.meta-quote').click(function(e) {
     , pseudo = $('#' + id).data('pseudo')
     , date = $('#' + id + ' .meta-permalink a').html()
 
-  if (!is_connected) {
+  if (!$is_connected) {
     location.href = '/se_connecter?pour=citer&qui=' + pseudo
     return
   }
