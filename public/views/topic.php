@@ -197,6 +197,11 @@ if ($matches_edit) {
   $message .= '<p class="edit-mention">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</p>';
 }
 $message = adapt_html($message);
+
+$pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
+if ($pos_signature !== false) {
+  $message = substr($message, 0, $pos_signature);
+}
 ?>
               <div class="content"><?= $message ?></div>
               <div class="clearfix"></div>
