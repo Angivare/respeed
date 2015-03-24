@@ -20,7 +20,7 @@ if($nick && $pass && $form && $ccode):
 else: ?>
 <div class="container">
 
-  <div class="sheet">
+  <div class="sheet sheet-first">
     <div class="sheet-navbar">
       <h2 class="sheet-title"><a href="/">Respeed</a></h2>
       <a href="/se_connecter" class="login-link">Connexion</a>

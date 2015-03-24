@@ -119,7 +119,7 @@ if ($matches_id) {
 ?>
 <div class="container">
 
-  <div class="sheet">
+  <div class="sheet sheet-first">
     <div class="sheet-navbar">
       <h2 class="sheet-title"><a href="/">Respeed</a></h2>
 <?php if($jvc->is_connected()): ?>
