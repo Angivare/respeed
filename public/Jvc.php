@@ -604,8 +604,13 @@ class Jvc {
   }
 
   private function ajax_array($type) {
-    if(!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
-      return $this->_err('Pas de token valide disponible');
+    if(
+    		(!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
+    	&&(time() - $this->tokens_last_update() >= 3600/2)
+    ) {
+    	$rep = $this->get('http://www.jeuxvideo.com/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
+    	self::refresh_tokens($rep['body']);
+    }
     return [
       'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],
       'ajax_hash' => $this->tk["ajax_hash_$type"]
