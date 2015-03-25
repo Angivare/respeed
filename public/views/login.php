@@ -18,67 +18,72 @@ if($nick && $pass && $form && $ccode):
       header('Location: /');
   endif;
 else: ?>
-<div class="container">
+<header class="site-header">
+  <h2 class="site-title">
+    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+  </h2>
+  <div class="site-login-container">
+<?php if($jvc->is_connected()): ?>
+    <a href="/se_deconnecter" class="site-login-link logout">Se déconnecter</a>
+<?php else: ?>
+    <a href="/se_connecter" class="site-login-link">Se connecter</a>
+<?php endif ?>
+  </div>
+</header>
 
-  <div class="sheet">
-    <div class="sheet-navbar">
-      <h2 class="sheet-title"><a href="/">Respeed</a></h2>
-      <a href="/se_connecter" class="login-link">Connexion</a>
-    </div>
-
-    <div class="sheet sheet-last">
-      <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
-      <div class="content">
-        <div class="form-container">
+<div class="sheet">
+  <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
+  <div class="content no-menu login-fake-table">
+    <div class="form-container">
 <?php
 $pour = 'poster des messages';
 if (isset($_GET['pour'])) {
-  $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un pseudo';
   if ($_GET['pour'] == 'ignorer') {
+    $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un pseudo';
     $pour = 'ignorer ' . $qui;
   }
   elseif ($_GET['pour'] == 'citer') {
+    $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un message';
     $pour = 'citer ' . $qui;
   }
 }
 ?>
-          <div class="sell">Connectez-vous pour <?= $pour ?> via Respeed.</div>
+      <div class="sell">Connectez-vous pour <?= $pour ?> via Respeed.</div>
 <?php if($nick && $pass):
     $jvc->disconnect();
     $form = $jvc->connect_req($nick, $pass);
 ?>
-          <form action="/se_connecter" method="post">
-            <input type="hidden" name="form" value="<?php echo urlencode(serialize($form)) ?>">
-            <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick?>">
-            <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
-            <p><img src="data:image/png;base64,<?php echo base64_encode(
-              file_get_contents('http://www.jeuxvideo.com/captcha/ccode.php?' .
-              $form['fs_signature']
-              )) ?>" class="captcha">
-            <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus>
-            <p><input class="submit" type="submit" value="Se connecter">
-          </form>
+      <form action="/se_connecter" method="post">
+        <input type="hidden" name="form" value="<?php echo urlencode(serialize($form)) ?>">
+        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick?>">
+        <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
+        <p><img src="data:image/png;base64,<?php echo base64_encode(
+          file_get_contents('http://www.jeuxvideo.com/captcha/ccode.php?' .
+          $form['fs_signature']
+          )) ?>" class="captcha">
+        <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus>
+        <p><input class="submit" type="submit" value="Se connecter">
+      </form>
 <?php else: ?>
-          <form action="/se_connecter" method="post">
-            <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
-            <p><input class="input" type="password" name="pass" placeholder="Mot de passe">
-            <p><input class="submit" type="submit" value="Se connecter">
-          </form>
+      <form action="/se_connecter" method="post">
+        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
+        <p><input class="input" type="password" name="pass" placeholder="Mot de passe">
+        <p><input class="submit" type="submit" value="Se connecter">
+      </form>
 <?php endif; ?>
-        </div>
-        <aside class="aside-form">
-          <h2>Qu’apporte Respeed ?</h2>
-          <ul>
-            <li><strong>Instantanéité</strong> d’affichage des pages</li>
-            <li><strong>Moins de scroll</strong> sur les grands écrans</li>
-            <li><strong>Version mobile complète</strong></li>
-            <li><strong>Rafraîchissement automatique</strong> des topics</li>
-            <li><strong><a href="https://github.com/dieulot/respeed" target="_blank">Open source</a></strong>, tout développeur web peut participer</li>
-          </ul>
-        </aside>
-      </div>
-      <div class="clearfix"></div>
     </div>
+    <aside class="why-respeed">
+      <div>
+        <h2>Qu’apporte JVForum ?</h2>
+        <ul>
+          <li><strong>Instantanéité</strong> d’affichage des pages</li>
+          <li><strong>Moins de scroll</strong> sur les grands écrans</li>
+          <li><strong>Version mobile complète</strong></li>
+          <li><strong>Rafraîchissement automatique</strong> des topics</li>
+          <li><strong><a href="https://github.com/dieulot/respeed" target="_blank">Open source</a></strong>, tout développeur web peut participer</li>
+        </ul>
+      </div>
+    </aside>
   </div>
 </div>
 <?php endif;

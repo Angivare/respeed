@@ -107,33 +107,41 @@ for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
 
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
+
+
+preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $has_parent);
+$sous_forums = $jvc->sub_forums($got);
+
+preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
+if ($matches_id) {
+  $topicNew = $matches_id['id_topic'];
+}
 ?>
-<div class="container">
-
-  <div class="sheet">
-    <div class="sheet-navbar">
-      <h2 class="sheet-title"><a href="/">Respeed</a></h2>
+<header class="site-header">
+  <h2 class="site-title">
+    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+  </h2>
+  <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-      <a href="/se_deconnecter" class="login-link">Déconnexion</a>
+    <a href="/se_deconnecter" class="site-login-link logout">Se déconnecter</a>
 <?php else: ?>
-      <a href="/se_connecter" class="login-link">Connexion</a>
+    <a href="/se_connecter" class="site-login-link">Se connecter</a>
 <?php endif ?>
-    </div>
+  </div>
+</header>
 
-    <div class="sheet">
-      <h2 class="sheet-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
-
-      <div class="sheet sheet-last">
-      <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
-        <h1 class="sheet-title"><a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
-        <div class="content">
-          <div class="pages">
-            <div class="pages-container">
+<div class="sheet">
+  <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
+  <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
+  <h1 class="sheet-title"><a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
+  <div class="content">
+    <div class="pages">
+      <div class="pages-container">
 <?php foreach ($pages as $i): ?>
 <?php if ($i == ' '): ?>
-              <span class="faketable">
-                <span class="link"></span>
-              </span>
+        <span class="faketable">
+          <span class="link"></span>
+        </span>
 <?php continue; endif ?>
 <?php
 $number = $i;
@@ -154,37 +162,37 @@ if ($i == $page) {
 }
 $is_sign = (int)$number != $i;
 ?>
-              <span class="faketable">
-                <a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?><?= $i > 1 ? "/{$i}" : '' ?>" class="link <?= $i == $page ? 'active' : '' ?> <?= $is_sign ? 'sign' : '' ?>"><?= $number ?></a>
-              </span>
+        <span class="faketable">
+          <a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?><?= $i > 1 ? "/{$i}" : '' ?>" class="link <?= $i == $page ? 'active' : '' ?> <?= $is_sign ? 'sign' : '' ?>"><?= $number ?></a>
+        </span>
 <?php endforeach ?>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-          
-          <div class="liste-message">
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    
+    <div class="liste-message">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-            <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>">
-              <div class="meta-author">
-                <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></span>
+      <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>">
+        <div class="meta-author">
+          <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></span>
 <?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
-                <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span>
+          <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span>
 <?php endif ?>
-              </div>
-              <div class="meta-actions">
+        </div>
+        <div class="meta-actions">
 <?php
 $date = strip_tags(trim($matches['date'][$i]));
 ?>
-                <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
-                <span class="meta-quote">Citer</span>
+          <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
+          <span class="meta-quote">Citer</span>
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
-                <span class="meta-ignore">Ignorer</span>
-                <span class="meta-report">Dénoncer</span>
+          <span class="meta-ignore">Ignorer</span>
+          <span class="meta-report">Dénoncer</span>
 <?php else: ?>
-                <span class="meta-edit">Modifier</span>
-                <span class="meta-delete">Supprimer</span>
+          <span class="meta-edit">Modifier</span>
+          <span class="meta-delete">Supprimer</span>
 <?php endif ?>
-              </div>
+        </div>
 <?php
 $message = $matches['message'][$i];
 preg_match('#</div><div class="info-edition-msg">\s+Message édité le (?P<date>.+) par\s+<a href="(//www.jeuxvideo.com/profil/(?P<pseudo>.+)\?mode=infos)?" target="_blank">[^<]*</a>#Usi', $message, $matches_edit);
@@ -193,21 +201,26 @@ if ($matches_edit) {
   $message .= '<p class="edit-mention">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</p>';
 }
 $message = adapt_html($message);
-?>
-              <div class="content"><?= $message ?></div>
-              <div class="clearfix"></div>
-              <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
-            </div>
-<?php endfor ?>
-          </div>
 
-          <div class="pages">
-            <div class="pages-container">
+$pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
+if ($pos_signature !== false) {
+  $message = substr($message, 0, $pos_signature);
+}
+?>
+        <div class="content"><?= $message ?></div>
+        <div class="clearfix"></div>
+        <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
+      </div>
+<?php endfor ?>
+    </div>
+
+    <div class="pages">
+      <div class="pages-container">
 <?php foreach ($pages as $i): ?>
 <?php if ($i == ' '): ?>
-              <span class="faketable">
-                <span class="link"></span>
-              </span>
+        <span class="faketable">
+          <span class="link"></span>
+        </span>
 <?php continue; endif ?>
 <?php
 $number = $i;
@@ -228,46 +241,64 @@ if ($i == $page) {
 }
 $is_sign = (int)$number != $i;
 ?>
-              <span class="faketable">
-                <a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?><?= $i > 1 ? "/{$i}" : '' ?>" class="link <?= $i == $page ? 'active' : '' ?> <?= $is_sign ? 'sign' : '' ?>"><?= $number ?></a>
-              </span>
+        <span class="faketable">
+          <a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?><?= $i > 1 ? "/{$i}" : '' ?>" class="link <?= $i == $page ? 'active' : '' ?> <?= $is_sign ? 'sign' : '' ?>"><?= $number ?></a>
+        </span>
 <?php endforeach ?>
-            </div>
-            <div class="clearfix"></div>
-          </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
 
 <?php if (preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches)): ?>
-          <div class="form-post locked">
-            <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
-            <div class="form-post-inner">
-              <p><?= $matches['raison'] ?>
-            </div>
-          </div>
-<?php elseif($jvc->is_connected()): ?>
-          <div class="form-post">
-            <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
-            <div class="form-error"><p></p></div>
-            <div class="form-post-inner">
-              <p><textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
-              <span id="captcha-container"></span>
-              <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
-            </div>
-          </div>
-<?php endif; ?>
-
-        </div>
-        <aside class="aside">
-          <div class="menu">
-            <h3 class="title">Menu</h3>
-            <div class="menu-content">
-              Un menu.
-            </div>
-          </div>
-        </aside>
-        <div class="clearfix"></div>
+    <div class="form-post locked">
+      <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
+      <div class="form-post-inner">
+        <p><?= $matches['raison'] ?>
       </div>
     </div>
+<?php elseif($jvc->is_connected()): ?>
+    <div class="form-post">
+      <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
+      <div class="form-error"><p></p></div>
+      <div class="form-post-inner">
+        <p><textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
+        <span id="captcha-container"></span>
+        <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
+      </div>
+    </div>
+<?php endif; ?>
+
   </div>
+  <aside class="aside">
+    <div class="menu" id="forums_pref">
+      <h3 class="title">Mes forums préférés</h3>
+        <ul class="menu-content">
+        </ul>
+    </div>
+
+    <div class="menu" id="topics_pref">
+      <h3 class="title">Mes topics préférés</h3>
+        <ul class="menu-content">
+        </ul>
+    </div>
+
+<?php if ($sous_forums): ?>
+    <div class="menu">
+      <h3 class="title">Sous-forums</h3>
+        <ul class="menu-content">
+<?php if ($has_parent): ?>
+          <li><a href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a></li>
+<?php else: ?>
+          <li><a href="/<?= $forum ?>-<?= $slug ?>"><?= $forum_name ?></a></li>
+<?php endif ?>
+<?php foreach ($sous_forums as $sous_forum): ?>
+          <li><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
+<?php endforeach ?>
+        </ul>
+    </div>
+<?php endif ?>
+
+  </aside>
 </div>
 
 <script>
