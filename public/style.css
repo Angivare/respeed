@@ -18,6 +18,7 @@ body {
   color: #333;
   background: #ff9025;
   padding-bottom: 5px;
+  -webkit-text-size-adjust: 100%;
 }
 
 @media (min-width: 1025px) {
@@ -242,12 +243,24 @@ h1, h2, h3 {
   color: #333;
 }
 
+@media (max-width: 1024px) {
+  .ouvrir-jvc {
+    display: none;
+  }
+}
+
 .ouvrir-jvc:hover {
   border-color: #ccc;
   box-shadow: 0 1px 2px rgba(0,0,0,.1);
 }
 
 /* Liste des topics */
+
+@media (max-width: 1024px) {
+  h1.forum-title {
+    font-size: 1.5em;
+  }
+}
 
 .sheet-title .reload-sign {
   font-size: .8em;
@@ -259,53 +272,158 @@ h1, h2, h3 {
   color: inherit;
 }
 
-.topic {
-  background: #E9EFFA;
-  border-left: grey 5px solid;
+.liste-topics {
+  display: table;
+  margin: 0 -10px;
 }
 
-.topic:nth-child(even) {
+@media (min-width: 1025px) {
+  .liste-topics {
+    display: block;
+    margin: 0;
+  }
+}
+
+.topic {
+  display: table-row;
+  background: #E9EFFA;
+  border-left: grey 5px solid;
+  font-size: 14px;
+}
+
+@media (min-width: 1025px) {
+  .topic {
+    display: block;
+  }
+}
+
+.topic.even {
   background: #f5f5f5;
 }
 
-.liste-topics .title, .liste-topics .author, .liste-topics .nb-answers, .liste-topics .date {
-  display: inline-block;
+@media (min-width: 1025px) {
+  .liste-topics .title, .liste-topics .author, .liste-topics .nb-answers, .liste-topics .date {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 1024px) {
+  .liste-topics .label {
+    display: table-cell;
+    width: 4px;
+    background: grey;
+  }
 }
 
 .topic-main-link {
-  display: inline-block;
-  width: 75%;
-  padding-bottom: 2px;
+  display: table-cell;
+}
+
+@media (max-width: 1024px) {
+  .topic-main-link, .topic-last-page {
+    color: hsl(202, 90%, 20%);
+  }
+  
+  .topic-main-link:visited, .topic-last-page:visited {
+    color: hsl(202, 20%, 48%) !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .topic-main-link {
+    padding: 4px 0;
+    padding-left: 5px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .topic-main-link {
+    display: inline-block;
+    width: 75%;
+    padding-bottom: 2px;
+  }
 }
 
 .topic-last-page {
-  display: inline-block;
-  width: 24%;
-  padding-bottom: 2px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .topic-last-page {
+    padding: 0 5px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .topic-last-page {
+    display: inline-block;
+    width: 24%;
+    padding-bottom: 2px;
+  }
 }
 
 .liste-topics .title {
-  width: 80%;
-  font-size: 14px;
-  padding-left: 8px;
-  padding-top: 4px;
+}
+
+@media (min-width: 1025px) {
+  .liste-topics .title {
+    width: 80%;
+    padding-left: 8px;
+    padding-top: 4px;
+  }
 }
 
 .liste-topics .author {
-  width: 19%;
-  font-size: 14px;
+  font-size: 12px;
+}
+
+@media (min-width: 1025px) {
+  .liste-topics .author {
+    width: 19%;
+    font-size: 14px;
+  }
 }
 
 .liste-topics .nb-answers {
-  width: 38%;
-  font-size: 14px;
-  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .liste-topics .nb-answers {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .liste-topics .nb-answers {
+    width: 38%;
+    text-align: right;
+  }
+}
+
+@media (max-width: 1024px) {
+  .liste-topics .nb-answers .rep {
+    display: none;
+  }
 }
 
 .liste-topics .date {
-  width: 60%;
-  font-size: 14px;
-  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .liste-topics .date {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .liste-topics .date {
+    width: 60%;
+    text-align: center;
+  }
 }
 
 .topic.ignored a {
@@ -344,6 +462,36 @@ h1, h2, h3 {
 
 .liste-topics .label-ghost {
   border-color: #0cf;
+}
+
+@media (max-width: 1024px) {
+  .label-dossier1 .label {
+    background: #ffcc00;
+  }
+
+  .label-dossier2 .label {
+    background: #e36254;
+  }
+
+  .label-lock .label {
+    background: #333;
+  }
+
+  .label-marque-on .label {
+    background: #7cac37;
+  }
+
+  .label-marque-off .label {
+    background: #b72a2a;
+  }
+
+  .label-resolu .label {
+    background: #5aa02c;
+  }
+
+  .label-ghost .label {
+    background: #0cf;
+  }
 }
 
 /* Couleurs pseudos modos/admins */
