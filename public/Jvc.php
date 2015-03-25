@@ -481,6 +481,38 @@ class Jvc {
   }
 
   /**
+   * Supprime un message
+   * @param int $id 
+   * @return boolean TRUE/FALSE
+   */
+  public function delete($id) {
+    $tk = self::ajax_array('moderation_forum');
+    $post_data = http_build_query($tk) .
+      '&type=delete' .
+      '&tab_message%5B%5D=' . urlencode($id);
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/modal_del_message.php', $post_data);
+
+    //TODO: error handling? la page ne semble renvoyer aucune réponse cependant..
+    return TRUE;
+  }
+
+  /**
+   * Restaure un message
+   * @param int $id 
+   * @return boolean TRUE/FALSE
+   */
+  public function restore($id) {
+    $tk = self::ajax_array('moderation_forum');
+    $post_data = http_build_query($tk) .
+      '&type=delete' .
+      '&tab_message%5B%5D=' . urlencode($id);
+
+    $rep = json_decode($this->post('http://www.jeuxvideo.com/forums/modal_del_message.php', $post_data)['body']);
+    return $rep->erreur ? $this->_err($rep->erreur) : TRUE;
+  }
+
+  /**
    * Fait une recherche sur la liste des forums 
    * @param string $name 
    * @return array Tableau de tableaux associatifs contenant 'id', 'slug' et 'human'
