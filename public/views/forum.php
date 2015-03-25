@@ -39,18 +39,22 @@ $has_next_page = strpos($got, '<div class="pagi-after"></div>') === false;
 preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $has_parent);
 $sous_forums = $jvc->sub_forums($got);
 ?>
+<header class="site-header">
+  <h2 class="site-title">
+    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+  </h2>
+  <div class="site-login-container">
+<?php if($jvc->is_connected()): ?>
+    <a href="/se_deconnecter" class="site-login-link">Déconnexion</a>
+<?php else: ?>
+    <a href="/se_connecter" class="site-login-link">Connexion</a>
+<?php endif ?>
+  </div>
+</header>
 
 <div class="container">
 
   <div class="sheet sheet-first">
-    <div class="sheet-navbar">
-      <h2 class="sheet-title"><a href="/">Respeed</a></h2>
-<?php if($jvc->is_connected()): ?>
-      <a href="/se_deconnecter" class="login-link">Déconnexion</a>
-<?php else: ?>
-      <a href="/se_connecter" class="login-link">Connexion</a>
-<?php endif ?>
-    </div>
 
     <div class="sheet sheet-last">
       <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>

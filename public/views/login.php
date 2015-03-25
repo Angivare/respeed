@@ -18,13 +18,22 @@ if($nick && $pass && $form && $ccode):
       header('Location: /');
   endif;
 else: ?>
+<header class="site-header">
+  <h2 class="site-title">
+    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+  </h2>
+  <div class="site-login-container">
+<?php if($jvc->is_connected()): ?>
+    <a href="/se_deconnecter" class="site-login-link">Déconnexion</a>
+<?php else: ?>
+    <a href="/se_connecter" class="site-login-link">Connexion</a>
+<?php endif ?>
+  </div>
+</header>
+
 <div class="container">
 
   <div class="sheet sheet-first">
-    <div class="sheet-navbar">
-      <h2 class="sheet-title"><a href="/">Respeed</a></h2>
-      <a href="/se_connecter" class="login-link">Connexion</a>
-    </div>
 
     <div class="sheet sheet-last">
       <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
@@ -69,7 +78,7 @@ if (isset($_GET['pour'])) {
         </div>
         <aside class="why-respeed">
           <div>
-            <h2>Qu’apporte Respeed ?</h2>
+            <h2>Qu’apporte JVForum ?</h2>
             <ul>
               <li><strong>Instantanéité</strong> d’affichage des pages</li>
               <li><strong>Moins de scroll</strong> sur les grands écrans</li>
