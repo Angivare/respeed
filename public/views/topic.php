@@ -134,11 +134,9 @@ if ($matches_id) {
 
   <div class="sheet sheet-first">
 
-    <div class="sheet">
-      <h2 class="sheet-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
-
       <div class="sheet sheet-last">
-      <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
+        <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
+        <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
         <h1 class="sheet-title"><a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
         <div class="content">
           <div class="pages">
@@ -307,7 +305,6 @@ $is_sign = (int)$number != $i;
         </aside>
         <div class="clearfix"></div>
       </div>
-    </div>
   </div>
 </div>
 

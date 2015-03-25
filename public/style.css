@@ -295,6 +295,11 @@ h1, h2, h3 {
 .sheet-title .reload-sign {
   font-size: .8em;
   margin-left: 10px;
+  color: #888;
+}
+
+.sheet-title a:hover .reload-sign {
+  color: inherit;
 }
 
 .topic {
@@ -392,6 +397,12 @@ h1, h2, h3 {
 
 .pseudo-admin, .message .meta-author .author.pseudo-admin {
   color: #c00;
+}
+
+/* Topic */
+
+.forum-title a {
+  color: #9c0;
 }
 
 /* Liste des pages */

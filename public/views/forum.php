@@ -58,7 +58,7 @@ $sous_forums = $jvc->sub_forums($got);
 
     <div class="sheet sheet-last">
       <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
-      <h1 class="sheet-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?> <span class="reload-sign">↻</span></a></h1>
+      <h1 class="sheet-title forum-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?> <span class="reload-sign">↻</span></a></h1>
       <div class="content">
 
 <?php if ($page > 1): ?>
