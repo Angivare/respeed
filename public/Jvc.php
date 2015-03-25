@@ -520,9 +520,9 @@ class Jvc {
    * @return array contient, pour chaque forum, 'id' 'slug' et 'human'
    */
   public static function sub_forums($body) {
-  	$beg = strpos($body, '<ul class="liste-sous-forums">');
-  	$end = strpos($body, '<div class="panel panel-jv-forum">');
-  	$body = substr($body, $beg, $end-$beg);
+    $beg = strpos($body, '<ul class="liste-sous-forums">');
+    $end = strpos($body, '<div class="panel panel-jv-forum">');
+    $body = substr($body, $beg, $end-$beg);
     $re = '#<li class="line-ellipsis">.+' .
           '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
           '(?:\s+<span .+>)??' .
@@ -607,11 +607,11 @@ class Jvc {
 
   private function ajax_array($type) {
     if(
-    		(!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
-    	&&(time() - $this->tokens_last_update() >= 3600/2)
+        (!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
+      &&(time() - $this->tokens_last_update() >= 3600/2)
     ) {
-    	$rep = $this->get('http://www.jeuxvideo.com/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
-    	self::refresh_tokens($rep['body']);
+      $rep = $this->get('http://www.jeuxvideo.com/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
+      self::refresh_tokens($rep['body']);
     }
     return [
       'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],
