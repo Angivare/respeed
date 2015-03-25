@@ -81,15 +81,18 @@ h1, h2, h3 {
   display: table-cell;
   vertical-align: middle;
   text-align: right;
-  padding-right: 10px;
 }
 
 .site-login-link {
-  padding: 5px 5px;
-  color: #333;
-  border: 1px solid rgba(255,255,255,.8);
+  padding: 5px 10px;
+  color: white;
   border-radius: 5px;
-  background: rgba(255,255,255,.1);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.site-login-link.logout {
+  font-weight: normal;
 }
 
 /* Conteneur et feuilles */

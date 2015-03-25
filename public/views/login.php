@@ -24,9 +24,9 @@ else: ?>
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-    <a href="/se_deconnecter" class="site-login-link">Déconnexion</a>
+    <a href="/se_deconnecter" class="site-login-link logout">Se déconnecter</a>
 <?php else: ?>
-    <a href="/se_connecter" class="site-login-link">Connexion</a>
+    <a href="/se_connecter" class="site-login-link">Se connecter</a>
 <?php endif ?>
   </div>
 </header>
