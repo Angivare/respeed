@@ -32,10 +32,7 @@ else: ?>
 </header>
 
 <div class="container">
-
-  <div class="sheet sheet-first">
-
-    <div class="sheet sheet-last">
+    <div class="sheet">
       <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
       <div class="content no-menu login-fake-table">
         <div class="form-container">
@@ -90,6 +87,5 @@ if (isset($_GET['pour'])) {
         </aside>
       </div>
     </div>
-  </div>
 </div>
 <?php endif;

@@ -112,68 +112,29 @@ h1, h2, h3 {
 .sheet {
   background: white;
   border: solid rgba(0,0,0,.3);
-  border-color: #ea3f00; /* second */
-  /* alternative plus doux : #fe6c01 */
+  border-color: #ea3f00;
   border-width: 1px 0;
   border-radius: 15px;
-  box-shadow: 0 -1px 10px rgba(0,0,0,.1);
-  box-shadow: 0 -1px 10px rgba(234, 63, 0, 0.5); /* second */
-  padding: 0;
+  box-shadow: 0 -1px 10px rgba(234, 63, 0, 0.5);
+  padding: 5px 10px 10px;
   position: relative;
+  overflow: auto;
 }
 
 @media (min-width: 1025px) {
   .sheet {
     border-width: 1px;
-  }
-}
-
-.sheet-first {
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-@media (max-width: 1024px) {
-  .sheet-first {
-    border-radius: 0;
-    border: 0;
-    box-shadow: none;
-  }
-}
-
-.sheet-last {
-  padding: 5px 10px 10px;
-  overflow: auto;
-}
-
-@media (min-width: 1025px) {
-  .sheet-last {
     padding: 10px 30px;
   }
 }
 
 .sheet-title {
-  padding: 0 10px;
-  margin: 5px 0;
 }
 
 @media (min-width: 1025px) {
   .sheet-title {
-    padding: 0 20px;
-    margin: 5px 0;
-  }
-}
-
-.sheet-last .sheet-title {
-  padding: 0;
-  margin: 0;
-}
-
-@media (min-width: 1025px) {
-  .sheet-last .sheet-title {
-    padding: 0;
-    margin: 5px 0 10px;
+    padding: 0 10px;
+    margin: 5px -10px 10px;
   }
 }
 
