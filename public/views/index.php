@@ -15,20 +15,18 @@ $jvc = new Jvc();
   </div>
 </header>
 
-<div class="container">
-  <div class="sheet">
-    <div class="content">
-      <div class="menu" id="forums_pref">
-        <h3 class="title">Mes forums préférés</h3>
-          <ul class="menu-content">
-          </ul>
-      </div>
+<div class="sheet">
+  <div class="content">
+    <div class="menu" id="forums_pref">
+      <h3 class="title">Mes forums préférés</h3>
+        <ul class="menu-content">
+        </ul>
+    </div>
 
-      <div class="menu" id="topics_pref">
-        <h3 class="title">Mes topics préférés</h3>
-          <ul class="menu-content">
-          </ul>
-      </div>
-    <aside class="aside"></aside>
-  </div>
+    <div class="menu" id="topics_pref">
+      <h3 class="title">Mes topics préférés</h3>
+        <ul class="menu-content">
+        </ul>
+    </div>
+  <aside class="aside"></aside>
 </div>

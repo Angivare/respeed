@@ -17,6 +17,7 @@ body {
   overflow-y: scroll;
   color: #333;
   background: #ff9025;
+  padding-bottom: 5px;
 }
 
 @media (min-width: 1025px) {
@@ -24,6 +25,7 @@ body {
     background-color: #ffac2f;
     background-repeat: no-repeat;
     background-image: linear-gradient(#ff9025, #ffac2f);
+    padding-bottom: 20px;
   }
 }
 
@@ -95,19 +97,7 @@ h1, h2, h3 {
   font-weight: normal;
 }
 
-/* Conteneur et feuilles */
-
-.container {
-  padding-bottom: 10px;
-}
-
-@media (min-width: 1025px) {
-  .container {
-    max-width: 1400px;
-    margin: auto;
-    padding: 0 10px 20px;
-  }
-}
+/* Feuille */
 
 .sheet {
   background: white;
@@ -119,10 +109,14 @@ h1, h2, h3 {
   padding: 5px 10px 10px;
   position: relative;
   overflow: auto;
+  margin-bottom: 10px;
 }
 
 @media (min-width: 1025px) {
   .sheet {
+    width: calc(100% - 20px);
+    margin: auto;
+    max-width: 1400px;
     border-width: 1px;
     padding: 10px 30px;
   }
