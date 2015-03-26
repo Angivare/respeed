@@ -593,6 +593,10 @@ h1, h2, h3 {
 
 /* Messages */
 
+.liste-messages {
+  margin: 0 -30px;
+}
+
 .message {
   font-size: 14px;
 }
@@ -619,17 +623,16 @@ h1, h2, h3 {
 }
 
 .message .meta-author .avatar img {
-  max-width: 70px;
-  max-height: 70px;
+  max-width: 40px;
+  max-height: 40px;
   border-radius: 3px;
 }
 
 .message .content {
-  width: 75%;
+  width: 80%;
   float: left;
   border: 1px solid #d1d1d1;
   background: #F9F9F9;
-  min-height: 80px;
   margin-bottom: 12px;
   padding: 0 .5em;
   color: black;
@@ -663,14 +666,16 @@ h1, h2, h3 {
 }
 
 .message .meta-actions {
-  width: 13.5%;
+  width: 8.5%;
   margin-left: 1.5%;
   float: right;
   overflow: hidden;
+  margin-bottom: 12px;
 }
 
 .message .meta-actions span {
   display: block;
+  padding: 1px 0;
 }
 
 .message .meta-actions span, .ignored-message span {
