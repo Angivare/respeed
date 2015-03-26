@@ -8,6 +8,7 @@ $logout = isset($_GET['logout']) ? true : false;
 
 require 'helpers.php';
 require 'Jvc.php';
+require 'db.php';
 require '../config.php';
 
 ob_start();

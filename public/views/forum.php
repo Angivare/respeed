@@ -16,6 +16,7 @@ if($location) {
 }
 
 $jvc = new Jvc();
+$db = new Db();
 
 // Nom du forum
 $title = 'Communauté';
@@ -32,7 +33,25 @@ $regex = '#<tr class=".*" data-id=".+">.+' .
          '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
          '.+</tr>#Usi';
 preg_match_all($regex, $got, $matches);
+$matches = array_intersect_key($matches, array_flip([
+  'label', 'mode', 'topic', 'slug', 'title', 'pseudo_span', 'pseudo', 'nb_reponses', 'date'
+]));
 
+//Caching
+$cache = $db->get_forum_cache($forum, $page);
+if($cache && strtotime($cache['fetched_at']) > time() - 60*5) {
+  function comp_date($a, $b) {
+    return date_topic_list_to_timestamp($a) > date_topic_list_to_timestamp($b);
+  }
+  $vars = json_decode($cache['vars'], TRUE);
+  $cache_max = array_max($vars['date'], 'comp_date');
+  $got_max = array_max($matches['date'], 'comp_date');
+  if(comp_date($cache_max, $got_max))
+    $matches = $vars;
+  else
+    $db->set_forum_cache($forum, $page, json_encode($matches));
+} else
+  $db->set_forum_cache($forum, $page, json_encode($matches));
 
 $has_next_page = strpos($got, '<div class="pagi-after"></div>') === false;
 
@@ -91,7 +110,7 @@ $sous_forums = $jvc->sub_forums($got);
 <?php endif ?>
 
     <div class="liste-topics">
-<?php for ($i = 0; $i < count($matches[0]); $i++): ?>
+<?php for ($i = 0; $i < count($matches['topic']); $i++): ?>
       <div class="topic label-<?= $matches['label'][$i] ?> <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
         <div class="label"></div>
         <a class="topic-main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
