@@ -206,6 +206,8 @@ $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi
 if ($pos_signature !== false) {
   $message = substr($message, 0, $pos_signature);
 }
+
+$message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 ?>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>
