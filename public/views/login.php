@@ -62,13 +62,13 @@ if (isset($_GET['pour'])) {
           $form['fs_signature']
           )) ?>" class="captcha">
         <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus>
-        <p><input class="submit" type="submit" value="Se connecter">
+        <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
 <?php else: ?>
       <form action="/se_connecter" method="post">
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe">
-        <p><input class="submit" type="submit" value="Se connecter">
+        <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
 <?php endif; ?>
     </div>

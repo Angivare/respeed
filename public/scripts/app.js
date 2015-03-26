@@ -4,6 +4,7 @@ var form_data
   , blacklist
   , favoritesForums = []
   , favoritesTopics = []
+  , isBigScreen = screen.width > 1024
 
 /*** Helpers ***/
 
@@ -109,6 +110,9 @@ function displayFavoritesForums() {
   if (!$is_connected) {
     return
   }
+  if (!isBigScreen) {
+    return
+  }
   if (!$('#forums_pref')) {
     return
   }
@@ -122,12 +126,12 @@ function displayFavoritesForums() {
   })
   if ($forum) {
     if (hasThisForum) {
-      $('#forums_pref .menu-content').append('<li><span id="del_forum"><small>− Retirer ce forum</small></span></li>')
-      $('#del_forum').click(delForum)
+      $('#forums_pref .menu-content').append('<li id="add_or_del_forum"><span><small>− Retirer ce forum</small></span></li>')
+      $('#add_or_del_forum').click(delForum)
     }
     else {
-      $('#forums_pref .menu-content').append('<li><span id="add_forum"><small>+ Ajouter ce forum</small></span></li>')
-      $('#add_forum').click(addForum)
+      $('#forums_pref .menu-content').append('<li id="add_or_del_forum"><span><small>+ Ajouter ce forum</small></span></li>')
+      $('#add_or_del_forum').click(addForum)
     }
   }
   $('#forums_pref').show()
@@ -135,6 +139,9 @@ function displayFavoritesForums() {
 
 function displayFavoritesTopics() {
   if (!$is_connected) {
+    return
+  }
+  if (!isBigScreen) {
     return
   }
   if (!$('#topics_pref')) {
@@ -150,12 +157,12 @@ function displayFavoritesTopics() {
   })
   if ($topic) {
     if (hasThisTopic) {
-      $('#topics_pref .menu-content').append('<li><span id="del_topic"><small>− Retirer ce topic</small></span></li>')
-      $('#del_topic').click(delTopic)
+      $('#topics_pref .menu-content').append('<li id="add_or_del_topic"><span><small>− Retirer ce topic</small></span></li>')
+      $('#add_or_del_topic').click(delTopic)
     }
     else {
-      $('#topics_pref .menu-content').append('<li><span id="add_topic"><small>+ Ajouter ce topic</small></span></li>')
-      $('#add_topic').click(addTopic)
+      $('#topics_pref .menu-content').append('<li id="add_or_del_topic"><span><small>+ Ajouter ce topic</small></span></li>')
+      $('#add_or_del_topic').click(addTopic)
     }
   }
   $('#topics_pref').show()

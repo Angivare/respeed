@@ -92,7 +92,8 @@ $sous_forums = $jvc->sub_forums($got);
 
     <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-      <div class="topic label-<?= $matches['label'][$i] ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
+      <div class="topic label-<?= $matches['label'][$i] ?> <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
+        <div class="label"></div>
         <a class="topic-main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
           <div class="title"><?= $matches['title'][$i] ?></div>
 <?php
@@ -104,7 +105,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
           <div class="author pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?></div>
         </a>
         <a class="topic-last-page" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
-          <div class="nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?> rép</div>
+          <div class="nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?> <span class="rep">rép</span></div>
           <div class="date" title="<?= trim($matches['date'][$i]) ?>"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
         </a>
       </div>
