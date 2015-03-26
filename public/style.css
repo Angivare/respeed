@@ -100,16 +100,16 @@ h1, h2, h3 {
   font-weight: normal;
 }
 
-/* Feuille */
+/* Sheet */
 
 .sheet {
   background: white;
   border: solid rgba(0,0,0,.3);
   border-color: #ea3f00;
   border-width: 1px 0;
-  border-radius: 15px;
-  box-shadow: 0 -1px 10px rgba(234, 63, 0, 0.5);
-  padding: 5px 10px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(234, 63, 0, 0.5);
+  padding: 5px 0 10px;
   position: relative;
   overflow: auto;
   margin-bottom: 10px;
@@ -121,16 +121,19 @@ h1, h2, h3 {
     margin: auto;
     max-width: 1400px;
     border-width: 1px;
+    border-radius: 15px;
     padding: 10px 30px;
   }
 }
 
 .sheet-title {
+  padding: 0 10px;
+  margin: 5px 0 10px;
 }
 
 @media (min-width: 1025px) {
   .sheet-title {
-    padding: 0 10px;
+    padding: 0;
     margin: 5px -10px 10px;
   }
 }
@@ -170,15 +173,28 @@ h1, h2, h3 {
 /* Menu */
 
 .sheet > .aside {
-  width: 20%;
-  float: left;
+  margin: 10px 10px 0;
+}
+
+@media (min-width: 1025px) {
+  .sheet > .aside {
+    margin: 0;
+    width: 20%;
+    float: left;
+  }
 }
 
 .aside .menu {
   background: #ededed;
-  margin-left: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-radius: 0 10px 0 10px;
+}
+
+@media (min-width: 1025px) {
+  .aside .menu {
+    margin-left: 15px;
+    margin-bottom: 15px;
+  }
 }
 
 .aside .menu .title {
@@ -205,11 +221,17 @@ h1, h2, h3 {
 .aside .menu .menu-content a, .aside .menu .menu-content span {
   color: #014F65;
   display: block;
-  padding: 2px 8px;
+  padding: 8px 8px 6px;
   font-weight: bold;
   font-size: 14px;
   border-bottom: 1px solid #72b4c9;
   cursor: pointer;
+}
+
+@media (min-width: 1025px) {
+  .aside .menu .menu-content a, .aside .menu .menu-content span {
+    padding: 2px 8px;
+  }
 }
 
 .aside .menu .menu-content a:hover, .aside .menu .menu-content span:hover {
@@ -217,11 +239,7 @@ h1, h2, h3 {
   background: #59AAC6;
 }
 
-#forums_pref {
-  display: none;
-}
-
-#topics_pref {
+#forums_pref, #topics_pref {
   display: none;
 }
 
@@ -264,7 +282,7 @@ h1, h2, h3 {
 
 .sheet-title .reload-sign {
   font-size: .8em;
-  margin-left: 10px;
+  padding-left: 10px;
   color: #888;
 }
 
@@ -274,13 +292,12 @@ h1, h2, h3 {
 
 .liste-topics {
   display: table;
-  margin: 0 -10px;
+  width: 100%;
 }
 
 @media (min-width: 1025px) {
   .liste-topics {
     display: block;
-    margin: 0;
   }
 }
 
@@ -333,6 +350,7 @@ h1, h2, h3 {
   .topic-main-link {
     padding: 4px 0;
     padding-left: 5px;
+    border-right: 1px solid rgba(0,0,32,.03);
   }
 }
 
@@ -703,13 +721,13 @@ h1, h2, h3 {
 /* Connexion */
 
 .form-container {
-
+  padding: 0 10px;
 }
 
 @media (min-width: 1025px) {
   .form-container {
-    padding-left: 10px;
     display: table-cell;
+    padding: 0;
   }
 }
 
@@ -760,6 +778,7 @@ h1, h2, h3 {
 
 .why-respeed {
   text-align: center;
+  padding: 0 10px;
 }
 
 @media (min-width: 1025px) {
@@ -767,6 +786,7 @@ h1, h2, h3 {
     display: table-cell;
     vertical-align: top;
     width: 60%;
+    padding: 0;
   }
 }
 
