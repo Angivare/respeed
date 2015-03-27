@@ -170,9 +170,9 @@ $is_sign = (int)$number != $i;
       <div class="clearfix"></div>
     </div>
     
-    <div class="liste-message">
+    <div class="liste-messages">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
-      <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>">
+      <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>" data-date="<?= relative_date_messages($date) ?>">
         <div class="meta-author">
           <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></span>
 <?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
@@ -187,7 +187,6 @@ $date = strip_tags(trim($matches['date'][$i]));
           <span class="meta-quote">Citer</span>
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
           <span class="meta-ignore">Ignorer</span>
-          <span class="meta-report">Dénoncer</span>
 <?php else: ?>
           <span class="meta-edit">Modifier</span>
           <span class="meta-delete">Supprimer</span>
@@ -206,6 +205,8 @@ $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi
 if ($pos_signature !== false) {
   $message = substr($message, 0, $pos_signature);
 }
+
+$message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 ?>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>

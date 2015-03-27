@@ -336,7 +336,7 @@ $('.meta-unignore').click(function(e) {
 $('.meta-quote').click(function(e) {
   var id = e.target.parentNode.parentNode.id
     , pseudo = $('#' + id).data('pseudo')
-    , date = $('#' + id + ' .meta-permalink a').html()
+    , date = $('#' + id).data('date')
 
   if (!$is_connected) {
     location.href = '/se_connecter?pour=citer&qui=' + pseudo
