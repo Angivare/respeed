@@ -663,7 +663,7 @@ h1, h2, h3 {
 
 .message .content > .pre-jv, .message .content p > .code-jv {
   font-size: 95%;
-  font-family: Menlo, Monaco, Consolas, monospace;
+  font-family: Menlo, Consolas, monospace;
   border: 1px solid rgba(0,0,0,.2);
   border-radius: 3px;
   background: rgba(239,239,239,.8);
