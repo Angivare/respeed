@@ -182,6 +182,7 @@ $is_sign = (int)$number != $i;
         <div class="meta-actions">
 <?php
 $date = strip_tags(trim($matches['date'][$i]));
+$message = adapt_html($matches['message'][$i], $date);
 ?>
           <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
           <span class="meta-quote">Citer</span>
@@ -192,38 +193,6 @@ $date = strip_tags(trim($matches['date'][$i]));
           <span class="meta-delete">Supprimer</span>
 <?php endif ?>
         </div>
-<?php
-$message = $matches['message'][$i];
-preg_match('#</div><div class="info-edition-msg">\s+Message édité le (?P<date>.+) par\s+<a href="(//www.jeuxvideo.com/profil/(?P<pseudo>.+)\?mode=infos)?" target="_blank">[^<]*</a>#Usi', $message, $matches_edit);
-if ($matches_edit) {
-  $message = str_replace($matches_edit[0], '', $message);
-  $message .= '<p class="edit-mention">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</p>';
-}
-$message = adapt_html($message);
-
-$pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
-if ($pos_signature !== false) {
-  $message = substr($message, 0, $pos_signature);
-}
-$message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
-
-$message = preg_replace_callback('#<a href="(?P<url>http://www\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
-  $new_str = $matches[0];
-  $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'] . '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
-  if ($matches['page'] != 1) {
-    $path .= '/' . $matches['page'];
-  }
-  $new_str = str_replace($matches['url'], $path, $new_str);
-  return $new_str;
-}, $message);
-
-$message = preg_replace_callback('#<a href="(?P<url>http://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
-  $new_str = $matches[0];
-  $path = 'http://image.noelshack.com/fichiers/' . $matches['year'] . '/' . $matches['container'] . '/' . $matches['path'];
-  $new_str = str_replace($matches['url'], $path, $new_str);
-  return $new_str;
-}, $message);
-?>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>
         <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
