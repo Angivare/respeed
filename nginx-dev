@@ -1,5 +1,5 @@
 server {
-  server_name respeed.dev respeed.192.168.1.2.xip.io;
+  server_name dev.jvforum.fr mdev.jvforum.fr;
   root /home/alex/respeed/website/public;
 
   index index.php;

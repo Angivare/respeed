@@ -28,5 +28,13 @@ $jvc = new Jvc();
         <ul class="menu-content">
         </ul>
     </div>
+    
+    <div>
+    <h3>Fonctionnalités de JVForum</h3>
+    <ul>
+      <li>Transformation des liens NoelShack en liens direct</li>
+      <li>Cliquez/appuyez sur un avatar pour l’agrandir</li>
+    </ul>
+    </div>
   <aside class="aside"></aside>
 </div>

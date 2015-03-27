@@ -47,6 +47,22 @@ h1, h2, h3 {
   margin: 0;
 }
 
+@media (min-width: 1025px) {
+  .mobile {
+    display: none;
+  }
+}
+
+.desktop {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .desktop {
+    display: initial;
+  }
+}
+
 /* Header */
 
 .site-header {
@@ -594,55 +610,161 @@ h1, h2, h3 {
 /* Messages */
 
 .liste-messages {
-  margin: 0 -30px;
+}
+
+@media (min-width: 1025px) {
+  .liste-messages {
+    margin: 0 -30px;
+  }
+}
+
+@media (min-width: 1025px) {
 }
 
 .message {
   font-size: 14px;
+  border: solid #d1d1d1;
+  border-width: 1px 0;
+  background: #f9f9f9;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 1025px) {
+  .message {
+    border: initial;
+    background: initial;
+    margin-bottom: initial;
+  }
+}
+
+.message.even {
+  background: #EFF4FC;
+  border-color: #C0D7ED;
+}
+
+@media (min-width: 1025px) {
+  .message.even {
+    background: initial;
+  }
+}
+
+.message-header {
+  display: table;
+  width: 100%;
+  border-bottom: 1px dotted #444;
+}
+
+@media (min-width: 1025px) {
+  .message-header {
+    display: initial;
+    padding-top: initial;
+    border-bottom: initial;
+  }
 }
 
 .message .meta-author {
-  width: 10%;
-  float: left;
-  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-author {
+    display: initial;
+
+    width: 10%;
+    float: left;
+    text-align: center;
+  }
 }
 
 .message .meta-author .author {
-  display: block;
-  font-size: 110%;
   font-weight: bold;
-  line-height: 1;
-  margin-bottom: 2px;
-  color: #111;
-  word-wrap: break-word;
+}
+
+.message .meta-author .author .m-profil {
+  color: inherit;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-author .author {
+    font-size: 110%;
+    line-height: 1;
+    margin-bottom: 2px;
+    color: #111;
+    word-wrap: break-word;
+    padding: 0 3px;
+  }
+  
+  .message .meta-author .author.desktop {
+    display: block;
+  }
 }
 
 .message .meta-author .avatar {
+}
+
+@media (min-width: 1025px) {
+  .message .meta-author .avatar {
+    margin-bottom: 5px;
+  }
+}
+
+.message .meta-author .avatar a {
+  padding: 5px;
+  padding-right: 0;
   display: inline-block;
-  margin-bottom: 5px;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-author .avatar a {
+    padding: initial;
+  }
 }
 
 .message .meta-author .avatar img {
   max-width: 40px;
   max-height: 40px;
-  border-radius: 3px;
+  vertical-align: middle;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-author .avatar img {
+    display: initial;
+
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 3px;
+  }
+}
+
+.message .meta-author .author.mobile {
+}
+
+.message .meta-author .author.mobile a {
+  padding: 5px;
+  display: inline-block;
 }
 
 .message .content {
-  width: 80%;
-  float: left;
-  border: 1px solid #d1d1d1;
-  background: #F9F9F9;
-  margin-bottom: 12px;
-  padding: 0 .5em;
-  color: black;
-  word-wrap: break-word;
+  padding: 0 10px;
+}
+
+@media (min-width: 1025px) {
+  .message .content {
+    width: 80%;
+    float: left;
+    border: 1px solid #d1d1d1;
+    background: #F9F9F9;
+    margin-bottom: 12px;
+    padding: 0 .5em;
+    color: black;
+    word-wrap: break-word;
+  }
 }
 
 .message .edit-mention {
   font-size: .8em;
   color: rgba(0,0,0,.5);
-  letter-spacing: 1px;
 }
 
 .message .blockquote-jv {
@@ -652,7 +774,7 @@ h1, h2, h3 {
   background: rgba(0,0,64,.025);
 }
 
-.message > .blockquote-jv {
+.message .content > .blockquote-jv {
   font-size: 95%;
 }
 
@@ -660,35 +782,89 @@ h1, h2, h3 {
   margin: .5em 0;
 }
 
-.message:nth-child(even) .content {
-  background: #EFF4FC;
-  border-color: #C0D7ED;
+.message .content > .pre-jv, .message .content p > .code-jv {
+  font-size: 95%;
+  font-family: Menlo, Consolas, monospace;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 3px;
+  background: rgba(239,239,239,.8);
+  white-space: initial;
+}
+
+.message .pre-jv {
+  padding: .5em 7px;
+}
+
+.message .code-jv {
+  padding: 2px 3px;
+}
+
+
+.message.even .content {
+}
+
+@media (min-width: 1025px) {
+  .message.even .content {
+    background: #EFF4FC;
+    border-color: #C0D7ED;
+  }
 }
 
 .message .meta-actions {
-  width: 8.5%;
-  margin-left: 1.5%;
-  float: right;
-  overflow: hidden;
-  margin-bottom: 12px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-actions {
+    display: initial;
+    text-align: initial;
+
+    width: 8.5%;
+    margin-left: 1.5%;
+    float: right;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
 }
 
 .message .meta-actions span {
-  display: block;
-  padding: 1px 0;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-actions span {
+    display: block;
+    padding: 1px 0;
+  }
 }
 
 .message .meta-actions span, .ignored-message span {
-  cursor: pointer;
-  font-size: 12px;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-actions span, .ignored-message span {
+    cursor: pointer;
+    font-size: 12px;
+  }
 }
 
 .message .meta-actions span:hover, .ignored-message span:hover {
-  color: #111;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-actions span:hover, .ignored-message span:hover {
+    color: #111;
+  }
 }
 
 .message .meta-actions .meta-permalink {
-  white-space: nowrap;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-actions .meta-permalink {
+    white-space: nowrap;
+  }
 }
 
 .message .ignored-message {
@@ -701,22 +877,37 @@ h1, h2, h3 {
 
 .message.ignored .ignored-message {
   display: block;
-  border: 1px solid #d1d1d1;
-  background: #F9F9F9;
-  margin-bottom: 12px;
-  padding: 0 .5em;
-  width: 75%;
-  margin-left: 10%;
+}
+
+@media (min-width: 1025px) {
+  .message.ignored .ignored-message {
+    border: 1px solid #d1d1d1;
+    background: #F9F9F9;
+    margin-bottom: 12px;
+    padding: 0 .5em;
+    width: 80%;
+    margin-left: 10%;
+  }
 }
 
 .message:nth-child(even).ignored .ignored-message {
-  background: #EFF4FC;
-  border-color: #C0D7ED;
+}
+
+@media (min-width: 1025px) {
+  .message:nth-child(even).ignored .ignored-message {
+    background: #EFF4FC;
+    border-color: #C0D7ED;
+  }
 }
 
 .message.ignored .ignored-message .meta-unignore {
-  float: right;
-  margin-top: 2px;
+}
+
+@media (min-width: 1025px) {
+  .message.ignored .ignored-message .meta-unignore {
+    float: right;
+    margin-top: 2px;
+  }
 }
 
 .message:target {
