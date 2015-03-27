@@ -153,6 +153,7 @@ function wbr_pseudo($pseudo) {
 }
 
 function array_max($array, $comp_func) {
+  reset($array);
   $max = each($array)[1];
   while( FALSE !== ($v = each($array)) )
     $max = $comp_func($v[1], $max) ? $v[1] : $max;

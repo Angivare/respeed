@@ -39,15 +39,18 @@ $matches = array_intersect_key($matches, array_flip([
 
 //Caching
 $cache = $db->get_forum_cache($forum, $page);
-if($cache && strtotime($cache['fetched_at']) > time() - 60*5) {
+if($cache && $cache['fetched_at'] > time() - 60*5) {
   function comp_date($a, $b) {
     return date_topic_list_to_timestamp($a) > date_topic_list_to_timestamp($b);
   }
   $vars = json_decode($cache['vars'], TRUE);
   $cache_max = array_max($vars['date'], 'comp_date');
   $got_max = array_max($matches['date'], 'comp_date');
-  if(comp_date($cache_max, $got_max))
+  var_dump([date_topic_list_to_timestamp($cache_max), date_topic_list_to_timestamp($got_max)]);
+  if(comp_date($cache_max, $got_max)) {
     $matches = $vars;
+    var_dump('cache hit');
+  }
   else
     $db->set_forum_cache($forum, $page, json_encode($matches));
 } else
