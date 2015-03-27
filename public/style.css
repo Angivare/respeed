@@ -615,6 +615,7 @@ h1, h2, h3 {
   margin-bottom: 2px;
   color: #111;
   word-wrap: break-word;
+  padding: 0 3px;
 }
 
 .message .meta-author .avatar {
@@ -652,13 +653,30 @@ h1, h2, h3 {
   background: rgba(0,0,64,.025);
 }
 
-.message > .blockquote-jv {
+.message .content > .blockquote-jv {
   font-size: 95%;
 }
 
 .message .blockquote-jv > p {
   margin: .5em 0;
 }
+
+.message .content > .pre-jv, .message .content p > .code-jv {
+  font-size: 95%;
+  font-family: Menlo, Monaco, Consolas, monospace;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 3px;
+  background: rgba(239,239,239,.8);
+}
+
+.message .pre-jv {
+  padding: .5em 7px;
+}
+
+.message .code-jv {
+  padding: 2px 3px;
+}
+
 
 .message:nth-child(even) .content {
   background: #EFF4FC;
