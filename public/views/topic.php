@@ -176,22 +176,25 @@ $is_sign = (int)$number != $i;
 $date = strip_tags(trim($matches['date'][$i]));
 $message = adapt_html($matches['message'][$i], $date);
 ?>
-      <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>" data-date="<?= relative_date_messages($date) ?>">
-        <div class="meta-author">
-          <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></span>
+      <div class="message <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>" data-date="<?= relative_date_messages($date) ?>">
+        <div class="message-header">
+          <div class="meta-author">
+            <span class="author pseudo-<?= $matches['status'][$i] ?> desktop"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
 <?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
-          <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span>
+            <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span><!--
 <?php endif ?>
-        </div>
-        <div class="meta-actions">
-          <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
-          <span class="meta-quote">Citer</span>
+            <!-- --><span class="author pseudo-<?= $matches['status'][$i] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
+          </div>
+          <div class="meta-actions">
+            <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
+            <span class="meta-quote">Citer</span>
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
-          <span class="meta-ignore">Ignorer</span>
+            <span class="meta-ignore">Ignorer</span>
 <?php else: ?>
-          <span class="meta-edit">Modifier</span>
-          <span class="meta-delete">Supprimer</span>
+            <span class="meta-edit">Modifier</span>
+            <span class="meta-delete">Supprimer</span>
 <?php endif ?>
+          </div>
         </div>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>

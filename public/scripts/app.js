@@ -64,7 +64,7 @@ function updateRemoteBlacklist() {
     $.getJSON('/ajax/blacklist_get.php', function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
-        addToBlacklist(remoteBlacklist[i])
+        //addToBlacklist(remoteBlacklist[i])//doesnt work while we dont have an id
       }
       localStorage.remoteBlacklistLastUpdate = now
     })
@@ -313,7 +313,7 @@ $('#newmessage').focus(function() {
 })
 
 $('.meta-ignore').click(function(e) {
-  var id = e.target.parentNode.parentNode.id
+  var id = e.target.parentNode.parentNode.parentNode.id
     , pseudo = $('#' + id).data('pseudo')
 
   if (!$is_connected) {
@@ -334,7 +334,7 @@ $('.meta-unignore').click(function(e) {
 })
 
 $('.meta-quote').click(function(e) {
-  var id = e.target.parentNode.parentNode.id
+  var id = e.target.parentNode.parentNode.parentNode.id
     , pseudo = $('#' + id).data('pseudo')
     , date = $('#' + id).data('date')
 
@@ -359,4 +359,9 @@ $('.meta-quote').click(function(e) {
     
     $('#newmessage').val($('#newmessage').val() + citation).focus()
   })
+})
+
+$('.m-profil').click(function () {
+  window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
+  return false
 })
