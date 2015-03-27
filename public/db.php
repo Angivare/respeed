@@ -6,7 +6,7 @@ class Db {
   public function __construct() {
     $this->connected = FALSE;
     try {
-      $this->db = new PDO('mysql:host=localhost;dbname=respeed', 'respeed', DB_PASS);
+      $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
       $this->connected = TRUE;
     } catch(Exception $e) { die('Erreur lors de la connexion à la bdd: '.$e->getMessage()); }
     $this->db->query('SET NAMES UTF8');
