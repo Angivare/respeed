@@ -172,6 +172,10 @@ $is_sign = (int)$number != $i;
     
     <div class="liste-messages">
 <?php for ($i = 0; $i < count($matches[0]); $i++): ?>
+<?php
+$date = strip_tags(trim($matches['date'][$i]));
+$message = adapt_html($matches['message'][$i], $date);
+?>
       <div class="message" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>" data-date="<?= relative_date_messages($date) ?>">
         <div class="meta-author">
           <span class="author pseudo-<?= $matches['status'][$i] ?>"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></span>
@@ -180,10 +184,6 @@ $is_sign = (int)$number != $i;
 <?php endif ?>
         </div>
         <div class="meta-actions">
-<?php
-$date = strip_tags(trim($matches['date'][$i]));
-$message = adapt_html($matches['message'][$i], $date);
-?>
           <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
           <span class="meta-quote">Citer</span>
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
