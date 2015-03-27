@@ -95,12 +95,16 @@ function relative_date_timestamp($timestamp) {
 }
 
 function relative_date_topic_list($str_date) {
+  return relative_date_timestamp(date_topic_list_to_timestamp($str_date));
+}
+
+function date_topic_list_to_timestamp($str_date) {
   if (strpos($str_date, '/') !== false) {
     // Convertir en format US pour strtotime
     $array_date = explode('/', $str_date);
     $str_date = $array_date[1] . '/' . trim($array_date[0]) . '/' . $array_date[2];
   }
-  return relative_date_timestamp(strtotime($str_date));
+  return strtotime($str_date);
 }
 
 function relative_date_messages($str_date) {
@@ -146,4 +150,11 @@ function wbr_pseudo($pseudo) {
   }
   $wbr_pseudo .= '</wbr>';
   return $wbr_pseudo;
+}
+
+function array_max($array, $comp_func) {
+  $max = each($array)[1];
+  while( FALSE !== ($v = each($array)) )
+    $max = $comp_func($v[1], $max) ? $v[1] : $max;
+  return $max;
 }

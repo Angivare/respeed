@@ -481,6 +481,38 @@ class Jvc {
   }
 
   /**
+   * Supprime un message
+   * @param int $id 
+   * @return boolean TRUE/FALSE
+   */
+  public function delete($id) {
+    $tk = self::ajax_array('moderation_forum');
+    $post_data = http_build_query($tk) .
+      '&type=delete' .
+      '&tab_message%5B%5D=' . urlencode($id);
+
+    $rep = $this->post('http://www.jeuxvideo.com/forums/modal_del_message.php', $post_data);
+
+    //TODO: error handling? la page ne semble renvoyer aucune réponse cependant..
+    return TRUE;
+  }
+
+  /**
+   * Restaure un message
+   * @param int $id 
+   * @return boolean TRUE/FALSE
+   */
+  public function restore($id) {
+    $tk = self::ajax_array('moderation_forum');
+    $post_data = http_build_query($tk) .
+      '&type=delete' .
+      '&tab_message%5B%5D=' . urlencode($id);
+
+    $rep = json_decode($this->post('http://www.jeuxvideo.com/forums/modal_del_message.php', $post_data)['body']);
+    return $rep->erreur ? $this->_err($rep->erreur) : TRUE;
+  }
+
+  /**
    * Fait une recherche sur la liste des forums 
    * @param string $name 
    * @return array Tableau de tableaux associatifs contenant 'id', 'slug' et 'human'
@@ -520,9 +552,9 @@ class Jvc {
    * @return array contient, pour chaque forum, 'id' 'slug' et 'human'
    */
   public static function sub_forums($body) {
-  	$beg = strpos($body, '<ul class="liste-sous-forums">');
-  	$end = strpos($body, '<div class="panel panel-jv-forum">');
-  	$body = substr($body, $beg, $end-$beg);
+    $beg = strpos($body, '<ul class="liste-sous-forums">');
+    $end = strpos($body, '<div class="panel panel-jv-forum">');
+    $body = substr($body, $beg, $end-$beg);
     $re = '#<li class="line-ellipsis">.+' .
           '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
           '(?:\s+<span .+>)??' .
@@ -606,8 +638,13 @@ class Jvc {
   }
 
   private function ajax_array($type) {
-    if(!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
-      return $this->_err('Pas de token valide disponible');
+    if(
+        (!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
+      &&(time() - $this->tokens_last_update() >= 3600/2)
+    ) {
+      $rep = $this->get('http://www.jeuxvideo.com/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
+      self::refresh_tokens($rep['body']);
+    }
     return [
       'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],
       'ajax_hash' => $this->tk["ajax_hash_$type"]
