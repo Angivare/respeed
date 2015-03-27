@@ -216,6 +216,13 @@ $message = preg_replace_callback('#<a href="(?P<url>http://www\.jeuxvideo\.com/f
   $new_str = str_replace($matches['url'], $path, $new_str);
   return $new_str;
 }, $message);
+
+$message = preg_replace_callback('#<a href="(?P<url>http://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
+  $new_str = $matches[0];
+  $path = 'http://image.noelshack.com/fichiers/' . $matches['year'] . '/' . $matches['container'] . '/' . $matches['path'];
+  $new_str = str_replace($matches['url'], $path, $new_str);
+  return $new_str;
+}, $message);
 ?>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>
