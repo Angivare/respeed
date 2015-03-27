@@ -375,7 +375,6 @@ class Jvc {
   /**
    * Ajoute un pseudo à la blacklist
    * @param int $id id à blacklist
-   * @param string $bdy page où le post apparaît
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
   public function blacklist_add($id) {

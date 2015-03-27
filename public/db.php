@@ -38,4 +38,27 @@ class Db {
       ]
     );
   }
+
+  public function get_topic_cache($topic_id, $page, $topic_mode, $forum_id) {
+    return $this->query(
+      'SELECT * FROM topics WHERE topic_id=? AND page=? AND topic_mode=? AND forum_id=?',
+      [$topic_id, $page, $topic_mode, $forum_id]
+    )->fetch();
+  }
+
+  public function set_topic_cache($topic_id, $page, $topic_mode, $forum_id, $vars) {
+    return $this->query(
+      'INSERT INTO topics (topic_id, page, topic_mode, forum_id, vars, fetched_at) ' .
+      'VALUES(:topic_id, :page, :topic_mode, :forum_id, :vars, :time) ' .
+      'ON DUPLICATE KEY UPDATE vars=:var, fetched_at=:time',
+      [
+        ':topic_id' => $topic_id,
+        ':page' => $page,
+        ':topic_mode' => $topic_mode,
+        ':forum_id' => $forum_id,
+        ':vars' => $vars,
+        ':time' => microtime(TRUE)
+      ]
+    );
+  }
 }

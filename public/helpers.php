@@ -108,12 +108,15 @@ function date_topic_list_to_timestamp($str_date) {
 }
 
 function relative_date_messages($str_date) {
+  return relative_date_timestamp(date_messages_to_timestamp($str_date));
+}
+
+function date_messages_to_timestamp($str_date) {
   global $mois_jvc;
   // Convertir en format US pour strtotime
   $array_date = explode(' ', $str_date);
   $str_date = $mois_jvc[$array_date[1]] . '/' . $array_date[0] . '/' . $array_date[2] . ' ' . $array_date[4];
-
-  return relative_date_timestamp(strtotime($str_date));
+  return strtotime($str_date);
 }
 
 function edit_date_difference($post_date, $edit_date) {
