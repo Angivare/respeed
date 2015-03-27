@@ -205,8 +205,17 @@ $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi
 if ($pos_signature !== false) {
   $message = substr($message, 0, $pos_signature);
 }
-
 $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
+
+$message = preg_replace_callback('#<a href="(?P<url>http://www\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
+  $new_str = $matches[0];
+  $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'] . '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
+  if ($matches['page'] != 1) {
+    $path .= '/' . $matches['page'];
+  }
+  $new_str = str_replace($matches['url'], $path, $new_str);
+  return $new_str;
+}, $message);
 ?>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>
