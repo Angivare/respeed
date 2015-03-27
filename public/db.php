@@ -50,7 +50,7 @@ class Db {
     return $this->query(
       'INSERT INTO topics (topic_id, page, topic_mode, forum_id, vars, fetched_at) ' .
       'VALUES(:topic_id, :page, :topic_mode, :forum_id, :vars, :time) ' .
-      'ON DUPLICATE KEY UPDATE vars=:var, fetched_at=:time',
+      'ON DUPLICATE KEY UPDATE vars=:vars, fetched_at=:time',
       [
         ':topic_id' => $topic_id,
         ':page' => $page,

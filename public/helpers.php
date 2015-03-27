@@ -200,3 +200,9 @@ function array_max($array, $comp_func) {
     $max = $comp_func($v[1], $max) ? $v[1] : $max;
   return $max;
 }
+
+function strip_matches(&$matches) {
+  foreach($matches as $k => $v)
+    if(is_int($k))
+      unset($matches[$k]);
+}
