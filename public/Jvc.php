@@ -350,29 +350,6 @@ class Jvc {
   }
 
   /**
-   * Retourne la boîte de réception
-   * @param int $folder # du dossier
-   * @param int $page # de la page
-   * @return string la page retournée
-   */
-  public function get_mailbox($folder = 0, $page = 1) {
-    return $this->get('http://www.jeuxvideo.com/messages-prives/boite-reception.php',
-      "folder=$folder&page=$page");
-  }  
-
-  /**
-   * Retourne la page d'un message privé
-   * @param int $folder # du dossier 
-   * @param int $id # du mp
-   * @param int $offset
-   * @return string la page retournée
-   */
-  public function get_private_message($folder = 0, $id = 0, $offset = 1)  {
-    return $this->get('http://www.jeuxvideo.com/messages-prives/message.php',
-      "id=$id&folder=$folder&offset=$offset");
-  }
-
-  /**
    * Ajoute un pseudo à la blacklist
    * @param int $id id à blacklist
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
