@@ -1,78 +1,9 @@
 <?php
 
-function parse_forum($got) {
-  global $forum, $page, $slug;
-  $ret = [];
-
-  // Nom du forum
-  $ret['title'] = 'Communauté';
-  if (preg_match('#<h1 class="highlight">Forum (.+)</h1>#Usi', $got, $matches)) {
-      $ret['title'] = $matches[1];
-  }
-
-  // Topics
-  $regex = '#<tr class=".*" data-id=".+">.+' .
-           '<img src="/img/forums/topic-(?P<label>.+)\.png".+' .
-           '<a href="/forums/(?P<mode>.+)-.+-(?P<topic>.+)-1-0-1-0-(?P<slug>.+)\.htm" title="(?P<title>.+)">.+' .
-           '(?P<pseudo_span><span .+>)\s*(?P<pseudo>\S.*)\s*</span>.+' .
-           '<td class="nb-reponse-topic">\s+(?P<nb_reponses>.+)\s+</td>.+' .
-           '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
-           '.+</tr>#Usi';
-  preg_match_all($regex, $got, $ret['matches']);
-  strip_matches($ret['matches']);
-
-  $ret['has_next_page'] = strpos($got, '<div class="pagi-after"></div>') === false;
-
-  preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
-  $ret['sous_forums'] = Jvc::sub_forums($got);
-
-  return $ret;
-}
-
+require 'parser.php';
 $jvc = new Jvc();
-$db = new Db();
-$cache = $db->get_forum_cache($forum, $page);
-if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
-  foreach(json_decode($cache['vars'], TRUE) as $k => $v)
-    $$k = $v;
-} else {
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_HEADER, true);
-  $page_url = ($page - 1) * 25 + 1;
-  $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-  curl_setopt($ch, CURLOPT_URL, $url);
-  $got = curl_exec($ch);
-
-  $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-  $location = JVc::redirects($header);
-  if($location) {
-    preg_match('#/forums/0-(?P<forum>.+)-0-1-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
-    header("Location: /{$matches['forum']}-{$matches['slug']}");
-    exit;
-  }
-
-  $fetched_vars = parse_forum($got);
-  foreach($fetched_vars as $k => $v)
-    $$k = $v;
-
-  //Caching
-  $cache = $db->get_forum_cache($forum, $page);
-  if($cache && $cache['fetched_at'] > time() - 60*5) {
-    function comp_date($a, $b) {
-      return date_topic_list_to_timestamp($a) > date_topic_list_to_timestamp($b);
-    }
-    $vars = json_decode($cache['vars'], TRUE);
-    $cache_max = array_max($vars['matches']['date'], 'comp_date');
-    $got_max = array_max($matches['date'], 'comp_date');
-    if(comp_date($cache_max, $got_max))
-      $matches = $vars;
-    else
-      $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
-  } else
-    $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
-  unset($fetched_vars);
-}
+foreach(fetch_forum($forum, $page, $slug) as $k => $v)
+  $$k = $v;
 
 ?>
 <header class="site-header">
