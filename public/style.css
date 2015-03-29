@@ -687,11 +687,13 @@ h1, h2, h3 {
 .message .meta-author {
   display: table-cell;
   vertical-align: middle;
+  padding-left: 5px;
 }
 
 @media (min-width: 1025px) {
   .message .meta-author {
     display: initial;
+    padding-left: initial;
 
     width: 10%;
     float: left;
@@ -727,6 +729,8 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .message .meta-author .avatar {
+    margin-left: initial;
+
     display: inline-block;
     margin-bottom: 5px;
   }
@@ -734,7 +738,6 @@ h1, h2, h3 {
 
 .message .meta-author .avatar a {
   padding: 5px;
-  padding-right: 0;
   display: inline-block;
 }
 
@@ -791,6 +794,7 @@ h1, h2, h3 {
 }
 
 .message .meta-actions span {
+  display: none;
 }
 
 @media (min-width: 1025px) {
@@ -820,6 +824,7 @@ h1, h2, h3 {
 }
 
 .message .meta-actions .meta-permalink {
+  display: initial;
 }
 
 @media (min-width: 1025px) {
@@ -828,12 +833,27 @@ h1, h2, h3 {
   }
 }
 
+.message .meta-actions .meta-menu {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  background: url(http://cdn.jvforum.fr/ic_menu_24px.svg) center no-repeat;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+@media (min-width: 1025px) {
+  .message .meta-actions .meta-menu {
+    display: none;
+  }
+}
+
 /* Message - border */
 
 .message-border {
   border-bottom: 1px dotted #444;
   border-color: rgba(0,0,0,.4);
-  width: calc(100% - 10px);
+  width: calc(100% - 20px);
   margin: auto;
 }
 
