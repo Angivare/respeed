@@ -32,9 +32,13 @@ class Db {
 
   public function add_forum($forum) {
     return $this->query(
-      'INSERT INTO forums (forum_id, slug, human) VALUES (?, ?, ?) ' .
-      'ON DUPLICATE KEY UPDATE forum_id=forum_id',
-      [ $forum['id'], $forum['slug'], $forum['human'] ]
+      'INSERT INTO forums (forum_id, slug, human) VALUES (:id, :slug, :human) ' .
+      'ON DUPLICATE KEY UPDATE slug=:slug, human=:human',
+      [
+        ':id' => $forum['id'],
+        ':slug' => $forum['slug'],
+        ':human' => $forum['human']
+      ]
     );
   }
 
