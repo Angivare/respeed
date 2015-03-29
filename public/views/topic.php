@@ -133,7 +133,7 @@ $is_sign = (int)$number != $i;
     <div class="form-post locked">
       <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
       <div class="form-post-inner">
-        <p><?= $matches['raison'] ?>
+        <p><?= $locked_because ?>
       </div>
     </div>
 <?php elseif($jvc->is_connected()): ?>
