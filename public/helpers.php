@@ -84,7 +84,11 @@ function adapt_html($message, $date) {
   // Transformations liens vers topics en liens internes
   $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
     $new_str = $matches[0];
-    $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'] . '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
+    $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'];
+    if($matches['topic'])
+      $path .= '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
+    else
+      $path .= '-' . $matches['slug'];
     if ($matches['page'] != 1) {
       $path .= '/' . $matches['page'];
     }
