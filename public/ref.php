@@ -1,6 +1,5 @@
 <?php
 $ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-$ref = 'http://www.jeuxvideo.com/forums/42-1000021-38431092-3-0-1-0-actu-un-blabla-est-ne.htm';
 
 $re = '#^https?://(www|m)\.jeuxvideo\.com/forums/' .
       '(?P<mode>[0-9]+)-' .
