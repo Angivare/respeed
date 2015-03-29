@@ -651,7 +651,6 @@ h1, h2, h3 {
 .message-header {
   display: table;
   width: 100%;
-  border-bottom: 1px dotted #444;
 }
 
 @media (min-width: 1025px) {
@@ -743,6 +742,12 @@ h1, h2, h3 {
 .message .meta-author .author.mobile a {
   padding: 5px;
   display: inline-block;
+}
+
+.message-border {
+  border-bottom: 1px dotted #444;
+  width: calc(100% - 10px);
+  margin: auto;
 }
 
 .message .content {

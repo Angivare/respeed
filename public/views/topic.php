@@ -87,6 +87,7 @@ $message = adapt_html($matches['message'][$i], $date);
 <?php endif ?>
           </div>
         </div>
+        <div class="mobile message-border"></div>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>
         <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
