@@ -350,32 +350,8 @@ class Jvc {
   }
 
   /**
-   * Retourne la boîte de réception
-   * @param int $folder # du dossier
-   * @param int $page # de la page
-   * @return string la page retournée
-   */
-  public function get_mailbox($folder = 0, $page = 1) {
-    return $this->get('http://www.jeuxvideo.com/messages-prives/boite-reception.php',
-      "folder=$folder&page=$page");
-  }  
-
-  /**
-   * Retourne la page d'un message privé
-   * @param int $folder # du dossier 
-   * @param int $id # du mp
-   * @param int $offset
-   * @return string la page retournée
-   */
-  public function get_private_message($folder = 0, $id = 0, $offset = 1)  {
-    return $this->get('http://www.jeuxvideo.com/messages-prives/message.php',
-      "id=$id&folder=$folder&offset=$offset");
-  }
-
-  /**
    * Ajoute un pseudo à la blacklist
    * @param int $id id à blacklist
-   * @param string $bdy page où le post apparaît
    * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
    */
   public function blacklist_add($id) {
@@ -544,24 +520,6 @@ class Jvc {
     else $beg += strlen("\nLocation:");
     $end = strpos($hdr, "\n", $beg);
     return trim(substr($hdr, $beg, $end-$beg));
-  }
-
-  /**
-   * Retourne la liste des sous-forums
-   * @param string $body 
-   * @return array contient, pour chaque forum, 'id' 'slug' et 'human'
-   */
-  public static function sub_forums($body) {
-    $beg = strpos($body, '<ul class="liste-sous-forums">');
-    $end = strpos($body, '<div class="panel panel-jv-forum">');
-    $body = substr($body, $beg, $end-$beg);
-    $re = '#<li class="line-ellipsis">.+' .
-          '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
-          '(?:\s+<span .+>)??' .
-          '\s*?(?P<human>.+)\s*?' .
-          '(?:</span>.+)??</a>.+</li>#Usi';
-    preg_match_all($re, $body, $matches, PREG_SET_ORDER);
-    return $matches;
   }
 
   /**

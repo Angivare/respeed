@@ -1,121 +1,12 @@
 <?php
-$topic_mode = $_GET['topic'][0] === '0' ? 1 : 42;
-$url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
 
+require 'parser.php';
 $jvc = new Jvc();
-
-$header = '';
-$got = '';
-if(time() - $jvc->tokens_last_update() >= 3600/2) {
-  $got = $jvc->get($url);
-  $jvc->refresh_tokens($got['body']);
-  $header = $got['header'];
-  $got = $got['header'] . $got['body'];
-} else {
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_HEADER, true);
-  curl_setopt($ch, CURLOPT_URL, $url);
-  $got = curl_exec($ch);
-  $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-}
-
-$location = Jvc::redirects($header);
-if($location) {
-  preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
-  if($matches['topic_mode'] == '1') $matches['topic'] = '0' . $matches['topic'];
-  $location = "/{$matches['forum']}/{$matches['topic']}-{$matches['slug']}";
-  if ($matches['page'] > 1) {
-    $location .= "/{$matches['page']}";
-  }
-  header("Location: {$location}");
-  exit;
-}
-
-// Titre du topic
-$title = 'Topic';
-if (preg_match('#<span id="bloc-title-forum">(.+)</span>#Usi', $got, $matches)) {
-    $title = $matches[1];
-}
-
-// Slug et nom du forum
-$forum_slug = 'slug';
-$forum_name = 'Forum';
-if (preg_match('#<span><a href="/forums/0-' . $forum . '-0-1-0-1-0-(.+)\.htm">Forum (.+)</a></span>#Usi', $got, $matches)) {
-    $forum_slug = $matches[1];
-    $forum_name = $matches[2];
-}
-
-//Sondages
-$question = '';
-if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches))
-  $question = $matches[1];
-$regex = '#<tr>.+' .
-         '<td class="result-pourcent">.+' .
-         '<div class="pourcent">(?P<pourcent>[0-9]{1,3})\s*%</div>.+' .
-         '</td>.+<td class="reponse">(?P<human>.+)</td>.+' .
-         '</tr>#Usi';
-$answers = [];
-if(preg_match_all($regex, $got, $matches))
-  for($i = 0; $i < count($matches[0]); $i++)
-    $answers[] = ['pourcent' => $matches['pourcent'][$i], 'human' => $matches['human'][$i] ];
-
-// Messages
-$regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+>\s+<div class="conteneur-message">\s+' .
-         '(<div class="bloc-avatar-msg">\s+<div class="back-img-msg">\s+<div>\s+<span[^>]+>\s+<img src="(?P<avatar>.+)"[^>]+>\s+</span>\s+</div>\s+</div>\s+</div>\s+)?' .
-         '<div class="inner-head-content">.+(<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)"|<div class="bloc-pseudo-msg").+' .
-         '>\s+(?P<pseudo>.+)\s+<.+' .
-         '<div class="bloc-date-msg">\s+(<span[^>]+>)?(?P<date>[0-9].+)</div>.+' .
-         '<div class="txt-msg  text-enrichi-forum ">(?P<message>.*)</div>' .
-         '</div>\s+</div>\s+</div>\s+</div>#Usi';
-preg_match_all($regex, $got, $matches);
-
-
-// Pagination
-$last_page = 1;
-if (preg_match_all('#<span><a href="/forums/[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9a-z-]+\.htm" class="lien-jv">([0-9]+)</a></span>#Usi', $got, $matches2)) {
-  $last_page = array_pop($matches2[1]);
-}
-if ($page > $last_page) { // Si on est sur la dernière page elle ne sera pas capturée par la regex du dessus
-  $last_page = $page;
-}
-
-$pages = [];
-for ($i = $page; $i < 7; $i++) {
-  $pages[] = ' ';
-}
-if ($page != 1) {
-  $pages[] = 1;
-  for ($i = $page - 5; $i < $page; $i++) {
-    if ($i > 1) {
-      $pages[] = $i;
-    }
-  }
-}
-$pages[] = $page;
-if ($page != $last_page) {
-  for ($i = $page + 1; $i <= $page + 5; $i++) {
-    if ($i < $last_page) {
-      $pages[] = $i;
-    }
-  }
-  $pages[] = $last_page;
-}
-for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
-  $pages[] = ' ';
-}
-
+foreach(fetch_topic($topic, $page, $slug, $forum) as $k => $v)
+  $$k = $v;
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
-
-preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $has_parent);
-$sous_forums = $jvc->sub_forums($got);
-
-preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
-if ($matches_id) {
-  $topicNew = $matches_id['id_topic'];
-}
 ?>
 <header class="site-header">
   <h2 class="site-title">
@@ -171,7 +62,7 @@ $is_sign = (int)$number != $i;
     </div>
     
     <div class="liste-messages">
-<?php for ($i = 0; $i < count($matches[0]); $i++): ?>
+<?php for ($i = 0; $i < count($matches['post']); $i++): ?>
 <?php
 $date = strip_tags(trim($matches['date'][$i]));
 $message = adapt_html($matches['message'][$i], $date);
@@ -238,7 +129,7 @@ $is_sign = (int)$number != $i;
       <div class="clearfix"></div>
     </div>
 
-<?php if (preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches)): ?>
+<?php if ($locked): ?>
     <div class="form-post locked">
       <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
       <div class="form-post-inner">

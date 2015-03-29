@@ -78,10 +78,17 @@ function adapt_html($message, $date) {
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
   $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 
+  // Réparation des liens en /profil/pseudo.html
+  $message = preg_replace('#(<a href="https?://www\.jeuxvideo\.com/profil/.+)\.html"#Usi', '$1?mode=page_perso"', $message);
+
   // Transformations liens vers topics en liens internes
-  $message = preg_replace_callback('#<a href="(?P<url>http://www\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
+  $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
     $new_str = $matches[0];
-    $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'] . '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
+    $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'];
+    if($matches['topic'])
+      $path .= '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
+    else
+      $path .= '-' . $matches['slug'];
     if ($matches['page'] != 1) {
       $path .= '/' . $matches['page'];
     }
@@ -90,7 +97,7 @@ function adapt_html($message, $date) {
   }, $message);
 
   // Transformation des liens NoelShack en liens directs
-  $message = preg_replace_callback('#<a href="(?P<url>http://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
+  $message = preg_replace_callback('#<a href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
     $new_str = $matches[0];
     $path = 'http://image.noelshack.com/fichiers/' . $matches['year'] . '/' . $matches['container'] . '/' . $matches['path'];
     $new_str = str_replace($matches['url'], $path, $new_str);
@@ -101,7 +108,7 @@ function adapt_html($message, $date) {
 }
 
 function jvcare($str) {
-  return preg_replace_callback('#<span class="JvCare ([0-9A-F]+)" [^>]+>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function ($matches) {
+  return preg_replace_callback('#<span class="JvCare ([0-9A-F]+)"[^>]*>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function ($matches) {
     $new_str = $matches[0];
     $new_str = str_replace('<span class="JvCare ' . $matches[1], '<a href="' . strip_tags($matches[2]) . '" class="xXx', $new_str);
     $new_str = substr($new_str, 0, -strlen('</span>'));
@@ -146,12 +153,15 @@ function date_topic_list_to_timestamp($str_date) {
 }
 
 function relative_date_messages($str_date) {
+  return relative_date_timestamp(date_messages_to_timestamp($str_date));
+}
+
+function date_messages_to_timestamp($str_date) {
   global $mois_jvc;
   // Convertir en format US pour strtotime
   $array_date = explode(' ', $str_date);
   $str_date = $mois_jvc[$array_date[1]] . '/' . $array_date[0] . '/' . $array_date[2] . ' ' . $array_date[4];
-
-  return relative_date_timestamp(strtotime($str_date));
+  return strtotime($str_date);
 }
 
 function edit_date_difference($post_date, $edit_date) {
@@ -191,8 +201,15 @@ function wbr_pseudo($pseudo) {
 }
 
 function array_max($array, $comp_func) {
+  reset($array);
   $max = each($array)[1];
   while( FALSE !== ($v = each($array)) )
     $max = $comp_func($v[1], $max) ? $v[1] : $max;
   return $max;
+}
+
+function strip_matches(&$matches) {
+  foreach($matches as $k => $v)
+    if(is_int($k))
+      unset($matches[$k]);
 }
