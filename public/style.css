@@ -548,6 +548,7 @@ h1, h2, h3 {
   h2.forum-title {
     font-size: 1.17em;
     padding: 0 10px;
+    margin: 5px 0;
   }
   
   .topic-title {
@@ -583,6 +584,16 @@ h1, h2, h3 {
   width: 45px;
   float: left;
   margin-left: 5px;
+}
+
+@media (max-width: 700px) {
+  .pages .faketable {
+    width: 30px;
+    height: 30px;
+  }
+  .pages .faketable.empty {
+    display: none;
+  }
 }
 
 .pages .link {
@@ -930,6 +941,19 @@ h1, h2, h3 {
 
 .message:target {
   background: rgba(255, 85, 0, .07);
+}
+
+.fixed-action {
+  background: ;
+  width: 55px;
+  height: 55px;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  border-radius: 99px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+  background: #f60 url(http://cdn.jvforum.fr/ic_mode_edit_24px.svg) center no-repeat;
+  cursor: pointer;
 }
 
 /* Connexion */

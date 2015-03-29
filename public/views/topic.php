@@ -30,7 +30,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
       <div class="pages-container">
 <?php foreach ($pages as $i): ?>
 <?php if ($i == ' '): ?>
-        <span class="faketable">
+        <span class="faketable empty">
           <span class="link"></span>
         </span>
 <?php continue; endif ?>
@@ -99,7 +99,7 @@ $message = adapt_html($matches['message'][$i], $date);
       <div class="pages-container">
 <?php foreach ($pages as $i): ?>
 <?php if ($i == ' '): ?>
-        <span class="faketable">
+        <span class="faketable empty">
           <span class="link"></span>
         </span>
 <?php continue; endif ?>
@@ -137,7 +137,9 @@ $is_sign = (int)$number != $i;
         <p><?= $locked_because ?>
       </div>
     </div>
-<?php elseif($jvc->is_connected()): ?>
+<?php else: ?>
+    <label class="mobile fixed-action" for="newmessage" id="floating_newmessage"></label>
+<?php if($jvc->is_connected()): ?>
     <div class="form-post">
       <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
       <div class="form-error"><p></p></div>
@@ -147,6 +149,7 @@ $is_sign = (int)$number != $i;
         <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
       </div>
     </div>
+<?php endif; ?>
 <?php endif; ?>
 
   </div>

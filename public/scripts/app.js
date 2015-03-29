@@ -365,3 +365,10 @@ $('.m-profil').click(function () {
   window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
   return false
 })
+
+$('#floating_newmessage').click(function() {
+  if (!$is_connected) {
+    location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
+    return
+  }
+})
