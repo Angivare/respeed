@@ -66,6 +66,13 @@ class Db {
     );
   }
 
+  public function clean_forum_cache() {
+    return $this->query(
+      'DELETE FROM forums_cache WHERE fetched_at < (? - 60*5)',
+      [ microtime(TRUE) ]
+    );
+  }
+
   public function get_topic_cache($topic_id, $page, $topic_mode, $forum_id) {
     return $this->query(
       'SELECT * FROM topics_cache WHERE topic_id=? AND page=? AND topic_mode=? AND forum_id=?',
@@ -86,6 +93,13 @@ class Db {
         ':vars' => $vars,
         ':time' => microtime(TRUE)
       ]
+    );
+  }
+
+  public function clean_topic_cache() {
+    return $this->query(
+      'DELETE FROM topics_cache WHERE fetched_at < (? - 60*5)',
+      [ microtime(TRUE) ]
     );
   }
 }
