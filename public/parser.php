@@ -222,6 +222,7 @@ function parse_topic($got) {
   }
 
   $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches) ? TRUE : FALSE;
+  if($ret['locked']) $ret['matches']['raison'] = $matches['raison'];
 
   return $ret;
 }
