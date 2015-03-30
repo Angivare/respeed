@@ -141,4 +141,17 @@ class Db {
       []
     );
   }
+
+  public function log_message(
+    $msg_id, $topic_id, $forum_id, $ip, $date, $nick
+  ) {
+    $args = func_get_args();
+    $sql  = '(' . str_repeat('?,', count($args)-1) . '?)';
+    return $this->query(
+      'INSERT INTO logs_messages ' .
+      '(msg_id, topic_id, forum_id, ip, posted_at, nick)' .
+      ' VALUES ' . $sql,
+      $args
+    );
+  }
 }

@@ -142,7 +142,7 @@ class Jvc {
    * @param string $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
-  public function post_msg_finish($url, $msg, $form, $ccode='') {
+  public function post_msg_finish($url, $msg, $form, $ccode='', &$ret_location=NULL) {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
       '&form_alias_rang=1' .
@@ -150,8 +150,11 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    if(self::redirects($rep['header']))
+    if($location = self::redirects($rep['header'])) {
+      if($ret_location !== NULL)
+        $ret_location = $location;
       return TRUE;
+    }
     else if(preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match))
       return $this->_err($match[1]);
     else
@@ -185,7 +188,7 @@ class Jvc {
    * @param string $ccode 
    * @return boolean TRUE si le topic est créé, FALSE sinon
    */
-  public function post_topic_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='') {
+  public function post_topic_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='', &$ret_location=NULL) {
     $post_data = http_build_query($form) .
       '&titre_topic=' . urlencode($title) .
       '&message_topic=' . urlencode($msg) .
@@ -198,8 +201,11 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    if(self::redirects($rep['header']))
+    if($location = self::redirects($rep['header'])) {
+      if($ret_location !== NULL)
+        $ret_location = $location;
       return TRUE;
+    }
     else if(preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match))
       return $this->_err($match[1]);
     else
