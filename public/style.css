@@ -928,7 +928,7 @@ h1, h2, h3 {
   display: none;
 }
 
-.message.ignored .meta-author, .message.ignored .meta-actions, .message.ignored .content {
+.message.ignored .meta-author, .message.ignored .meta-actions, .message.ignored .message-border, .message.ignored .content {
   display: none;
 }
 
@@ -947,11 +947,11 @@ h1, h2, h3 {
   }
 }
 
-.message:nth-child(even).ignored .ignored-message {
+.message.even.ignored .ignored-message {
 }
 
 @media (min-width: 1025px) {
-  .message:nth-child(even).ignored .ignored-message {
+  .message.even.ignored .ignored-message {
     background: #EFF4FC;
     border-color: #C0D7ED;
   }
