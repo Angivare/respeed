@@ -26,13 +26,13 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <div class="sheet">
   <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
   <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
-  <h1 class="sheet-title"><a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
+  <h1 class="sheet-title topic-title"><a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
   <div class="content">
     <div class="pages">
       <div class="pages-container">
 <?php foreach ($pages as $i): ?>
 <?php if ($i == ' '): ?>
-        <span class="faketable">
+        <span class="faketable empty">
           <span class="link"></span>
         </span>
 <?php continue; endif ?>
@@ -80,6 +80,7 @@ $message = adapt_html($matches['message'][$i], $date);
           </div>
           <div class="meta-actions">
             <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
+            <span class="meta-menu"></span>
             <span class="meta-quote">Citer</span>
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
             <span class="meta-ignore">Ignorer</span>
@@ -89,6 +90,7 @@ $message = adapt_html($matches['message'][$i], $date);
 <?php endif ?>
           </div>
         </div>
+        <div class="mobile message-border"></div>
         <div class="content"><?= $message ?></div>
         <div class="clearfix"></div>
         <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
@@ -100,7 +102,7 @@ $message = adapt_html($matches['message'][$i], $date);
       <div class="pages-container">
 <?php foreach ($pages as $i): ?>
 <?php if ($i == ' '): ?>
-        <span class="faketable">
+        <span class="faketable empty">
           <span class="link"></span>
         </span>
 <?php continue; endif ?>
@@ -138,7 +140,9 @@ $is_sign = (int)$number != $i;
         <p><?= $matches['raison'] ?>
       </div>
     </div>
-<?php elseif($jvc->is_connected()): ?>
+<?php else: ?>
+    <label class="mobile fixed-action" for="newmessage" id="floating_newmessage"></label>
+<?php if($jvc->is_connected()): ?>
     <div class="form-post">
       <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
       <div class="form-error"><p></p></div>
@@ -148,6 +152,7 @@ $is_sign = (int)$number != $i;
         <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
       </div>
     </div>
+<?php endif; ?>
 <?php endif; ?>
 
   </div>
@@ -184,7 +189,7 @@ $is_sign = (int)$number != $i;
 </div>
 
 <script>
-var url = '<?= $url ?>'
+var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm'
   , tokens = <?= json_encode($jvc->tokens()) ?>
   , tokens_last_update = <?= $jvc->tokens_last_update() ?>
 </script>

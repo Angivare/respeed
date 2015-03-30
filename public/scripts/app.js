@@ -22,7 +22,9 @@ function addToBlacklist(pseudo, id_message) {
   }
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
   updateLocalBlacklist()
-  $.get('/ajax/blacklist_add.php', {id_message: id_message})
+  if (id_message) {
+    $.get('/ajax/blacklist_add.php', {id_message: id_message})
+  }
 }
 
 function removeFromBlacklist(pseudo) {
@@ -64,7 +66,7 @@ function updateRemoteBlacklist() {
     $.getJSON('/ajax/blacklist_get.php', function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
-        //addToBlacklist(remoteBlacklist[i])//doesnt work while we dont have an id
+        addToBlacklist(remoteBlacklist[i].human)
       }
       localStorage.remoteBlacklistLastUpdate = now
     })
@@ -364,4 +366,11 @@ $('.meta-quote').click(function(e) {
 $('.m-profil').click(function () {
   window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
   return false
+})
+
+$('#floating_newmessage').click(function() {
+  if (!$is_connected) {
+    location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
+    return
+  }
 })

@@ -11,6 +11,7 @@ var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
   , $topicNew = <?= isset($topicNew) ? $topicNew : 'false' ?>
   , $slug = <?= $slug ? "'{$slug}'" : 'false' ?>
   , $title = <?= $title ? "'{$title}'" : 'false' ?>
+  , $page = <?= $page ? $page : 'false' ?>
 </script>
 <script src="/scripts/jquery.js"></script>
 <?php if ($jvc->is_connected()): ?>

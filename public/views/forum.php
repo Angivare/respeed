@@ -159,7 +159,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 </div>
 
 <script>
-var url = '<?= $url ?>'
+var url = 'http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm'
   , tokens = <?= json_encode($jvc->tokens()) ?>
   , tokens_last_update = <?= $jvc->tokens_last_update() ?>
 </script>

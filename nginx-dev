@@ -13,6 +13,8 @@ server {
   
   rewrite ^/se_connecter$ /index.php?login;
   rewrite ^/se_deconnecter$ /index.php?logout;
+
+  rewrite ^/ref$ /ref.php;
   
   rewrite ^/mp$ /index.php?mp;
   rewrite ^/mp/([0-9]+)$ /index.php?mp=$1;
