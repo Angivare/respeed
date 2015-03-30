@@ -315,7 +315,7 @@ $('#newmessage').focus(function() {
 })
 
 $('.meta-ignore').click(function(e) {
-  var id = e.target.parentNode.parentNode.parentNode.id
+  var id = $(this).closest('.message').id
     , pseudo = $('#' + id).data('pseudo')
 
   if (!$is_connected) {
@@ -328,7 +328,7 @@ $('.meta-ignore').click(function(e) {
 })
 
 $('.meta-unignore').click(function(e) {
-  var id = e.target.parentNode.parentNode.id
+  var id = $(this).closest('.message').id
     , pseudo = $('#' + id).data('pseudo')
 
   removeFromBlacklist(pseudo)
@@ -336,16 +336,17 @@ $('.meta-unignore').click(function(e) {
 })
 
 $('.meta-quote').click(function(e) {
-  var id = e.target.parentNode.parentNode.parentNode.id
+  var id = $(this).closest('.message').id
     , pseudo = $('#' + id).data('pseudo')
     , date = $('#' + id).data('date')
+    , token = $('#token').val()
 
   if (!$is_connected) {
     location.href = '/se_connecter?pour=citer&qui=' + pseudo
     return
   }
 
-  $.getJSON('/ajax/quote.php', {id: id}, function(data) {
+  $.getJSON('/ajax/quote.php', {id: id, hash: token}, function(data) {
     if (!data.rep) {
       alert('Erreur avec la citation : ' + data.err)
       return
@@ -373,4 +374,17 @@ $('#floating_newmessage').click(function() {
     location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
     return
   }
+})
+
+$('.meta-menu').click(function(e) {
+  var id = e.target.parentNode.parentNode.parentNode.parentNode.id
+  $('#' + id).toggleClass('show-menu')
+})
+
+$('.message').click(function(e) {
+  if (e.target.className == 'meta-menu') {
+    return
+  }
+  var id = this.id
+  $('#' + id).removeClass('show-menu')
 })

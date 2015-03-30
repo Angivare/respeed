@@ -649,6 +649,7 @@ h1, h2, h3 {
   border-width: 1px 0;
   background: #f9f9f9;
   margin-bottom: 10px;
+  position: relative;
 }
 
 @media (min-width: 1025px) {
@@ -846,6 +847,40 @@ h1, h2, h3 {
   .message .meta-actions .meta-menu {
     display: none;
   }
+}
+
+/* Message - mobile menu */
+
+.message .not-action-menu {
+  -webkit-transition: transform .1s, -webkit-transform .1s, opacity .1s;
+          transition: transform .1s, -webkit-transform .1s, opacity .1s;
+}
+
+.message.show-menu .not-action-menu {
+  -webkit-transform: translateX(-200px);
+          transform: translateX(-200px);
+}
+
+.message .action-menu {
+  position: absolute;
+  left: calc(100% - 200px);
+  display: none;
+}
+
+.message.show-menu .action-menu {
+  display: block;
+}
+
+.message .action-menu .action {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+  height: 80px;
+}
+
+.message .action-menu .meta-quote {
+  background: url(http://cdn.jvforum.fr/ic_reply_24px.svg) center no-repeat;
 }
 
 /* Message - border */
