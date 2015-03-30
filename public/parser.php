@@ -87,6 +87,7 @@ function fetch_forum($forum, $page, $slug) {
   $t_db = microtime(TRUE) - $t_db;
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
+    $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
     $ch = curl_init();
@@ -238,6 +239,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
   $t_db = microtime(TRUE) - $t_db;
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
+    $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
     $t_req = microtime(TRUE);

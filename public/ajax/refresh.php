@@ -10,7 +10,11 @@ require '../Db.php';
 require '../helpers.php';
 require '../parser.php';
 
-if($forum && $topic && $slug)
+if($forum && $topic && $slug) {
+  $t = fetch_topic($topic, $page, $slug, $forum);
+  foreach($t['matches']['message'] as $k => $v)
+    $t['matches']['message'][$k] = adapt_html($v);
   echo json_encode(fetch_topic($topic, $page, $slug, $forum));
-else if($forum && $slug)
+} else if($forum && $slug) {
   echo json_encode(fetch_forum($forum, $page, $slug));
+}
