@@ -137,7 +137,7 @@ class Db {
 
   public function clean_tokens() {
     return $this->query(
-      'DELETE FROM tokens WHERE generated < NOW5() - INTERVAL 1 HOUR',
+      'DELETE FROM tokens WHERE generated < NOW5() - INTERVAL 1 HOUR OR used=TRUE',
       []
     );
   }
