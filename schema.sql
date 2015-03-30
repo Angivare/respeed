@@ -29,3 +29,14 @@ CREATE TABLE `tokens` (
   `used` boolean NOT NULL,
   PRIMARY KEY (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `logs_messages` (
+  `msg_id` int(11) unsigned NOT NULL,
+  `topic_id` int(11) unsigned NOT NULL,
+  `forum_id` int(11) unsigned NOT NULL,
+  `ip` int(11) unsigned NOT NULL,
+  `posted_at` datetime NOT NULL,
+  `user_agent` varchar(200) NOT NULL,
+  `nick` varchar(15) NOT NULL,
+  PRIMARY KEY (`msg_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
