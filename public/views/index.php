@@ -34,6 +34,8 @@ $jvc = new Jvc();
     <ul>
       <li>Transformation des liens NoelShack en liens direct</li>
       <li>Cliquez/appuyez sur un avatar pour l’agrandir</li>
+      <li>Pseudos ignorés plus discret</li>
+      <li>Topics cachés pour les pseudos ignorés</li>
     </ul>
     </div>
   <aside class="aside"></aside>
