@@ -9,6 +9,7 @@ echo "<!-- JVC request delay: {$t_req}s | MySQL request delay: {$t_db}s -->";
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
 ?>
+<input type="hidden" id="token" value="<?= $token ?>">
 <header class="site-header">
   <h2 class="site-title">
     <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>

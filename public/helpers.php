@@ -103,6 +103,11 @@ function adapt_html($message, $date) {
     $new_str = str_replace($matches['url'], $path, $new_str);
     return $new_str;
   }, $message);
+
+  // Décollage liens
+  $message = preg_replace('#(</a>)(<a [^<]+>)#Usi', '$1 $2', $message);
+  // Décollage smileys
+  $message = preg_replace('#(data-def="SMILEYS" [^<]+>)(<img)#Usi', '$1 $2', $message);
   
   return $message;
 }

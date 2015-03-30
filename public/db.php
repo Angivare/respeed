@@ -1,5 +1,7 @@
 <?php
 class Db {
+  const DEBUG = FALSE;
+
   private $db;
   private $connected;
 
@@ -15,7 +17,12 @@ class Db {
   public function query($query, $arguments=[]) {
     if(!$this->connected) return FALSE;
     $req = $this->db->prepare($query);
-    return $req->execute($arguments) ? $req : FALSE;
+    if(self::DEBUG) {
+      $ret = $req->execute($arguments);
+      var_dump($req->errorInfo());
+      return $ret ? $req : FALSE;
+    } else
+      return $req->execute($arguments) ? $req : FALSE;
   }
 
   public function search_forum($str) {
@@ -104,6 +111,47 @@ class Db {
     return $this->query(
       'DELETE FROM topics_cache WHERE fetched_at < (? - 60*5)',
       [ microtime(TRUE) ]
+    );
+  }
+
+  public function set_token($hash) {
+    return $this->query(
+      'INSERT INTO tokens (generated, token) VALUES (NOW(), ?)',
+      [$hash]
+    )->fetch();
+  }
+
+  public function discard_token($hash) {
+    return $this->query(
+      'UPDATE tokens SET used=TRUE WHERE token=?',
+      [$hash]
+    );
+  }
+
+  public function get_token($hash) {
+    return $this->query(
+      'SELECT * FROM tokens WHERE token=?',
+      [$hash]
+    )->fetch();
+  }
+
+  public function clean_tokens() {
+    return $this->query(
+      'DELETE FROM tokens WHERE generated < NOW5() - INTERVAL 1 HOUR OR used=TRUE',
+      []
+    );
+  }
+
+  public function log_message(
+    $msg_id, $topic_id, $forum_id, $ip, $date, $nick
+  ) {
+    $args = func_get_args();
+    $sql  = '(' . str_repeat('?,', count($args)-1) . '?)';
+    return $this->query(
+      'INSERT INTO logs_messages ' .
+      '(msg_id, topic_id, forum_id, ip, posted_at, nick)' .
+      ' VALUES ' . $sql,
+      $args
     );
   }
 }
