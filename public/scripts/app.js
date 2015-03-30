@@ -66,7 +66,7 @@ function updateRemoteBlacklist() {
     $.getJSON('/ajax/blacklist_get.php', function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
-        addToBlacklist(remoteBlacklist[i])
+        addToBlacklist(remoteBlacklist[i].human)
       }
       localStorage.remoteBlacklistLastUpdate = now
     })
