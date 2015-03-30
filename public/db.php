@@ -116,21 +116,21 @@ class Db {
 
   public function set_token($hash) {
     return $this->query(
-      'INSERT INTO tokens (generated, hash) VALUES (NOW(), ?)',
+      'INSERT INTO tokens (generated, token) VALUES (NOW(), ?)',
       [$hash]
     )->fetch();
   }
 
   public function discard_token($hash) {
     return $this->query(
-      'UPDATE tokens SET used=TRUE WHERE hash=?',
+      'UPDATE tokens SET used=TRUE WHERE token=?',
       [$hash]
     );
   }
 
   public function get_token($hash) {
     return $this->query(
-      'SELECT * FROM tokens WHERE hash=?',
+      'SELECT * FROM tokens WHERE token=?',
       [$hash]
     )->fetch();
   }

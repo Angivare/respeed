@@ -22,3 +22,10 @@ CREATE TABLE `topics_cache` (
   `fetched_at` double NOT NULL,
   PRIMARY KEY (`topic_id`,`topic_mode`,`forum_id`,`page`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `tokens` (
+  `token` varchar(32) NOT NULL,
+  `generated` timestamp NOT NULL,
+  `used` boolean NOT NULL,
+  PRIMARY KEY (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
