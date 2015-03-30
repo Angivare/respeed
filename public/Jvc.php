@@ -554,8 +554,13 @@ class Jvc {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
-    if(count($this->cookie) && $connected !== FALSE)
+    if(count($this->cookie) && $connected !== FALSE) {
       curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string());
+      $ip = $_SERVER['REMOTE_ADDR'];
+      curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "HTTP_X_FORWARDED_FOR: $ip"
+      ]);
+    }
     $rep = curl_exec($ch);
     $ret = array(
       'header' => substr($rep, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
