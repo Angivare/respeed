@@ -315,7 +315,7 @@ $('#newmessage').focus(function() {
 })
 
 $('.meta-ignore').click(function(e) {
-  var id = $(this).closest('.message').id
+  var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
 
   if (!$is_connected) {
@@ -328,7 +328,7 @@ $('.meta-ignore').click(function(e) {
 })
 
 $('.meta-unignore').click(function(e) {
-  var id = $(this).closest('.message').id
+  var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
 
   removeFromBlacklist(pseudo)
@@ -336,7 +336,7 @@ $('.meta-unignore').click(function(e) {
 })
 
 $('.meta-quote').click(function(e) {
-  var id = $(this).closest('.message').id
+  var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
     , date = $('#' + id).data('date')
     , token = $('#token').val()
