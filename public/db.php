@@ -1,6 +1,6 @@
 <?php
 class Db {
-  const DEBUG = FALSE;
+  const DEBUG = TRUE;
 
   private $db;
   private $connected;
