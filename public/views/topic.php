@@ -4,6 +4,7 @@ require 'parser.php';
 $jvc = new Jvc();
 foreach(fetch_topic($topic, $page, $slug, $forum) as $k => $v)
   $$k = $v;
+echo "<!-- JVC request delay: {$t_req}s | MySQL request delay: {$t_db}s -->";
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
@@ -135,7 +136,7 @@ $is_sign = (int)$number != $i;
     <div class="form-post locked">
       <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
       <div class="form-post-inner">
-        <p><?= $locked_because ?>
+        <p><?= $matches['raison'] ?>
       </div>
     </div>
 <?php else: ?>
