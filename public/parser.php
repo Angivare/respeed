@@ -82,6 +82,8 @@ function parse_forum($got) {
 function fetch_forum($forum, $page, $slug) {
   $jvc = new Jvc();
   $db = new Db();
+  $auth = new Auth($db);
+
   $t_db = microtime(TRUE);
     $cache = $db->get_forum_cache($forum, $page);
   $t_db = microtime(TRUE) - $t_db;
@@ -129,6 +131,7 @@ function fetch_forum($forum, $page, $slug) {
   }
   $ret['t_db'] = $t_db;
   $ret['t_req'] = $t_req;
+  $ret['token'] = $auth->generate();
   return $ret;
 }
 
@@ -234,6 +237,8 @@ function fetch_topic($topic, $page, $slug, $forum) {
 
   $jvc = new Jvc();
   $db = new Db();
+  $auth = new Auth($db);
+
   $t_db = microtime(TRUE);
     $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
   $t_db = microtime(TRUE) - $t_db;
@@ -291,5 +296,6 @@ function fetch_topic($topic, $page, $slug, $forum) {
   $ret['topic_mode'] = $topic_mode;
   $ret['t_db'] = $t_db;
   $ret['t_req'] = $t_req;
+  $ret['token'] = $auth->generate();
   return $ret;
 }

@@ -1,5 +1,5 @@
 <?php
-require '../Jvc.php';
+require 'common.php';
 
 $id = isset($_GET['id']) ? $_GET['id'] : FALSE;
 $jvc = new Jvc();

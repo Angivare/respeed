@@ -1,10 +1,11 @@
 <?php
+require 'common.php';
+
 $id_message = isset($_GET['id_message']) ? (int)$_GET['id_message'] : 0;
 if (!$id_message) {
   exit;
 }
 
-require '../Jvc.php';
 $jvc = new Jvc();
 
 $rep = $jvc->get("http://www.jeuxvideo.com/respeed/forums/message/{$id_message}");

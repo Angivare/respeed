@@ -1,5 +1,5 @@
 <?php
-require '../Jvc.php';
+require 'common.php';
 
 $jvc = new Jvc();
 

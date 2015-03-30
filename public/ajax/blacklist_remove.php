@@ -1,10 +1,11 @@
 <?php
+require 'common.php';
+
 $nick = isset($_GET['nick']) ? strtolower($_GET['nick']) : 0;
 if (!$nick) {
   exit;
 }
 
-require '../Jvc.php';
 $jvc = new Jvc();
 
 $bl = $jvc->blacklist();

@@ -1,12 +1,14 @@
 <?php
-require '../Jvc.php';
+require 'common.php';
 
 $url = isset($_POST['url']) ? $_POST['url'] : FALSE;
 $title = isset($_POST['title']) ? $_POST['title'] : FALSE;
 $msg = isset($_POST['msg']) ? $_POST['msg'] : FALSE;
 $form = isset($_POST['form']) ? $_POST['form'] : FALSE;
 $ccode = isset($_POST['ccode']) ? $_POST['ccode'] : '';
+
 $jvc = new Jvc();
+
 if($url && $msg && $form)
   echo json_encode([
     'rep' => $jvc->post_topic_finish($url, $title, $msg, $form, '', [], $ccode),
