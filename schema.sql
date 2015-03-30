@@ -36,7 +36,6 @@ CREATE TABLE `logs_messages` (
   `forum_id` int(11) unsigned NOT NULL,
   `ip` int(11) unsigned NOT NULL,
   `posted_at` datetime NOT NULL,
-  `user_agent` varchar(200) NOT NULL,
   `nick` varchar(15) NOT NULL,
   PRIMARY KEY (`msg_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
