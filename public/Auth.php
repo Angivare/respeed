@@ -26,6 +26,9 @@ class Auth {
   }
 
   public function validate($hash) {
+    $ip = ip2long($_SERVER['REMOTE_ADDR']);
+    if($this->db->query('SELECT ip FROM ip_blacklist WHERE ip=?', [$ip])->fetch())
+      return $this->_err('Ip blacklistée');
     $stored = $this->db->get_token($hash);
     if(!$stored)
       return $this->_err('Jeton expiré');
