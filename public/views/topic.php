@@ -71,7 +71,7 @@ $message = adapt_html($matches['message'][$i], $date);
 ?>
       <div class="message <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>" data-date="<?= relative_date_messages($date) ?>">
         <div class="action-menu">
-          <span class="action meta-quote">Citer</span><!--
+          <label class="action meta-quote" for="newmessage">Citer</label><!--
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
           --><span class="action meta-ignore">Ignorer</span>
 <?php else: ?>

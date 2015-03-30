@@ -23,7 +23,7 @@ function addToBlacklist(pseudo, id_message) {
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
   updateLocalBlacklist()
   if (id_message) {
-    $.get('/ajax/blacklist_add.php', {id_message: id_message})
+    $.get('/ajax/blacklist_add.php', {id_message: id_message, hash: $('#token').val()})
   }
 }
 
@@ -37,7 +37,7 @@ function removeFromBlacklist(pseudo) {
   var blacklistString = ''
   blacklist.splice(index, 1)
   localStorage.blacklist = blacklist.join(' ')
-  $.get('/ajax/blacklist_remove.php', {nick: pseudo})
+  $.get('/ajax/blacklist_remove.php', {nick: pseudo, hash: $('#token').val()})
 }
 
 function applyBlacklist() {
@@ -63,7 +63,7 @@ function updateRemoteBlacklist() {
   var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
   var now = +new Date
   if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
-    $.getJSON('/ajax/blacklist_get.php', function(data) {
+    $.getJSON('/ajax/blacklist_get.php', {hash: $('#token').val()}, function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
         addToBlacklist(remoteBlacklist[i].human)
@@ -88,7 +88,7 @@ function updateFavorites() {
   if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
     return
   }
-  $.getJSON('/ajax/favorite_get.php', function(data) {
+  $.getJSON('/ajax/favorite_get.php', {hash: $('#token').val()}, function(data) {
     favoritesForums = []
     favoritesTopics = []
     $.each(data.rep.forums, function(index, value) {
@@ -172,7 +172,7 @@ function displayFavoritesTopics() {
 
 function request_form_data() {
   if (!form_data) {
-    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', {url: url}, function(data, status, xhr) {
+    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', {url: url, hash: $('#token').val()}, function(data, status, xhr) {
       data = JSON.parse(data)
       if (data.err == 'Forum fermé') {
         $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
@@ -203,6 +203,7 @@ function addForum() {
     id: $forum,
     type: 'forum',
     action: 'add',
+    hash: $('#token').val(),
   })
 }
 
@@ -222,6 +223,7 @@ function delForum() {
     id: $forum,
     type: 'forum',
     action: 'delete',
+    hash: $('#token').val(),
   })
 }
 
@@ -239,6 +241,7 @@ function addTopic() {
     id: $topicNew,
     type: 'topic',
     action: 'add',
+    hash: $('#token').val(),
   })
 }
 
@@ -258,6 +261,7 @@ function delTopic() {
     id: $topicNew,
     type: 'topic',
     action: 'delete',
+    hash: $('#token').val(),
   })
 }
 
@@ -355,7 +359,7 @@ $('.meta-quote').click(function(e) {
     if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
       citation += "\n\n"
     }
-    citation += "> '''" + pseudo + "''', " + date + " http://jvrespeed.com" + location.pathname + "#" + id + "\n"
+    citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
     citation += "> \n"
     citation += "> " + $.trim(data.rep).split("\n").join("\n> ")
     citation += "\n\n"
