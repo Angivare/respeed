@@ -26,7 +26,7 @@ CREATE TABLE `topics_cache` (
 CREATE TABLE `tokens` (
   `token` varchar(32) NOT NULL,
   `generated` timestamp NOT NULL,
-  `used` boolean NOT NULL,
+  `used` boolean NOT NULL DEFAULT '0',
   PRIMARY KEY (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
