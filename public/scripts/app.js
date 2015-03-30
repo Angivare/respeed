@@ -268,6 +268,7 @@ function delTopic() {
 /*** App ***/
 
 $(function() {
+  FastClick.attach(document.body)
   updateLocalBlacklist()
   updateRemoteBlacklist()
   applyBlacklist()
