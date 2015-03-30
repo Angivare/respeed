@@ -58,9 +58,9 @@ if (isset($_GET['pour'])) {
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick?>">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
         <p><img src="data:image/png;base64,<?php echo base64_encode(
-          file_get_contents('http://www.jeuxvideo.com/captcha/ccode.php?' .
+          $jvc->get('http://www.jeuxvideo.com/captcha/ccode.php?' .
           $form['fs_signature']
-          )) ?>" class="captcha">
+          )['body']) ?>" class="captcha">
         <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus>
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>

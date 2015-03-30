@@ -82,7 +82,9 @@ function parse_forum($got) {
 function fetch_forum($forum, $page, $slug) {
   $jvc = new Jvc();
   $db = new Db();
-  $cache = $db->get_forum_cache($forum, $page);
+  $t_db = microtime(TRUE);
+    $cache = $db->get_forum_cache($forum, $page);
+  $t_db = microtime(TRUE) - $t_db;
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
     $ret = json_decode($cache['vars'], TRUE);
@@ -93,7 +95,9 @@ function fetch_forum($forum, $page, $slug) {
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
     curl_setopt($ch, CURLOPT_URL, $url);
-    $got = curl_exec($ch);
+    $t_req = microtime(TRUE);
+      $got = curl_exec($ch);
+    $t_req = microtime(TRUE) - $t_req;
 
     $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
     $location = JVc::redirects($header);
@@ -122,6 +126,8 @@ function fetch_forum($forum, $page, $slug) {
     } else
       $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
   }
+  $ret['t_db'] = $t_db;
+  $ret['t_req'] = $t_req;
   return $ret;
 }
 
@@ -216,9 +222,7 @@ function parse_topic($got) {
   }
 
   $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches) ? TRUE : FALSE;
-  if ($ret['locked']) {
-    $ret['locked_because'] = $matches['raison'];
-  }
+  if($ret['locked']) $ret['matches']['raison'] = $matches['raison'];
 
   return $ret;
 }
@@ -229,24 +233,28 @@ function fetch_topic($topic, $page, $slug, $forum) {
 
   $jvc = new Jvc();
   $db = new Db();
-  $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
+  $t_db = microtime(TRUE);
+    $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
+  $t_db = microtime(TRUE) - $t_db;
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
     $ret = json_decode($cache['vars'], TRUE);
   } else {
-    if(time() - $jvc->tokens_last_update() >= 3600/2) {
-      $got = $jvc->get($url);
-      $jvc->refresh_tokens($got['body']);
-      $header = $got['header'];
-      $got = $got['header'] . $got['body'];
-    } else {
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_HEADER, true);
-      curl_setopt($ch, CURLOPT_URL, $url);
-      $got = curl_exec($ch);
-      $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-    }
+    $t_req = microtime(TRUE);
+      if(time() - $jvc->tokens_last_update() >= 3600/2) {
+        $got = $jvc->get($url);
+        $jvc->refresh_tokens($got['body']);
+        $header = $got['header'];
+        $got = $got['header'] . $got['body'];
+      } else {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        $got = curl_exec($ch);
+        $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+      }
+    $t_req = microtime(TRUE) - $t_req;
 
     $location = Jvc::redirects($header);
     if($location) {
@@ -279,5 +287,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
       $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($fetched_vars));
   }
   $ret['topic_mode'] = $topic_mode;
+  $ret['t_db'] = $t_db;
+  $ret['t_req'] = $t_req;
   return $ret;
 }

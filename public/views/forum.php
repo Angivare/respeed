@@ -4,7 +4,7 @@ require 'parser.php';
 $jvc = new Jvc();
 foreach(fetch_forum($forum, $page, $slug) as $k => $v)
   $$k = $v;
-
+echo "<!-- JVC request delay: {$t_req}s | MySQL request delay: {$t_db}s -->";
 ?>
 <header class="site-header">
   <h2 class="site-title">
