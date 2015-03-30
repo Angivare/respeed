@@ -2,7 +2,7 @@
 
 class Auth {
   const SALT = 'ladp_sacre';
-  const RAND_BYTES = 8;
+  const RAND_BYTES = 2;
 
   private $db;
   private $err;
