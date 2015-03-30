@@ -22,7 +22,9 @@ function addToBlacklist(pseudo, id_message) {
   }
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
   updateLocalBlacklist()
-  $.get('/ajax/blacklist_add.php', {id_message: id_message})
+  if (id_message) {
+    $.get('/ajax/blacklist_add.php', {id_message: id_message})
+  }
 }
 
 function removeFromBlacklist(pseudo) {
@@ -64,7 +66,7 @@ function updateRemoteBlacklist() {
     $.getJSON('/ajax/blacklist_get.php', function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
-        //addToBlacklist(remoteBlacklist[i])//doesnt work while we dont have an id
+        addToBlacklist(remoteBlacklist[i])
       }
       localStorage.remoteBlacklistLastUpdate = now
     })
