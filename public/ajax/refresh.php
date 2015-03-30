@@ -6,7 +6,7 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 require '../../config.php';
 require '../Jvc.php';
-require '../Db.php';
+require '../db.php';
 require '../helpers.php';
 require '../parser.php';
 
