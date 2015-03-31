@@ -1030,6 +1030,7 @@ h1, h2, h3 {
   overflow: hidden;
   background-image: url(http://cdn.jvforum.fr/ic_visibility_24px.svg?);
   color: transparent;
+  cursor: default;
 }
 
 @media (min-width: 1025px) {
@@ -1037,6 +1038,7 @@ h1, h2, h3 {
     width: initial;
     height: initial;
     background-image: initial;
+    color: inherit;
 
     margin-top: 2px;
   }
