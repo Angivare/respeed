@@ -22,7 +22,7 @@ if($url && $msg && $form) {
 
   //Logging
   preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $l);
-  if($l['topic_mode'] === 1) $l['topic'] = '0' . $l['topic'];
+  if($l['topic_mode'] === '1') $l['topic'] = '0' . $l['topic'];
   $got = $jvc->get("http://www.jeuxvideo.com{$location}");
   $m = parse_topic($got['body'])['matches'];
   $i = count($m['post'])-1;
