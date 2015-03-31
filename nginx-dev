@@ -12,7 +12,7 @@ server {
   rewrite ^/([0-9]+)/([0-9]+)-([a-z0-9-]+)/([0-9]+)$ /index.php?forum=$1&topic=$2&slug=$3&page=$4;
   
   rewrite ^/se_connecter$ /index.php?login;
-  rewrite ^/se_deconnecter$ /index.php?logout;
+  rewrite ^/se_deconnecter/([0-9a-f]+)-([0-9]+)-([0-9a-f]+)$ /index.php?logout&hash=$1&ts=$2&rand=$3;
 
   rewrite ^/ref$ /ref.php;
   
