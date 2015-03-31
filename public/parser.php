@@ -129,7 +129,7 @@ function fetch_forum($forum, $page, $slug) {
       $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
   }
   $ret['t_db'] = $t_db;
-  $ret['t_req'] = $t_req
+  $ret['t_req'] = $t_req;
   return $ret;
 }
 
