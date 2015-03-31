@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/style-1.css">
 <?= $body ?>
+<input type="hidden" id="token" value="<?= $token ?>">
 <script>
 var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
   , $forum = <?= $forum ? $forum : 'false' ?>

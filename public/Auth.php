@@ -1,7 +1,6 @@
 <?php
 
 class Auth {
-  const SALT = 'ladp_sacre';
   const RAND_BYTES = 2;
 
   private $db;
@@ -19,7 +18,8 @@ class Auth {
   public function generate() {
     $ts = time();
     do {
-      $hash = md5(self::SALT . $ts . openssl_random_pseudo_bytes(self::RAND_BYTES));
+      //TODO: add identifier unique to the user in the hash
+      $hash = md5(SALT . $ts . openssl_random_pseudo_bytes(self::RAND_BYTES));
     } while($this->db->get_token($hash));
     $this->db->set_token($hash);
     return $hash;
@@ -34,12 +34,8 @@ class Auth {
       return $this->_err('Jeton expiré');
     else if(strtotime($stored['generated']) < time() - 3600)
       return $this->_err('Jeton expiré');
-    else if($stored['used'])
-      return $this->_err('Jeton déjà utilisé');
-    else {
-      $this->db->discard_token($hash);
+    else
       return TRUE;
-    }
   }
 
   private function _err($err) {

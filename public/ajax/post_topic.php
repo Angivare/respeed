@@ -16,7 +16,7 @@ if($url && $msg && $form) {
   $location = '';
   echo json_encode([
     'rep' => $jvc->post_topic_finish($url, $title, $msg, $form, '', [], $ccode, $location),
-    'err' => $jvc->err() == 'Indéfinie' ? false : $jvc->err()
+    'err' => $jvc->err()
   ]);
   if(!$location) exit;
 
@@ -37,6 +37,6 @@ if($url && $msg && $form) {
 } else if($url) {
   echo json_encode([
     'rep' => $jvc->post_topic_req($url),
-    'err' => $jvc->err() == 'Indéfinie' ? false : $jvc->err()
+    'err' => $jvc->err()
   ]);
 }
