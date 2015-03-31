@@ -275,122 +275,125 @@ InstantClick.on('change', function(isInitialLoad) {
   updateLocalBlacklist()
   applyBlacklist()
 })
-InstantClick.init(65)
 
-$('#post').click(function(e) {
-  e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
-  if (!form_data) {
-    $('#newmessage').focus()
-    return
-  }
-  var params = {
-    url: url,
-    msg: $('#newmessage').val(),
-    form: form_data,
-  }
-  if ($('#ccode').val()) {
-    params.ccode = $('#ccode').val()
-  }
-  if ($('#newsujet')) {
-    params.title = $('#newsujet').val()
-  }
-  $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', params, function(data, status, xhr) {
-    data = JSON.parse(data)
-
-    $('#captcha-container').html('')
-    form_data = null
-
-    if (!data.err) {
-      $('.form-error').hide()
-      $('#newmessage').val('')
+InstantClick.on('change', function() {
+  $('#post').click(function(e) {
+    e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
+    if (!form_data) {
+      $('#newmessage').focus()
       return
     }
+    var params = {
+      url: url,
+      msg: $('#newmessage').val(),
+      form: form_data,
+    }
+    if ($('#ccode').val()) {
+      params.ccode = $('#ccode').val()
+    }
+    if ($('#newsujet')) {
+      params.title = $('#newsujet').val()
+    }
+    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', params, function(data, status, xhr) {
+      data = JSON.parse(data)
 
-    $('.form-error p').html(data.err)
-    $('.form-error').show()
-    $('#newmessage').focus()
+      $('#captcha-container').html('')
+      form_data = null
+
+      if (!data.err) {
+        $('.form-error').hide()
+        $('#newmessage').val('')
+        return
+      }
+
+      $('.form-error p').html(data.err)
+      $('.form-error').show()
+      $('#newmessage').focus()
+    })
   })
-})
 
-$('#newsujet').focus(function(e) {
-  request_form_data()
-})
+  $('#newsujet').focus(function(e) {
+    request_form_data()
+  })
 
-$('#newmessage').focus(function() {
-  request_form_data()
-})
+  $('#newmessage').focus(function() {
+    request_form_data()
+  })
 
-$('.meta-ignore').click(function(e) {
-  var id = $(this).closest('.message').attr('id')
-    , pseudo = $('#' + id).data('pseudo')
+  $('.meta-ignore').click(function(e) {
+    var id = $(this).closest('.message').attr('id')
+      , pseudo = $('#' + id).data('pseudo')
 
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
-    return
-  }
-
-  addToBlacklist(pseudo, id)
-  applyBlacklist()
-})
-
-$('.meta-unignore').click(function(e) {
-  var id = $(this).closest('.message').attr('id')
-    , pseudo = $('#' + id).data('pseudo')
-
-  removeFromBlacklist(pseudo)
-  applyBlacklist()
-})
-
-$('.meta-quote').click(function(e) {
-  var id = $(this).closest('.message').attr('id')
-    , pseudo = $('#' + id).data('pseudo')
-    , date = $('#' + id).data('date')
-    , token = $('#token').val()
-
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=citer&qui=' + pseudo
-    return
-  }
-
-  $.getJSON('/ajax/quote.php', {id: id, hash: token}, function(data) {
-    if (!data.rep) {
-      alert('Erreur avec la citation : ' + data.err)
+    if (!$is_connected) {
+      location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
       return
     }
-    var citation = ""
-    if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
+
+    addToBlacklist(pseudo, id)
+    applyBlacklist()
+  })
+
+  $('.meta-unignore').click(function(e) {
+    var id = $(this).closest('.message').attr('id')
+      , pseudo = $('#' + id).data('pseudo')
+
+    removeFromBlacklist(pseudo)
+    applyBlacklist()
+  })
+
+  $('.meta-quote').click(function(e) {
+    var id = $(this).closest('.message').attr('id')
+      , pseudo = $('#' + id).data('pseudo')
+      , date = $('#' + id).data('date')
+      , token = $('#token').val()
+
+    if (!$is_connected) {
+      location.href = '/se_connecter?pour=citer&qui=' + pseudo
+      return
+    }
+
+    $.getJSON('/ajax/quote.php', {id: id, hash: token}, function(data) {
+      if (!data.rep) {
+        alert('Erreur avec la citation : ' + data.err)
+        return
+      }
+      var citation = ""
+      if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
+        citation += "\n\n"
+      }
+      citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
+      citation += "> \n"
+      citation += "> " + $.trim(data.rep).split("\n").join("\n> ")
       citation += "\n\n"
+      
+      $('#newmessage').val($('#newmessage').val() + citation).focus()
+    })
+  })
+
+  $('.m-profil').click(function () {
+    window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
+    return false
+  })
+
+  $('#floating_newmessage').click(function() {
+    if (!$is_connected) {
+      location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
+      return
     }
-    citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
-    citation += "> \n"
-    citation += "> " + $.trim(data.rep).split("\n").join("\n> ")
-    citation += "\n\n"
-    
-    $('#newmessage').val($('#newmessage').val() + citation).focus()
+  })
+
+  $('.meta-menu').click(function(e) {
+    var id = e.target.parentNode.parentNode.parentNode.parentNode.id
+    $('#' + id).toggleClass('show-menu')
+  })
+
+  $('.message').click(function(e) {
+    if (e.target.className == 'meta-menu') {
+      return
+    }
+    var id = this.id
+    $('#' + id).removeClass('show-menu')
   })
 })
 
-$('.m-profil').click(function () {
-  window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
-  return false
-})
-
-$('#floating_newmessage').click(function() {
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
-    return
-  }
-})
-
-$('.meta-menu').click(function(e) {
-  var id = e.target.parentNode.parentNode.parentNode.parentNode.id
-  $('#' + id).toggleClass('show-menu')
-})
-
-$('.message').click(function(e) {
-  if (e.target.className == 'meta-menu') {
-    return
-  }
-  var id = this.id
-  $('#' + id).removeClass('show-menu')
-})
+InstantClick.init(65)
