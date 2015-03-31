@@ -372,8 +372,15 @@ InstantClick.on('change', function() {
       $('#newmessage').val($('#newmessage').val() + citation).focus()
     })
   })
+  
+  $('.meta-delete').click(function() {
+    var id = $(this).closest('.message').attr('id')
+      , token = $('#token').val()
 
-  $('.m-profil').click(function () {
+    $.get('/ajax/message_delete.php', {id: id, hash: token})
+  })
+
+  $('.m-profil').click(function() {
     window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
     return false
   })
