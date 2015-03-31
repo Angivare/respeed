@@ -17,18 +17,28 @@ class Auth {
 
   public function generate() {
     $ts = time();
+    $rand = openssl_random_pseudo_bytes(self::RAND_BYTES);
     do {
-      //TODO: add identifier unique to the user in the hash
-      $hash = md5(SALT . $ts . openssl_random_pseudo_bytes(self::RAND_BYTES));
+      $hash = md5($_SERVER['REMOTE_ADDR'] . SALT . $ts . $rand);
     } while($this->db->get_token($hash));
     $this->db->set_token($hash);
-    return $hash;
+    return [
+      'hash' => $hash,
+      'ts' => $ts,
+      'rand' => bin2hex($rand)
+    ];
   }
 
-  public function validate($hash) {
+  public function validate($hash, $ts, $rand) {
     $ip = ip2long($_SERVER['REMOTE_ADDR']);
     if($this->db->query('SELECT ip FROM ip_blacklist WHERE ip=?', [$ip])->fetch())
       return $this->_err('Ip blacklistée');
+
+    if(strlen($rand)%2) return $this->_err('Jeton invalide');
+    $recreated = md5($_SERVER['REMOTE_ADDR'] . SALT . $ts . hex2bin($rand));
+    if($hash != $recreated)
+      return $this->_err('Jeton invalide');
+
     $stored = $this->db->get_token($hash);
     if(!$stored)
       return $this->_err('Jeton expiré');
