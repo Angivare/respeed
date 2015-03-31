@@ -267,19 +267,15 @@ function delTopic() {
 
 /*** App ***/
 
-InstantClick.on('change', function(isInitialLoad) {
-  setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
-  if (!isInitialLoad) {
-    updateLocalBlacklist()
-    updateFavorites()
-  }
-})
-InstantClick.init(65)
 FastClick.attach(document.body)
 updateRemoteBlacklist()
-updateLocalBlacklist()
-applyBlacklist()
-updateFavorites()
+InstantClick.on('change', function(isInitialLoad) {
+  updateFavorites()
+  setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
+  updateLocalBlacklist()
+  applyBlacklist()
+})
+InstantClick.init(65)
 
 $('#post').click(function(e) {
   e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
