@@ -1,8 +1,8 @@
 <?php
 
-$hash = isset($_POST['hash']) ? $_POST['hash']  : '';
-$ts = isset($_POST['ts']) ? (int)$_POST['ts'] : 0;
-$rand = isset($_POST['rand']) ? $_POST['rand'] : '';
+$hash = isset($_GET['hash']) ? $_GET['hash']  : '';
+$ts = isset($_GET['ts']) ? (int)$_GET['ts'] : 0;
+$rand = isset($_GET['rand']) ? $_GET['rand'] : '';
 
 $auth = new Auth(new Db());
 
