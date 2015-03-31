@@ -5,6 +5,7 @@ var form_data
   , favoritesForums = []
   , favoritesTopics = []
   , isBigScreen = screen.width > 1024
+  , topicRefreshes = []
 
 /*** Helpers ***/
 
@@ -280,6 +281,30 @@ function delTopic() {
   })
 }
 
+function startTopicRefresh() {
+  if (!$topic) {
+    return
+  }
+  topicRefreshes.push(setInterval(topicRefresh, 1500))
+}
+
+function stopTopicRefreshes() {
+  while (topicRefreshes.length) {
+    clearInterval(topicRefreshes[0])
+    topicRefreshes.shift()
+  }
+}
+
+function topicRefresh() {
+  $.getJSON('/ajax/refresh.php?forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug + '&page=' + $page + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, function(data) {
+    //if $newtopic != data.newtopic {return}
+    if (data.title != $title) {
+      $title = data.title
+      $('.topic-title').html($title)
+    }
+  })
+}
+
 /*** App ***/
 
 FastClick.attach(document.body)
@@ -289,6 +314,7 @@ InstantClick.on('change', function(isInitialLoad) {
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
   updateLocalBlacklist()
   applyBlacklist()
+  startTopicRefresh()
 })
 
 InstantClick.on('change', function() {
