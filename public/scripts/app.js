@@ -319,7 +319,7 @@ InstantClick.on('change', function() {
       $('#captcha-container').html('')
       form_data = null
 
-      if (!data.err) {
+      if (data.rep) {
         $('.form-error').hide()
         $('#newmessage').val('')
         return
