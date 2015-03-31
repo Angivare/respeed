@@ -5,6 +5,7 @@ var form_data
   , favoritesForums = []
   , favoritesTopics = []
   , isBigScreen = screen.width > 1024
+  , topicRefreshes = []
 
 /*** Helpers ***/
 
@@ -23,7 +24,7 @@ function addToBlacklist(pseudo, id_message) {
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
   updateLocalBlacklist()
   if (id_message) {
-    $.get('/ajax/blacklist_add.php', {id_message: id_message, hash: $('#token').val()})
+    $.get('/ajax/blacklist_add.php', {id_message: id_message, hash: $hash, ts: $ts, rand: $rand})
   }
 }
 
@@ -37,7 +38,7 @@ function removeFromBlacklist(pseudo) {
   var blacklistString = ''
   blacklist.splice(index, 1)
   localStorage.blacklist = blacklist.join(' ')
-  $.get('/ajax/blacklist_remove.php', {nick: pseudo, hash: $('#token').val()})
+  $.get('/ajax/blacklist_remove.php', {nick: pseudo, hash: $hash, ts: $ts, rand: $rand})
 }
 
 function applyBlacklist() {
@@ -63,7 +64,7 @@ function updateRemoteBlacklist() {
   var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
   var now = +new Date
   if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
-    $.getJSON('/ajax/blacklist_get.php', {hash: $('#token').val()}, function(data) {
+    $.getJSON('/ajax/blacklist_get.php', {hash: $hash, ts: $ts, rand: $rand}, function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
         addToBlacklist(remoteBlacklist[i].human)
@@ -88,7 +89,7 @@ function updateFavorites() {
   if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
     return
   }
-  $.getJSON('/ajax/favorite_get.php', {hash: $('#token').val()}, function(data) {
+  $.getJSON('/ajax/favorite_get.php', {hash: $hash, ts: $ts, rand: $rand}, function(data) {
     favoritesForums = []
     favoritesTopics = []
     $.each(data.rep.forums, function(index, value) {
@@ -175,7 +176,11 @@ function displayFavoritesTopics() {
 
 function request_form_data() {
   if (!form_data) {
-    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', {url: url, hash: $('#token').val()}, function(data, status, xhr) {
+    var urlPost = $('#newsujet').length ? '/ajax/post_topic.php' : '/ajax/post_msg.php'
+    urlPost += '?hash=' + $hash
+    urlPost += '&ts=' + $ts
+    urlPost += '&rand=' + $rand
+    $.post(urlPost, {url: url}, function(data, status, xhr) {
       data = JSON.parse(data)
       if (data.err == 'Forum fermé') {
         $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
@@ -206,7 +211,9 @@ function addForum() {
     id: $forum,
     type: 'forum',
     action: 'add',
-    hash: $('#token').val(),
+    hash: $hash,
+    ts: $ts,
+    rand: $rand,
   })
 }
 
@@ -226,7 +233,9 @@ function delForum() {
     id: $forum,
     type: 'forum',
     action: 'delete',
-    hash: $('#token').val(),
+    hash: $hash,
+    ts: $ts,
+    rand: $rand,
   })
 }
 
@@ -244,7 +253,9 @@ function addTopic() {
     id: $topicNew,
     type: 'topic',
     action: 'add',
-    hash: $('#token').val(),
+    hash: $hash,
+    ts: $ts,
+    rand: $rand,
   })
 }
 
@@ -264,7 +275,33 @@ function delTopic() {
     id: $topicNew,
     type: 'topic',
     action: 'delete',
-    hash: $('#token').val(),
+    hash: $hash,
+    ts: $ts,
+    rand: $rand,
+  })
+}
+
+function startTopicRefresh() {
+  if (!$topic) {
+    return
+  }
+  topicRefreshes.push(setInterval(topicRefresh, 1500))
+}
+
+function stopTopicRefreshes() {
+  while (topicRefreshes.length) {
+    clearInterval(topicRefreshes[0])
+    topicRefreshes.shift()
+  }
+}
+
+function topicRefresh() {
+  $.getJSON('/ajax/refresh.php?forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug + '&page=' + $page + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, function(data) {
+    //if $newtopic != data.newtopic {return}
+    if (data.title != $title) {
+      $title = data.title
+      $('.topic-title').html($title)
+    }
   })
 }
 
@@ -277,6 +314,7 @@ InstantClick.on('change', function(isInitialLoad) {
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
   updateLocalBlacklist()
   applyBlacklist()
+  startTopicRefresh()
 })
 
 InstantClick.on('change', function() {
@@ -297,13 +335,17 @@ InstantClick.on('change', function() {
     if ($('#newsujet')) {
       params.title = $('#newsujet').val()
     }
-    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', params, function(data, status, xhr) {
+    var urlPost = $('#newsujet').length ? '/ajax/post_topic.php' : '/ajax/post_msg.php'
+    urlPost += '?hash=' + $hash
+    urlPost += '&ts=' + $ts
+    urlPost += '&rand=' + $rand
+    $.post(urlPost, params, function(data, status, xhr) {
       data = JSON.parse(data)
 
       $('#captcha-container').html('')
       form_data = null
 
-      if (!data.err) {
+      if (data.rep) {
         $('.form-error').hide()
         $('#newmessage').val('')
         return
@@ -348,14 +390,14 @@ InstantClick.on('change', function() {
     var id = $(this).closest('.message').attr('id')
       , pseudo = $('#' + id).data('pseudo')
       , date = $('#' + id).data('date')
-      , token = $('#token').val()
+      , hash = $('#hash').val()
 
     if (!$is_connected) {
       location.href = '/se_connecter?pour=citer&qui=' + pseudo
       return
     }
 
-    $.getJSON('/ajax/quote.php', {id: id, hash: token}, function(data) {
+    $.getJSON('/ajax/quote.php', {id: id, hash: $hash, ts: $ts, rand: $rand}, function(data) {
       if (!data.rep) {
         alert('Erreur avec la citation : ' + data.err)
         return
@@ -375,9 +417,8 @@ InstantClick.on('change', function() {
   
   $('.meta-delete').click(function() {
     var id = $(this).closest('.message').attr('id')
-      , token = $('#token').val()
 
-    $.get('/ajax/message_delete.php', {id: id, hash: token})
+    $.get('/ajax/message_delete.php', {id: id, hash: $hash, ts: $ts, rand: $rand})
   })
 
   $('.m-profil').click(function() {
@@ -406,4 +447,4 @@ InstantClick.on('change', function() {
   })
 })
 
-InstantClick.init(65)
+InstantClick.init()
