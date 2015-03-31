@@ -104,6 +104,9 @@ function updateFavorites() {
 }
 
 function displayFavorites() {
+  if ($('#add_or_del_forum').length) {
+    return // Hack – InstantClick ne devrait pas appeler `change` quand on fait précédent/suivant, ou devrait agir sur le DOM/HTML de base
+  }
   displayFavoritesForums()
   displayFavoritesTopics()
 }
