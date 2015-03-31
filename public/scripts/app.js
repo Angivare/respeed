@@ -23,7 +23,7 @@ function addToBlacklist(pseudo, id_message) {
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
   updateLocalBlacklist()
   if (id_message) {
-    $.get('/ajax/blacklist_add.php', {id_message: id_message})
+    $.get('/ajax/blacklist_add.php', {id_message: id_message, hash: $('#token').val()})
   }
 }
 
@@ -37,7 +37,7 @@ function removeFromBlacklist(pseudo) {
   var blacklistString = ''
   blacklist.splice(index, 1)
   localStorage.blacklist = blacklist.join(' ')
-  $.get('/ajax/blacklist_remove.php', {nick: pseudo})
+  $.get('/ajax/blacklist_remove.php', {nick: pseudo, hash: $('#token').val()})
 }
 
 function applyBlacklist() {
@@ -63,7 +63,7 @@ function updateRemoteBlacklist() {
   var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
   var now = +new Date
   if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
-    $.getJSON('/ajax/blacklist_get.php', function(data) {
+    $.getJSON('/ajax/blacklist_get.php', {hash: $('#token').val()}, function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
         addToBlacklist(remoteBlacklist[i].human)
@@ -88,7 +88,7 @@ function updateFavorites() {
   if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
     return
   }
-  $.getJSON('/ajax/favorite_get.php', function(data) {
+  $.getJSON('/ajax/favorite_get.php', {hash: $('#token').val()}, function(data) {
     favoritesForums = []
     favoritesTopics = []
     $.each(data.rep.forums, function(index, value) {
@@ -104,6 +104,9 @@ function updateFavorites() {
 }
 
 function displayFavorites() {
+  if ($('#add_or_del_forum').length) {
+    return // Hack – InstantClick ne devrait pas appeler `change` quand on fait précédent/suivant, ou devrait agir sur le DOM/HTML de base
+  }
   displayFavoritesForums()
   displayFavoritesTopics()
 }
@@ -172,7 +175,7 @@ function displayFavoritesTopics() {
 
 function request_form_data() {
   if (!form_data) {
-    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', {url: url}, function(data, status, xhr) {
+    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', {url: url, hash: $('#token').val()}, function(data, status, xhr) {
       data = JSON.parse(data)
       if (data.err == 'Forum fermé') {
         $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
@@ -203,6 +206,7 @@ function addForum() {
     id: $forum,
     type: 'forum',
     action: 'add',
+    hash: $('#token').val(),
   })
 }
 
@@ -222,6 +226,7 @@ function delForum() {
     id: $forum,
     type: 'forum',
     action: 'delete',
+    hash: $('#token').val(),
   })
 }
 
@@ -239,6 +244,7 @@ function addTopic() {
     id: $topicNew,
     type: 'topic',
     action: 'add',
+    hash: $('#token').val(),
   })
 }
 
@@ -258,119 +264,146 @@ function delTopic() {
     id: $topicNew,
     type: 'topic',
     action: 'delete',
+    hash: $('#token').val(),
   })
 }
 
 /*** App ***/
 
-$(function() {
-  updateLocalBlacklist()
-  updateRemoteBlacklist()
-  applyBlacklist()
+FastClick.attach(document.body)
+updateRemoteBlacklist()
+InstantClick.on('change', function(isInitialLoad) {
   updateFavorites()
-  displayFavorites()
+  setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
+  updateLocalBlacklist()
+  applyBlacklist()
 })
 
-$('#post').click(function(e) {
-  e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
-  if (!form_data) {
-    $('#newmessage').focus()
-    return
-  }
-  var params = {
-    url: url,
-    msg: $('#newmessage').val(),
-    form: form_data,
-  }
-  if ($('#ccode').val()) {
-    params.ccode = $('#ccode').val()
-  }
-  if ($('#newsujet')) {
-    params.title = $('#newsujet').val()
-  }
-  $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', params, function(data, status, xhr) {
-    data = JSON.parse(data)
-
-    $('#captcha-container').html('')
-    form_data = null
-
-    if (!data.err) {
-      $('.form-error').hide()
-      $('#newmessage').val('')
+InstantClick.on('change', function() {
+  $('#post').click(function(e) {
+    e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
+    if (!form_data) {
+      $('#newmessage').focus()
       return
     }
+    var params = {
+      url: url,
+      msg: $('#newmessage').val(),
+      form: form_data,
+    }
+    if ($('#ccode').val()) {
+      params.ccode = $('#ccode').val()
+    }
+    if ($('#newsujet')) {
+      params.title = $('#newsujet').val()
+    }
+    $.post($('#newsujet') ? '/ajax/post_topic.php' : '/ajax/post_msg.php', params, function(data, status, xhr) {
+      data = JSON.parse(data)
 
-    $('.form-error p').html(data.err)
-    $('.form-error').show()
-    $('#newmessage').focus()
+      $('#captcha-container').html('')
+      form_data = null
+
+      if (!data.err) {
+        $('.form-error').hide()
+        $('#newmessage').val('')
+        return
+      }
+
+      $('.form-error p').html(data.err)
+      $('.form-error').show()
+      $('#newmessage').focus()
+    })
   })
-})
 
-$('#newsujet').focus(function(e) {
-  request_form_data()
-})
+  $('#newsujet').focus(function(e) {
+    request_form_data()
+  })
 
-$('#newmessage').focus(function() {
-  request_form_data()
-})
+  $('#newmessage').focus(function() {
+    request_form_data()
+  })
 
-$('.meta-ignore').click(function(e) {
-  var id = e.target.parentNode.parentNode.parentNode.id
-    , pseudo = $('#' + id).data('pseudo')
+  $('.meta-ignore').click(function(e) {
+    var id = $(this).closest('.message').attr('id')
+      , pseudo = $('#' + id).data('pseudo')
 
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
-    return
-  }
-
-  addToBlacklist(pseudo, id)
-  applyBlacklist()
-})
-
-$('.meta-unignore').click(function(e) {
-  var id = e.target.parentNode.parentNode.id
-    , pseudo = $('#' + id).data('pseudo')
-
-  removeFromBlacklist(pseudo)
-  applyBlacklist()
-})
-
-$('.meta-quote').click(function(e) {
-  var id = e.target.parentNode.parentNode.parentNode.id
-    , pseudo = $('#' + id).data('pseudo')
-    , date = $('#' + id).data('date')
-
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=citer&qui=' + pseudo
-    return
-  }
-
-  $.getJSON('/ajax/quote.php', {id: id}, function(data) {
-    if (!data.rep) {
-      alert('Erreur avec la citation : ' + data.err)
+    if (!$is_connected) {
+      location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
       return
     }
-    var citation = ""
-    if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
+
+    addToBlacklist(pseudo, id)
+    applyBlacklist()
+  })
+
+  $('.meta-unignore').click(function(e) {
+    var id = $(this).closest('.message').attr('id')
+      , pseudo = $('#' + id).data('pseudo')
+
+    removeFromBlacklist(pseudo)
+    applyBlacklist()
+  })
+
+  $('.meta-quote').click(function(e) {
+    var id = $(this).closest('.message').attr('id')
+      , pseudo = $('#' + id).data('pseudo')
+      , date = $('#' + id).data('date')
+      , token = $('#token').val()
+
+    if (!$is_connected) {
+      location.href = '/se_connecter?pour=citer&qui=' + pseudo
+      return
+    }
+
+    $.getJSON('/ajax/quote.php', {id: id, hash: token}, function(data) {
+      if (!data.rep) {
+        alert('Erreur avec la citation : ' + data.err)
+        return
+      }
+      var citation = ""
+      if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
+        citation += "\n\n"
+      }
+      citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
+      citation += "> \n"
+      citation += "> " + $.trim(data.rep).split("\n").join("\n> ")
       citation += "\n\n"
+      
+      $('#newmessage').val($('#newmessage').val() + citation).focus()
+    })
+  })
+  
+  $('.meta-delete').click(function() {
+    var id = $(this).closest('.message').attr('id')
+      , token = $('#token').val()
+
+    $.get('/ajax/message_delete.php', {id: id, hash: token})
+  })
+
+  $('.m-profil').click(function() {
+    window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
+    return false
+  })
+
+  $('#floating_newmessage').click(function() {
+    if (!$is_connected) {
+      location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
+      return
     }
-    citation += "> '''" + pseudo + "''', " + date + " http://jvrespeed.com" + location.pathname + "#" + id + "\n"
-    citation += "> \n"
-    citation += "> " + $.trim(data.rep).split("\n").join("\n> ")
-    citation += "\n\n"
-    
-    $('#newmessage').val($('#newmessage').val() + citation).focus()
+  })
+
+  $('.meta-menu').click(function(e) {
+    var id = e.target.parentNode.parentNode.parentNode.parentNode.id
+    $('#' + id).toggleClass('show-menu')
+  })
+
+  $('.message').click(function(e) {
+    if (e.target.className == 'meta-menu') {
+      return
+    }
+    var id = this.id
+    $('#' + id).removeClass('show-menu')
   })
 })
 
-$('.m-profil').click(function () {
-  window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
-  return false
-})
-
-$('#floating_newmessage').click(function() {
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
-    return
-  }
-})
+InstantClick.init(65)

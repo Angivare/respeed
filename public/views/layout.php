@@ -16,7 +16,7 @@ var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
   , $title = <?= $title ? "'{$title}'" : 'false' ?>
   , $page = <?= $page ? $page : 'false' ?>
 </script>
-<script src="/scripts/jquery.js"></script>
-<?php if ($jvc->is_connected()): ?>
-<?php endif ?>
-<script src="/scripts/app.js"></script>
+<script src="/scripts/jquery.min.js" data-no-instant></script>
+<script src="/scripts/fastclick.min.js" data-no-instant></script>
+<script src="/scripts/instantclick.js" data-no-instant></script>
+<script src="/scripts/app.js" data-no-instant></script>

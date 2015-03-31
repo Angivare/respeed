@@ -15,7 +15,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-    <a href="/se_deconnecter" class="site-login-link logout">Se déconnecter</a>
+    <a href="/se_deconnecter" class="site-login-link logout" data-no-instant>Se déconnecter</a>
 <?php else: ?>
     <a href="/se_connecter" class="site-login-link">Se connecter</a>
 <?php endif ?>
@@ -69,30 +69,40 @@ $date = strip_tags(trim($matches['date'][$i]));
 $message = adapt_html($matches['message'][$i], $date);
 ?>
       <div class="message <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>" data-date="<?= relative_date_messages($date) ?>">
-        <div class="message-header">
-          <div class="meta-author">
-            <span class="author pseudo-<?= $matches['status'][$i] ?> desktop"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
-<?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
-            <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span><!--
-<?php endif ?>
-            <!-- --><span class="author pseudo-<?= $matches['status'][$i] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
-          </div>
-          <div class="meta-actions">
-            <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
-            <span class="meta-menu"></span>
-            <span class="meta-quote">Citer</span>
+        <div class="action-menu">
+          <label class="action meta-quote" for="newmessage">Citer</label><!--
 <?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
-            <span class="meta-ignore">Ignorer</span>
+          --><span class="action meta-ignore">Ignorer</span>
 <?php else: ?>
-            <span class="meta-edit">Modifier</span>
-            <span class="meta-delete">Supprimer</span>
+          --><span class="action meta-delete">Supprimer</span>
 <?php endif ?>
-          </div>
         </div>
-        <div class="mobile message-border"></div>
-        <div class="content"><?= $message ?></div>
-        <div class="clearfix"></div>
-        <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
+        <div class="not-action-menu">
+          <div class="message-header">
+            <div class="meta-author">
+              <span class="author pseudo-<?= $matches['status'][$i] ?> desktop"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
+<?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
+              <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span><!--
+<?php endif ?>
+              <!-- --><span class="author pseudo-<?= $matches['status'][$i] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
+            </div>
+            <div class="meta-actions">
+              <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
+              <span class="meta-menu"></span>
+              <span class="meta-quote">Citer</span>
+<?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
+              <span class="meta-ignore">Ignorer</span>
+<?php else: ?>
+              <!--<span class="meta-edit">Modifier</span>-->
+              <span class="meta-delete">Supprimer</span>
+<?php endif ?>
+            </div>
+          </div>
+          <div class="mobile message-border"></div>
+          <div class="content"><?= $message ?></div>
+          <div class="clearfix"></div>
+          <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
+        </div>
       </div>
 <?php endfor ?>
     </div>
