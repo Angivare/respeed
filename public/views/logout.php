@@ -1,7 +1,5 @@
 <?php
 
-require '../Auth.php';
-
 $hash = isset($_GET['hash']) ? $_GET['hash']  : '';
 $ts = isset($_GET['ts']) ? (int)$_GET['ts'] : 0;
 $rand = isset($_GET['rand']) ? $_GET['rand'] : '';
