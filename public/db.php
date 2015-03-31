@@ -121,13 +121,6 @@ class Db {
     )->fetch();
   }
 
-  public function discard_token($hash) {
-    return $this->query(
-      'UPDATE tokens SET used=TRUE WHERE token=?',
-      [$hash]
-    );
-  }
-
   public function get_token($hash) {
     return $this->query(
       'SELECT * FROM tokens WHERE token=?',
@@ -137,7 +130,7 @@ class Db {
 
   public function clean_tokens() {
     return $this->query(
-      'DELETE FROM tokens WHERE generated < NOW5() - INTERVAL 1 HOUR OR used=TRUE',
+      'DELETE FROM tokens WHERE generated < NOW5() - INTERVAL 1 HOUR',
       []
     );
   }

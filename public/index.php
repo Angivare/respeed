@@ -12,6 +12,10 @@ require 'db.php';
 require 'Auth.php';
 require '../config.php';
 
+$db = new Db();
+$auth = new Auth($db);
+$token = $auth->generate();
+
 ob_start();
 if ($login)
   require 'views/login.php';

@@ -6,14 +6,13 @@ foreach(fetch_forum($forum, $page, $slug) as $k => $v)
   $$k = $v;
 echo "<!-- JVC request delay: {$t_req}s | MySQL request delay: {$t_db}s -->";
 ?>
-<input type="hidden" id="token" value="<?= $token ?>">
 <header class="site-header">
   <h2 class="site-title">
     <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-    <a href="/se_deconnecter" class="site-login-link logout" data-no-instant>Se déconnecter</a>
+    <a href="/se_deconnecter/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
 <?php else: ?>
     <a href="/se_connecter" class="site-login-link">Se connecter</a>
 <?php endif ?>

@@ -8,7 +8,7 @@ $jvc = new Jvc();
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-    <a href="/se_deconnecter" class="site-login-link logout" data-no-instant>Se déconnecter</a>
+    <a href="/se_deconnecter/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout">Se déconnecter</a>
 <?php else: ?>
     <a href="/se_connecter" class="site-login-link">Se connecter</a>
 <?php endif ?>
@@ -34,8 +34,6 @@ $jvc = new Jvc();
     <ul>
       <li>Transformation des liens NoelShack en liens direct</li>
       <li>Cliquez/appuyez sur un avatar pour l’agrandir</li>
-      <li>Pseudos ignorés plus discret</li>
-      <li>Topics cachés pour les pseudos ignorés</li>
     </ul>
     </div>
   <aside class="aside"></aside>
