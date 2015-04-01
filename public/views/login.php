@@ -7,6 +7,7 @@ $ccode = isset($_POST['ccode']) ? $_POST['ccode'] : NULL;
 $form = isset($_POST['form']) ? $_POST['form'] : NULL;
 $nick = isset($_POST['nick']) ? $_POST['nick'] : NULL;
 $pass = isset($_POST['pass']) ? $_POST['pass'] : NULL;
+$ref = isset($_POST['ref']) ? $_POST['ref'] : NULL;
 
 if($nick && $pass && $form && $ccode):
   $form = unserialize(urldecode($form));
@@ -14,8 +15,12 @@ if($nick && $pass && $form && $ccode):
     $url = 'http://www.jeuxvideo.com/forums/42-1000021-38431092-949-0-1-0-actu-un-blabla-est-ne.htm';
     if(!$jvc->connect_finish($nick, $pass, $form, $ccode))
       echo 'Erreur lors de la connexion: ' . $jvc->err();
-    else
-      header('Location: /');
+    else {
+      if($ref && $ref != '/se_connecter')
+        header("Location: $ref");
+      else
+        header('Location: /');
+    }
   endif;
 else: ?>
 <header class="site-header">
@@ -54,10 +59,11 @@ if (isset($_GET['pour'])) {
     $form = $jvc->connect_req($nick, $pass);
 ?>
       <form action="/se_connecter" method="post">
-        <input type="hidden" name="form" value="<?php echo urlencode(serialize($form)) ?>">
+        <input type="hidden" name="ref" value="<?= $ref ?>">
+        <input type="hidden" name="form" value="<?= urlencode(serialize($form)) ?>">
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick?>">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
-        <p><img src="data:image/png;base64,<?php echo base64_encode(
+        <p><img src="data:image/png;base64,<?= base64_encode(
           $jvc->get('http://www.jeuxvideo.com/captcha/ccode.php?' .
           $form['fs_signature']
           )['body']) ?>" class="captcha">
@@ -66,6 +72,10 @@ if (isset($_GET['pour'])) {
       </form>
 <?php else: ?>
       <form action="/se_connecter" method="post">
+<?php if($url = parse_url($_SERVER['HTTP_REFERER'])) {
+  if($url['host'] == 'respeed.dev' && $url['path'] != '/se_connecter')
+    echo '<input type="hidden" name="ref" value="' . $url['path'] . '">';
+} ?>
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
