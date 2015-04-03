@@ -16,11 +16,11 @@ class Auth {
   }
 
   public function generate() {
-    $nick = isset($_COOKIE['pseudo']) ? strtolower($_COOKIE['pseudo']) : '';
+    $ip = $_SERVER['REMOTE_ADDR'];
     $ts = time();
     $rand = openssl_random_pseudo_bytes(self::RAND_BYTES);
     do {
-      $hash = md5($nick . SALT . $ts . $rand);
+      $hash = md5($ip . SALT . $ts . $rand);
     } while($this->db->get_token($hash));
     $this->db->set_token($hash);
     return [
@@ -36,8 +36,8 @@ class Auth {
       return $this->_err('Ip blacklistée');
 
     if(strlen($rand)%2) return $this->_err('Jeton invalide');
-    $nick = isset($_COOKIE['pseudo']) ? strtolower($_COOKIE['pseudo']) : '';
-    $recreated = md5($nick . SALT . $ts . hex2bin($rand));
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $recreated = md5($ip . SALT . $ts . hex2bin($rand));
     if($hash != $recreated)
       return $this->_err('Jeton invalide');
 
