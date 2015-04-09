@@ -60,7 +60,7 @@ $superlatifs = [
 
 function adapt_html($message, $date) {
   // Mise en forme édition
-  preg_match('#</div><div class="info-edition-msg">\s+Message édité le (?P<date>.+) par\s+<a href="(//www.jeuxvideo.com/profil/(?P<pseudo>.+)\?mode=infos)?" target="_blank">[^<]*</a>#Usi', $message, $matches_edit);
+  preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<a href="(//www.jeuxvideo.com/profil/(?P<pseudo>.+)\?mode=infos)?" target="_blank">[^<]*</a>#Usi', $message, $matches_edit);
   if ($matches_edit) {
     $message = str_replace($matches_edit[0], '', $message);
     $message .= '<p class="edit-mention">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</p>';
