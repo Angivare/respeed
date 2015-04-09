@@ -24,6 +24,19 @@ if(strcasecmp($pseudo, trim($match['pseudo'])) != 0)
   exit;
 
 ?>
+<header class="site-header">
+  <h2 class="site-title">
+    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+  </h2>
+  <div class="site-login-container">
+<?php if($jvc->is_connected()): ?>
+    <a href="/se_deconnecter/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
+<?php else: ?>
+    <a href="/se_connecter" class="site-login-link">Se connecter</a>
+<?php endif ?>
+  </div>
+</header>
+
 <div class="sheet">
   <div class="liste-messages">
 <?php

@@ -242,11 +242,11 @@ function fetch_topic($topic, $page, $slug, $forum) {
     $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
-      if(time() - $jvc->tokens_last_update() >= 3600/2) {
+      if($jvc->is_connected() && time() - $jvc->tokens_last_update() >= 3600/2) {
         $rep = delay( function() use (&$jvc, &$url) {
           return $jvc->get($url);
         }, $t_req);
-        $jvc->refresh_tokens($got['body']);
+        $jvc->refresh_tokens($rep['body']);
       } else {
         $rep = delay( function() use (&$jvc, &$url) {
           return $jvc->get($url, NULL, FALSE);
