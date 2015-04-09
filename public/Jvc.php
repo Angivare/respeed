@@ -538,7 +538,7 @@ class Jvc {
    * renvoyée, TRUE sinon
    * @return array réponse du serveur, séparé en 'header' et 'body'
    */
-  public function post($url, $data, $connected = TRUE, $cached = FALSE) {
+  public function post($url, $data, $connected = TRUE, $cached = TRUE) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -555,23 +555,27 @@ class Jvc {
    * renvoyée, TRUE sinon
    * @return array réponse du serveur, séparé en 'header' et 'body'
    */
-  public function get($url, $query = NULL, $connected = TRUE, $cached = FALSE) {
+  public function get($url, $query = NULL, $connected = TRUE, $cached = TRUE) {
     $query = $query ? "?$query" : '';
     return $this->finish_req(curl_init(), $url . $query, $connected, $cached);
   }
 
-  private function finish_req($ch, $url, $connected = TRUE, $cached = FALSE) {
+  private function finish_req($ch, $url, $connected = TRUE, $cached = TRUE) {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
 
-    if($this->is_connected())
+    if($this->is_connected() && $connected) {
       $coniunctio = $this->cookie['coniunctio'];
-    else
-      $coniunctio = $cached ? NULL : 'hello';
+      $dlrowolleh = $this->cookie['dlrowolleh'];
+    }
+    else {
+      $coniunctio = $cached ? NULL : '1685850$1428895224$6d788e4873e8af0cf4d13eb1b953ef9a';
+      $dlrowolleh = $cached ? $this->cookie['dlrowolleh'] : NULL;
+    }
 
     if(count($this->cookie) && $connected !== FALSE) {
-      curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio]));
+      curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
       $ip = $_SERVER['REMOTE_ADDR'];
       curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "HTTP_X_FORWARDED_FOR: $ip"
@@ -613,7 +617,8 @@ class Jvc {
   private function cookie_string($add) {
     $ret = '';
     foreach($this->cookie as $k => $v) {
-      if(array_key_exists($k, $add) && $add[$k] !== FALSE) {
+      if(array_key_exists($k, $add)) {
+        if($add[$k] === NULL) continue;
         $ret .= $k . '=' . $add[$k] . '; ';
         unset($add[$k]);
         continue;
@@ -621,7 +626,7 @@ class Jvc {
       $ret .= $k . '=' . $v . '; ';
     }
     foreach($add as $k => $v)
-      if($v !== FALSE)
+      if($v !== NULL)
         $ret .= $k . '=' . $v . '; ';
     return substr($ret, 0, -2);
   }
