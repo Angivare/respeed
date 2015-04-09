@@ -218,3 +218,10 @@ function strip_matches(&$matches) {
     if(is_int($k))
       unset($matches[$k]);
 }
+
+function delay($f, &$t) {
+  $t =  microtime(TRUE)*1000;
+  $ret = $f();
+  $t = microtime(TRUE)*1000 - $t;
+  return $ret;
+}

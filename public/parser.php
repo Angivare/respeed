@@ -91,17 +91,15 @@ function fetch_forum($forum, $page, $slug) {
     $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, true);
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-    curl_setopt($ch, CURLOPT_URL, $url);
-    $t_req = microtime(TRUE);
-      $got = curl_exec($ch);
-    $t_req = microtime(TRUE) - $t_req;
+    $rep = delay(function() use(&$jvc, &$url) {
+      return $jvc->get($url, NULL, FALSE);
+    }, $t_req);
 
-    $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+    $header = &$rep['header'];
+    $got = &$rep['body'];
+
     $location = JVc::redirects($header);
     if($location) {
       preg_match('#/forums/0-(?P<forum>.+)-0-1-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
@@ -244,21 +242,19 @@ function fetch_topic($topic, $page, $slug, $forum) {
     $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
-    $t_req = microtime(TRUE);
       if(time() - $jvc->tokens_last_update() >= 3600/2) {
-        $got = $jvc->get($url);
+        $rep = delay( function() use (&$jvc, &$url) {
+          return $jvc->get($url);
+        }, $t_req);
         $jvc->refresh_tokens($got['body']);
-        $header = $got['header'];
-        $got = $got['header'] . $got['body'];
       } else {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        $got = curl_exec($ch);
-        $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+        $rep = delay( function() use (&$jvc, &$url) {
+          return $jvc->get($url, NULL, FALSE);
+        }, $t_req);
       }
-    $t_req = microtime(TRUE) - $t_req;
+
+    $header = &$rep['header'];
+    $got = &$rep['body'];
 
     $location = Jvc::redirects($header);
     if($location) {
