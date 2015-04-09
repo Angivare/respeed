@@ -540,7 +540,8 @@ h1, h2, h3 {
   color: #080;
 }
 
-.pseudo-admin, .message .meta-author .author.pseudo-admin {
+.pseudo-admin, .message .meta-author .author.pseudo-admin,
+.pseudo-staff, .message .meta-author .author.pseudo-staff {
   color: #c00;
 }
 
