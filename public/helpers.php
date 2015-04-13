@@ -213,10 +213,11 @@ function array_max($array, $comp_func) {
   return $max;
 }
 
-function strip_matches(&$matches) {
+function strip_matches($matches) {
   foreach($matches as $k => $v)
     if(is_int($k))
       unset($matches[$k]);
+  return $matches;
 }
 
 function delay($f, &$t) {

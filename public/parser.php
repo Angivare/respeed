@@ -11,7 +11,7 @@ function sub_forums($body) {
         '(?:</span>.+)??</a>.+</li>#Usi';
   preg_match_all($re, $body, $matches, PREG_SET_ORDER);
   foreach($matches as $k => $v)
-    strip_matches($matches[$k]);
+    $matches[$k] = strip_matches($matches[$k]);
   return $matches;
 }
 
@@ -42,7 +42,7 @@ function hot_topics($body) {
         '(?P<human>[^<]+)</a>\s+</li>#Usi';
   preg_match_all($re, $body, $matches, PREG_SET_ORDER);
   foreach($matches as $k => $v)
-    strip_matches($matches[$k]);
+    $matches[$k] = strip_matches($matches[$k]);
   return $matches;
 }
 
@@ -69,7 +69,7 @@ function parse_forum($got) {
            '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
            '.+</tr>#Usi';
   preg_match_all($regex, $got, $ret['matches']);
-  strip_matches($ret['matches']);
+  $ret['matches'] = strip_matches($ret['matches']);
 
   $ret['has_next_page'] = strpos($got, '<div class="pagi-after"></div>') === false;
 
@@ -160,7 +160,7 @@ function parse_topic($got) {
            '<div class="txt-msg  text-enrichi-forum ">(?P<message>.*)</div>' .
            '</div>\s+</div>\s+</div>\s+</div>#Usi';
   preg_match_all($regex, $got, $ret['matches']);
-  strip_matches($ret['matches']);
+  $ret['matches'] = strip_matches($ret['matches']);
 
   // Pagination
   $ret['last_page'] = 1;
@@ -197,7 +197,7 @@ function parse_topic($got) {
   }
 
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
-  strip_matches($ret['has_parent']);
+  $ret['has_parent'] = strip_matches($ret['has_parent']);
   $ret['sous_forums'] = sub_forums($got);
 
   preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
