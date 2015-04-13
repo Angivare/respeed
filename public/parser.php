@@ -159,8 +159,30 @@ function parse_topic($got) {
            '<div class="bloc-date-msg">\s+(<span[^>]+>)?(?P<date>[0-9].+)</div>.+' .
            '<div class="txt-msg  text-enrichi-forum ">(?P<message>.*)</div>' .
            '</div>\s+</div>\s+</div>\s+</div>#Usi';
-  preg_match_all($regex, $got, $ret['matches']);
+  preg_match_all($regex, $got, $matches);
+  $ret['matches'] = $matches;
   strip_matches($ret['matches']);
+
+  $ret['messages'] = [];
+  for ($i = 0; $i < count($matches[0]); $i++) {
+    $dateRaw = strip_tags(trim($matches['date'][$i]));
+    $avatar = $avatarBig = false;
+    if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false) {
+      $avatar = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]);
+      $avatarBig = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]);
+    }
+    $ret['messages'][] = [
+      'pos' => $i,
+      'pseudo' => htmlspecialchars(trim($matches['pseudo'][$i])),
+      'avatar' => $avatar,
+      'avatarBig' => $avatarBig,
+      'dateRaw' => $dateRaw,
+      'date' => relative_date_messages($dateRaw),
+      'content' => adapt_html($matches['message'][$i], $dateRaw),
+      'id' => $matches['post'][$i],
+      'status' => $matches['status'][$i],
+    ];
+  }
 
   // Pagination
   $ret['last_page'] = 1;

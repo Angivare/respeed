@@ -11,8 +11,6 @@ require '../parser.php';
 
 if($forum && $topic && $slug) {
   $t = fetch_topic($topic, $page, $slug, $forum);
-  foreach($t['matches']['message'] as $k => $v)
-    $t['matches']['message'][$k] = adapt_html($v, strip_tags(trim($t['matches']['date'][$k])));
   echo json_encode(fetch_topic($topic, $page, $slug, $forum));
 } else if($forum && $slug) {
   echo json_encode(fetch_forum($forum, $page, $slug));
