@@ -83,7 +83,7 @@ $is_sign = (int)$number != $i;
               <!-- --><span class="author pseudo-<?= $message['status'] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower($message['pseudo']) ?>.html" class="m-profil"><?= wbr_pseudo($message['pseudo']) ?></a></span>
             </div>
             <div class="meta-actions">
-              <span class="meta-permalink" title="<?= $message['date'] ?>"><a href="#<?= $message['id'] ?>"><?= $message['date'] ?></a></span>
+              <span class="meta-permalink" title="<?= $message['date'] ?>"><a href="#<?= $message['id'] ?>" class="js-date"><?= $message['date'] ?></a></span>
               <span class="meta-menu"></span>
               <span class="meta-quote">Citer</span>
 <?php if (strcasecmp($pseudo, $message['pseudo']) != 0): ?>
