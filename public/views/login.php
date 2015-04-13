@@ -72,7 +72,7 @@ if (isset($_GET['pour'])) {
 <?php else: ?>
       <form action="/se_connecter" method="post">
 <?php if($url = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : NULL) {
-  if($url['host'] == 'respeed.dev' && $url['path'] != '/se_connecter')
+  if($url['host'] == $_SERVER['SERVER_NAME'] && $url['path'] != '/se_connecter')
     echo '<input type="hidden" name="ref" value="' . $url['path'] . '">';
 } ?>
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
