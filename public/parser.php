@@ -83,25 +83,23 @@ function fetch_forum($forum, $page, $slug) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $t_db = microtime(TRUE);
-    $cache = $db->get_forum_cache($forum, $page);
-  $t_db = microtime(TRUE) - $t_db;
+  $cache = delay(function() use (&$db, &$forum, &$page) {
+    return $db->get_forum_cache($forum, $page);
+  }, $t_db);
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
     $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, true);
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-    curl_setopt($ch, CURLOPT_URL, $url);
-    $t_req = microtime(TRUE);
-      $got = curl_exec($ch);
-    $t_req = microtime(TRUE) - $t_req;
+    $rep = delay(function() use(&$jvc, &$url) {
+      return $jvc->get($url, NULL, FALSE, FALSE);
+    }, $t_req);
 
-    $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+    $header = &$rep['header'];
+    $got = &$rep['body'];
+
     $location = JVc::redirects($header);
     if($location) {
       preg_match('#/forums/0-(?P<forum>.+)-0-1-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
@@ -109,24 +107,8 @@ function fetch_forum($forum, $page, $slug) {
       exit;
     }
 
-    $fetched_vars = parse_forum($got);
-    $ret = $fetched_vars;
-
-    //Caching
-    $cache = $db->get_forum_cache($forum, $page);
-    if($cache && $cache['fetched_at'] > time() - 60*5) {
-      function comp_date($a, $b) {
-        return date_topic_list_to_timestamp($a) > date_topic_list_to_timestamp($b);
-      }
-      $vars = json_decode($cache['vars'], TRUE);
-      $cache_max = array_max($vars['matches']['date'], 'comp_date');
-      $got_max = array_max($fetched_vars['matches']['date'], 'comp_date');
-      if(comp_date($cache_max, $got_max))
-        $ret = $vars;
-      else
-        $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
-    } else
-      $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
+    $ret = parse_forum($got);
+    $db->set_forum_cache($forum, $page, json_encode($ret));
   }
   $ret['t_db'] = $t_db;
   $ret['t_req'] = $t_req;
@@ -236,29 +218,27 @@ function fetch_topic($topic, $page, $slug, $forum) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $t_db = microtime(TRUE);
-    $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
-  $t_db = microtime(TRUE) - $t_db;
+  $cache = delay(function() use (&$db, &$topic, &$page, &$topic_mode, &$forum) {
+    return $db->get_topic_cache($topic, $page, $topic_mode, $forum);
+  }, $t_db);
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
     $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
-    $t_req = microtime(TRUE);
-      if(time() - $jvc->tokens_last_update() >= 3600/2) {
-        $got = $jvc->get($url);
-        $jvc->refresh_tokens($got['body']);
-        $header = $got['header'];
-        $got = $got['header'] . $got['body'];
+      if($jvc->is_connected() && time() - $jvc->tokens_last_update() >= 3600/2) {
+        $rep = delay( function() use (&$jvc, &$url) {
+          return $jvc->get($url);
+        }, $t_req);
+        $jvc->refresh_tokens($rep['body']);
       } else {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        $got = curl_exec($ch);
-        $header = substr($got, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
+        $rep = delay( function() use (&$jvc, &$url) {
+          return $jvc->get($url, NULL, FALSE, FALSE);
+        }, $t_req);
       }
-    $t_req = microtime(TRUE) - $t_req;
+
+    $header = &$rep['header'];
+    $got = &$rep['body'];
 
     $location = Jvc::redirects($header);
     if($location) {
@@ -272,23 +252,8 @@ function fetch_topic($topic, $page, $slug, $forum) {
       exit;
     }
 
-    $fetched_vars = parse_topic($got);
-    $ret = $fetched_vars;
-
-    //Caching
-    if($cache && $cache['fetched_at'] > time() - 60*5) {
-      function comp_date($a, $b) {
-        return date_messages_to_timestamp(strip_tags(trim($a))) > date_messages_to_timestamp(strip_tags(trim($b)));
-      }
-      $vars = json_decode($cache['vars'], TRUE);
-      $cache_max = array_max($vars['matches']['date'], 'comp_date');
-      $got_max = array_max($fetched_vars['matches']['date'], 'comp_date');
-      if(comp_date($cache_max, $got_max))
-        $ret = $vars;
-      else
-        $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($fetched_vars));
-    } else
-      $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($fetched_vars));
+    $ret = parse_topic($got);
+    $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($ret));
   }
   $ret['topic_mode'] = $topic_mode;
   $ret['t_db'] = $t_db;

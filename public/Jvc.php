@@ -27,8 +27,10 @@ class Jvc {
 
     $this->tk_update = isset($_COOKIE['tk_update']) ? $_COOKIE['tk_update'] : 0;
 
-    if(!isset($this->cookie['dlrowolleh']))
+    if(!isset($this->cookie['dlrowolleh']) || !$this->cookie['dlrowolleh']) {
+      $this->cookie['dlrowolleh'] = NULL;
       $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
+    }
 
     $this->err = 'Indéfinie';
   }
@@ -63,6 +65,9 @@ class Jvc {
     setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
     $this->tk = [];
     $this->last_update = 0;
+
+    $this->cookie['dlrowolleh'] = NULL;
+    $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
   }
 
   /**
@@ -534,13 +539,15 @@ class Jvc {
    * @param mixed $data champ à envoyer, urlencodé ou un tableau associatif 
    * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
    * en tant qu'utilisateur connecté, FALSE sinon
+   * @param boolean $cached FALSE (par défaut) si la dernière version du fichier doit être
+   * renvoyée, TRUE sinon
    * @return array réponse du serveur, séparé en 'header' et 'body'
    */
-  public function post($url, $data, $connected = TRUE) {
+  public function post($url, $data, $connected = TRUE, $cached = TRUE) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    return $this->finish_req($ch, $url, $connected);
+    return $this->finish_req($ch, $url, $connected, $cached);
   }
 
   /**
@@ -549,24 +556,37 @@ class Jvc {
    * @param string $query paramètres à envoyer, urlencodé 
    * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
    * en tant qu'utilisateur connecté, FALSE sinon
+   * @param boolean $cached FALSE (par défaut) si la dernière version du fichier doit être
+   * renvoyée, TRUE sinon
    * @return array réponse du serveur, séparé en 'header' et 'body'
    */
-  public function get($url, $query = '', $connected = TRUE) {
+  public function get($url, $query = NULL, $connected = TRUE, $cached = TRUE) {
     $query = $query ? "?$query" : '';
-    return $this->finish_req(curl_init(), $url . $query, $connected);
+    return $this->finish_req(curl_init(), $url . $query, $connected, $cached);
   }
 
-  private function finish_req($ch, $url, $connected = TRUE) {
+  private function finish_req($ch, $url, $connected = TRUE, $cached = TRUE) {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
-    if(count($this->cookie) && $connected !== FALSE) {
-      curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string());
+
+    if($this->is_connected() && $connected) {
+      $coniunctio = $this->cookie['coniunctio'];
+      $dlrowolleh = $this->cookie['dlrowolleh'];
+    }
+    else {
+      $coniunctio = $cached ? NULL : '0';
+      $dlrowolleh = $cached ? $this->cookie['dlrowolleh'] : NULL;
+    }
+
+    if(count($this->cookie) && ($connected !== FALSE || $cached === FALSE)) {
+      curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
       $ip = $_SERVER['REMOTE_ADDR'];
       curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "HTTP_X_FORWARDED_FOR: $ip"
       ]);
     }
+
     $rep = curl_exec($ch);
     $ret = array(
       'header' => substr($rep, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
@@ -599,10 +619,20 @@ class Jvc {
       setcookie(self::JV_PREFIX.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
   }
 
-  private function cookie_string() {
+  private function cookie_string($add) {
     $ret = '';
-    foreach($this->cookie as $k => $v)
+    foreach($this->cookie as $k => $v) {
+      if(array_key_exists($k, $add)) {
+        if($add[$k] === NULL) continue;
+        $ret .= $k . '=' . $add[$k] . '; ';
+        unset($add[$k]);
+        continue;
+      }
       $ret .= $k . '=' . $v . '; ';
+    }
+    foreach($add as $k => $v)
+      if($v !== NULL)
+        $ret .= $k . '=' . $v . '; ';
     return substr($ret, 0, -2);
   }
 
