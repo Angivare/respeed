@@ -281,26 +281,22 @@ function delTopic() {
   })
 }
 
-function startTopicRefresh() {
+function topicRefresh() {
   if (!$topic) {
+    // On est pas sur un topic
     return
   }
-  topicRefreshes.push(setInterval(topicRefresh, 1500))
-}
 
-function stopTopicRefreshes() {
-  while (topicRefreshes.length) {
-    clearInterval(topicRefreshes[0])
-    topicRefreshes.shift()
-  }
-}
-
-function topicRefresh() {
   $.getJSON('/ajax/refresh.php?forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug + '&page=' + $page + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, function(data) {
-    //if $newtopic != data.newtopic {return}
+    if (data.topicNew != $topicNew) {
+      // On est plus sur le topic quand la requête se termine
+      return
+    }
+
     if (data.title != $title) {
       $title = data.title
-      $('.topic-title').html($title)
+      $('.js-topicTitle').html($title)
+      $('title').html($title)
     }
   })
 }
@@ -309,12 +305,13 @@ function topicRefresh() {
 
 FastClick.attach(document.body)
 updateRemoteBlacklist()
+setInterval(topicRefresh, 2000)
+
 InstantClick.on('change', function(isInitialLoad) {
   updateFavorites()
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
   updateLocalBlacklist()
   applyBlacklist()
-  startTopicRefresh()
 })
 
 InstantClick.on('change', function() {
