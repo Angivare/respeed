@@ -442,6 +442,10 @@ InstantClick.on('change', function() {
     var id = this.id
     $('#' + id).removeClass('show-menu')
   })
+  
+  $('.js-avatarImg').error(function(handler) {
+    $(handler.target).remove()
+  })
 })
 
 InstantClick.init()

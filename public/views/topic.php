@@ -82,7 +82,7 @@ $message = adapt_html($matches['message'][$i], $date);
             <div class="meta-author">
               <span class="author pseudo-<?= $matches['status'][$i] ?> desktop"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
 <?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
-              <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span><!--
+              <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img class="js-avatarImg" src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span><!--
 <?php endif ?>
               <!-- --><span class="author pseudo-<?= $matches['status'][$i] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
             </div>
