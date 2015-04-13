@@ -335,6 +335,12 @@ h1, h2, h3 {
 }
 
 @media (min-width: 1025px) {
+  .topic:hover {
+    background-image: linear-gradient(rgba(255, 85, 0, 0.05), rgba(255, 85, 0, 0.05));
+  }
+}
+
+@media (min-width: 1025px) {
   .liste-topics .title, .liste-topics .author, .liste-topics .nb-answers, .liste-topics .date {
     display: inline-block;
   }
@@ -534,7 +540,8 @@ h1, h2, h3 {
   color: #080;
 }
 
-.pseudo-admin, .message .meta-author .author.pseudo-admin {
+.pseudo-admin, .message .meta-author .author.pseudo-admin,
+.pseudo-staff, .message .meta-author .author.pseudo-staff {
   color: #c00;
 }
 

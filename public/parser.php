@@ -11,7 +11,7 @@ function sub_forums($body) {
         '(?:</span>.+)??</a>.+</li>#Usi';
   preg_match_all($re, $body, $matches, PREG_SET_ORDER);
   foreach($matches as $k => $v)
-    $matches[$k] = strip_matches($matches[$k]);
+    strip_matches($matches[$k]);
   return $matches;
 }
 
@@ -42,7 +42,7 @@ function hot_topics($body) {
         '(?P<human>[^<]+)</a>\s+</li>#Usi';
   preg_match_all($re, $body, $matches, PREG_SET_ORDER);
   foreach($matches as $k => $v)
-    $matches[$k] = strip_matches($matches[$k]);
+    strip_matches($matches[$k]);
   return $matches;
 }
 
@@ -69,7 +69,7 @@ function parse_forum($got) {
            '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
            '.+</tr>#Usi';
   preg_match_all($regex, $got, $ret['matches']);
-  $ret['matches'] = strip_matches($ret['matches']);
+  strip_matches($ret['matches']);
 
   $ret['has_next_page'] = strpos($got, '<div class="pagi-after"></div>') === false;
 
@@ -159,8 +159,30 @@ function parse_topic($got) {
            '<div class="bloc-date-msg">\s+(<span[^>]+>)?(?P<date>[0-9].+)</div>.+' .
            '<div class="txt-msg  text-enrichi-forum ">(?P<message>.*)</div>' .
            '</div>\s+</div>\s+</div>\s+</div>#Usi';
-  preg_match_all($regex, $got, $ret['matches']);
-  $ret['matches'] = strip_matches($ret['matches']);
+  preg_match_all($regex, $got, $matches);
+  $ret['matches'] = $matches;
+  strip_matches($ret['matches']);
+
+  $ret['messages'] = [];
+  for ($i = 0; $i < count($matches[0]); $i++) {
+    $dateRaw = strip_tags(trim($matches['date'][$i]));
+    $avatar = $avatarBig = false;
+    if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false) {
+      $avatar = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]);
+      $avatarBig = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]);
+    }
+    $ret['messages'][] = [
+      'pos' => $i,
+      'pseudo' => htmlspecialchars(trim($matches['pseudo'][$i])),
+      'avatar' => $avatar,
+      'avatarBig' => $avatarBig,
+      'dateRaw' => $dateRaw,
+      'date' => relative_date_messages($dateRaw),
+      'content' => adapt_html($matches['message'][$i], $dateRaw),
+      'id' => $matches['post'][$i],
+      'status' => $matches['status'][$i],
+    ];
+  }
 
   // Pagination
   $ret['last_page'] = 1;
@@ -197,7 +219,7 @@ function parse_topic($got) {
   }
 
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
-  $ret['has_parent'] = strip_matches($ret['has_parent']);
+  strip_matches($ret['has_parent']);
   $ret['sous_forums'] = sub_forums($got);
 
   preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);

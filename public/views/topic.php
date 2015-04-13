@@ -25,7 +25,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <div class="sheet">
   <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
   <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
-  <h1 class="sheet-title topic-title"><a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
+  <h1 class="sheet-title topic-title"><a class="js-topicTitle" href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
   <div class="content">
     <div class="pages">
       <div class="pages-container">
@@ -63,15 +63,11 @@ $is_sign = (int)$number != $i;
     </div>
     
     <div class="liste-messages">
-<?php for ($i = 0; $i < count($matches['post']); $i++): ?>
-<?php
-$date = strip_tags(trim($matches['date'][$i]));
-$message = adapt_html($matches['message'][$i], $date);
-?>
-      <div class="message <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $matches['post'][$i] ?>" data-pseudo="<?= htmlspecialchars(trim($matches['pseudo'][$i])) ?>" data-date="<?= relative_date_messages($date) ?>">
+<?php foreach ($messages as $message): ?>
+      <div class="message <?= ($message['pos'] % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $message['id'] ?>" data-pseudo="<?= $message['pseudo'] ?>" data-date="<?= $message['date'] ?>">
         <div class="action-menu">
           <label class="action meta-quote" for="newmessage">Citer</label><!--
-<?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
+<?php if (strcasecmp($pseudo, $message['pseudo']) != 0): ?>
           --><span class="action meta-ignore">Ignorer</span>
 <?php else: ?>
           --><span class="action meta-delete">Supprimer</span>
@@ -80,17 +76,17 @@ $message = adapt_html($matches['message'][$i], $date);
         <div class="not-action-menu">
           <div class="message-header">
             <div class="meta-author">
-              <span class="author pseudo-<?= $matches['status'][$i] ?> desktop"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
-<?php if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false): ?>
-              <span class="avatar"><a href="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]) ?>"><img src="<?= str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]) ?>"></a></span><!--
+              <span class="author pseudo-<?= $message['status'] ?> desktop"><a href="http://m.jeuxvideo.com/profil/<?= strtolower($message['pseudo']) ?>.html" class="m-profil"><?= wbr_pseudo($message['pseudo']) ?></a></span>
+<?php if ($message['avatar']): ?>
+              <span class="avatar"><a href="<?= $message['avatarBig'] ?>"><img class="js-avatarImg" src="<?= $message['avatar'] ?>"></a></span><!--
 <?php endif ?>
-              <!-- --><span class="author pseudo-<?= $matches['status'][$i] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower(htmlspecialchars(trim($matches['pseudo'][$i]))) ?>.html" class="m-profil"><?= wbr_pseudo(trim($matches['pseudo'][$i])) ?></a></span>
+              <!-- --><span class="author pseudo-<?= $message['status'] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower($message['pseudo']) ?>.html" class="m-profil"><?= wbr_pseudo($message['pseudo']) ?></a></span>
             </div>
             <div class="meta-actions">
-              <span class="meta-permalink" title="<?= $date ?>"><a href="#<?= $matches['post'][$i] ?>"><?= relative_date_messages($date) ?></a></span>
+              <span class="meta-permalink" title="<?= $message['date'] ?>"><a href="#<?= $message['id'] ?>"><?= $message['date'] ?></a></span>
               <span class="meta-menu"></span>
               <span class="meta-quote">Citer</span>
-<?php if (strcasecmp($pseudo, trim($matches['pseudo'][$i])) != 0): ?>
+<?php if (strcasecmp($pseudo, $message['pseudo']) != 0): ?>
               <span class="meta-ignore">Ignorer</span>
 <?php else: ?>
               <!--<span class="meta-edit">Modifier</span>-->
@@ -99,12 +95,12 @@ $message = adapt_html($matches['message'][$i], $date);
             </div>
           </div>
           <div class="mobile message-border"></div>
-          <div class="content"><?= $message ?></div>
+          <div class="content"><?= $message['content'] ?></div>
           <div class="clearfix"></div>
-          <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= trim($matches['pseudo'][$i]) ?> parle mais se fait ignorer.</div>
+          <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= $message['pseudo'] ?> parle mais se fait ignorer.</div>
         </div>
       </div>
-<?php endfor ?>
+<?php endforeach ?>
     </div>
 
     <div class="pages">
