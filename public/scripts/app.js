@@ -293,10 +293,17 @@ function topicRefresh() {
       return
     }
 
+    // Titre du topic
     if (data.title != $title) {
       $title = data.title
       $('.js-topicTitle').html($title)
       $('title').html($title)
+    }
+    
+    // Dates
+    for (var i = 0; i < data.messages.length; i++) {
+      var message = data.messages[i]
+      $('#' + message.id + ' .js-date').html(message.date)
     }
   })
 }
@@ -305,7 +312,7 @@ function topicRefresh() {
 
 FastClick.attach(document.body)
 updateRemoteBlacklist()
-setInterval(topicRefresh, 2000)
+setInterval(topicRefresh, 2500)
 
 InstantClick.on('change', function(isInitialLoad) {
   updateFavorites()
