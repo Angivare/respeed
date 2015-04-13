@@ -191,7 +191,10 @@ function request_form_data() {
       }
       form_data = data.rep
       if (form_data.fs_signature) {
-        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha.php?signature=' + form_data.fs_signature + '" class="captcha">')
+        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha.php?'
+          + 'signature=' + encodeURIComponent(form_data.fs_signature)
+          + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
+          + '" class="captcha">')
       }
     })
   }
