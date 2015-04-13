@@ -142,7 +142,7 @@ $is_sign = (int)$number != $i;
     <div class="form-post locked">
       <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
       <div class="form-post-inner">
-        <p><?= $matches['raison'] ?>
+        <p><?= $lock_raison ?>
       </div>
     </div>
 <?php else: ?>

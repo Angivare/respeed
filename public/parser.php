@@ -160,8 +160,6 @@ function parse_topic($got) {
            '<div class="txt-msg  text-enrichi-forum ">(?P<message>.*)</div>' .
            '</div>\s+</div>\s+</div>\s+</div>#Usi';
   preg_match_all($regex, $got, $matches);
-  $ret['matches'] = $matches;
-  strip_matches($ret['matches']);
 
   $ret['messages'] = [];
   for ($i = 0; $i < count($matches[0]); $i++) {
@@ -228,7 +226,7 @@ function parse_topic($got) {
   }
 
   $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches) ? TRUE : FALSE;
-  if($ret['locked']) $ret['matches']['raison'] = $matches['raison'];
+  if($ret['locked']) $ret['lock_raison'] = $matches['raison'];
 
   return $ret;
 }
