@@ -27,8 +27,10 @@ class Jvc {
 
     $this->tk_update = isset($_COOKIE['tk_update']) ? $_COOKIE['tk_update'] : 0;
 
-    if(!isset($this->cookie['dlrowolleh']))
+    if(!isset($this->cookie['dlrowolleh']) || !$this->cookie['dlrowolleh']) {
+      $this->cookie['dlrowolleh'] = NULL;
       $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
+    }
 
     $this->err = 'Indéfinie';
   }
@@ -63,6 +65,9 @@ class Jvc {
     setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
     $this->tk = [];
     $this->last_update = 0;
+
+    $this->cookie['dlrowolleh'] = NULL;
+    $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
   }
 
   /**
@@ -570,11 +575,11 @@ class Jvc {
       $dlrowolleh = $this->cookie['dlrowolleh'];
     }
     else {
-      $coniunctio = $cached ? NULL : '1685850$1428895224$6d788e4873e8af0cf4d13eb1b953ef9a';
+      $coniunctio = $cached ? NULL : '0';
       $dlrowolleh = $cached ? $this->cookie['dlrowolleh'] : NULL;
     }
 
-    if(count($this->cookie) && $connected !== FALSE) {
+    if(count($this->cookie) && ($connected !== FALSE || $cached === FALSE)) {
       curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
       $ip = $_SERVER['REMOTE_ADDR'];
       curl_setopt($ch, CURLOPT_HTTPHEADER, [

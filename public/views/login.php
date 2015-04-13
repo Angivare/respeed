@@ -12,7 +12,6 @@ $ref = isset($_POST['ref']) ? $_POST['ref'] : NULL;
 if($nick && $pass && $form && $ccode):
   $form = unserialize(urldecode($form));
   if(is_array($form) && ctype_digit($ccode)):
-    $url = 'http://www.jeuxvideo.com/forums/42-1000021-38431092-949-0-1-0-actu-un-blabla-est-ne.htm';
     if(!$jvc->connect_finish($nick, $pass, $form, $ccode))
       echo 'Erreur lors de la connexion: ' . $jvc->err();
     else {
@@ -72,7 +71,7 @@ if (isset($_GET['pour'])) {
       </form>
 <?php else: ?>
       <form action="/se_connecter" method="post">
-<?php if($url = parse_url($_SERVER['HTTP_REFERER'])) {
+<?php if($url = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : NULL) {
   if($url['host'] == 'respeed.dev' && $url['path'] != '/se_connecter')
     echo '<input type="hidden" name="ref" value="' . $url['path'] . '">';
 } ?>

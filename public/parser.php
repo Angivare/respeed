@@ -83,9 +83,9 @@ function fetch_forum($forum, $page, $slug) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $t_db = microtime(TRUE);
-    $cache = $db->get_forum_cache($forum, $page);
-  $t_db = microtime(TRUE) - $t_db;
+  $cache = delay(function() use (&$db, &$forum, &$page) {
+    return $db->get_forum_cache($forum, $page);
+  }, $t_db);
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
     $t_req = 0;
@@ -94,7 +94,7 @@ function fetch_forum($forum, $page, $slug) {
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
     $rep = delay(function() use(&$jvc, &$url) {
-      return $jvc->get($url, NULL, FALSE);
+      return $jvc->get($url, NULL, FALSE, FALSE);
     }, $t_req);
 
     $header = &$rep['header'];
@@ -107,24 +107,8 @@ function fetch_forum($forum, $page, $slug) {
       exit;
     }
 
-    $fetched_vars = parse_forum($got);
-    $ret = $fetched_vars;
-
-    //Caching
-    $cache = $db->get_forum_cache($forum, $page);
-    if($cache && $cache['fetched_at'] > time() - 60*5) {
-      function comp_date($a, $b) {
-        return date_topic_list_to_timestamp($a) > date_topic_list_to_timestamp($b);
-      }
-      $vars = json_decode($cache['vars'], TRUE);
-      $cache_max = array_max($vars['matches']['date'], 'comp_date');
-      $got_max = array_max($fetched_vars['matches']['date'], 'comp_date');
-      if(comp_date($cache_max, $got_max))
-        $ret = $vars;
-      else
-        $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
-    } else
-      $db->set_forum_cache($forum, $page, json_encode($fetched_vars));
+    $ret = parse_forum($got);
+    $db->set_forum_cache($forum, $page, json_encode($ret));
   }
   $ret['t_db'] = $t_db;
   $ret['t_req'] = $t_req;
@@ -234,9 +218,9 @@ function fetch_topic($topic, $page, $slug, $forum) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $t_db = microtime(TRUE);
-    $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
-  $t_db = microtime(TRUE) - $t_db;
+  $cache = delay(function() use (&$db, &$topic, &$page, &$topic_mode, &$forum) {
+    return $db->get_topic_cache($topic, $page, $topic_mode, $forum);
+  }, $t_db);
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
     $t_req = 0;
@@ -249,7 +233,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
         $jvc->refresh_tokens($rep['body']);
       } else {
         $rep = delay( function() use (&$jvc, &$url) {
-          return $jvc->get($url, NULL, FALSE);
+          return $jvc->get($url, NULL, FALSE, FALSE);
         }, $t_req);
       }
 
@@ -268,23 +252,8 @@ function fetch_topic($topic, $page, $slug, $forum) {
       exit;
     }
 
-    $fetched_vars = parse_topic($got);
-    $ret = $fetched_vars;
-
-    //Caching
-    if($cache && $cache['fetched_at'] > time() - 60*5) {
-      function comp_date($a, $b) {
-        return date_messages_to_timestamp(strip_tags(trim($a))) > date_messages_to_timestamp(strip_tags(trim($b)));
-      }
-      $vars = json_decode($cache['vars'], TRUE);
-      $cache_max = array_max($vars['matches']['date'], 'comp_date');
-      $got_max = array_max($fetched_vars['matches']['date'], 'comp_date');
-      if(comp_date($cache_max, $got_max))
-        $ret = $vars;
-      else
-        $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($fetched_vars));
-    } else
-      $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($fetched_vars));
+    $ret = parse_topic($got);
+    $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($ret));
   }
   $ret['topic_mode'] = $topic_mode;
   $ret['t_db'] = $t_db;
