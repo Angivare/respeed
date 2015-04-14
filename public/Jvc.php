@@ -29,7 +29,7 @@ class Jvc {
 
     if(!isset($this->cookie['dlrowolleh']) || !$this->cookie['dlrowolleh']) {
       $this->cookie['dlrowolleh'] = NULL;
-      $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
+      $this->get('http://www.jeuxvideo.com/login');
     }
 
     $this->err = 'Indéfinie';
