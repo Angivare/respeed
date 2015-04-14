@@ -1,7 +1,7 @@
 <?php
 require 'common.php';
 
-$id = isset($_GET['id']) ? $_GET['id'] : FALSE;
+arg('id');
 $jvc = new Jvc();
 
 if($id)

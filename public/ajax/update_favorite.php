@@ -1,10 +1,7 @@
 <?php
 require 'common.php';
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$type = isset($_GET['type']) ? $_GET['type'] : '';
-$action = isset($_GET['action']) ? $_GET['action'] : '';
-
+arg('id', 'type', 'action');
 $jvc = new Jvc();
 
 if($id && $type && $action)
