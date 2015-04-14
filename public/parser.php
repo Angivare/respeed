@@ -234,7 +234,7 @@ function parse_topic($got) {
 }
 
 function fetch_topic($topic, $page, $slug, $forum) {
-  $topic_mode = $_GET['topic'][0] === '0' ? 1 : 42;
+  $topic_mode = $topic[0] === '0' ? 1 : 42;
   $url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
 
   $jvc = new Jvc();
