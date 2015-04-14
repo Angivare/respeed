@@ -252,7 +252,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
         $rep = delay( function() use (&$jvc, &$url) {
           return $jvc->get($url);
         }, $t_req);
-        $jvc->refresh_tokens($rep['body']);
+        $jvc->tokens_refresh($rep['body']);
       } else {
         $rep = delay( function() use (&$jvc, &$url) {
           return $jvc->get($url, NULL, FALSE, FALSE);

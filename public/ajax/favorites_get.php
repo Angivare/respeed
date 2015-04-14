@@ -1,10 +1,9 @@
 <?php
 require 'common.php';
 
-arg('id');
 $jvc = new Jvc();
 
 echo json_encode([
-  'rep' => $jvc->quote($id),
+  'rep' => $jvc->favorites_get(),
   'err' => $jvc->err()
   ]);

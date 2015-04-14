@@ -133,7 +133,7 @@ class Jvc {
    * @return mixed FALSE si une erreur a eu lieu, le formulaire
    * sinon
    */
-  public function post_msg_req($url) {
+  public function message_post_req($url) {
     $form = self::parse_form($this->get($url)['body']);
     if(count($form)) return $form;
     return $this->_err('Impossible de préparer le formulaire');
@@ -147,7 +147,7 @@ class Jvc {
    * @param string $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
-  public function post_msg_finish($url, $msg, $form, $ccode='', &$ret_location=NULL) {
+  public function message_post_finish($url, $msg, $form, $ccode='', &$ret_location=NULL) {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
       '&form_alias_rang=1' .
@@ -173,7 +173,7 @@ class Jvc {
    * @param string $url url du forum
    * @return mixed FALSE si une erreur a eu lieu, le formulaire sinon
    */
-  public function post_topic_req($url) {
+  public function topic_post_req($url) {
     $rep = $this->get($url)['body'];
     $form = self::parse_form($rep);
     if(count($form)) return $form;
@@ -193,7 +193,7 @@ class Jvc {
    * @param string $ccode 
    * @return boolean TRUE si le topic est créé, FALSE sinon
    */
-  public function post_topic_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='', &$ret_location=NULL) {
+  public function topic_post_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='', &$ret_location=NULL) {
     $post_data = http_build_query($form) .
       '&titre_topic=' . urlencode($title) .
       '&message_topic=' . urlencode($msg) .
@@ -222,7 +222,7 @@ class Jvc {
    * @param string $url 
    * @return mixed FALSE si une erreur a eu lieu, les infos sur le sondage sinon
    */
-  public function ans_poll_req($url) {
+  public function poll_answer_req($url) {
     $rep = $this->get($url);
     $regex = '#<tr>.+<td class="reponse">.+' .
              '<a .+ data-id-sondage="(?P<question>.+)" data-id-reponse="(?P<answer>.+)".*>' .
@@ -240,7 +240,7 @@ class Jvc {
    * @param int $id_answer 
    * @return mixed TRUE/FALSE
    */
-  public function ans_poll_finish($id_topic, $id_question, $id_answer) {
+  public function poll_answer_finish($id_topic, $id_question, $id_answer) {
     $tk = $this->ajax_array('liste_messages');
     $post_data = http_build_query($tk) .
       '&id_topic=' . urlencode($id_topic) .
@@ -261,7 +261,7 @@ class Jvc {
    * @param string $body Le contenu d'un topic
    * @return boolean TRUE s'il n'y a pas eu d'erreur, FALSE sinon
    */
-  public function refresh_tokens($body) {
+  public function tokens_refresh($body) {
     $this->tk = self::parse_ajax_tk($body, '.+?', TRUE);
     if(!$this->tk) return $this->_err('Indéfinie');
     $this->tk_update = time();
@@ -390,7 +390,7 @@ class Jvc {
    * utilisateur est représenté par un tableau associatif contenant
    * une valeur 'id' et 'human'. FALSE si une erreur est survenue
    */
-  public function blacklist() {
+  public function blacklist_get() {
     $rep = $this->get('http://www.jeuxvideo.com/sso/blacklist.php');
 
     $regex =  '#<li data-id-alias="(?P<id>[0-9]+)">.+' .
@@ -432,7 +432,7 @@ class Jvc {
    * Retourne la liste des sujets & topics préférés
    * @return array Tableau associatif contenant les sujets et topics favoris
    */
-  public function favorites() {
+  public function favorites_get() {
     $rep = $this->get('http://www.jeuxvideo.com/forums.htm');
 
     $lim = strpos($rep['body'], '<ul id="liste-sujet-prefere"');
@@ -472,7 +472,7 @@ class Jvc {
    * @param int $id 
    * @return boolean TRUE/FALSE
    */
-  public function delete($id) {
+  public function message_delete($id) {
     $tk = self::ajax_array('moderation_forum');
     $post_data = http_build_query($tk) .
       '&type=delete' .
@@ -489,7 +489,7 @@ class Jvc {
    * @param int $id 
    * @return boolean TRUE/FALSE
    */
-  public function restore($id) {
+  public function message_restore($id) {
     $tk = self::ajax_array('moderation_forum');
     $post_data = http_build_query($tk) .
       '&type=delete' .
@@ -642,7 +642,7 @@ class Jvc {
       &&(time() - $this->tokens_last_update() >= 3600/2)
     ) {
       $rep = $this->get('http://www.jeuxvideo.com/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
-      self::refresh_tokens($rep['body']);
+      self::tokens_refresh($rep['body']);
     }
     return [
       'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],

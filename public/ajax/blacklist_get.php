@@ -4,6 +4,6 @@ require 'common.php';
 $jvc = new Jvc();
 
 echo json_encode([
-  'rep' => $jvc->blacklist(),
+  'rep' => $jvc->blacklist_get(),
   'err' => $jvc->err()
 ]);

@@ -1,11 +1,12 @@
 <?php
 require 'common.php';
 
-arg('id');
+arg('id_message');
 $jvc = new Jvc();
 
-if($id)
+if($id_message) {
   echo json_encode([
-    'rep' => $jvc->delete($id),
+    'rep' => $jvc->quote($id_message),
     'err' => $jvc->err()
-  ]);
+    ]);
+}
