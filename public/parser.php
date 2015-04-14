@@ -169,14 +169,15 @@ function parse_topic($got) {
       $avatar = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]);
       $avatarBig = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]);
     }
+    $content = adapt_html($matches['message'][$i], $dateRaw);
     $ret['messages'][] = [
-      'pos' => $i,
       'pseudo' => htmlspecialchars(trim($matches['pseudo'][$i])),
       'avatar' => $avatar,
       'avatarBig' => $avatarBig,
       'dateRaw' => $dateRaw,
       'date' => relative_date_messages($dateRaw),
-      'content' => adapt_html($matches['message'][$i], $dateRaw),
+      'content' => $content,
+      'contentMd5' => md5($content),
       'id' => $matches['post'][$i],
       'status' => $matches['status'][$i],
     ];

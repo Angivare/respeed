@@ -303,10 +303,22 @@ function topicRefresh() {
       $('title').html($title)
     }
     
-    // Dates
     for (var i = 0; i < data.messages.length; i++) {
       var message = data.messages[i]
-      $('#' + message.id + ' .js-date').html(message.date)
+      if ($('#' + message.id).length) {
+        // Date
+        $('#' + message.id + ' .js-date').html(message.date)
+        
+        // Message
+        if ($('#' + message.id).data('contentMd5') != message.contentMd5) {
+          // Mise à jour
+          $('#' + message.id).data('contentMd5', message.contentMd5)
+          $('#' + message.id + ' .js-content').html(message.content)
+        }
+      }
+      else {
+        // Création
+      }
     }
   })
 }

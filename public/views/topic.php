@@ -64,7 +64,7 @@ $is_sign = (int)$number != $i;
     
     <div class="liste-messages">
 <?php foreach ($messages as $message): ?>
-      <div class="message <?= ($message['pos'] % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $message['id'] ?>" data-pseudo="<?= $message['pseudo'] ?>" data-date="<?= $message['date'] ?>">
+      <div class="message <?= ($message['pos'] % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $message['id'] ?>" data-pseudo="<?= $message['pseudo'] ?>" data-date="<?= $message['date'] ?>"  data-content-md5="<?= $message['contentMd5'] ?>">
         <div class="action-menu">
           <label class="action meta-quote" for="newmessage">Citer</label><!--
 <?php if (strcasecmp($pseudo, $message['pseudo']) != 0): ?>
@@ -95,7 +95,7 @@ $is_sign = (int)$number != $i;
             </div>
           </div>
           <div class="mobile message-border"></div>
-          <div class="content"><?= $message['content'] ?></div>
+          <div class="js-content content"><?= $message['content'] ?></div>
           <div class="clearfix"></div>
           <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= $message['pseudo'] ?> parle mais se fait ignorer.</div>
         </div>
