@@ -10,12 +10,19 @@
 class Jvc {
   /**
    * Retourne la session sur JVC du client depuis les cookies
+   * @param string $site 'JVC' ou 'FJV'
    */
-  public function __construct() {
+  public function __construct($site = 'JVC') {
     $this->err = 'Indéfinie';
-    $this->domain = 'http://www.jeuxvideo.com';
-    $this->cookie_pre = '_JVCC_';
-    $this->tokens_pre = '_JTOK_';
+    if($site === 'JVC') {
+      $this->domain = 'http://www.jeuxvideo.com';
+      $this->cookie_pre = '_JVCCOK_';
+      $this->tokens_pre = '_JVCTOK_';
+    } else if($site === 'FJV') {
+      $this->domain = 'http://www.forumjv.com';
+      $this->cookie_pre = '_FJVCOK_';
+      $this->tokens_pre = '_FJVTOK_';
+    }
 
     $this->cookie = [];
     foreach($_COOKIE as $k => $v)
