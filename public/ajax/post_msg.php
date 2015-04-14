@@ -21,15 +21,15 @@ if($url && $msg && $form) {
 
   preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $l);
   $got = $jvc->get("http://www.jeuxvideo.com{$location}");
-  $m = parse_topic($got['body'])['matches'];
-  $i = count($m['post'])-1;
+  $m = parse_topic($got['body'])['messages'];
+  $i = count($m)-1;
   $db->log_message(
-    $m['post'][$i],
+    $m[$i]['id'],
     $l['topic'],
     $l['forum'],
     $_SERVER['REMOTE_ADDR'],
     date('Y-m-d H:i:s', time()),
-    $m['pseudo'][$i]
+    $m[$i]['pseudo']
   );
 
 } else if($url)
