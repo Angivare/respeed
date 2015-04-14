@@ -2,7 +2,6 @@
 require 'common.php';
 
 arg('id_message', 'msg', 'form', 'ccode');
-$jvc = new Jvc();
 
 if($id_message && $msg && $form)
   echo json_encode([

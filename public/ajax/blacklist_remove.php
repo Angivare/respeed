@@ -5,7 +5,6 @@ arg('nick');
 
 if($nick) {
   $nick = strtolower($nick);
-  $jvc = new Jvc();
 
   $bl = $jvc->blacklist();
 

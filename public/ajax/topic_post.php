@@ -5,7 +5,6 @@ require '../helpers.php';
 require '../parser.php';
 
 arg('url', 'title', 'msg', 'form', 'ccode');
-$jvc = new Jvc();
 
 if($url && $msg && $form) {
   $location = '';

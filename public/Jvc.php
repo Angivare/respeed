@@ -22,6 +22,8 @@ class Jvc {
       $this->domain = 'http://www.forumjv.com';
       $this->cookie_pre = '_FJVCOK_';
       $this->tokens_pre = '_FJVTOK_';
+    } else {
+      die('Mauvais paramètre fourni à Jvc::__construct, contacter l\'admin');
     }
 
     $this->cookie = [];
