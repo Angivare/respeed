@@ -179,7 +179,7 @@ function parse_topic($got) {
       'date' => relative_date_messages($dateRaw),
       'content' => $content,
       'contentMd5' => md5($content),
-      'id' => $matches['post'][$i],
+      'id' => (int)$matches['post'][$i],
       'status' => $matches['status'][$i],
     ];
   }

@@ -61,10 +61,12 @@ $is_sign = (int)$number != $i;
       </div>
       <div class="clearfix"></div>
     </div>
-    
-    <div class="liste-messages">
+
+<script>var liste_messages = []</script>
+    <div class="js-listeMessages liste-messages">
 <?php foreach ($messages as $message): ?>
-<?= generate_message_markup($message, strcasecmp($pseudo, $message['pseudo']) != 0) ?>
+<?= generate_message_markup($message) ?>
+<script>liste_messages.push(<?= $message['id'] ?>)</script>
 <?php endforeach ?>
     </div>
 

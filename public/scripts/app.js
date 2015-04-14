@@ -6,6 +6,7 @@ var form_data
   , favoritesTopics = []
   , isBigScreen = screen.width > 1024
   , topicRefreshes = []
+  , liste_messages = liste_messages || []
 
 /*** Helpers ***/
 
@@ -264,7 +265,7 @@ function topicRefresh() {
     return
   }
 
-  ajax('get_topic', {forum: $forum, topic: $topic, slug: $slug, page: $page}, function(data) {
+  ajax('get_topic', {forum: $forum, topic: $topic, slug: $slug, page: $page, liste_messages: liste_messages}, function(data) {
     if (data.topicNew != $topicNew) {
       // On est plus sur le topic quand la requête se termine
       return
@@ -279,7 +280,9 @@ function topicRefresh() {
     
     for (var i = 0; i < data.messages.length; i++) {
       var message = data.messages[i]
-      if ($('#' + message.id).length) {
+      if ($.inArray(message.id, liste_messages) > -1) {
+        // Mise à jour
+
         // Date
         $('#' + message.id + ' .js-date').html(message.date)
         
@@ -292,6 +295,8 @@ function topicRefresh() {
       }
       else {
         // Création
+        $('.js-listeMessages').append(message.markup)
+        liste_messages.push(message.id)
       }
     }
   })

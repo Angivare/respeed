@@ -227,7 +227,8 @@ function delay($f, &$t) {
   return $ret;
 }
 
-function generate_message_markup($message, $is_ours) {
+function generate_message_markup($message) {
+  $is_ours = strcasecmp(isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '', $message['pseudo']) != 0;
   $odd_or_even = ($message['pos'] % 2 == 0) ? 'odd' : 'even';
   $pseudoLowercase = strtolower($message['pseudo']);
   $pseudoWbr = wbr_pseudo($message['pseudo']);
