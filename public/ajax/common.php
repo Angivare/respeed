@@ -19,3 +19,11 @@ if(!$hash || !$ts || !$rand) {
   echo json_encode([ 'rep' => FALSE, 'err' => $auth->err() ]);
   exit;
 }
+
+function arg($varname) {
+  for($i = 0; $i < func_num_args(); $i++) {
+    $varname = func_get_arg($i);
+    global $$varname;
+    $$varname = isset($_POST[$varname]) ? $_POST[$varname] : 0;
+  }
+}

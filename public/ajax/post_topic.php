@@ -1,15 +1,10 @@
 <?php
 require 'common.php';
 
-$url = isset($_POST['url']) ? $_POST['url'] : FALSE;
-$title = isset($_POST['title']) ? $_POST['title'] : FALSE;
-$msg = isset($_POST['msg']) ? $_POST['msg'] : FALSE;
-$form = isset($_POST['form']) ? $_POST['form'] : FALSE;
-$ccode = isset($_POST['ccode']) ? $_POST['ccode'] : '';
-
 require '../helpers.php';
 require '../parser.php';
 
+arg('url', 'title', 'msg', 'form', 'ccode');
 $jvc = new Jvc();
 
 if($url && $msg && $form) {

@@ -1,13 +1,11 @@
 <?php
 require 'common.php';
 
-$forum = isset($_GET['forum']) ? (int)$_GET['forum'] : 0;
-$topic = isset($_GET['topic']) ? (int)$_GET['topic'] : 0;
-$slug = isset($_GET['slug']) ? $_GET['slug'] : FALSE;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
 require '../helpers.php';
 require '../parser.php';
+
+arg('forum', 'topic', 'slug', 'page');
+if(!$page) $page = 1;
 
 if($forum && $topic && $slug) {
   $t = fetch_topic($topic, $page, $slug, $forum);

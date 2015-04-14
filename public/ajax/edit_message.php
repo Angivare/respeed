@@ -1,10 +1,7 @@
 <?php
 require 'common.php';
 
-$id = isset($_POST['id']) ? $_POST['id'] : FALSE;
-$msg = isset($_POST['msg']) ? $_POST['msg'] : FALSE;
-$form = isset($_POST['form']) ? $_POST['form'] : FALSE;
-$ccode = isset($_POST['ccode']) ? $_POST['ccode'] : '';
+arg('id', 'msg', 'form', 'ccode');
 $jvc = new Jvc();
 
 if($id && $msg && $form)
