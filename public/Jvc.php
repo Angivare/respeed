@@ -8,25 +8,24 @@
  * @package default
  */
 class Jvc {
-  const JVC_COOKIE = '_JVCC_';
-  const JVC_TOKENS = '_JTOK_';
-
   /**
    * Retourne la session sur JVC du client depuis les cookies
    */
   public function __construct() {
     $this->err = 'Indéfinie';
     $this->domain = 'http://www.jeuxvideo.com';
+    $this->cookie_pre = '_JVCC_';
+    $this->tokens_pre = '_JTOK_';
 
     $this->cookie = [];
     foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen(self::JVC_COOKIE)) === self::JVC_COOKIE)
-        $this->cookie[substr($k, strlen(self::JVC_COOKIE))] = $v;
+      if(substr($k, 0, strlen(self::$this->cookie_pre)) === self::$this->cookie_pre)
+        $this->cookie[substr($k, strlen(self::$this->cookie_pre))] = $v;
 
     $this->tk = [];
     foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen(self::JVC_TOKENS)) === self::JVC_TOKENS)
-        $this->tk[substr($k, strlen(self::JVC_TOKENS))] = $v;
+      if(substr($k, 0, strlen(self::$this->tokens_pre)) === self::$this->tokens_pre)
+        $this->tk[substr($k, strlen(self::$this->tokens_pre))] = $v;
 
     $this->tk_update = isset($_COOKIE['tk_update']) ? $_COOKIE['tk_update'] : 0;
 
@@ -58,12 +57,12 @@ class Jvc {
    */
   public function disconnect() {
     foreach($this->cookie as $k => $v)
-      setcookie(self::JVC_COOKIE.$k, '', time()-1, '/', null, FALSE, TRUE);
+      setcookie(self::$this->cookie_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('pseudo', '', time()-1, '/', null, FALSE, TRUE);
     $this->cookie = [];
 
     foreach($this->tk as $k => $v)
-      setcookie(self::JVC_TOKENS.$k, '', time()-1, '/', null, FALSE, TRUE);
+      setcookie(self::$this->tokens_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
     $this->tk = [];
     $this->last_update = 0;
@@ -268,7 +267,7 @@ class Jvc {
     if(!$this->tk) return $this->_err('Indéfinie');
     $this->tk_update = time();
     foreach($this->tk as $k => $v)
-      setcookie(self::JVC_TOKENS.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+      setcookie(self::$this->tokens_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
     setcookie('tk_update', $this->tk_update, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
     return TRUE;
   }
@@ -618,7 +617,7 @@ class Jvc {
     }
 
     foreach($this->cookie as $k => $v)
-      setcookie(self::JVC_COOKIE.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+      setcookie(self::$this->cookie_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
   }
 
   private function cookie_string($add) {
