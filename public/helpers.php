@@ -226,3 +226,59 @@ function delay($f, &$t) {
   $t = microtime(TRUE)*1000 - $t;
   return $ret;
 }
+
+function generate_message_markup($message, $is_ours) {
+  $odd_or_even = ($message['pos'] % 2 == 0) ? 'odd' : 'even';
+  $pseudoLowercase = strtolower($message['pseudo']);
+  $pseudoWbr = wbr_pseudo($message['pseudo']);
+  $markup = <<<MESSAGE
+<div class="message {$odd_or_even}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-date="{$message['date']}"  data-content-md5="{$message['contentMd5']}">
+  <div class="action-menu">
+    <label class="action meta-quote" for="newmessage">Citer</label><!--
+MESSAGE;
+
+  if ($is_ours) {
+    $markup .= '--><span class="action meta-ignore">Ignorer</span>';
+  }
+  else {
+    $markup .= '--><span class="action meta-delete">Supprimer</span>';
+  }
+  $markup .= <<<MESSAGE
+  </div>
+  <div class="not-action-menu">
+    <div class="message-header">
+      <div class="meta-author">
+        <span class="author pseudo-{$message['status']} desktop"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
+MESSAGE;
+  if ($message['avatar']) {
+    $markup .= <<<MESSAGE
+          <span class="avatar"><a href="{$message['avatarBig']}"><img class="js-avatarImg" src="{$message['avatar']}"></a></span><!--
+MESSAGE;
+  }
+  $markup .= <<<MESSAGE
+        <!-- --><span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
+      </div>
+      <div class="meta-actions">
+        <span class="meta-permalink" title="{$message['dateRaw']}"><a href="#{$message['id']}" class="js-date">{$message['date']}</a></span>
+        <span class="meta-menu"></span>
+        <span class="meta-quote">Citer</span>
+MESSAGE;
+  if ($is_ours) {
+    $markup .= '<span class="meta-ignore">Ignorer</span>';
+  }
+  else {
+    $markup .= '<!--<span class="meta-edit">Modifier</span>-->';
+    $markup .= '<span class="meta-delete">Supprimer</span>';
+  }
+  $markup .= <<<MESSAGE
+      </div>
+    </div>
+    <div class="mobile message-border"></div>
+    <div class="js-content content">{$message['content']}</div>
+    <div class="clearfix"></div>
+    <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> {$message['pseudo']} parle mais se fait ignorer.</div>
+  </div>
+</div>
+MESSAGE;
+  return $markup;
+}

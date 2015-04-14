@@ -64,42 +64,7 @@ $is_sign = (int)$number != $i;
     
     <div class="liste-messages">
 <?php foreach ($messages as $message): ?>
-      <div class="message <?= ($message['pos'] % 2 == 0) ? 'odd' : 'even' ?>" id="<?= $message['id'] ?>" data-pseudo="<?= $message['pseudo'] ?>" data-date="<?= $message['date'] ?>"  data-content-md5="<?= $message['contentMd5'] ?>">
-        <div class="action-menu">
-          <label class="action meta-quote" for="newmessage">Citer</label><!--
-<?php if (strcasecmp($pseudo, $message['pseudo']) != 0): ?>
-          --><span class="action meta-ignore">Ignorer</span>
-<?php else: ?>
-          --><span class="action meta-delete">Supprimer</span>
-<?php endif ?>
-        </div>
-        <div class="not-action-menu">
-          <div class="message-header">
-            <div class="meta-author">
-              <span class="author pseudo-<?= $message['status'] ?> desktop"><a href="http://m.jeuxvideo.com/profil/<?= strtolower($message['pseudo']) ?>.html" class="m-profil"><?= wbr_pseudo($message['pseudo']) ?></a></span>
-<?php if ($message['avatar']): ?>
-              <span class="avatar"><a href="<?= $message['avatarBig'] ?>"><img class="js-avatarImg" src="<?= $message['avatar'] ?>"></a></span><!--
-<?php endif ?>
-              <!-- --><span class="author pseudo-<?= $message['status'] ?> mobile"><a href="http://m.jeuxvideo.com/profil/<?= strtolower($message['pseudo']) ?>.html" class="m-profil"><?= wbr_pseudo($message['pseudo']) ?></a></span>
-            </div>
-            <div class="meta-actions">
-              <span class="meta-permalink" title="<?= $message['dateRaw'] ?>"><a href="#<?= $message['id'] ?>" class="js-date"><?= $message['date'] ?></a></span>
-              <span class="meta-menu"></span>
-              <span class="meta-quote">Citer</span>
-<?php if (strcasecmp($pseudo, $message['pseudo']) != 0): ?>
-              <span class="meta-ignore">Ignorer</span>
-<?php else: ?>
-              <!--<span class="meta-edit">Modifier</span>-->
-              <span class="meta-delete">Supprimer</span>
-<?php endif ?>
-            </div>
-          </div>
-          <div class="mobile message-border"></div>
-          <div class="js-content content"><?= $message['content'] ?></div>
-          <div class="clearfix"></div>
-          <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> <?= $message['pseudo'] ?> parle mais se fait ignorer.</div>
-        </div>
-      </div>
+<?= generate_message_markup($message, strcasecmp($pseudo, $message['pseudo']) != 0) ?>
 <?php endforeach ?>
     </div>
 

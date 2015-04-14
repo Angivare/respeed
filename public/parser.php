@@ -171,6 +171,7 @@ function parse_topic($got) {
     }
     $content = adapt_html($matches['message'][$i], $dateRaw);
     $ret['messages'][] = [
+      'pos' => $i,
       'pseudo' => htmlspecialchars(trim($matches['pseudo'][$i])),
       'avatar' => $avatar,
       'avatarBig' => $avatarBig,
