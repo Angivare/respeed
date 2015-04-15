@@ -390,7 +390,7 @@ InstantClick.on('change', function() {
       return
     }
 
-    ajax('quote', {id: id}, function(data) {
+    ajax('quote', {id_message: id}, function(data) {
       if (!data.rep) {
         alert('Erreur avec la citation : ' + data.err)
         return
@@ -411,7 +411,7 @@ InstantClick.on('change', function() {
   $('.meta-delete').click(function() {
     var id = $(this).closest('.message').attr('id')
 
-    ajax('message_delete', {id: id})
+    ajax('message_delete', {id_message: id})
   })
 
   $('.m-profil').click(function() {
