@@ -5,12 +5,11 @@ require '../helpers.php';
 require '../parser.php';
 
 arg('url', 'msg', 'form', 'ccode');
-$jvc = new Jvc();
 
 if($url && $msg && $form) {
   $location = '';
   echo json_encode([
-    'rep' => $jvc->post_msg_finish($url, $msg, $form, $ccode, $location),
+    'rep' => $jvc->message_post_finish($url, $msg, $form, $ccode, $location),
     'err' => $jvc->err()
   ]);
   if(!$location) exit;
@@ -30,6 +29,6 @@ if($url && $msg && $form) {
 
 } else if($url)
   echo json_encode([
-    'rep' => $jvc->post_msg_req($url),
+    'rep' => $jvc->message_post_req($url),
     'err' => $jvc->err()
   ]);

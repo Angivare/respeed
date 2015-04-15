@@ -31,7 +31,7 @@ function addToBlacklist(pseudo, id_message) {
   localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
   updateLocalBlacklist()
   if (id_message) {
-    ajax('add_blacklist', {id_message: id_message})
+    ajax('blacklist_add', {id_message: id_message})
   }
 }
 
@@ -45,7 +45,7 @@ function removeFromBlacklist(pseudo) {
   var blacklistString = ''
   blacklist.splice(index, 1)
   localStorage.blacklist = blacklist.join(' ')
-  ajax('remove_blacklist', {nick: pseudo})
+  ajax('blacklist_remove', {nick: pseudo})
 }
 
 function applyBlacklist() {
@@ -71,7 +71,7 @@ function updateRemoteBlacklist() {
   var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
   var now = +new Date
   if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
-    ajax('get_blacklist', {}, function(data) {
+    ajax('blacklist_get', {}, function(data) {
       var remoteBlacklist = data.rep
       for (var i = 0; i < remoteBlacklist.length; i++) {
         addToBlacklist(remoteBlacklist[i].human)
@@ -96,7 +96,7 @@ function updateFavorites() {
   if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
     return
   }
-  ajax('get_favorite', {}, function(data) {
+  ajax('favorites_get', {}, function(data) {
     favoritesForums = []
     favoritesTopics = []
     $.each(data.rep.forums, function(index, value) {
@@ -183,7 +183,7 @@ function displayFavoritesTopics() {
 
 function request_form_data() {
   if (!form_data) {
-    var action = $('#newsujet').length ? 'post_topic' : 'post_message'
+    var action = $('#newsujet').length ? 'topic_post' : 'message_post'
     ajax(action, {url: url}, function(data) {
       if (data.err == 'Forum fermé') {
         $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
@@ -194,7 +194,7 @@ function request_form_data() {
       }
       form_data = data.rep
       if (form_data.fs_signature) {
-        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha.php?'
+        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha_get.php?'
           + 'signature=' + encodeURIComponent(form_data.fs_signature)
           + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
           + '" class="captcha">')
@@ -213,7 +213,7 @@ function addForum() {
   $('#forums_pref .menu-content').html('')
   displayFavoritesForums()
 
-  ajax('update_favorite', {id: $forum, type: 'forum', action: 'add'})
+  ajax('favorites_update', {id: $forum, type: 'forum', action: 'add'})
 }
 
 function delForum() {
@@ -228,7 +228,7 @@ function delForum() {
   $('#forums_pref .menu-content').html('')
   displayFavoritesForums()
 
-  ajax('update_favorite', {id: $forum, type: 'forum', action: 'delete'})
+  ajax('favorites_update', {id: $forum, type: 'forum', action: 'delete'})
 }
 
 function addTopic() {
@@ -241,7 +241,7 @@ function addTopic() {
   $('#topics_pref .menu-content').html('')
   displayFavoritesTopics()
 
-  ajax('update_favorite', {id: $topicNew, type: 'topic', action: 'add'})
+  ajax('favorites_update', {id: $topicNew, type: 'topic', action: 'add'})
 }
 
 function delTopic() {
@@ -256,7 +256,7 @@ function delTopic() {
   $('#topics_pref .menu-content').html('')
   displayFavoritesTopics()
 
-  ajax('update_favorite', {id: $topicNew, type:'topic', action: 'delete'})
+  ajax('favorites_update', {id: $topicNew, type:'topic', action: 'delete'})
 }
 
 function topicRefresh() {
@@ -265,7 +265,7 @@ function topicRefresh() {
     return
   }
 
-  ajax('get_topic', {forum: $forum, topic: $topic, slug: $slug, page: $page, liste_messages: liste_messages}, function(data) {
+  ajax('topic_get', {forum: $forum, topic: $topic, slug: $slug, page: $page, liste_messages: liste_messages}, function(data) {
     if (data.topicNew != $topicNew) {
       // On est plus sur le topic quand la requête se termine
       return
@@ -333,7 +333,7 @@ InstantClick.on('change', function() {
     if ($('#newsujet')) {
       params.title = $('#newsujet').val()
     }
-    var action = $('#newsujet').length ? 'post_topic' : 'post_message'
+    var action = $('#newsujet').length ? 'topic_post' : 'message_post'
     ajax(action, params, function(data) {
       $('#captcha-container').html('')
       form_data = null
@@ -390,7 +390,7 @@ InstantClick.on('change', function() {
       return
     }
 
-    ajax('get_quote', {id: id}, function(data) {
+    ajax('quote', {id: id}, function(data) {
       if (!data.rep) {
         alert('Erreur avec la citation : ' + data.err)
         return
@@ -411,7 +411,7 @@ InstantClick.on('change', function() {
   $('.meta-delete').click(function() {
     var id = $(this).closest('.message').attr('id')
 
-    ajax('delete_message', {id: id})
+    ajax('message_delete', {id: id})
   })
 
   $('.m-profil').click(function() {

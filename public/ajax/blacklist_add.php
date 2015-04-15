@@ -4,8 +4,6 @@ require 'common.php';
 arg('id_message');
 
 if($id_message) {
-  $jvc = new Jvc();
-
   $rep = $jvc->get("http://www.jeuxvideo.com/respeed/forums/message/{$id_message}");
   $location = Jvc::redirects($rep['header']);
   if($location) {
