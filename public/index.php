@@ -1,10 +1,10 @@
 <?php
 $action = isset($_GET['action']) ? $_GET['action'] : false;
-$id_message = isset($_GET['id_message']) ? (int)$_GET['id_message'] : 0;
-$forum = isset($_GET['forum']) ? (int)$_GET['forum'] : false;
-$topic = isset($_GET['topic']) ? (int)$_GET['topic'] : false;
+$id_message = isset($_GET['id_message']) ? $_GET['id_message'] : 0;
+$forum = isset($_GET['forum']) ? $_GET['forum'] : false;
+$topic = isset($_GET['topic']) ? $_GET['topic'] : false;
 $slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
 $login = isset($_GET['login']) ? true : false;
 $logout = isset($_GET['logout']) ? true : false;
 
