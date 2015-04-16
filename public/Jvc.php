@@ -28,13 +28,13 @@ class Jvc {
 
     $this->cookie = [];
     foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen(self::$this->cookie_pre)) === self::$this->cookie_pre)
-        $this->cookie[substr($k, strlen(self::$this->cookie_pre))] = $v;
+      if(substr($k, 0, strlen($this->cookie_pre)) === $this->cookie_pre)
+        $this->cookie[substr($k, strlen($this->cookie_pre))] = $v;
 
     $this->tk = [];
     foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen(self::$this->tokens_pre)) === self::$this->tokens_pre)
-        $this->tk[substr($k, strlen(self::$this->tokens_pre))] = $v;
+      if(substr($k, 0, strlen($this->tokens_pre)) === $this->tokens_pre)
+        $this->tk[substr($k, strlen($this->tokens_pre))] = $v;
 
     $this->tk_update = isset($_COOKIE['tk_update']) ? $_COOKIE['tk_update'] : 0;
 
@@ -66,12 +66,12 @@ class Jvc {
    */
   public function disconnect() {
     foreach($this->cookie as $k => $v)
-      setcookie(self::$this->cookie_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
+      setcookie($this->cookie_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('pseudo', '', time()-1, '/', null, FALSE, TRUE);
     $this->cookie = [];
 
     foreach($this->tk as $k => $v)
-      setcookie(self::$this->tokens_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
+      setcookie($this->tokens_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
     $this->tk = [];
     $this->last_update = 0;
@@ -133,6 +133,18 @@ class Jvc {
       return $this->_err($match[1]);
 
     return $this->_err('Indéfinie');
+  }
+
+  /**
+   * Renvoie la page du lien permanent du post
+   * @param int $id 
+   * @return mixed la page, séparée en 'header' et 'body' ou FALSE
+   */
+  public function message_get($id) {
+    $rep = $this->get($this->domain . "/respeed/forums/message/{$id}");
+    $location = self::redirects($rep['header']);
+    if(!$location) return $this->_err('Impossible de trouver le lien permanent');
+    return $this->get($this->domain . $location);
   }
 
   /**
@@ -276,7 +288,7 @@ class Jvc {
     if(!$this->tk) return $this->_err('Indéfinie');
     $this->tk_update = time();
     foreach($this->tk as $k => $v)
-      setcookie(self::$this->tokens_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+      setcookie($this->tokens_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
     setcookie('tk_update', $this->tk_update, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
     return TRUE;
   }
@@ -626,7 +638,7 @@ class Jvc {
     }
 
     foreach($this->cookie as $k => $v)
-      setcookie(self::$this->cookie_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+      setcookie($this->cookie_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
   }
 
   private function cookie_string($add) {

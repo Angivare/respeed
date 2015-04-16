@@ -13,8 +13,10 @@ function arg($varname) {
   }
 }
 
-arg('hash', 'ts', 'rand', 'site');
-if(!$site) $site = 'JVC';
+$hash = isset($_GET['hash']) ? $_GET['hash'] : 0;
+$ts = isset($_GET['ts']) ? $_GET['ts'] : 0;
+$rand = isset($_GET['rand']) ? $_GET['rand'] : 0;
+$site = isset($_GET['site']) ? $_GET['site'] : 'JVC';
 
 $db = new Db();
 $auth = new Auth($db);
