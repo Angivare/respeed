@@ -30,3 +30,7 @@ Les CDV et DDB sont prévues et il leur faut la même chose : Ouvrir une page no
 La lightbox ne doit pas griser ou rendre innaccessible le reste de la page derrière, et cliquer sur le reste de la page doit fermer la lightbox.
 
 Sur desktop, il n’y a pas besoin de s’occuper de changer l’URL de la page (avec `history.pushState`). Sur mobile elles sont là de base.
+
+## License
+
+Le projet n’est pas sous license libre à cause des icônes Material Design qui sont sous CC-BY, ce qui je crois ne peut se mélanger avec une license MIT/GPL, et parce que dans le futur il pourrait y avoir des smileys supplémentaires dans JVForum qui eux non plus ne seront pas redistribuables sous license libre.
