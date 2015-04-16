@@ -5,12 +5,20 @@ require '../db.php';
 require '../Jvc.php';
 require '../Auth.php';
 
-$hash = isset($_GET['hash']) ? $_GET['hash']  : '';
-$ts = isset($_GET['ts']) ? (int)$_GET['ts'] : 0;
-$rand = isset($_GET['rand']) ? $_GET['rand'] : '';
+function arg($varname) {
+  for($i = 0; $i < func_num_args(); $i++) {
+    $varname = func_get_arg($i);
+    global $$varname;
+    $$varname = isset($_POST[$varname]) ? $_POST[$varname] : 0;
+  }
+}
+
+arg('hash', 'ts', 'rand', 'site');
+if(!$site) $site = 'JVC';
 
 $db = new Db();
 $auth = new Auth($db);
+$jvc = new Jvc($site);
 
 if(!$hash || !$ts || !$rand) {
   echo json_encode([ 'rep' => FALSE, 'err' => 'Paramètres invalides' ]);
@@ -18,12 +26,4 @@ if(!$hash || !$ts || !$rand) {
 } else if(!$auth->validate($hash, $ts, $rand)) {
   echo json_encode([ 'rep' => FALSE, 'err' => $auth->err() ]);
   exit;
-}
-
-function arg($varname) {
-  for($i = 0; $i < func_num_args(); $i++) {
-    $varname = func_get_arg($i);
-    global $$varname;
-    $$varname = isset($_POST[$varname]) ? $_POST[$varname] : 0;
-  }
 }

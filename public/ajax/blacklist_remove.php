@@ -2,10 +2,9 @@
 require 'common.php';
 
 arg('nick');
-$nick = strtolower($nick);
 
 if($nick) {
-  $jvc = new Jvc();
+  $nick = strtolower($nick);
 
   $bl = $jvc->blacklist();
 

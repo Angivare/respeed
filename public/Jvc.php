@@ -8,31 +8,41 @@
  * @package default
  */
 class Jvc {
-  const JV_PREFIX = '_JVC_';
-  const TK_PREFIX = '_TOK_';
-
   /**
    * Retourne la session sur JVC du client depuis les cookies
+   * @param string $site 'JVC' ou 'FJV'
    */
-  public function __construct() {
+  public function __construct($site = 'JVC') {
+    $this->err = 'Indéfinie';
+    if($site === 'JVC') {
+      $this->domain = 'http://www.jeuxvideo.com';
+      $this->cookie_pre = '_JVCCOK_';
+      $this->tokens_pre = '_JVCTOK_';
+    } else if($site === 'FJV') {
+      $this->domain = 'http://www.forumjv.com';
+      $this->cookie_pre = '_FJVCOK_';
+      $this->tokens_pre = '_FJVTOK_';
+    } else {
+      die('Mauvais paramètre fourni à Jvc::__construct, contacter l\'admin');
+    }
+
     $this->cookie = [];
     foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen(self::JV_PREFIX)) === self::JV_PREFIX)
-        $this->cookie[substr($k, strlen(self::JV_PREFIX))] = $v;
+      if(substr($k, 0, strlen(self::$this->cookie_pre)) === self::$this->cookie_pre)
+        $this->cookie[substr($k, strlen(self::$this->cookie_pre))] = $v;
 
     $this->tk = [];
     foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen(self::TK_PREFIX)) === self::TK_PREFIX)
-        $this->tk[substr($k, strlen(self::TK_PREFIX))] = $v;
+      if(substr($k, 0, strlen(self::$this->tokens_pre)) === self::$this->tokens_pre)
+        $this->tk[substr($k, strlen(self::$this->tokens_pre))] = $v;
 
     $this->tk_update = isset($_COOKIE['tk_update']) ? $_COOKIE['tk_update'] : 0;
 
     if(!isset($this->cookie['dlrowolleh']) || !$this->cookie['dlrowolleh']) {
       $this->cookie['dlrowolleh'] = NULL;
-      $this->get('http://www.jeuxvideo.com/login');
+      $this->get($this->domain . '/login');
     }
 
-    $this->err = 'Indéfinie';
   }
 
   /**
@@ -56,18 +66,18 @@ class Jvc {
    */
   public function disconnect() {
     foreach($this->cookie as $k => $v)
-      setcookie(self::JV_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
+      setcookie(self::$this->cookie_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('pseudo', '', time()-1, '/', null, FALSE, TRUE);
     $this->cookie = [];
 
     foreach($this->tk as $k => $v)
-      setcookie(self::TK_PREFIX.$k, '', time()-1, '/', null, FALSE, TRUE);
+      setcookie(self::$this->tokens_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
     setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
     $this->tk = [];
     $this->last_update = 0;
 
     $this->cookie['dlrowolleh'] = NULL;
-    $this->get('http://www.jeuxvideo.com/profil/angivare?mode=page_perso');
+    $this->get($this->domain . '/profil/angivare?mode=page_perso');
   }
 
   /**
@@ -78,7 +88,7 @@ class Jvc {
    * dans connect_finish() sinon
    */
   public function connect_req($nick, $pass) {
-    $url = 'http://www.jeuxvideo.com/login';
+    $url = $this->domain . '/login';
 
     $rep = $this->get($url);
 
@@ -105,7 +115,7 @@ class Jvc {
    * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
    */
   public function connect_finish($nick, $pass, $form, $ccode = '') {
-    $url = 'http://www.jeuxvideo.com/login';
+    $url = $this->domain . '/login';
 
     $post_data = 'login_pseudo=' . urlencode($nick) .
                  '&login_password=' . urlencode($pass) .
@@ -133,7 +143,7 @@ class Jvc {
    * @return mixed FALSE si une erreur a eu lieu, le formulaire
    * sinon
    */
-  public function post_msg_req($url) {
+  public function message_post_req($url) {
     $form = self::parse_form($this->get($url)['body']);
     if(count($form)) return $form;
     return $this->_err('Impossible de préparer le formulaire');
@@ -147,7 +157,7 @@ class Jvc {
    * @param string $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
-  public function post_msg_finish($url, $msg, $form, $ccode='', &$ret_location=NULL) {
+  public function message_post_finish($url, $msg, $form, $ccode='', &$ret_location=NULL) {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
       '&form_alias_rang=1' .
@@ -173,7 +183,7 @@ class Jvc {
    * @param string $url url du forum
    * @return mixed FALSE si une erreur a eu lieu, le formulaire sinon
    */
-  public function post_topic_req($url) {
+  public function topic_post_req($url) {
     $rep = $this->get($url)['body'];
     $form = self::parse_form($rep);
     if(count($form)) return $form;
@@ -193,7 +203,7 @@ class Jvc {
    * @param string $ccode 
    * @return boolean TRUE si le topic est créé, FALSE sinon
    */
-  public function post_topic_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='', &$ret_location=NULL) {
+  public function topic_post_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='', &$ret_location=NULL) {
     $post_data = http_build_query($form) .
       '&titre_topic=' . urlencode($title) .
       '&message_topic=' . urlencode($msg) .
@@ -222,7 +232,7 @@ class Jvc {
    * @param string $url 
    * @return mixed FALSE si une erreur a eu lieu, les infos sur le sondage sinon
    */
-  public function ans_poll_req($url) {
+  public function poll_answer_req($url) {
     $rep = $this->get($url);
     $regex = '#<tr>.+<td class="reponse">.+' .
              '<a .+ data-id-sondage="(?P<question>.+)" data-id-reponse="(?P<answer>.+)".*>' .
@@ -240,14 +250,14 @@ class Jvc {
    * @param int $id_answer 
    * @return mixed TRUE/FALSE
    */
-  public function ans_poll_finish($id_topic, $id_question, $id_answer) {
+  public function poll_answer_finish($id_topic, $id_question, $id_answer) {
     $tk = $this->ajax_array('liste_messages');
     $post_data = http_build_query($tk) .
       '&id_topic=' . urlencode($id_topic) .
       '&id_sondage=' . urlencode($id_question) .
       '&id_sondage_reponse=' . urlencode($id_answer);
 
-    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_topic_sondage_vote.php', $post_data);
+    $rep = $this->post($this->domain . '/forums/ajax_topic_sondage_vote.php', $post_data);
     $rep = json_decode($rep['body']);
 
     if($rep->erreur)
@@ -261,12 +271,12 @@ class Jvc {
    * @param string $body Le contenu d'un topic
    * @return boolean TRUE s'il n'y a pas eu d'erreur, FALSE sinon
    */
-  public function refresh_tokens($body) {
+  public function tokens_refresh($body) {
     $this->tk = self::parse_ajax_tk($body, '.+?', TRUE);
     if(!$this->tk) return $this->_err('Indéfinie');
     $this->tk_update = time();
     foreach($this->tk as $k => $v)
-      setcookie(self::TK_PREFIX.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+      setcookie(self::$this->tokens_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
     setcookie('tk_update', $this->tk_update, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
     return TRUE;
   }
@@ -288,7 +298,7 @@ class Jvc {
       '&id_message=' . urlencode($id) .
       '&action=get';
 
-    $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $get_data);
+    $rep = $this->get($this->domain . '/forums/ajax_edit_message.php', $get_data);
     $rep = json_decode($rep['body']);
 
     if($rep->erreur)
@@ -316,7 +326,7 @@ class Jvc {
     if($ccode)
       $post_data .= '&fs_ccode=' . urlencode($ccode);
 
-    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_message.php', $post_data);
+    $rep = $this->post($this->domain . '/forums/ajax_edit_message.php', $post_data);
     $rep = json_decode($rep['body']);
 
     if($rep->erreur)
@@ -337,7 +347,7 @@ class Jvc {
       '&id_topic=' . urlencode($id) .
       '&titre_topic=' . urlencode($title);
 
-    $rep = $this->post('http://www.jeuxvideo.com/forums/ajax_edit_title.php', $post_data);
+    $rep = $this->post($this->domain . '/forums/ajax_edit_title.php', $post_data);
     $rep = json_decode($rep['body']);
 
     if($rep->erreur)
@@ -355,7 +365,7 @@ class Jvc {
     $tk = $this->ajax_array('liste_messages');
     $post_data = 'id_message=' . urlencode($id) .
       '&' . http_build_query($tk);
-    $ret = json_decode(self::post('http://www.jeuxvideo.com/forums/ajax_citation.php',
+    $ret = json_decode(self::post($this->domain . '/forums/ajax_citation.php',
       $post_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
   }
@@ -369,7 +379,7 @@ class Jvc {
     $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode($this->get('http://www.jeuxvideo.com/forums/ajax_forum_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get($this->domain . '/forums/ajax_forum_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
@@ -380,7 +390,7 @@ class Jvc {
    */
   public function blacklist_remove($id) {
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
-    $ret = json_decode($this->get('http://www.jeuxvideo.com/sso/ajax_delete_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get($this->domain . '/sso/ajax_delete_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
   }
 
@@ -390,8 +400,8 @@ class Jvc {
    * utilisateur est représenté par un tableau associatif contenant
    * une valeur 'id' et 'human'. FALSE si une erreur est survenue
    */
-  public function blacklist() {
-    $rep = $this->get('http://www.jeuxvideo.com/sso/blacklist.php');
+  public function blacklist_get() {
+    $rep = $this->get($this->domain . '/sso/blacklist.php');
 
     $regex =  '#<li data-id-alias="(?P<id>[0-9]+)">.+' .
               '<span>(?P<human>.+)</span>.+'  .
@@ -424,7 +434,7 @@ class Jvc {
       '&id_topic=' . urlencode($id_topic) .
       '&action=' . urlencode($action) .
       '&type=' . urlencode($type);
-    $rep = $this->get('http://www.jeuxvideo.com/forums/ajax_forum_prefere.php', $get_data);
+    $rep = $this->get($this->domain . '/forums/ajax_forum_prefere.php', $get_data);
     return TRUE;
   }
 
@@ -432,8 +442,8 @@ class Jvc {
    * Retourne la liste des sujets & topics préférés
    * @return array Tableau associatif contenant les sujets et topics favoris
    */
-  public function favorites() {
-    $rep = $this->get('http://www.jeuxvideo.com/forums.htm');
+  public function favorites_get() {
+    $rep = $this->get($this->domain . '/forums.htm');
 
     $lim = strpos($rep['body'], '<ul id="liste-sujet-prefere"');
 
@@ -472,13 +482,13 @@ class Jvc {
    * @param int $id 
    * @return boolean TRUE/FALSE
    */
-  public function delete($id) {
+  public function message_delete($id) {
     $tk = self::ajax_array('moderation_forum');
     $post_data = http_build_query($tk) .
       '&type=delete' .
       '&tab_message%5B%5D=' . urlencode($id);
 
-    $rep = $this->post('http://www.jeuxvideo.com/forums/modal_del_message.php', $post_data);
+    $rep = $this->post($this->domain . '/forums/modal_del_message.php', $post_data);
 
     //TODO: error handling? la page ne semble renvoyer aucune réponse cependant..
     return TRUE;
@@ -489,13 +499,13 @@ class Jvc {
    * @param int $id 
    * @return boolean TRUE/FALSE
    */
-  public function restore($id) {
+  public function message_restore($id) {
     $tk = self::ajax_array('moderation_forum');
     $post_data = http_build_query($tk) .
       '&type=delete' .
       '&tab_message%5B%5D=' . urlencode($id);
 
-    $rep = json_decode($this->post('http://www.jeuxvideo.com/forums/modal_del_message.php', $post_data)['body']);
+    $rep = json_decode($this->post($this->domain . '/forums/modal_del_message.php', $post_data)['body']);
     return $rep->erreur ? $this->_err($rep->erreur) : TRUE;
   }
 
@@ -616,7 +626,7 @@ class Jvc {
     }
 
     foreach($this->cookie as $k => $v)
-      setcookie(self::JV_PREFIX.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+      setcookie(self::$this->cookie_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
   }
 
   private function cookie_string($add) {
@@ -641,8 +651,8 @@ class Jvc {
         (!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
       &&(time() - $this->tokens_last_update() >= 3600/2)
     ) {
-      $rep = $this->get('http://www.jeuxvideo.com/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
-      self::refresh_tokens($rep['body']);
+      $rep = $this->get($this->domain . '/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
+      self::tokens_refresh($rep['body']);
     }
     return [
       'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],
