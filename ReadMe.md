@@ -23,8 +23,10 @@ Ne cherchez pas à faire parfait. Des petites contributions vallent mieux que de
 
 ### Moyennement important
 
-#### Système de popup pour les CDV et/ou DDB (JS)
+#### Système de lightbox pour les CDV et/ou DDB (JS, CSS)
 
-Les CDV et DDB sont prévues et il leur faut la même chose : Ouvrir leur « popup » comme une page normale sur mobile et dans une popup sur desktop (utilisez `isBigScreen`, si c’est mobile (`false`) ne faites rien, si c’est desktop (`true`) chargez la page (une page de test) et affichez-la dans une popup)
+Les CDV et DDB sont prévues et il leur faut la même chose : Ouvrir une page normale sur mobile, et dans une lightbox sur desktop (utilisez `isBigScreen`, si c’est mobile (`false`) ne faites rien, si c’est desktop (`true`) chargez la page (une page de test) et affichez-la dans une lightbox)
+
+La lightbox ne doit pas griser ou rendre innaccessible le reste de la page derrière, et cliquer sur le reste de la page doit fermer la lightbox.
 
 Sur desktop, il n’y a pas besoin de s’occuper de changer l’URL de la page (avec `history.pushState`). Sur mobile elles sont là de base.
