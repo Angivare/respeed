@@ -846,7 +846,7 @@ h1, h2, h3 {
   display: inline-block;
   width: 34px;
   height: 34px;
-  background: url(http://cdn.jvforum.fr/ic_menu_24px.svg) center no-repeat;
+  background: url(/images/ic_menu_24px.svg) center no-repeat;
   margin-right: 5px;
   vertical-align: middle;
 }
@@ -896,15 +896,15 @@ h1, h2, h3 {
 }
 
 .message .action-menu .meta-quote {
-  background-image: url(http://cdn.jvforum.fr/ic_reply_24px.svg);
+  background-image: url(/images/ic_reply_24px.svg);
 }
 
 .message .action-menu .meta-ignore {
-  background-image: url(http://cdn.jvforum.fr/ic_visibility_off_24px.svg);
+  background-image: url(/images/ic_visibility_off_24px.svg);
 }
 
 .message .action-menu .meta-delete {
-  background-image: url(http://cdn.jvforum.fr/ic_delete_24px.svg);
+  background-image: url(/images/ic_delete_24px.svg);
 }
 
 /* Message - border */
@@ -1035,7 +1035,7 @@ h1, h2, h3 {
   width: 24px;
   height: 24px;
   overflow: hidden;
-  background-image: url(http://cdn.jvforum.fr/ic_visibility_24px.svg?);
+  background-image: url(/images/ic_visibility_24px.svg?);
   color: transparent;
   cursor: default;
 }
@@ -1062,7 +1062,7 @@ h1, h2, h3 {
   right: 24px;
   border-radius: 99px;
   box-shadow: 0 2px 5px rgba(0,0,0,.2);
-  background: #f60 url(http://cdn.jvforum.fr/ic_mode_edit_24px.svg) center no-repeat;
+  background: #f60 url(/images/ic_mode_edit_24px.svg) center no-repeat;
   cursor: pointer;
 }
 
