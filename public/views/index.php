@@ -26,24 +26,10 @@ $jvc = new Jvc();
     <div class="favorites-index">
       <div class="favorites-forums">
         <h3>Forums préférés</h3>
-        <a class="favorite" href="">Communauté</a>
-        <a class="favorite odd" href="">Grand Theft Auto V</a>
-        <a class="favorite" href="">Blabla 18-25 ans</a>
-        <a class="favorite odd" href="">League of Legends</a>
-        <a class="favorite" href="">Football Manager 2015</a>
-        <a class="favorite odd" href="">Destiny</a>
       </div>
       
       <div class="favorites-topics">
         <h3>Topics préférés</h3>
-        <a class="favorite" href="">Communauté</a>
-        <a class="favorite odd" href="">Grand Theft Auto V</a>
-        <a class="favorite" href="">Blabla 18-25 ans</a>
-        <a class="favorite odd" href="">League of Legends</a>
-        <a class="favorite" href="">Football Manager 2015</a>
-        <a class="favorite odd" href="">Destiny</a>
-        <a class="favorite" href="">Football Manager 2015</a>
-        <a class="favorite odd" href="">Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny</a>
       </div>
     </div>
 <?php endif ?>

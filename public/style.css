@@ -336,6 +336,12 @@ h1, h2, h3 {
   padding: 8px 10px;
 }
 
+@media (min-width: 1025px) {
+  .favorites-index .favorite {
+    padding: 4px 10px;
+  }
+}
+
 .favorites-index .favorite.odd {
   background: #EFF4FC;
 }

@@ -181,6 +181,33 @@ function displayFavoritesTopics() {
   $('#topics_pref').show()
 }
 
+function displayFavoritesOnIndex() {
+  if (!$is_connected) {
+    return
+  }
+  if (!$('.favorites-index').length) {
+    return
+  }
+  var odd = false
+    , str = ''
+  $.each(favoritesForums, function(_, forum) {
+    str += '<a class="favorite ' + (odd ? 'odd' : '') + '" href="' + forum.lien + '">' + forum.titre + '</a>'
+    odd = !odd
+  })
+  if (str) {
+    $('.favorites-index .favorites-forums').append(str)
+  }
+  odd = false
+  str = ''
+  $.each(favoritesTopics, function(_, topic) {
+    str += '<a class="favorite ' + (odd ? 'odd' : '') + '" href="' + topic.lien + '">' + topic.titre + '</a>'
+    odd = !odd
+  })
+  if (str) {
+    $('.favorites-index .favorites-topics').append(str)
+  }
+}
+
 function request_form_data() {
   if (!form_data) {
     var action = $('#newsujet').length ? 'topic_post' : 'message_post'
@@ -317,6 +344,7 @@ InstantClick.on('change', function(isInitialLoad) {
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
   updateLocalBlacklist()
   applyBlacklist()
+  displayFavoritesOnIndex()
 })
 
 InstantClick.on('change', function() {
