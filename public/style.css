@@ -63,6 +63,10 @@ h1, h2, h3 {
   }
 }
 
+#instantclick {
+  display: none;
+}
+
 /* HEADER */
 
 .site-header {
