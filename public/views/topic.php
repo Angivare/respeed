@@ -2,8 +2,9 @@
 
 require 'parser.php';
 $jvc = new Jvc();
-foreach(fetch_topic($topic, $page, $slug, $forum) as $k => $v)
+foreach(fetch_topic($topic, $page, $slug, $forum) as $k => $v) {
   $$k = $v;
+}
 echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->";
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
@@ -29,35 +30,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
   <div class="content">
     <div class="pages">
       <div class="pages-container">
-<?php foreach ($pages as $i): ?>
-<?php if ($i == ' '): ?>
-        <span class="faketable empty">
-          <span class="link"></span>
-        </span>
-<?php continue; endif ?>
-<?php
-$number = $i;
-if ($i == $last_page) {
-  $number = '»';
-}
-if ($i == 1) {
-  $number = '«';
-}
-if ($i == $page - 1) {
-  $number = '‹';
-}
-if ($i == $page + 1) {
-  $number = '›';
-}
-if ($i == $page) {
-  $number = $i;
-}
-$is_sign = (int)$number != $i;
-?>
-        <span class="faketable">
-          <a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?><?= $i > 1 ? "/{$i}" : '' ?>" class="link <?= $i == $page ? 'active' : '' ?> <?= $is_sign ? 'sign' : '' ?>"><?= $number ?></a>
-        </span>
-<?php endforeach ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -72,35 +45,7 @@ $is_sign = (int)$number != $i;
 
     <div class="pages">
       <div class="pages-container">
-<?php foreach ($pages as $i): ?>
-<?php if ($i == ' '): ?>
-        <span class="faketable empty">
-          <span class="link"></span>
-        </span>
-<?php continue; endif ?>
-<?php
-$number = $i;
-if ($i == $last_page) {
-  $number = '»';
-}
-if ($i == 1) {
-  $number = '«';
-}
-if ($i == $page - 1) {
-  $number = '‹';
-}
-if ($i == $page + 1) {
-  $number = '›';
-}
-if ($i == $page) {
-  $number = $i;
-}
-$is_sign = (int)$number != $i;
-?>
-        <span class="faketable">
-          <a href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?><?= $i > 1 ? "/{$i}" : '' ?>" class="link <?= $i == $page ? 'active' : '' ?> <?= $is_sign ? 'sign' : '' ?>"><?= $number ?></a>
-        </span>
-<?php endforeach ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
       <div class="clearfix"></div>
     </div>

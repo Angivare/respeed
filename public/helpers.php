@@ -283,3 +283,70 @@ MESSAGE;
 MESSAGE;
   return $markup;
 }
+
+function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) {
+  $pages = [];
+  for ($i = $page; $i < 7; $i++) {
+    $pages[] = ' ';
+  }
+  if ($page != 1) {
+    $pages[] = 1;
+    for ($i = $page - 5; $i < $page; $i++) {
+      if ($i > 1) {
+        $pages[] = $i;
+      }
+    }
+  }
+  $pages[] = $page;
+  if ($page != $last_page) {
+    for ($i = $page + 1; $i <= $page + 5; $i++) {
+      if ($i < $last_page) {
+        $pages[] = $i;
+      }
+    }
+    $pages[] = $last_page;
+  }
+  for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
+    $pages[] = ' ';
+  }
+
+  $markup = '';
+  foreach ($pages as $i) {
+    if ($i == ' ') {
+      $markup .= <<<MARKUP
+        <span class="faketable empty">
+          <span class="link"></span>
+        </span>
+MARKUP;
+      continue;
+    }
+    $number = $i;
+    if ($i == $last_page) {
+      $number = '»';
+    }
+    if ($i == 1) {
+      $number = '«';
+    }
+    if ($i == $page - 1) {
+      $number = '‹';
+    }
+    if ($i == $page + 1) {
+      $number = '›';
+    }
+    if ($i == $page) {
+      $number = $i;
+    }
+    $is_sign = (int)$number != $i;
+    $topic_id = ($topic_mode == 1 ? '0' : '') . $topic;
+    $page_trail = $i > 1 ? "/{$i}" : '';
+    $class = $i == $page ? ' active' : '';
+    $class .= $is_sign ? ' sign' : '';
+    $markup .= <<<MARKUP
+        <span class="faketable">
+          <a href="/{$forum}/{$topic_id}-{$slug}{$page_trail}" class="link {$class}">{$number}</a>
+        </span>
+MARKUP;
+  }
+
+  return $markup;
+}

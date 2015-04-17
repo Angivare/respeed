@@ -197,31 +197,6 @@ function parse_topic($got) {
     $ret['last_page'] = $page;
   }
 
-  $ret['pages'] = [];
-  for ($i = $page; $i < 7; $i++) {
-    $ret['pages'][] = ' ';
-  }
-  if ($page != 1) {
-    $ret['pages'][] = 1;
-    for ($i = $page - 5; $i < $page; $i++) {
-      if ($i > 1) {
-        $ret['pages'][] = $i;
-      }
-    }
-  }
-  $ret['pages'][] = $page;
-  if ($page != $ret['last_page']) {
-    for ($i = $page + 1; $i <= $page + 5; $i++) {
-      if ($i < $ret['last_page']) {
-        $ret['pages'][] = $i;
-      }
-    }
-    $ret['pages'][] = $ret['last_page'];
-  }
-  for ($i = $ret['last_page'] - $page; $i < $ret['last_page'] - $ret['last_page'] + 6; $i++) {
-    $ret['pages'][] = ' ';
-  }
-
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
   $ret['has_parent'] = strip_matches($ret['has_parent']);
   $ret['sous_forums'] = sub_forums($got);
