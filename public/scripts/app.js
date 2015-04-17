@@ -312,7 +312,7 @@ function topicRefresh() {
       $('.js-topicTitle').html($title)
       $('title').html($title)
     }
-    
+    // Messages
     for (var i = 0; i < data.messages.length; i++) {
       var message = data.messages[i]
       if ($.inArray(message.id, liste_messages) > -1) {
@@ -333,6 +333,12 @@ function topicRefresh() {
         $('.js-listeMessages').append(message.markup)
         liste_messages.push(message.id)
       }
+    }
+    
+    // Pagination
+    if (data.last_page > last_page) {
+      last_page = data.last_page
+      $('.pages-container').html(data.paginationMarkup)
     }
   })
 }

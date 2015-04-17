@@ -15,6 +15,7 @@ if($forum && $topic && $slug) {
     }
   }
   $t['page'] = (int)$page; // Pour vérifier simplement qu’on a la bonne page dans app.js
+  $t['paginationMarkup'] = generate_topic_pagination_markup($page, $t['last_page'], $forum, (int)$topic, $topic[0] == '0' ? 1 : 42, $slug);
   
   echo json_encode($t);
 } else if($forum && $slug) {
