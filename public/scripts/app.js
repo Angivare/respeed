@@ -304,6 +304,10 @@ function topicRefresh() {
 
 /*** App ***/
 
+if (!$is_connected) {
+  localStorage.clear()
+}
+
 FastClick.attach(document.body)
 updateRemoteBlacklist()
 setInterval(topicRefresh, 2500)
