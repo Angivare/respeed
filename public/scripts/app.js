@@ -108,13 +108,13 @@ function updateFavorites() {
     localStorage.favoritesForums = JSON.stringify(favoritesForums)
     localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
     localStorage.favoritesLastUpdate = now
+
+    displayFavorites()
+    displayFavoritesOnIndex()
   })
 }
 
 function displayFavorites() {
-  if ($('#add_or_del_forum').length) {
-    return // Hack – InstantClick ne devrait pas appeler `change` quand on fait précédent/suivant, ou devrait agir sur le DOM/HTML de base
-  }
   displayFavoritesForums()
   displayFavoritesTopics()
 }
@@ -126,9 +126,11 @@ function displayFavoritesForums() {
   if (!isBigScreen) {
     return
   }
-  if (!$('#forums_pref')) {
+  if (!$('#forums_pref').length) {
     return
   }
+  
+  $('#forums_pref .menu-content').html('') // Suppression
 
   var hasThisForum = false
   $.each(favoritesForums, function (_, forum) {
@@ -157,9 +159,11 @@ function displayFavoritesTopics() {
   if (!isBigScreen) {
     return
   }
-  if (!$('#topics_pref')) {
+  if (!$('#topics_pref').length) {
     return
   }
+  
+  $('#topics_pref .menu-content').html('') // Suppression
 
   var hasThisTopic = false
   $.each(favoritesTopics, function (_, topic) {
@@ -188,6 +192,9 @@ function displayFavoritesOnIndex() {
   if (!$('.favorites-index').length) {
     return
   }
+
+  $('.favorites-index .favorite').remove() // Suppression
+
   var odd = false
     , str = ''
   $.each(favoritesForums, function(_, forum) {
@@ -197,6 +204,7 @@ function displayFavoritesOnIndex() {
   if (str) {
     $('.favorites-index .favorites-forums').append(str)
   }
+
   odd = false
   str = ''
   $.each(favoritesTopics, function(_, topic) {
