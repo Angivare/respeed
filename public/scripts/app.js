@@ -301,8 +301,8 @@ function topicRefresh() {
   }
 
   ajax('topic_get', {forum: $forum, topic: $topic, slug: $slug, page: $page, liste_messages: liste_messages}, function(data) {
-    if (data.topicNew != $topicNew) {
-      // On est plus sur le topic quand la requête se termine
+    if (data.topicNew != $topicNew || data.page != $page) {
+      // On est plus sur le topic, ou alors plus sur la même page, quand la requête se termine
       return
     }
 
