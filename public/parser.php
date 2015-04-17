@@ -54,6 +54,10 @@ function parse_forum($got) {
   $ret['title'] = 'Communauté';
   if (preg_match('#<h1 class="highlight">Forum (.+)</h1>#Usi', $got, $matches)) {
       $ret['title'] = $matches[1];
+      $pos = strpos($ret['title'], ' - Page ');
+      if ($pos !== false) {
+        $ret['title'] = substr($ret['title'], 0, $pos);
+      }
   }
 
   $ret['connected'] = connected($got);
