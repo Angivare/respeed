@@ -33,12 +33,4 @@ $jvc = new Jvc();
       </div>
     </div>
 <?php endif ?>
-    
-    <div>
-      <h3>Fonctionnalités de JVForum</h3>
-      <ul>
-        <li>Transformation des liens NoelShack en liens direct</li>
-        <li>Cliquez/appuyez sur un avatar pour l’agrandir</li>
-      </ul>
-    </div>
 </div>
