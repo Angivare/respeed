@@ -31,6 +31,16 @@ La lightbox ne doit pas griser ou rendre innaccessible le reste de la page derri
 
 Sur desktop, il n’y a pas besoin de s’occuper de changer l’URL de la page (avec `history.pushState`). Sur mobile elles sont là de base.
 
+#### Refactoring
+
+Si vous voyez des choses qui ont besoin
+
+### Bientôt
+
+Une liste de ce qu’il y aura à contribuer plus tard, mais pas de suite car je n’ai pas encore réfléchi au design nécessaire.
+
+#### Lecture/envoi MP (PHP)
+
 ## License
 
 Le projet n’est pas sous license libre à cause des icônes Material Design qui sont sous CC-BY, ce qui je crois ne peut se mélanger avec une license MIT/GPL, et parce que dans le futur il pourrait y avoir des smileys supplémentaires dans JVForum qui eux non plus ne seront pas redistribuables sous license libre.

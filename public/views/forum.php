@@ -24,38 +24,11 @@ echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->";
   <h1 class="sheet-title forum-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?> <span class="reload-sign">↻</span></a></h1>
   <div class="content">
 
-<?php if ($page > 1): ?>
-    <div class="pages pages-forum pages-left">
-      <div class="pages-container">
-        <span class="faketable">
-          <a href="/<?= $forum ?>-<?= $slug ?>" class="link sign">«</a>
-        </span>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-<?php if ($page > 2): ?>
-    <div class="pages pages-forum pages-left">
-      <div class="pages-container">
-        <span class="faketable">
-          <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page - 1 ?>" class="link sign">‹</a>
-        </span>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-<?php endif ?>
-<?php if ($has_next_page): ?>
-    <div class="pages pages-forum">
-      <div class="pages-container">
-        <span class="faketable">
-          <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page + 1 ?>" class="link sign">›</a>
-        </span>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-<?php else: ?>
-    <div class="clearfix"></div>
-<?php endif ?>
-<?php endif ?>
+<?php
+if ($page > 1) {
+  include 'forum_pagination.php';
+}
+?>
 
     <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches['topic']); $i++): ?>
@@ -79,38 +52,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 <?php endfor ?>
     </div>
 
-<?php if ($page > 1): ?>
-    <div class="pages pages-forum pages-left">
-      <div class="pages-container">
-        <span class="faketable">
-          <a href="/<?= $forum ?>-<?= $slug ?>" class="link sign">«</a>
-        </span>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-<?php endif ?>
-<?php if ($page > 2): ?>
-    <div class="pages pages-forum pages-left">
-      <div class="pages-container">
-        <span class="faketable">
-          <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page - 1 ?>" class="link sign">‹</a>
-        </span>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-<?php endif ?>
-<?php if ($has_next_page): ?>
-    <div class="pages pages-forum">
-      <div class="pages-container">
-        <span class="faketable">
-          <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page + 1 ?>" class="link sign">›</a>
-        </span>
-      </div>
-      <div class="clearfix"></div>
-    </div>
-<?php else: ?>
-    <div class="clearfix"></div>
-<?php endif ?>
+<?php include 'forum_pagination.php' ?>
 
 <?php if($jvc->is_connected()): ?>
     <div class="form-post">
@@ -123,7 +65,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
         <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
       </div>
     </div>
-<?php endif; ?>
+<?php endif ?>
   </div>
   <aside class="aside">
     <div class="menu" id="forums_pref">

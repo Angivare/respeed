@@ -534,6 +534,76 @@ h1, h2, h3 {
   }
 }
 
+/* Pagination */
+
+.pagination-forum {
+  position: relative;
+  margin: 10px;
+}
+
+@media (min-width: 1025px) {
+  .pagination-forum {
+    margin: 10px 0;
+  }
+}
+
+.pagination-forum .precedent {
+  text-align: left;
+  position: absolute;
+}
+
+.pagination-forum .precedent a.debut {
+  display: inline-block;
+  padding-left: 16px;
+  background: url(/images/page_debut.svg) -6px no-repeat;
+  margin-right: 20px;
+}
+
+.pagination-forum .precedent a.precedent-lien {
+  display: inline-block;
+  padding-left: 16px;
+  background: url(/images/page_prec.svg) -8px no-repeat;
+}
+
+/*.pagination-forum .precedent span {
+  display: inline-block;
+  width: 0;
+  overflow: hidden;
+}*/
+
+.pagination-forum .page {
+  text-align: center;
+  width: 100%;
+}
+
+.pagination-forum .page.hidden {
+  visibility: hidden;
+}
+
+.pagination-forum .page a {
+  background: #f60;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 3px 5px;
+}
+
+.pagination-forum .page a:hover, .pagination-forum .page a:active {
+  color: white !important;
+}
+
+.pagination-forum .suivant {
+  text-align: right;
+  position: absolute;
+  right: 0;
+}
+
+.pagination-forum .suivant a {
+  display: inline-block;
+  padding-right: 16px;
+  background: url(/images/page_suiv.svg) right -8px center no-repeat;
+}
+
 /* Couleurs pseudos modos/admins */
 
 .pseudo-modo, .message .meta-author .author.pseudo-modo {
