@@ -16,24 +16,37 @@ $jvc = new Jvc();
 </header>
 
 <div class="sheet">
-  <div class="content">
+  <div class="content no-menu">
 <?php if (!$jvc->is_connected()): ?>
     <div class="presentation">
       <h2>Bienvenue sur JVForum !</h2>
-      <p>JVForum vous permet de mieux profiter des forums de jeuxvideo.com quelque soit l’appareil que vous utilisez. <a href="/se_connecter">Connectez-vous</a> pour retrouver ici vos forums et topics préférés.</p>
+      <p>JVForum vous permet de mieux profiter des forums de jeuxvideo.com quelque soit l’appareil que vous utilisez. <a href="/se_connecter">Connectez-vous</a> pour retrouver vos forums et topics préférés.</p>
+    </div>
+<?php else: ?>
+    <div class="favorites-index">
+      <div class="favorites-forums">
+        <h3>Forums préférés</h3>
+        <a class="favorite" href="">Communauté</a>
+        <a class="favorite odd" href="">Grand Theft Auto V</a>
+        <a class="favorite" href="">Blabla 18-25 ans</a>
+        <a class="favorite odd" href="">League of Legends</a>
+        <a class="favorite" href="">Football Manager 2015</a>
+        <a class="favorite odd" href="">Destiny</a>
+      </div>
+      
+      <div class="favorites-topics">
+        <h3>Topics préférés</h3>
+        <a class="favorite" href="">Communauté</a>
+        <a class="favorite odd" href="">Grand Theft Auto V</a>
+        <a class="favorite" href="">Blabla 18-25 ans</a>
+        <a class="favorite odd" href="">League of Legends</a>
+        <a class="favorite" href="">Football Manager 2015</a>
+        <a class="favorite odd" href="">Destiny</a>
+        <a class="favorite" href="">Football Manager 2015</a>
+        <a class="favorite odd" href="">Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny Destiny</a>
+      </div>
     </div>
 <?php endif ?>
-    <div class="menu" id="forums_pref">
-      <h3 class="title">Mes forums préférés</h3>
-        <ul class="menu-content">
-        </ul>
-    </div>
-
-    <div class="menu" id="topics_pref">
-      <h3 class="title">Mes topics préférés</h3>
-        <ul class="menu-content">
-        </ul>
-    </div>
     
     <div>
       <h3>Fonctionnalités de JVForum</h3>

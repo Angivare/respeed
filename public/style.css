@@ -300,6 +300,46 @@ h1, h2, h3 {
   }
 }
 
+@media (min-width: 500px) {
+  .favorites-index {
+    overflow: auto;
+  }
+
+  .favorites-forums, .favorites-topics {
+    float: left;
+  }
+
+  .favorites-forums {
+    width: 40%;
+  }
+
+  .favorites-topics {
+    width: 57%;
+    margin-left: 3%;
+  }
+}
+
+.favorites-index h3 {
+  padding: 0 10px;
+  margin: .5em 0;
+}
+
+@media (min-width: 1025px) {
+  .favorites-index h3 {
+    padding: initial;
+  }
+}
+
+.favorites-index .favorite {
+  background: #f9f9f9;
+  display: block;
+  padding: 8px 10px;
+}
+
+.favorites-index .favorite.odd {
+  background: #EFF4FC;
+}
+
 /* CONNEXION */
 
 .form-container {
