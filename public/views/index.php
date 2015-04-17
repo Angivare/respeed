@@ -17,6 +17,12 @@ $jvc = new Jvc();
 
 <div class="sheet">
   <div class="content">
+<?php if (!$jvc->is_connected()): ?>
+    <div class="presentation">
+      <h2>Bienvenue sur JVForum !</h2>
+      <p>JVForum vous permet de mieux profiter des forums de jeuxvideo.com quelque soit l’appareil que vous utilisez. <a href="/se_connecter">Connectez-vous</a> pour retrouver ici vos forums et topics préférés.</p>
+    </div>
+<?php endif ?>
     <div class="menu" id="forums_pref">
       <h3 class="title">Mes forums préférés</h3>
         <ul class="menu-content">
@@ -30,11 +36,10 @@ $jvc = new Jvc();
     </div>
     
     <div>
-    <h3>Fonctionnalités de JVForum</h3>
-    <ul>
-      <li>Transformation des liens NoelShack en liens direct</li>
-      <li>Cliquez/appuyez sur un avatar pour l’agrandir</li>
-    </ul>
+      <h3>Fonctionnalités de JVForum</h3>
+      <ul>
+        <li>Transformation des liens NoelShack en liens direct</li>
+        <li>Cliquez/appuyez sur un avatar pour l’agrandir</li>
+      </ul>
     </div>
-  <aside class="aside"></aside>
 </div>
