@@ -452,6 +452,10 @@ InstantClick.on('change', function() {
   $('.meta-delete').click(function() {
     var id = $(this).closest('.message').attr('id')
 
+    if (!confirm('Êtes-vous sûr de vouloir effacer ce message ? Vous ne pourrez pas le restaurer depuis JVForum.')) {
+      return
+    }
+    $('#' + id).remove()
     ajax('message_delete', {id_message: id})
   })
 
