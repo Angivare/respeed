@@ -661,7 +661,7 @@ class Jvc {
   private function ajax_array($type) {
     if(
         (!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
-      &&(time() - $this->tokens_last_update() >= 3600/2)
+      || (time() - $this->tokens_last_update() >= 3600/2)
     ) {
       $rep = $this->get($this->domain . '/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
       self::tokens_refresh($rep['body']);
