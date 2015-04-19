@@ -6,7 +6,7 @@ arg('nick');
 if($nick) {
   $nick = strtolower($nick);
 
-  $bl = $jvc->blacklist();
+  $bl = $jvc->blacklist_get();
 
   foreach($bl as $entry)
   	if(strtolower($entry['human']) === $nick) {
