@@ -335,9 +335,10 @@ function topicRefresh() {
         $('.js-listeMessages').append(message.markup)
         liste_messages.push(message.id)
 
+        $('#' + message.id + ' .meta-quote').click(quote)
         $('#' + message.id + ' .meta-ignore').click(ignore)
         $('#' + message.id + ' .meta-unignore').click(unignore)
-        $('#' + message.id + ' .meta-quote').click(quote)
+        $('#' + message.id + ' .meta-edit').click(edit)
         $('#' + message.id + ' .meta-delete').click(deleteMessage)
         $('#' + message.id + ' .m-profil').click(openProfile)
         $('#' + message.id + ' .meta-menu').click(toggleMenu)
@@ -436,6 +437,21 @@ function quote() {
   $('#newmessage').val($('#newmessage').val() + citation).focus()
 }
 
+function edit() {
+  var id = $(this).closest('.message').attr('id')
+    , text = toJVCode($('#' + id + ' .content').html())
+
+  var html = '<p>\
+    <textarea class="input textarea">' + toJVCode(text) + '</textarea>\
+    <span id="captcha-container"></span>\
+    <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster">\
+  </p>'
+  $('#' + id + ' .js-content').html(html)
+  $('#' + id + ' .js-content textarea').focus()
+
+        
+}
+
 function deleteMessage() {
   var id = $(this).closest('.message').attr('id')
 
@@ -502,9 +518,10 @@ InstantClick.on('change', function() {
   $('#floating_newmessage').click(floatingNewmessageTap)
 
   // Messages
+  $('.meta-quote').click(quote)
   $('.meta-ignore').click(ignore)
   $('.meta-unignore').click(unignore)
-  $('.meta-quote').click(quote)
+  $('.meta-edit').click(edit)
   $('.meta-delete').click(deleteMessage)
   $('.m-profil').click(openProfile)
   $('.meta-menu').click(toggleMenu)

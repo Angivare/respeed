@@ -260,7 +260,7 @@ MESSAGE;
     $markup .= '<span class="meta-ignore">Ignorer</span>';
   }
   else {
-    $markup .= '<!--<span class="meta-edit">Modifier</span>-->';
+    $markup .= '<span class="meta-edit">Modifier</span>';
     $markup .= '<span class="meta-delete">Supprimer</span>';
   }
   $markup .= <<<MESSAGE
