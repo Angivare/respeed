@@ -8,6 +8,8 @@ var form_data
   , topicRefreshes = []
   , liste_messages = liste_messages || []
 
+
+
 /*** Helpers ***/
 
 function ajax(action, data, success) {
@@ -343,6 +345,130 @@ function topicRefresh() {
   })
 }
 
+
+
+/*** Fonctions pour events ***/
+
+function post(e) {
+  e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
+  if (!form_data) {
+    $('#newmessage').focus()
+    return
+  }
+  var params = {
+    url: url,
+    msg: $('#newmessage').val(),
+    form: form_data,
+  }
+  if ($('#ccode').val()) {
+    params.ccode = $('#ccode').val()
+  }
+  if ($('#newsujet')) {
+    params.title = $('#newsujet').val()
+  }
+  var action = $('#newsujet').length ? 'topic_post' : 'message_post'
+  ajax(action, params, function(data) {
+    $('#captcha-container').html('')
+    form_data = null
+
+    if (data.rep) {
+      $('.form-error').hide()
+      $('#newmessage').val('')
+      return
+    }
+
+    $('.form-error p').html(data.err)
+    $('.form-error').show()
+    $('#newmessage').focus()
+  })
+}
+
+function ignore() {
+  var id = $(this).closest('.message').attr('id')
+    , pseudo = $('#' + id).data('pseudo')
+
+  if (!$is_connected) {
+    location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
+    return
+  }
+
+  addToBlacklist(pseudo, id)
+  applyBlacklist()
+}
+
+function unignore() {
+  var id = $(this).closest('.message').attr('id')
+    , pseudo = $('#' + id).data('pseudo')
+
+  removeFromBlacklist(pseudo)
+  applyBlacklist()
+}
+
+function quote() {
+  var id = $(this).closest('.message').attr('id')
+    , pseudo = $('#' + id).data('pseudo')
+    , date = $('#' + id).data('date')
+    , hash = $('#hash').val()
+    , text = $('#' + id + ' .content').html()
+
+  if (!$is_connected) {
+    location.href = '/se_connecter?pour=citer&qui=' + pseudo
+    return
+  }
+
+  var citation = ""
+  if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
+    citation += "\n\n"
+  }
+  citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
+  citation += "> \n"
+  citation += "> " + toJVCode(text).split("\n").join("\n> ")
+  citation += "\n\n"
+  
+  $('#newmessage').val($('#newmessage').val() + citation).focus()
+}
+
+function deleteMessage() {
+  var id = $(this).closest('.message').attr('id')
+
+  if (!confirm('Êtes-vous sûr de vouloir effacer ce message ? Vous ne pourrez pas le restaurer depuis JVForum.')) {
+    return
+  }
+  $('#' + id).remove()
+  ajax('message_delete', {id_message: id})
+}
+
+function openProfile() {
+  window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
+  return false
+}
+
+function floatingNewmessageTap() {
+  if (!$is_connected) {
+    location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
+    return
+  }
+}
+
+function toggleMenu(e) {
+  var id = e.target.parentNode.parentNode.parentNode.parentNode.id
+  $('#' + id).toggleClass('show-menu')
+}
+
+function closeMenu(e) {
+  if (e.target.className == 'meta-menu') {
+    return
+  }
+  var id = this.id
+  $('#' + id).removeClass('show-menu')
+}
+
+function remove404Avatar(e) {
+  $(e.target).remove()
+}
+
+
+
 /*** App ***/
 
 if (!$is_connected) {
@@ -362,131 +488,20 @@ InstantClick.on('change', function(isInitialLoad) {
 })
 
 InstantClick.on('change', function() {
-  $('#post').click(function(e) {
-    e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
-    if (!form_data) {
-      $('#newmessage').focus()
-      return
-    }
-    var params = {
-      url: url,
-      msg: $('#newmessage').val(),
-      form: form_data,
-    }
-    if ($('#ccode').val()) {
-      params.ccode = $('#ccode').val()
-    }
-    if ($('#newsujet')) {
-      params.title = $('#newsujet').val()
-    }
-    var action = $('#newsujet').length ? 'topic_post' : 'message_post'
-    ajax(action, params, function(data) {
-      $('#captcha-container').html('')
-      form_data = null
+  $('#post').click(post)
+  $('#newsujet').focus(request_form_data)
+  $('#newmessage').focus(request_form_data)
+  $('#floating_newmessage').click(floatingNewmessageTap)
 
-      if (data.rep) {
-        $('.form-error').hide()
-        $('#newmessage').val('')
-        return
-      }
-
-      $('.form-error p').html(data.err)
-      $('.form-error').show()
-      $('#newmessage').focus()
-    })
-  })
-
-  $('#newsujet').focus(function(e) {
-    request_form_data()
-  })
-
-  $('#newmessage').focus(function() {
-    request_form_data()
-  })
-
-  $('.meta-ignore').click(function(e) {
-    var id = $(this).closest('.message').attr('id')
-      , pseudo = $('#' + id).data('pseudo')
-
-    if (!$is_connected) {
-      location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
-      return
-    }
-
-    addToBlacklist(pseudo, id)
-    applyBlacklist()
-  })
-
-  $('.meta-unignore').click(function(e) {
-    var id = $(this).closest('.message').attr('id')
-      , pseudo = $('#' + id).data('pseudo')
-
-    removeFromBlacklist(pseudo)
-    applyBlacklist()
-  })
-
-  $('.meta-quote').click(function(e) {
-    var id = $(this).closest('.message').attr('id')
-      , pseudo = $('#' + id).data('pseudo')
-      , date = $('#' + id).data('date')
-      , hash = $('#hash').val()
-      , text = $('#' + id + ' .content').html()
-
-    if (!$is_connected) {
-      location.href = '/se_connecter?pour=citer&qui=' + pseudo
-      return
-    }
-
-    var citation = ""
-    if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
-      citation += "\n\n"
-    }
-    citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
-    citation += "> \n"
-    citation += "> " + toJVCode(text).split("\n").join("\n> ")
-    citation += "\n\n"
-    
-    $('#newmessage').val($('#newmessage').val() + citation).focus()
-  })
-  
-  $('.meta-delete').click(function() {
-    var id = $(this).closest('.message').attr('id')
-
-    if (!confirm('Êtes-vous sûr de vouloir effacer ce message ? Vous ne pourrez pas le restaurer depuis JVForum.')) {
-      return
-    }
-    $('#' + id).remove()
-    ajax('message_delete', {id_message: id})
-  })
-
-  $('.m-profil').click(function() {
-    window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
-    return false
-  })
-
-  $('#floating_newmessage').click(function() {
-    if (!$is_connected) {
-      location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
-      return
-    }
-  })
-
-  $('.meta-menu').click(function(e) {
-    var id = e.target.parentNode.parentNode.parentNode.parentNode.id
-    $('#' + id).toggleClass('show-menu')
-  })
-
-  $('.message').click(function(e) {
-    if (e.target.className == 'meta-menu') {
-      return
-    }
-    var id = this.id
-    $('#' + id).removeClass('show-menu')
-  })
-  
-  $('.js-avatarImg').error(function(handler) {
-    $(handler.target).remove()
-  })
+  // Messages
+  $('.meta-ignore').click(ignore)
+  $('.meta-unignore').click(unignore)
+  $('.meta-quote').click(quote)
+  $('.meta-delete').click(deleteMessage)
+  $('.m-profil').click(openProfile)
+  $('.meta-menu').click(toggleMenu)
+  $('.message').click(closeMenu)
+  $('.js-avatarImg').error(remove404Avatar)
 })
 
 InstantClick.init()
