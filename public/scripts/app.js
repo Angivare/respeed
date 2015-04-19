@@ -334,6 +334,15 @@ function topicRefresh() {
         // Création
         $('.js-listeMessages').append(message.markup)
         liste_messages.push(message.id)
+
+        $('#' + message.id + ' .meta-ignore').click(ignore)
+        $('#' + message.id + ' .meta-unignore').click(unignore)
+        $('#' + message.id + ' .meta-quote').click(quote)
+        $('#' + message.id + ' .meta-delete').click(deleteMessage)
+        $('#' + message.id + ' .m-profil').click(openProfile)
+        $('#' + message.id + ' .meta-menu').click(toggleMenu)
+        $('#' + message.id + ' .message').click(closeMenu)
+        $('#' + message.id + ' .js-avatarImg').error(remove404Avatar)
       }
     }
     
