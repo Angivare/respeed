@@ -241,7 +241,7 @@ MESSAGE;
   <div class="not-action-menu">
     <div class="message-header">
       <div class="meta-author">
-        <span class="author pseudo-{$message['status']} desktop"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
+        <span class="author pseudo-{$message['status']} desktop"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" target="_blank" class="m-profil">{$pseudoWbr}</a></span>
 MESSAGE;
   if ($message['avatar']) {
     $markup .= <<<MESSAGE
