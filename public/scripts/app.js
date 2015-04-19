@@ -99,7 +99,7 @@ function updateFavorites() {
     return
   }
   ajax('favorites_get', {}, function(data) {
-    if (data.err) {
+    if (!data.rep) {
       alert('Erreur lors de la synchronisation des favoris : ' + data.err)
       return
     }
