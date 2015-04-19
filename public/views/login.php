@@ -61,7 +61,7 @@ if (isset($_GET['pour'])) {
   }
 }
 ?>
-      <div class="sell">Connectez-vous pour <?= $pour ?> via Respeed.</div>
+      <div class="sell">Connectez-vous pour <?= $pour ?> via JVForum.</div>
 <?php if($nick && $pass):
     $jvc->disconnect();
     $form = $jvc->connect_req($nick, $pass);
@@ -100,7 +100,7 @@ if (isset($_GET['pour'])) {
           <li><strong>Moins de scroll</strong> sur les grands écrans</li>
           <li><strong>Version mobile complète</strong></li>
           <li><strong>Rafraîchissement automatique</strong> des topics</li>
-          <li><strong><a href="https://github.com/dieulot/respeed" target="_blank">Open source</a></strong>, tout développeur web peut participer</li>
+          <li><strong>Open source</strong>, tout développeur web peut participer</li>
         </ul>
       </div>
     </aside>
