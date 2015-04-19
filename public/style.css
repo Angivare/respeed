@@ -1235,7 +1235,6 @@ h1, h2, h3 {
   overflow: hidden;
   background-image: url(/images/ic_visibility_24px.svg?);
   color: transparent;
-  cursor: default;
 }
 
 @media (min-width: 1025px) {
