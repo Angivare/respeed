@@ -63,8 +63,8 @@ h1, h2, h3 {
   }
 }
 
-#instantclick {
-  display: none;
+#instantclick-bar {
+  background: black;
 }
 
 /* HEADER */
