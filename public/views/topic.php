@@ -25,6 +25,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
 <div class="sheet">
   <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
+
   <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
   <h1 class="sheet-title topic-title"><a class="js-topicTitle" href="/<?= $forum ?>/<?= $topic_mode == 1 ? '0' : '' ?><?= $topic ?>-<?= $slug ?>"><?= $title ?></a></h1>
   <div class="content">
@@ -71,6 +72,15 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     </div>
 <?php endif; ?>
 <?php endif; ?>
+
+    <div class="bottom-back-buttons">
+      <span>
+        <a class="submit" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour forum</a>
+      </span>
+      <span class="align-right">
+        <a class="submit" href="/">Accueil</a>
+      </span>
+    </div>
 
   </div>
   <aside class="aside">

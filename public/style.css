@@ -1264,6 +1264,28 @@ h1, h2, h3 {
   cursor: pointer;
 }
 
+/* TOPIC - Boutons en bas */
+
+.bottom-back-buttons {
+  padding: 20px 10px;
+  display: table;
+  width: 100%;
+}
+
+@media (min-width: 1025px) {
+  .bottom-back-buttons {
+    padding: 20px 0;
+  }
+}
+
+.bottom-back-buttons span {
+  display: table-cell;
+}
+
+.bottom-back-buttons span.align-right {
+  text-align: right;
+}
+
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
 
 .pseudo-modo, .message .meta-author .author.pseudo-modo {
