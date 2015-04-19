@@ -416,7 +416,6 @@ function unignore() {
 function quote() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
-    , date = $('#' + id).data('date')
     , hash = $('#hash').val()
     , text = $('#' + id + ' .content').html()
 
@@ -429,7 +428,7 @@ function quote() {
   if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
     citation += "\n\n"
   }
-  citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
+  citation += "> '''" + pseudo + "''', http://jvforum.fr" + location.pathname + "#" + id + "\n"
   citation += "> \n"
   citation += "> " + toJVCode(text).split("\n").join("\n> ")
   citation += "\n\n"
