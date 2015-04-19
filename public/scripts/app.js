@@ -99,6 +99,10 @@ function updateFavorites() {
     return
   }
   ajax('favorites_get', {}, function(data) {
+    if (data.err) {
+      alert('Erreur lors de la synchronisation des favoris : ' + data.err)
+      return
+    }
     favoritesForums = []
     favoritesTopics = []
     $.each(data.rep.forums, function(index, value) {
