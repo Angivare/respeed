@@ -430,28 +430,23 @@ InstantClick.on('change', function() {
       , pseudo = $('#' + id).data('pseudo')
       , date = $('#' + id).data('date')
       , hash = $('#hash').val()
+      , text = $('#' + id + ' .content').html()
 
     if (!$is_connected) {
       location.href = '/se_connecter?pour=citer&qui=' + pseudo
       return
     }
 
-    ajax('quote', {id_message: id}, function(data) {
-      if (!data.rep) {
-        alert('Erreur avec la citation : ' + data.err)
-        return
-      }
-      var citation = ""
-      if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
-        citation += "\n\n"
-      }
-      citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
-      citation += "> \n"
-      citation += "> " + $.trim(data.rep).split("\n").join("\n> ")
+    var citation = ""
+    if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
       citation += "\n\n"
-      
-      $('#newmessage').val($('#newmessage').val() + citation).focus()
-    })
+    }
+    citation += "> '''" + pseudo + "''', " + date + " http://jvforum.fr" + location.pathname + "#" + id + "\n"
+    citation += "> \n"
+    citation += "> " + toJVCode(text).split("\n").join("\n> ")
+    citation += "\n\n"
+    
+    $('#newmessage').val($('#newmessage').val() + citation).focus()
   })
   
   $('.meta-delete').click(function() {

@@ -8,20 +8,24 @@ $form = isset($_POST['form']) ? $_POST['form'] : NULL;
 $nick = isset($_POST['nick']) ? $_POST['nick'] : NULL;
 $pass = isset($_POST['pass']) ? $_POST['pass'] : NULL;
 $ref = isset($_POST['ref']) ? $_POST['ref'] : NULL;
+$err = NULL;
 
 if($nick && $pass && $form && $ccode):
   $form = unserialize(urldecode($form));
-  if(is_array($form) && ctype_digit($ccode)):
-    if(!$jvc->connect_finish($nick, $pass, $form, $ccode))
-      echo 'Erreur lors de la connexion: ' . $jvc->err();
+  if(is_array($form)):
+    if(!$jvc->connect_finish($nick, $pass, $form, $ccode)) {
+      $err = 'Erreur lors de la connexion: ' . $jvc->err();
+      $nick = NULL; $pass = NULL; $form = NULL; $ccode = NULL;
+    }
     else {
       if($ref && $ref != '/se_connecter')
         header("Location: $ref");
-      else
+      else 
         header('Location: /');
+      exit;
     }
   endif;
-else: ?>
+endif; ?>
 <header class="site-header">
   <h2 class="site-title">
     <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
@@ -38,6 +42,11 @@ else: ?>
 <div class="sheet">
   <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
   <div class="content no-menu login-fake-table">
+<?php if($err): ?>
+    <div class="connection-error">
+      <?= $err ?>
+    </div>
+<?php endif ?>
     <div class="form-container">
 <?php
 $pour = 'poster des messages';
@@ -74,6 +83,8 @@ if (isset($_GET['pour'])) {
 <?php if($url = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : NULL) {
   if($url['host'] == $_SERVER['SERVER_NAME'] && $url['path'] != '/se_connecter')
     echo '<input type="hidden" name="ref" value="' . $url['path'] . '">';
+  else if($ref)
+    echo '<input type="hidden" name="ref" value="' . $ref . '">';
 } ?>
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe">
@@ -95,4 +106,3 @@ if (isset($_GET['pour'])) {
     </aside>
   </div>
 </div>
-<?php endif;
