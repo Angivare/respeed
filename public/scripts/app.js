@@ -580,11 +580,11 @@ if (!$is_connected) {
   localStorage.clear()
 }
 
-FastClick.attach(document.body)
 updateRemoteBlacklist()
 setInterval(topicRefresh, 2500)
 
 InstantClick.on('change', function(isInitialLoad) {
+  FastClick.attach(document.body)
   updateFavorites()
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
   updateLocalBlacklist()
