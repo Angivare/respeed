@@ -220,49 +220,44 @@ function displayFavoritesOnIndex() {
 }
 
 function request_form_data() {
-  if (!form_data) {
-    var action = $('#newsujet').length ? 'topic_post' : 'message_post'
-    ajax(action, {url: url}, function(data) {
-      if (data.err == 'Forum fermé') {
-        $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
-        $('#newsujet').attr('disabled', '')
-        $('#newmessage').attr('disabled', '')
-        $('.form-error').show()
-        return
-      }
-      form_data = data.rep
-      if (form_data.fs_signature) {
-        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha_get.php?'
-          + 'signature=' + encodeURIComponent(form_data.fs_signature)
-          + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
-          + '" class="captcha">')
-      }
-    })
+  if (form_data) {
+    return
   }
+  var action = $('#newsujet').length ? 'topic_post' : 'message_post'
+  ajax(action, {url: url}, function(data) {
+    if (data.err == 'Forum fermé') {
+      $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
+      $('#newsujet').attr('disabled', '')
+      $('#newmessage').attr('disabled', '')
+      $('.form-error').show()
+      return
+    }
+    form_data = data.rep
+    if (form_data.fs_signature) {
+      $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha_get.php?'
+        + 'signature=' + encodeURIComponent(form_data.fs_signature)
+        + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
+        + '" class="captcha">')
+    }
+  })
 }
 
-function request_edit_form_data() {
-  console.log('x')
-  return
-  if (!edit_form_data) {
-    var action = $('#newsujet').length ? 'topic_post' : 'message_post'
-    ajax(action, {url: url}, function(data) {
-      if (data.err == 'Forum fermé') {
-        $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
-        $('#newsujet').attr('disabled', '')
-        $('#newmessage').attr('disabled', '')
-        $('.form-error').show()
-        return
-      }
-      edit_form_data = data.rep
-      if (edit_form_data.fs_signature) {
-        $('#captcha-container').html('<br><input class="input input-captcha" id="ccode" name="ccode" placeholder="Code"> <img src="/ajax/captcha_get.php?'
-          + 'signature=' + encodeURIComponent(edit_form_data.fs_signature)
-          + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
-          + '" class="captcha">')
-      }
-    })
+function request_edit_form_data(e) {
+  if (edit_form_data) {
+    return
   }
+  
+  var id = $(this).closest('.message').attr('id')
+
+  ajax('message_edit', {id_message: id}, function(data) {
+    edit_form_data = data.rep
+    if (edit_form_data.fs_signature) {
+      $('#captcha-container').html('<br><input class="input input-captcha" id="ccode_edit" name="ccode" placeholder="Code"> <img src="/ajax/captcha_get.php?'
+        + 'signature=' + encodeURIComponent(edit_form_data.fs_signature)
+        + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
+        + '" class="captcha">')
+    }
+  })
 }
 
 function addForum() {
@@ -426,6 +421,39 @@ function post(e) {
   })
 }
 
+function postEdit(e) {
+  e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
+  if (!edit_form_data) {
+    $('#editmessage').focus()
+    return
+  }
+
+  var id = $(this).closest('.message').attr('id')
+
+  var params = {
+    id_message: id,
+    msg: $('#editmessage').val(),
+    form: edit_form_data,
+  }
+  if ($('#ccode_edit').val()) {
+    params.ccode = $('#ccode').val()
+  }
+  ajax('message_edit', params, function(data) {
+    $('#captcha-container').html('')
+    edit_form_data = null
+
+    if (data.rep) {
+      $('.form-error').hide()
+      cancelEdit()
+      return
+    }
+
+    $('.form-error p').html(data.err)
+    $('.form-error').show()
+    $('#editmessage').focus()
+  })
+}
+
 function ignore() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
@@ -492,12 +520,13 @@ function edit() {
   var text = toJVCode(html)
 
   var htmlTextarea = '<p>\
-    <textarea class="input textarea">' + text + '</textarea>\
+    <textarea class="input textarea" id="editmessage">' + text + '</textarea>\
     <span id="captcha-container"></span>\
-    <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster">\
+    <br><input class="submit submit-main submit-big" id="post_edit" type="submit" value="Poster">\
   </p>'
   $('#' + id + ' .js-content').html(htmlTextarea).addClass('js-isEditing').data('html', html)
   $('#' + id + ' .js-content textarea').focus(request_edit_form_data).focus()
+  $('#post_edit').click(postEdit)
 }
 
 function deleteMessage() {
