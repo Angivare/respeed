@@ -17,12 +17,12 @@ $ip = [];
 foreach($lines as $l) {
   if(!$l || $l[0] == '#') continue;
 
-  $ip[] = ip2long($l);
+  $ip[] = $l;
 }
 
 $db = new Db();
 
-$sql = str_repeat('(?),', count($ip)-1) . '(?)';
+$sql = str_repeat('(INET_ATON(?)),', count($ip)-1) . '(?)';
 
 $db->query('DELETE FROM ip_blacklist WHERE ip=ip', []);
 $db->query(
