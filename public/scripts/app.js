@@ -450,8 +450,14 @@ function unignore() {
 function quote() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
-    , hash = $('#hash').val()
-    , text = $('#' + id + ' .content').html()
+  
+  var html = $('#' + id + ' .content').html()
+    , pos = html.indexOf('<p class="edit-mention">')
+  if (pos > -1) {
+    html = html.substr(0, pos)
+  }
+
+  var text = toJVCode(html)
 
   if (!$is_connected) {
     location.href = '/se_connecter?pour=citer&qui=' + pseudo
