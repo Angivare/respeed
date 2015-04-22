@@ -84,7 +84,7 @@ if (isset($_GET['pour'])) {
           $jvc->get('http://www.jeuxvideo.com/captcha/ccode.php?' .
           $form['fs_signature']
           )['body']) ?>" class="captcha">
-        <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus>
+        <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus autocomplete="off">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
 <?php else: ?>
