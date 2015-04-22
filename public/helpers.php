@@ -238,7 +238,6 @@ MESSAGE;
     $markup .= '--><span class="action meta-ignore">Ignorer</span>';
   }
   else {
-    $markup .= '--><span class="action meta-edit">Modifier</span><!--';
     $markup .= '--><span class="action meta-delete">Supprimer</span>';
   }
   $markup .= <<<MESSAGE
