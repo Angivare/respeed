@@ -1069,13 +1069,13 @@ h1, h2, h3 {
 }
 
 .message.show-menu .not-action-menu {
-  -webkit-transform: translateX(-200px);
-          transform: translateX(-200px);
+  -webkit-transform: translateX(-300px);
+          transform: translateX(-300px);
 }
 
 .message .action-menu {
   position: absolute;
-  left: calc(100% - 200px);
+  left: calc(100% - 300px);
   display: none;
 }
 
