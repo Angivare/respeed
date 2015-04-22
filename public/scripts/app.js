@@ -502,7 +502,7 @@ function quote() {
   }
   citation += "> '''" + pseudo + "''', http://jvforum.fr" + location.pathname + "#" + id + "\n"
   citation += "> \n"
-  citation += "> " + toJVCode(text).split("\n").join("\n> ")
+  citation += "> " + text.split("\n").join("\n> ")
   citation += "\n\n"
   
   $('#newmessage').val($('#newmessage').val() + citation).focus()
@@ -521,7 +521,7 @@ function edit() {
     html = html.substr(0, pos)
   }
 
-  var text = toJVCode(html)
+  var text = JVCode.he(toJVCode(html))
 
   var htmlTextarea = '<p>\
     <textarea class="input textarea" id="editmessage">' + text + '</textarea>\
