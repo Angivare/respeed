@@ -50,6 +50,10 @@ $superlatifs = [
   'sensationnel',
 ];
 
+function h($string) {
+  return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5);
+}
+
 function adapt_html($message, $date) {
   // Mise en forme édition
   preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<a href="(//www.jeuxvideo.com/profil/(?P<pseudo>.+)\?mode=infos)?" target="_blank">[^<]*</a>#Usi', $message, $matches_edit);

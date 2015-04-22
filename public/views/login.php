@@ -16,7 +16,7 @@ if($nick && $pass && $form && $ccode):
   $form = unserialize(urldecode($form));
   if(is_array($form)):
     if(!$jvc->connect_finish($nick, $pass, $form, $ccode, $form)) {
-      $err = 'Erreur lors de la connexion: ' . $jvc->err();
+      $err = $jvc->err();
       if(!isset($form['fs_signature'])) {
         $err_nick = $nick;
         $err_pass = $pass;
@@ -51,11 +51,6 @@ endif; ?>
 <div class="sheet">
   <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
   <div class="content no-menu login-fake-table">
-<?php if($err): ?>
-    <div class="connection-error">
-      <?= $err ?>
-    </div>
-<?php endif ?>
     <div class="form-container">
 <?php
 $pour = 'poster des messages';
@@ -70,7 +65,11 @@ if (isset($_GET['pour'])) {
   }
 }
 ?>
+<?php if($err): ?>
+      <div class="connection-error"><?= $err ?></div>
+<?php else: ?>
       <div class="sell">Connectez-vous pour <?= $pour ?> via JVForum.</div>
+<?php endif ?>
 <?php if($nick && $pass):
     $jvc->disconnect();
     if(!$form)
@@ -96,8 +95,8 @@ if (isset($_GET['pour'])) {
   else if($ref)
     echo '<input type="hidden" name="ref" value="' . $ref . '">';
 } ?>
-        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $err_nick ?>" <?= $err_nick ? '' : 'autofocus' ?>>
-        <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<? $err_nick ?>">
+        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?>>
+        <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
 <?php endif; ?>
