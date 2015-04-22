@@ -505,7 +505,8 @@ function quote() {
   citation += "> " + text.split("\n").join("\n> ")
   citation += "\n\n"
   
-  $('#newmessage').val($('#newmessage').val() + citation).focus()
+  $('#newmessage').focus() // Doit être avant .val pour avoir le curseur placé en bas
+  $('#newmessage').val($('#newmessage').val() + citation)
 }
 
 function edit() {
