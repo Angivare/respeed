@@ -17,7 +17,7 @@ $ip = [];
 foreach($lines as $l) {
   if(!$l || $l[0] == '#') continue;
 
-  $ip[] = ip2long($l);
+  $ip[] = $l;
 }
 
 $db = new Db();

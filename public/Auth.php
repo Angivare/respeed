@@ -31,7 +31,7 @@ class Auth {
   }
 
   public function validate($hash, $ts, $rand) {
-    $ip = ip2long($_SERVER['REMOTE_ADDR']);
+    $ip = $_SERVER['REMOTE_ADDR'];
     if($this->db->query('SELECT ip FROM ip_blacklist WHERE ip=?', [$ip])->fetch())
       return $this->_err('Ip blacklistée');
 
