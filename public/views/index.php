@@ -33,4 +33,5 @@ $jvc = new Jvc();
       </div>
     </div>
 <?php endif ?>
+  </div>
 </div>

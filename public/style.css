@@ -1383,3 +1383,17 @@ h1, h2, h3 {
   position: absolute;
   margin-left: 20px;
 }
+
+/* NOUVEAUTÉS */
+
+.news {
+  padding: 0 10px;
+}
+
+.news h2 {
+  margin: .83em 0;
+}
+
+.news li {
+  margin-bottom: .5em;
+}

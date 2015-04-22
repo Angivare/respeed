@@ -5,6 +5,7 @@ $slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slu
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $login = isset($_GET['login']) ? true : false;
 $logout = isset($_GET['logout']) ? true : false;
+$news = isset($_GET['news']) ? true : false;
 
 require 'helpers.php';
 require 'Jvc.php';
@@ -21,6 +22,8 @@ if ($login)
   require 'views/login.php';
 elseif ($logout)
   require 'views/logout.php';
+elseif ($news)
+  require 'views/news.php';
 elseif ($forum && $topic)
   require 'views/topic.php';
 elseif ($forum)
