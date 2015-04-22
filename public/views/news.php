@@ -23,7 +23,8 @@ $jvc = new Jvc();
     
     <h3>Mercredi 22</h3>
     <ul>
-      <li>Ajout de la liste des nouveautés et changements, que vous êtes en train de lire</li>
+      <li><strong>Correction du bug empêchant de citer sur iOS</strong>
+      <li>Ajout de la liste des nouveautés et changements, que vous êtes en train de lire
       <li>Les champs pour le captcha ne montrent plus les anciens captchas sauvegardés par le navigateur
       <li>Meilleure gestion des erreurs lors de la connexion
       <li>Correction d’une faille XSS lors de l’édit d’un de ses messages (rien de bien grave, donc)
