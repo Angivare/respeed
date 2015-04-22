@@ -8,14 +8,23 @@ $form = isset($_POST['form']) ? $_POST['form'] : NULL;
 $nick = isset($_POST['nick']) ? $_POST['nick'] : NULL;
 $pass = isset($_POST['pass']) ? $_POST['pass'] : NULL;
 $ref = isset($_POST['ref']) ? $_POST['ref'] : NULL;
+$err_nick = '';
+$err_pass = '';
 $err = NULL;
 
 if($nick && $pass && $form && $ccode):
   $form = unserialize(urldecode($form));
   if(is_array($form)):
-    if(!$jvc->connect_finish($nick, $pass, $form, $ccode)) {
-      $err = 'Erreur lors de la connexion: ' . $jvc->err();
-      $nick = NULL; $pass = NULL; $form = NULL; $ccode = NULL;
+    if(!$jvc->connect_finish($nick, $pass, $form, $ccode, $form)) {
+      $err = $jvc->err();
+      if(!isset($form['fs_signature'])) {
+        $err_nick = $nick;
+        $err_pass = $pass;
+        $nick = NULL;
+        $pass = NULL;
+      }
+      $form = NULL;
+      $ccode = NULL;
     }
     else {
       if($ref && $ref != '/se_connecter')
@@ -42,11 +51,6 @@ endif; ?>
 <div class="sheet">
   <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
   <div class="content no-menu login-fake-table">
-<?php if($err): ?>
-    <div class="connection-error">
-      <?= $err ?>
-    </div>
-<?php endif ?>
     <div class="form-container">
 <?php
 $pour = 'poster des messages';
@@ -61,15 +65,20 @@ if (isset($_GET['pour'])) {
   }
 }
 ?>
+<?php if($err): ?>
+      <div class="connection-error"><?= $err ?></div>
+<?php else: ?>
       <div class="sell">Connectez-vous pour <?= $pour ?> via JVForum.</div>
+<?php endif ?>
 <?php if($nick && $pass):
     $jvc->disconnect();
-    $form = $jvc->connect_req($nick, $pass);
+    if(!$form)
+      $form = $jvc->connect_req($nick, $pass);
 ?>
       <form action="/se_connecter" method="post">
         <input type="hidden" name="ref" value="<?= $ref ?>">
         <input type="hidden" name="form" value="<?= urlencode(serialize($form)) ?>">
-        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick?>">
+        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
         <p><img src="data:image/png;base64,<?= base64_encode(
           $jvc->get('http://www.jeuxvideo.com/captcha/ccode.php?' .
@@ -86,8 +95,8 @@ if (isset($_GET['pour'])) {
   else if($ref)
     echo '<input type="hidden" name="ref" value="' . $ref . '">';
 } ?>
-        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus>
-        <p><input class="input" type="password" name="pass" placeholder="Mot de passe">
+        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?>>
+        <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
 <?php endif; ?>

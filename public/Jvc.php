@@ -112,9 +112,11 @@ class Jvc {
    * @param string $pass 
    * @param array $form 
    * @param string $ccode 
+   * @param array &$ret_form contient le formulaire à réutiliser dans
+   * le cas d'une erreur
    * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
    */
-  public function connect_finish($nick, $pass, $form, $ccode = '') {
+  public function connect_finish($nick, $pass, $form, $ccode, &$ret_form) {
     $url = $this->domain . '/login';
 
     $post_data = 'login_pseudo=' . urlencode($nick) .
@@ -128,6 +130,8 @@ class Jvc {
       setcookie('pseudo', $nick, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
       return TRUE;
     }
+
+    $ret_form = self::parse_form($rep['body']);
 
     if(preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match))
       return $this->_err($match[1]);
