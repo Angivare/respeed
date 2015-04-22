@@ -22,7 +22,7 @@ foreach($lines as $l) {
 
 $db = new Db();
 
-$sql = str_repeat('(INET_ATON(?)),', count($ip)-1) . '(?)';
+$sql = str_repeat('(?),', count($ip)-1) . '(?)';
 
 $db->query('DELETE FROM ip_blacklist WHERE ip=ip', []);
 $db->query(

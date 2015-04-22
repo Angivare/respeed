@@ -40,6 +40,6 @@ CREATE TABLE `logs_messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `ip_blacklist` (
-  `ip` int(11) NOT NULL,
+  `ip` varchar(15) NOT NULL,
   PRIMARY KEY (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
