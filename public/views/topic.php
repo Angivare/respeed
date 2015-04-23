@@ -58,9 +58,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
         <p><?= $lock_raison ?>
       </div>
     </div>
-<?php else: ?>
-    <label class="mobile fixed-action" for="newmessage" id="floating_newmessage"></label>
-<?php if($jvc->is_connected()): ?>
+<?php elseif($jvc->is_connected()): ?>
     <div class="form-post">
       <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
       <div class="form-error"><p></p></div>
@@ -70,8 +68,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
         <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></p>
       </div>
     </div>
-<?php endif; ?>
-<?php endif; ?>
+<?php endif ?>
 
     <div class="bottom-back-buttons">
       <span>

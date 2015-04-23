@@ -549,13 +549,6 @@ function openProfile() {
   return false
 }
 
-function floatingNewmessageTap() {
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=poster&forum=' + $forum + '&topic=' + $topic + '&slug=' + $slug
-    return
-  }
-}
-
 function toggleMenu(e) {
   var id = e.target.parentNode.parentNode.parentNode.parentNode.id
   $('#' + id).toggleClass('show-menu')
@@ -597,7 +590,6 @@ InstantClick.on('change', function() {
   $('#post').click(post)
   $('#newsujet').focus(request_form_data)
   $('#newmessage').focus(request_form_data)
-  $('#floating_newmessage').click(floatingNewmessageTap)
 
   // Messages
   $('.meta-quote').click(quote)
