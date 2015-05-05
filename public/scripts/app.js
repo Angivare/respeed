@@ -53,7 +53,7 @@ function removeFromBlacklist(pseudo) {
 
 function applyBlacklist() {
   $('[data-pseudo]').each(function(i, element) {
-    var pseudo = $(element).data('pseudo').toLowerCase()
+    var pseudo = ($(element).data('pseudo') + '').toLowerCase()
 
     if ($(element).hasClass('ignored')) {
       if ($.inArray(pseudo, blacklist) == -1) {
