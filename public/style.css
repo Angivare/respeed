@@ -1256,19 +1256,6 @@ h1, h2, h3 {
   background: rgba(255, 85, 0, .07);
 }
 
-.fixed-action {
-  background: ;
-  width: 55px;
-  height: 55px;
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  border-radius: 99px;
-  box-shadow: 0 2px 5px rgba(0,0,0,.2);
-  background: #f60 url(/images/ic_mode_edit_24px.svg) center no-repeat;
-  cursor: pointer;
-}
-
 /* TOPIC - Boutons en bas */
 
 .bottom-back-buttons {
