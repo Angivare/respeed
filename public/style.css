@@ -92,6 +92,10 @@ h1, h2, h3 {
   display: inline-block;
 }
 
+.site-title-link:hover, .site-title-link:active {
+  color: white !important;
+}
+
 .site-title-spacer {
   padding-right: 1px;
 }
