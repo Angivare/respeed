@@ -34,7 +34,12 @@ if ($page > 1) {
 
     <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches['topic']); $i++): ?>
-<?php if (in_array(strtolower($pseudo), ['alexandre', 'pauly']) && $matches['topic'][$i] == 38431092) continue; ?>
+<?php
+/* Spécifiquement pour moi : masquage d’un topic */
+if (in_array(strtolower($pseudo), ['alexandre', 'pauly']) && $matches['topic'][$i] == 38431092) {
+  continue;
+}
+?>
       <div class="topic label-<?= $matches['label'][$i] ?> <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
         <div class="label"></div>
         <a class="topic-main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
