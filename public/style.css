@@ -96,12 +96,6 @@ h1, h2, h3 {
   padding-right: 1px;
 }
 
-@media (min-width: 1025px) {
-  .site-title-link {
-    color: #333;
-  }
-}
-
 .site-login-container {
   display: table-cell;
   vertical-align: middle;
