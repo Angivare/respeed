@@ -118,7 +118,7 @@ function jvcare($str) {
   }, $str);
 }
 
-function relative_date_timestamp($timestamp) {
+function relative_date_timestamp($timestamp, $topicList) {
   global $jours, $mois;
   $now = time();
   $diff = $now - $timestamp;
@@ -135,8 +135,12 @@ function relative_date_timestamp($timestamp) {
 
   // Aujourd’hui
   if (date('dmy', $timestamp) == date('dmy', $now)) {
-    //return floor($diff / 60 / 60) . ' h ' . floor(($diff % (60 * 60)) / 60) . ' m';
     return date('H:i', $timestamp);
+  }
+
+  // Hier
+  if (date('dmy', $timestamp) == date('dmy', $now - 60 * 60 * 24)) {
+    return $topicList ? 'hier' : ('hier, ' . date('H:i', $timestamp));
   }
 
   // De cette année
@@ -148,7 +152,7 @@ function relative_date_timestamp($timestamp) {
 }
 
 function relative_date_topic_list($str_date) {
-  return relative_date_timestamp(date_topic_list_to_timestamp($str_date));
+  return relative_date_timestamp(date_topic_list_to_timestamp($str_date), true);
 }
 
 function date_topic_list_to_timestamp($str_date) {
