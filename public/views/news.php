@@ -26,6 +26,8 @@ $jvc = new Jvc();
       <li>Refonte esthétique des champs de texte
       <li>iOS : autocorrection enlevée quand on tape son pseudo pour se connecter
       <li>Mobile : suppression de la liste des sous-forums sur topic
+      <li><strong>Amélioration de l’affichage des dates</strong>
+        <br>Les messages d’aujourd’hui ou d’hier plus vieux d’une heure montrent maintenant l’heure de post
     </ul>
     
     <h3>Mercredi 06</h3>
