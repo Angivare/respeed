@@ -123,21 +123,26 @@ function relative_date_timestamp($timestamp) {
   $diff = time() - $timestamp;
   
   // Moins d’une minute
-  if ($diff < 60)
+  if ($diff < 60) {
     return $diff . ' s';
+  }
+
   // Moins d’une heure
-  if ($diff < 60 * 60)
+  if ($diff < 60 * 60) {
     return floor($diff / 60) . ' m ' . ($diff % 60) . ' s';
+  }
+
   // Moins d’un jour
-  if ($diff < 60 * 60 * 24)
+  if ($diff < 60 * 60 * 24) {
     return floor($diff / 60 / 60) . ' h ' . floor(($diff % (60 * 60)) / 60) . ' m';
+  }
+
   // De cette année
   if (date('Y', $timestamp) == date('Y')) {
     return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1];
   }
-  return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
 
-  return '??';
+  return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
 }
 
 function relative_date_topic_list($str_date) {
