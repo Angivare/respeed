@@ -78,7 +78,7 @@ if (isset($_GET['pour'])) {
       <form action="/se_connecter" method="post">
         <input type="hidden" name="ref" value="<?= $ref ?>">
         <input type="hidden" name="form" value="<?= urlencode(serialize($form)) ?>">
-        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>">
+        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autocorrect="off">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
         <p><img src="data:image/png;base64,<?= base64_encode(
           $jvc->get('http://www.jeuxvideo.com/captcha/ccode.php?' .
@@ -95,7 +95,7 @@ if (isset($_GET['pour'])) {
   else if($ref)
     echo '<input type="hidden" name="ref" value="' . $ref . '">';
 } ?>
-        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?>>
+        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?> autocorrect="off">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
