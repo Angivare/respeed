@@ -369,11 +369,12 @@ h1, h2, h3 {
 
 .input {
   font-size: 1.5em;
-  border: 1px solid hsl(209, 56%, 63%);
+  border: 1px solid #9c0;
   border-radius: 1px;
   padding: 2px 5px;
   font-family: sans-serif;
   width: 100%;
+  box-shadow: inset 0 1px 3px rgba(153, 204, 0, .4);
 }
 
 @media (min-width: 1025px) {
@@ -383,8 +384,8 @@ h1, h2, h3 {
 }
 
 .input:focus {
-  border-color: hsl(209, 56%, 43%);
-  background: hsl(209, 56%, 98.5%);
+  background: hsl(75, 100%, 95%);
+  outline: none;
 }
 
 .submit {
@@ -1257,14 +1258,14 @@ h1, h2, h3 {
 /* TOPIC - Boutons en bas */
 
 .bottom-back-buttons {
-  padding: 20px 10px;
+  padding: 10px;
   display: table;
   width: 100%;
 }
 
 @media (min-width: 1025px) {
   .bottom-back-buttons {
-    padding: 20px 0;
+    padding: 10px 0;
   }
 }
 
@@ -1290,20 +1291,32 @@ h1, h2, h3 {
 /* FORUM/TOPIC - Formulaire de post */
 
 .form-post {
-  margin-top: 10px;
-  border: 1px solid #9c0;
-  border-radius: 1px 8px 1px 5px;
+  margin: 10px 0;
+  border: 0 solid #9c0;
+  border-bottom-width: 1px;
+}
+
+@media (min-width: 1025px) {
+  .form-post {
+    border-width: 0 1px 1px;
+    border-radius: 4px 4px 0 0;
+  }
 }
 
 .form-post .titre-bloc {
   background: #9c0;
-  border-radius: 0 7px 0 0;
   color: white;
   padding: 2px 11px;
   font-weight: bold;
   font-size: 1.1em;
   display: block;
   cursor: pointer;
+}
+
+@media (min-width: 1025px) {
+  .form-post .titre-bloc {
+    border-radius: 3px 3px 0 0;
+  }
 }
 
 .form-post.locked {
@@ -1316,8 +1329,14 @@ h1, h2, h3 {
 }
 
 .form-post-inner {
-  padding: 0 10px;
   position: relative;
+  padding: 10px 0;
+}
+
+@media (min-width: 1025px) {
+  .form-post-inner {
+    padding: 10px;
+  }
 }
 
 .form-error {
@@ -1341,6 +1360,16 @@ h1, h2, h3 {
   font-size: 1.2em;
   width: 100%;
   padding: 3px 5px;
+  border-width: 1px 0;
+  border-color: #9c0;
+  -webkit-appearance: none;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 1025px) {
+  .input.newsujet {
+    border-width: 1px;
+  }
 }
 
 .input.textarea {
@@ -1349,6 +1378,15 @@ h1, h2, h3 {
   resize: vertical;
   height: 200px;
   padding: 4px 6px;
+  border-width: 1px 0;
+  border-color: #9c0;
+  -webkit-appearance: none;
+}
+
+@media (min-width: 1025px) {
+  .input.textarea {
+    border-width: 1px;
+  }
 }
 
 .submit-main {
@@ -1362,6 +1400,16 @@ h1, h2, h3 {
 .submit-big {
   font-size: 1.2em;
   padding: 6px 20px;
+}
+
+.form-post .submit {
+  margin-left: 10px;
+}
+
+@media (min-width: 1025px) {
+  .form-post .submit {
+    margin-left: 0;
+  }
 }
 
 .form-post-inner .captcha {
