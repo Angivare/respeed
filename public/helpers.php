@@ -120,7 +120,8 @@ function jvcare($str) {
 
 function relative_date_timestamp($timestamp) {
   global $jours, $mois;
-  $diff = time() - $timestamp;
+  $now = time();
+  $diff = $now - $timestamp;
   
   // Moins d’une minute
   if ($diff < 60) {
@@ -132,9 +133,10 @@ function relative_date_timestamp($timestamp) {
     return floor($diff / 60) . ' m ' . ($diff % 60) . ' s';
   }
 
-  // Moins d’un jour
-  if ($diff < 60 * 60 * 24) {
-    return floor($diff / 60 / 60) . ' h ' . floor(($diff % (60 * 60)) / 60) . ' m';
+  // Aujourd’hui
+  if (date('dmy', $timestamp) == date('dmy', $now)) {
+    //return floor($diff / 60 / 60) . ' h ' . floor(($diff % (60 * 60)) / 60) . ' m';
+    return date('H:i', $timestamp);
   }
 
   // De cette année
