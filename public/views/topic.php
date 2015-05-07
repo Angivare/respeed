@@ -94,7 +94,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     </div>
 
 <?php if ($sous_forums): ?>
-    <div class="menu">
+    <div class="menu desktop">
       <h3 class="title">Sous-forums</h3>
         <ul class="menu-content">
 <?php if ($has_parent): ?>

@@ -25,6 +25,7 @@ $jvc = new Jvc();
     <ul>
       <li>Refonte esthétique des champs de texte
       <li>iOS : autocorrection enlevée quand on tape son pseudo pour se connecter
+      <li>Mobile : suppression de la liste des sous-forums sur topic
     </ul>
     
     <h3>Mercredi 06</h3>
