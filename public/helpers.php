@@ -118,7 +118,7 @@ function jvcare($str) {
   }, $str);
 }
 
-function relative_date_timestamp($timestamp, $topicList) {
+function relative_date_timestamp($timestamp, $topicList = false) {
   global $jours, $mois;
   $now = time();
   $diff = $now - $timestamp;
