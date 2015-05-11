@@ -1,6 +1,16 @@
 # JVForum
 
-Si vous n’êtes pas un développeur, vous cherchez sans doute jvforum.fr
+JVForum a besoin d’être documenté avant de pouvoir accepter les contributions. Revenez dans quelques jours. (Écrit le 11 mai.)
+
+.
+
+.
+
+.
+
+.
+
+.
 
 ## Prérequis
 
