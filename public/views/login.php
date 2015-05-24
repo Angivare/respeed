@@ -48,23 +48,10 @@ endif; ?>
   <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
   <div class="content no-menu login-fake-table">
     <div class="form-container">
-<?php
-$pour = 'poster des messages';
-if (isset($_GET['pour'])) {
-  if ($_GET['pour'] == 'ignorer') {
-    $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un pseudo';
-    $pour = 'ignorer ' . $qui;
-  }
-  elseif ($_GET['pour'] == 'citer') {
-    $qui = isset($_GET['qui']) && preg_match('#^[a-zA-Z0-9-_[\]]{3,15}$#', $_GET['qui']) ? $_GET['qui'] : 'un message';
-    $pour = 'citer ' . $qui;
-  }
-}
-?>
 <?php if($err): ?>
       <div class="connection-error"><?= $err ?></div>
 <?php else: ?>
-      <div class="sell">Connectez-vous pour <?= $pour ?> via JVForum.</div>
+      <div class="sell">Connectez-vous pour poster des messages via JVForum.</div>
 <?php endif ?>
 <?php if($nick && $pass):
     $jvc->disconnect();
