@@ -762,6 +762,12 @@ h1, h2, h3 {
   }
 }
 
+@media (min-width: 1025px) {
+  .topic-title {
+    padding-left: 10px;
+  }
+}
+
 /* TOPIC - Pagination */
 
 .pages {
