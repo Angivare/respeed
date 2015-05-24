@@ -7,7 +7,6 @@ $ccode = isset($_POST['ccode']) ? $_POST['ccode'] : NULL;
 $form = isset($_POST['form']) ? $_POST['form'] : NULL;
 $nick = isset($_POST['nick']) ? $_POST['nick'] : NULL;
 $pass = isset($_POST['pass']) ? $_POST['pass'] : NULL;
-$ref = isset($_POST['ref']) ? $_POST['ref'] : NULL;
 $err_nick = '';
 $err_pass = '';
 $err = NULL;
@@ -27,10 +26,7 @@ if($nick && $pass && $form && $ccode):
       $ccode = NULL;
     }
     else {
-      if($ref && $ref != '/se_connecter')
-        header("Location: $ref");
-      else 
-        header('Location: /');
+      header('Location: /1000021/39170088-jvforum-beta-privee');
       exit;
     }
   endif;
@@ -89,12 +85,6 @@ if (isset($_GET['pour'])) {
       </form>
 <?php else: ?>
       <form action="/se_connecter" method="post">
-<?php if($url = isset($_SERVER['HTTP_REFERER']) ? parse_url($_SERVER['HTTP_REFERER']) : NULL) {
-  if($url['host'] == $_SERVER['SERVER_NAME'] && $url['path'] != '/se_connecter')
-    echo '<input type="hidden" name="ref" value="' . $url['path'] . '">';
-  else if($ref)
-    echo '<input type="hidden" name="ref" value="' . $ref . '">';
-} ?>
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?> autocorrect="off">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
