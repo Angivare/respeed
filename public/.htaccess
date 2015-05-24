@@ -12,8 +12,6 @@ RewriteRule ^se_deconnecter/([0-9a-f]+)-([0-9]+)-([0-9a-f]+)$ /index.php?logout&
 
 RewriteRule ^news$ /index.php?news [L]
 
-RewriteRule ^ref$ /ref.php [L]
-
 RewriteRule ^mp$ /index.php?mp [L]
 RewriteRule ^mp/([0-9]+)$ /index.php?mp=$1 [L]
 RewriteRule ^mp/([0-9]+)/([0-9]+)$ /index.php?mp=$1&id=$2 [L]
