@@ -21,6 +21,11 @@ $jvc = new Jvc();
     
     <h2>Mai 2015</h2>
     
+    <h3>Mardi 19</h3>
+    <ul>
+      <li>Correction du bug de la mention édit (causé par un changement du code chez JVC)
+    </ul>
+    
     <h3>Jeudi 07</h3>
     <ul>
       <li>Refonte esthétique des champs de texte
