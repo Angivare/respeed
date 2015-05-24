@@ -12,5 +12,5 @@
         <a href="/<?= $forum ?>-<?= $slug ?>/<?= $page + 1 ?>">Suivant</a>
       </div>
 <?php endif ?>
-      <div class="page <?= $page > 1 ? '' : 'hidden' ?>"><a href="/<?= $forum ?>-<?= $slug ?>/<?= $page ?>">Page <?= $page ?></a></div>
+      <div class="page <?= $page > 1 ? '' : 'hidden' ?>"><span>Page <?= $page ?></span></div>
     </div>

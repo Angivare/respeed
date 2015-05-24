@@ -720,16 +720,12 @@ h1, h2, h3 {
   visibility: hidden;
 }
 
-.pagination-forum .page a {
+.pagination-forum .page span {
   background: #f60;
   color: white;
   font-size: 13px;
   font-weight: bold;
   padding: 3px 5px;
-}
-
-.pagination-forum .page a:hover, .pagination-forum .page a:active {
-  color: white !important;
 }
 
 .pagination-forum .suivant {
