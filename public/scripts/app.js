@@ -462,11 +462,6 @@ function ignore() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
 
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=ignorer&qui=' + pseudo
-    return
-  }
-
   addToBlacklist(pseudo, id)
   applyBlacklist()
 }
@@ -490,11 +485,6 @@ function quote() {
   }
 
   var text = toJVCode(html)
-
-  if (!$is_connected) {
-    location.href = '/se_connecter?pour=citer&qui=' + pseudo
-    return
-  }
 
   var citation = ""
   if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
