@@ -5,6 +5,7 @@ require '../helpers.php';
 require '../parser.php';
 
 arg('forum', 'topic', 'slug', 'page', 'liste_messages');
+$topic_mode = $topic[0] == '0' ? 1 : 42;
 if(!$page) $page = 1;
 
 if($forum && $topic && $slug) {
