@@ -348,11 +348,20 @@ MARKUP;
     $page_trail = $i > 1 ? "/{$i}" : '';
     $class = $i == $page ? ' active' : '';
     $class .= $is_sign ? ' sign' : '';
-    $markup .= <<<MARKUP
-        <span class="faketable">
-          <a href="/{$forum}/{$topic_id}-{$slug}{$page_trail}" class="link {$class}">{$number}</a>
-        </span>
+    if ($i != $page) {
+      $markup .= <<<MARKUP
+          <span class="faketable">
+            <a href="/{$forum}/{$topic_id}-{$slug}{$page_trail}" class="link {$class}">{$number}</a>
+          </span>
 MARKUP;
+    }
+    else {
+      $markup .= <<<MARKUP
+          <span class="faketable">
+            <span class="link {$class}">{$number}</span>
+          </span>
+MARKUP;
+    }
   }
 
   return $markup;
