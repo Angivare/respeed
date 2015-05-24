@@ -59,7 +59,6 @@ endif; ?>
       $form = $jvc->connect_req($nick, $pass);
 ?>
       <form action="/se_connecter" method="post">
-        <input type="hidden" name="ref" value="<?= $ref ?>">
         <input type="hidden" name="form" value="<?= urlencode(serialize($form)) ?>">
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autocorrect="off">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
