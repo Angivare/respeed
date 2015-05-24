@@ -7,8 +7,10 @@ if (!$jvc->is_connected()) {
   exit;
 }
 
-foreach(fetch_forum($forum, $page, $slug) as $k => $v)
+foreach(fetch_forum($forum, $page, $slug) as $k => $v) {
   $$k = $v;
+}
+
 echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->";
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;

@@ -10,10 +10,10 @@ if (!$jvc->is_connected()) {
 foreach(fetch_topic($topic, $page, $slug, $forum) as $k => $v) {
   $$k = $v;
 }
+
 echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->";
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
-
 ?>
 <header class="site-header">
   <h2 class="site-title">
