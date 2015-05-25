@@ -29,14 +29,17 @@ CREATE TABLE `tokens` (
   PRIMARY KEY (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `logs_messages` (
-  `msg_id` int(11) unsigned NOT NULL,
-  `topic_id` int(11) unsigned NOT NULL,
-  `forum_id` int(11) unsigned NOT NULL,
-  `ip` int(11) NOT NULL,
-  `posted_at` datetime NOT NULL,
-  `nick` varchar(15) NOT NULL,
-  PRIMARY KEY (`msg_id`)
+CREATE TABLE `logs_messages2` (
+  `id` int unsigned NOT NULL auto_increment,
+  `pseudo` varchar(15),
+  `message_id` int unsigned,
+  `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_topic` tinyint unsigned NOT NULL,
+  `forum_id` int unsigned NOT NULL,
+  `topic_mode` tinyint unsigned,
+  `topic_id` int unsigned,
+  `ip` varchar(15) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `ip_blacklist` (
