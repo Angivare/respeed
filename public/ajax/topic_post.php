@@ -6,28 +6,25 @@ require '../parser.php';
 
 arg('url', 'title', 'msg', 'form', 'ccode');
 
-if($url && $msg && $form) {
+if ($url && $msg && $form) {
+  $url_end = explode('/', $url);
+  $url_end = array_pop($url_end);
+  $url_end = explode('-', $url_end);
+
+  $forum_id = $url_end[1];
+
+  $insert_id = $db->log_message($forum_id);
+  
   $location = '';
   echo json_encode([
     'rep' => $jvc->topic_post_finish($url, $title, $msg, $form, '', [], $ccode, $location),
     'err' => $jvc->err()
   ]);
-  if(!$location) exit;
 
-  preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm\#post_(?P<id>[0-9]+?)#U', $location, $l);
-  if($l['topic_mode'] === '1') $l['topic'] = '0' . $l['topic'];
-  if($rep = $jvc->message_get($l['id'])) {
-    preg_match('#(<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)"|<div class="bloc-pseudo-msg").+>\s+?(?P<pseudo>.+)\s+<#Usi', $rep['body'], $m);
-    $db->log_message(
-      $l['id'],
-      $l['topic'],
-      $l['forum'],
-      $_SERVER['REMOTE_ADDR'],
-      date('Y-m-d H:i:s', time()),
-      $m['pseudo']
-    );
+  if ($location && preg_match('#/forums/(?P<topic_mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+).htm#', $location, $matches)) {
+    $db->log_message_update($insert_id, null, $matches['topic_mode'], $matches['topic']);
   }
-} else if($url) {
+} else if ($url) {
   echo json_encode([
     'rep' => $jvc->topic_post_req($url),
     'err' => $jvc->err()

@@ -135,16 +135,26 @@ class Db {
     );
   }
 
-  public function log_message(
-    $msg_id, $topic_id, $forum_id, $ip, $date, $nick
-  ) {
-    $args = func_get_args();
-    $sql  = '(' . str_repeat('?,', count($args)-1) . '?)';
-    return $this->query(
-      'INSERT INTO logs_messages ' .
-      '(msg_id, topic_id, forum_id, ip, posted_at, nick)' .
-      ' VALUES ' . $sql,
-      $args
+  public function log_message($forum_id, $topic_mode = null, $topic_id = null) {
+    $this->query(
+      'INSERT INTO logs_messages2(pseudo, is_topic, forum_id, topic_mode, topic_id, ip) VALUES(?, ?, ?, ?, ?, ?)',
+      [$_COOKIE['pseudo'], is_null($topic_mode), $forum_id, $topic_mode, $topic_id, $_SERVER['REMOTE_ADDR']]
     );
+    return $this->db->lastInsertId();
+  }
+  
+  public function log_message_update($id, $message_id, $topic_mode = null, $topic_id = null) {
+    if (is_null($message_id)) { // Topic
+      $this->query(
+        'UPDATE logs_messages2 SET topic_mode = ?, topic_id = ? WHERE id = ?',
+        [$topic_mode, $topic_id, $id]
+      );
+    }
+    else { // Message
+      $this->query(
+        'UPDATE logs_messages2 SET message_id = ? WHERE id = ?',
+        [$message_id, $id]
+      );
+    }
   }
 }
