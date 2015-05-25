@@ -21,6 +21,11 @@ $jvc = new Jvc();
     
     <h2>Mai 2015</h2>
     
+    <h3>Lundi 25 mai</h3>
+    <ul>
+      <li>Certains liens inutiles (titre d’un topic, page en cours) ont été retirés, pour éviter les clics accidentels sur mobile
+    </ul>
+    
     <h3>Mardi 19</h3>
     <ul>
       <li>Correction du bug de la mention édit (causé par un changement du code chez JVC)
