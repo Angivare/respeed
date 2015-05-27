@@ -1177,6 +1177,26 @@ h1, h2, h3 {
   padding: 2px 3px;
 }
 
+.message .bloc-spoil-jv {
+  background: red;
+  background-image: linear-gradient(rgb(255,64,64), rgb(255,96,96));
+  border: 1px solid red;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+.message .bloc-spoil-jv .contenu-spoil {
+  visibility: hidden;
+}
+
+.message .bloc-spoil-jv.shown {
+  background: transparent;
+}
+
+.message .bloc-spoil-jv.shown .contenu-spoil {
+  visibility: visible;
+}
+
 
 .message.even .content {
 }

@@ -369,6 +369,7 @@ function topicRefresh() {
         $('#' + message.id + ' .meta-menu').click(toggleMenu)
         $('#' + message.id + ' .message').click(closeMenu)
         $('#' + message.id + ' .js-avatarImg').error(remove404Avatar)
+        $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
 
         applyBlacklist()
       }
@@ -559,6 +560,10 @@ function remove404Avatar(e) {
   $(e.target).remove()
 }
 
+function toggleSpoil() {
+  $(this).toggleClass('shown')
+}
+
 
 
 /*** App ***/
@@ -606,6 +611,7 @@ InstantClick.on('change', function() {
   $('.meta-menu').click(toggleMenu)
   $('.message').click(closeMenu)
   $('.js-avatarImg').error(remove404Avatar)
+  $('.bloc-spoil-jv').click(toggleSpoil)
 })
 
 InstantClick.init()
