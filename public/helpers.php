@@ -104,8 +104,6 @@ function adapt_html($message, $date) {
   $message = preg_replace('#(</a>)(<a [^<]+>)#Usi', '$1 $2', $message);
   // Décollage smileys
   $message = preg_replace('#(data-def="SMILEYS" [^<]+>)(<img)#Usi', '$1 $2', $message);
-
-  $message = '<p></p>' . $message . '<p></p>'; // Hack styling pour pas que les éléments sans <p> (genre les spoilers) collent au haut ou bas des messages
   
   return $message;
 }
