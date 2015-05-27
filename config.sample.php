@@ -7,4 +7,6 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'jvforum');
 
+define('GOOGLE_ANALYTICS_ID', '');
+
 date_default_timezone_set('Europe/Paris');

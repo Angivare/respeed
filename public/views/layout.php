@@ -3,6 +3,7 @@
 <title><?= $title ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/style-3.css">
+<meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
 <?= $body ?>
 <script>
 var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
