@@ -17,7 +17,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 ?>
 <header class="site-header">
   <h2 class="site-title">
-    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+    <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>

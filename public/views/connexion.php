@@ -33,7 +33,7 @@ if($nick && $pass && $form && $ccode):
 endif; ?>
 <header class="site-header">
   <h2 class="site-title">
-    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+    <a href="<?= $jvc->is_connected() ? '/accueil' : '/' ?>" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
