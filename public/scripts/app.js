@@ -369,6 +369,8 @@ function topicRefresh() {
         $('#' + message.id + ' .meta-menu').click(toggleMenu)
         $('#' + message.id + ' .message').click(closeMenu)
         $('#' + message.id + ' .js-avatarImg').error(remove404Avatar)
+
+        applyBlacklist()
       }
     }
     
