@@ -288,14 +288,34 @@ h1, h2, h3 {
 
 /* PAGE D’ACCUEIL */
 
-.presentation {
-  padding: 0 10px;
+.salespage {
+  padding: 10px 10px;
+  max-width: 800px;
+  margin: auto;
 }
 
 @media (min-width: 1025px) {
-  .presentation {
-    padding: initial;
+  .salespage {
+    padding: 20px 0;
   }
+}
+
+.salespage .screen-mobile {
+  margin-left: 5px;
+}
+
+.salespage .screen-mobile img {
+  width: 90px;
+  height: 160px;
+}
+
+.salespage .screen-desktop {
+  margin-left: 5px;
+}
+
+.salespage .screen-desktop img {
+  width: 232px;
+  height: 136px;
 }
 
 @media (min-width: 500px) {
