@@ -490,7 +490,7 @@ function quote() {
   if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
     citation += "\n\n"
   }
-  citation += "> '''" + pseudo + "''', http://jvforum.fr" + location.pathname + "#" + id + "\n"
+  citation += "> '''" + pseudo + "''' :\n"
   citation += "> \n"
   citation += "> " + text.split("\n").join("\n> ")
   citation += "\n\n"
