@@ -1167,7 +1167,6 @@ h1, h2, h3 {
   border: 1px solid rgba(0,0,0,.2);
   border-radius: 3px;
   background: rgba(239,239,239,.8);
-  white-space: initial;
 }
 
 .message .pre-jv {
