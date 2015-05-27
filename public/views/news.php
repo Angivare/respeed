@@ -64,3 +64,7 @@ $jvc = new Jvc();
     </ul>
   </div>
 </div>
+
+<?php if (!$jvc->is_connected()): ?>
+<footer class="site-footer">JVForum n’est pas affilié avec <a href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</footer>
+<?php endif ?>

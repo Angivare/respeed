@@ -132,7 +132,7 @@ h1, h2, h3 {
 @media (min-width: 1025px) {
   .sheet {
     width: calc(100% - 20px);
-    margin: auto;
+    margin: 0 auto 10px;
     max-width: 1400px;
     border-width: 1px;
     border-radius: 15px;
@@ -1427,4 +1427,16 @@ h1, h2, h3 {
 
 .news li {
   margin-bottom: .5em;
+}
+
+/* FOOTER */
+
+.site-footer {
+  text-align: center;
+  font-size: 13px;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
 }
