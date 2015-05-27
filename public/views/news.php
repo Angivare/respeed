@@ -31,6 +31,11 @@ $jvc = new Jvc();
       <li>Certains liens inutiles (titre d’un topic, page en cours) ont été retirés, pour éviter les clics accidentels sur mobile
     </ul>
     
+    <h3>Dimanche 24 mai</h3>
+    <ul>
+      <li>Il est maintenant obligatoire d’être connecté pour voir un forum ou un topic, sur demande de JVC.
+    </ul>
+    
     <h3>Mardi 19</h3>
     <ul>
       <li>Correction du bug de la mention édit (causé par un changement du code chez JVC)
