@@ -51,7 +51,7 @@ endif; ?>
 <?php if($err): ?>
       <div class="connection-error"><?= $err ?></div>
 <?php else: ?>
-      <div class="sell">Connectez-vous pour poster des messages via JVForum.</div>
+      <div class="sell">Utilisez votre pseudo jeuxvideo.com pour profiter de JVForum.</div>
 <?php endif ?>
 <?php if($nick && $pass):
     $jvc->disconnect();
@@ -75,20 +75,12 @@ endif; ?>
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
-<?php endif; ?>
+      <p>Vos identifiants seront transmis au serveur de JVForum, sans y être stocké.
+
+      <h2>Pourquoi dois-je donner mon identifiant ?</h2>
+      <p>À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été retirée sur demande de JVC.
+<?php endif ?>
     </div>
-    <aside class="why-respeed">
-      <div>
-        <h2>Qu’apporte JVForum ?</h2>
-        <ul>
-          <li><strong>Instantanéité</strong> d’affichage des pages</li>
-          <li><strong>Moins de scroll</strong> sur les grands écrans</li>
-          <li><strong>Version mobile complète</strong></li>
-          <li><strong>Rafraîchissement automatique</strong> des topics</li>
-          <li><strong>Open source</strong>, tout développeur web peut participer</li>
-        </ul>
-      </div>
-    </aside>
   </div>
 </div>
 

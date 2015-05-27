@@ -372,7 +372,6 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .form-container {
-    display: table-cell;
     padding: 0;
   }
 }
@@ -427,31 +426,6 @@ h1, h2, h3 {
 .input-captcha {
   font-size: 2em;
   width: 240px;
-}
-
-.why-respeed {
-  text-align: center;
-  padding: 0 10px;
-}
-
-@media (min-width: 1025px) {
-  .why-respeed {
-    display: table-cell;
-    vertical-align: top;
-    width: 60%;
-    padding: 0;
-  }
-}
-
-.why-respeed div {
-  font-size: 14px;
-  border: 1px solid rgba(0,0,0,.3);
-  border-radius: 10px;
-  padding: 10px;
-  background: #E7E6EC;
-  box-shadow: 0px 2px 5px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.3);
-  display: inline-block;
-  text-align: initial;
 }
 
 /* FORUM */
