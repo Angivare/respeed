@@ -3,8 +3,8 @@ $forum = isset($_GET['forum']) ? $_GET['forum'] : false;
 $topic = isset($_GET['topic']) ? $_GET['topic'] : false;
 $slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$login = isset($_GET['login']) ? true : false;
-$logout = isset($_GET['logout']) ? true : false;
+$connexion = isset($_GET['connexion']) ? true : false;
+$deconnexion = isset($_GET['deconnexion']) ? true : false;
 $news = isset($_GET['news']) ? true : false;
 
 require 'helpers.php';
@@ -18,10 +18,10 @@ $auth = new Auth($db);
 $token = $auth->generate();
 
 ob_start();
-if ($login)
-  require 'views/login.php';
-elseif ($logout)
-  require 'views/logout.php';
+if ($connexion)
+  require 'views/connexion.php';
+elseif ($deconnexion)
+  require 'views/deconnexion.php';
 elseif ($news)
   require 'views/news.php';
 elseif ($forum && $topic)
