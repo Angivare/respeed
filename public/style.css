@@ -1183,6 +1183,12 @@ h1, h2, h3 {
   border: 1px solid red;
   border-radius: 2px;
   padding: 0 2px;
+  margin-bottom: 1em;
+  display: inline-block;
+}
+
+.message .bloc-spoil-jv.en-ligne {
+  margin-bottom: 0;
 }
 
 .message .bloc-spoil-jv .contenu-spoil {
