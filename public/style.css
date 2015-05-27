@@ -1109,6 +1109,7 @@ h1, h2, h3 {
   border-color: rgba(0,0,0,.4);
   width: calc(100% - 20px);
   margin: auto;
+  margin-bottom: 1em;
 }
 
 /* TOPIC - Message - content */
