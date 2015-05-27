@@ -527,7 +527,7 @@ function edit() {
 function deleteMessage() {
   var id = $(this).closest('.message').attr('id')
 
-  if (!confirm('Êtes-vous sûr de vouloir effacer ce message ? Vous ne pourrez pas le restaurer depuis JVForum.')) {
+  if (!confirm('Effacer définitivement ce message ?')) {
     return
   }
   $('#' + id).remove()
