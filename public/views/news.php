@@ -8,9 +8,9 @@ $jvc = new Jvc();
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-    <a href="/se_deconnecter/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
+    <a href="/deconnexion/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
 <?php else: ?>
-    <a href="/se_connecter" class="site-login-link">Se connecter</a>
+    <a href="/connexion" class="site-login-link">Se connecter</a>
 <?php endif ?>
   </div>
 </header>

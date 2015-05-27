@@ -8,9 +8,9 @@ $jvc = new Jvc();
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-    <a href="/se_deconnecter/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
+    <a href="/deconnexion/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
 <?php else: ?>
-    <a href="/se_connecter" class="site-login-link">Se connecter</a>
+    <a href="/connexion" class="site-login-link">Se connecter</a>
 <?php endif ?>
   </div>
 </header>
@@ -20,7 +20,7 @@ $jvc = new Jvc();
 <?php if (!$jvc->is_connected()): ?>
     <div class="presentation">
       <h2>Bienvenue sur JVForum !</h2>
-      <p>JVForum vous permet de mieux profiter des forums de jeuxvideo.com quelque soit l’appareil que vous utilisez. <a href="/se_connecter">Connectez-vous</a> pour retrouver vos forums et topics préférés.</p>
+      <p>JVForum vous permet de mieux profiter des forums de jeuxvideo.com quelque soit l’appareil que vous utilisez. <a href="/connexion">Connectez-vous</a> pour retrouver vos forums et topics préférés.</p>
     </div>
 <?php else: ?>
     <div class="favorites-index">

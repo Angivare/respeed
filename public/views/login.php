@@ -37,15 +37,15 @@ endif; ?>
   </h2>
   <div class="site-login-container">
 <?php if($jvc->is_connected()): ?>
-    <a href="/se_deconnecter" class="site-login-link logout" data-no-instant>Se déconnecter</a>
+    <a href="/deconnexion" class="site-login-link logout" data-no-instant>Se déconnecter</a>
 <?php else: ?>
-    <a href="/se_connecter" class="site-login-link">Se connecter</a>
+    <a href="/connexion" class="site-login-link">Se connecter</a>
 <?php endif ?>
   </div>
 </header>
 
 <div class="sheet">
-  <h1 class="sheet-title"><a href="/se_connecter"><?= $title ?></a></h1>
+  <h1 class="sheet-title"><a href="/connexion"><?= $title ?></a></h1>
   <div class="content no-menu login-fake-table">
     <div class="form-container">
 <?php if($err): ?>
@@ -58,7 +58,7 @@ endif; ?>
     if(!$form)
       $form = $jvc->connect_req($nick, $pass);
 ?>
-      <form action="/se_connecter" method="post">
+      <form action="/connexion" method="post">
         <input type="hidden" name="form" value="<?= urlencode(serialize($form)) ?>">
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autocorrect="off">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
@@ -70,7 +70,7 @@ endif; ?>
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
 <?php else: ?>
-      <form action="/se_connecter" method="post">
+      <form action="/connexion" method="post">
         <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?> autocorrect="off">
         <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
         <p><input class="submit submit-center" type="submit" value="Se connecter">
