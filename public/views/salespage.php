@@ -1,6 +1,11 @@
 <?php
 $title = 'JVForum';
 $jvc = new Jvc();
+
+if ($jvc->is_connected()) {
+  header('Location: /accueil');
+  exit;
+}
 ?>
 <header class="site-header">
   <h2 class="site-title">
@@ -17,22 +22,10 @@ $jvc = new Jvc();
 
 <div class="sheet">
   <div class="content no-menu">
-<?php if (!$jvc->is_connected()): ?>
     <div class="presentation">
       <h2>Bienvenue sur JVForum !</h2>
       <p>JVForum vous permet de mieux profiter des forums de jeuxvideo.com quelque soit l’appareil que vous utilisez. <a href="/connexion">Connectez-vous</a> pour retrouver vos forums et topics préférés.</p>
     </div>
-<?php else: ?>
-    <div class="favorites-index">
-      <div class="favorites-forums">
-        <h3>Forums préférés</h3>
-      </div>
-      
-      <div class="favorites-topics">
-        <h3>Topics préférés</h3>
-      </div>
-    </div>
-<?php endif ?>
   </div>
 </div>
 
