@@ -18,7 +18,7 @@ var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
 <?php endforeach ?>
 </script>
 <script src="/scripts/jquery.min.js" data-no-instant></script>
-<script src="/scripts/fastclick.min.js" data-no-instant></script>
+<script src="/scripts/fastclick.js" data-no-instant></script>
 <script src="/scripts/instantclick.js" data-no-instant></script>
 <script src="/scripts/jvcode.js" data-no-instant></script>
 <script src="/scripts/app-2.js" data-no-instant></script>
