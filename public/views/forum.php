@@ -20,11 +20,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
   </h2>
   <div class="site-login-container">
-<?php if($jvc->is_connected()): ?>
     <a href="/deconnexion/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
-<?php else: ?>
-    <a href="/connexion" class="site-login-link">Se connecter</a>
-<?php endif ?>
   </div>
 </header>
 
@@ -63,7 +59,6 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 
 <?php include 'forum_pagination.php' ?>
 
-<?php if($jvc->is_connected()): ?>
     <div class="form-post">
       <label class="titre-bloc" for="newsujet">Créer un nouveau sujet</label>
       <div class="form-error"><p></p></div>
@@ -75,7 +70,6 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
         <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster">
       </div>
     </div>
-<?php endif ?>
   </div>
   <aside class="aside">
     <div class="menu" id="forums_pref">

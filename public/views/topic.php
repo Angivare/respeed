@@ -20,11 +20,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
   </h2>
   <div class="site-login-container">
-<?php if($jvc->is_connected()): ?>
     <a href="/deconnexion/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
-<?php else: ?>
-    <a href="/connexion" class="site-login-link">Se connecter</a>
-<?php endif ?>
   </div>
 </header>
 
@@ -63,7 +59,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
         <p><?= $lock_raison ?>
       </div>
     </div>
-<?php elseif($jvc->is_connected()): ?>
+<?php else: ?>
     <div class="form-post">
       <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
       <div class="form-error"><p></p></div>

@@ -36,7 +36,7 @@ endif; ?>
     <a href="<?= $jvc->is_connected() ? '/accueil' : '/' ?>" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
   </h2>
   <div class="site-login-container">
-<?php if($jvc->is_connected()): ?>
+<?php if ($jvc->is_connected()): ?>
     <a href="/deconnexion" class="site-login-link logout" data-no-instant>Se déconnecter</a>
 <?php else: ?>
     <a href="/connexion" class="site-login-link">Se connecter</a>
