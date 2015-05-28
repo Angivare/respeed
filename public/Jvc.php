@@ -595,6 +595,16 @@ class Jvc {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_NOPROGRESS, FALSE);
+    $t = microtime(TRUE);
+    curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, function($ch, $dt, $dl, $ut, $ul) use ($t) {
+      if(microtime(TRUE) - $t > 2) {
+        header('HTTP/1.0 504 Gateway Timeout');
+        echo '<div class="sheet">Timeout de JVC: <a href="javascript:void(0);" onclick="window.location.reload()">Recharger la page</a></div>';
+        include 'views/layout.php';
+        exit;
+      }
+    });
 
     if($this->is_connected() && $connected) {
       $coniunctio = $this->cookie['coniunctio'];
