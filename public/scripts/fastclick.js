@@ -231,7 +231,7 @@
 		case 'button':
 		case 'select':
 		case 'textarea':
-			if (target.disabled) {
+			if (target.disabled || target.value.length) {
 				return true;
 			}
 
@@ -239,7 +239,7 @@
 		case 'input':
 
 			// File inputs need real clicks on iOS 6 due to a browser bug (issue #68)
-			if ((deviceIsIOS && target.type === 'file') || target.disabled) {
+			if ((deviceIsIOS && target.type === 'file') || target.disabled || target.value.length) {
 				return true;
 			}
 
@@ -263,7 +263,7 @@
 	FastClick.prototype.needsFocus = function(target) {
 		switch (target.nodeName.toLowerCase()) {
 		case 'textarea':
-			return true;
+			return !target.value.length;
 		case 'select':
 			return !deviceIsAndroid;
 		case 'input':
@@ -278,7 +278,7 @@
 			}
 
 			// No point in attempting to focus disabled inputs
-			return !target.disabled && !target.readOnly;
+			return !target.value.length && !target.disabled && !target.readOnly;
 		default:
 			return (/\bneedsfocus\b/).test(target.className);
 		}
