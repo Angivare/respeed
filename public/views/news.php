@@ -21,17 +21,22 @@ $jvc = new Jvc();
     
     <h2>Mai 2015</h2>
     
-    <h3>Mercredi 27 mai</h3>
+    <h3>Jeudi 28</h3>
+    <ul>
+      <li>iOS : Correction du bug qui empêchait de déplacer le curseur dans le formulaire de réponse.
+    </ul>
+
+    <h3>Mercredi 27</h3>
     <ul>
       <li>Suppression des liens jvforum.fr dans les citations, sur demande de JVC.
     </ul>
     
-    <h3>Lundi 25 mai</h3>
+    <h3>Lundi 25</h3>
     <ul>
       <li>Certains liens inutiles (titre d’un topic, page en cours) ont été retirés, pour éviter les clics accidentels sur mobile
     </ul>
     
-    <h3>Dimanche 24 mai</h3>
+    <h3>Dimanche 24</h3>
     <ul>
       <li>Il est maintenant obligatoire d’être connecté pour voir un forum ou un topic, sur demande de JVC.
     </ul>
