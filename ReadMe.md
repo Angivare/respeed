@@ -1,4 +1,4 @@
-# JVForum
+# [JVForum](http://jvforum.fr/)
 
 Une liste sera faite plus tard des choses prévues pour JVForum, auxquelles vous pourrez contribuer.
 
