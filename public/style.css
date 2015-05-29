@@ -384,6 +384,16 @@ h1, h2, h3 {
   .form-container {
     padding: 0;
   }
+  
+  .connexion-bloc1 {
+    float: left;
+    width: 50%;
+  }
+  
+  .connexion-bloc2 {
+    float: left;
+    width: 50%;
+  }
 }
 
 .connection-error {

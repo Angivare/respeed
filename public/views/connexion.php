@@ -46,7 +46,7 @@ endif; ?>
 
 <div class="sheet">
   <h1 class="sheet-title"><a href="/connexion"><?= $title ?></a></h1>
-  <div class="content no-menu login-fake-table">
+  <div class="content no-menu">
     <div class="form-container">
 <?php if($err): ?>
       <div class="connection-error"><?= $err ?></div>
@@ -70,15 +70,19 @@ endif; ?>
         <p><input class="submit submit-center" type="submit" value="Se connecter">
       </form>
 <?php else: ?>
-      <form action="/connexion" method="post">
-        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?> autocorrect="off">
-        <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
-        <p><input class="submit submit-center" type="submit" value="Se connecter">
-      </form>
-      <p>Vos identifiants seront transmis au serveur de JVForum, sans y être stocké.
+      <div class="connexion-bloc1">
+        <form action="/connexion" method="post">
+          <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?> autocorrect="off">
+          <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
+          <p><input class="submit submit-center" type="submit" value="Se connecter">
+        </form>
+        <p>Vos identifiants seront transmis au serveur de JVForum, sans y être stocké.
+      </div>
 
-      <h2>Pourquoi dois-je donner mon identifiant ?</h2>
-      <p>À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été retirée sur demande de JVC.
+      <div class="connexion-bloc2">
+        <h2>Pourquoi dois-je donner mon identifiant ?</h2>
+        <p>À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été retirée sur demande de JVC.
+      </div>
 <?php endif ?>
     </div>
   </div>
