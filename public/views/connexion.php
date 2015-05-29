@@ -76,7 +76,7 @@ endif; ?>
           <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
           <p><input class="submit submit-center" type="submit" value="Se connecter">
         </form>
-        <p>Vos identifiants seront transmis au serveur de JVForum, sans y être stocké.
+        <p>Votre identifiant sera transmis au serveur de JVForum, sans y être stocké.
       </div>
 
       <div class="connexion-bloc2">
