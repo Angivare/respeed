@@ -26,7 +26,7 @@ if($nick && $pass && $form && $ccode):
       $ccode = NULL;
     }
     else {
-      header('Location: /1000021/39170088-jvforum-beta-privee');
+      header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
       exit;
     }
   endif;
@@ -81,7 +81,7 @@ endif; ?>
 
       <div class="connexion-bloc2">
         <h2>Pourquoi dois-je donner mon identifiant ?</h2>
-        <p>À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été retirée sur demande de JVC.
+        <p>À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été <a href="http://www.jeuxvideo.com/nplay/forums/message/714206419">retirée sur demande de JVC</a>.
       </div>
 <?php endif ?>
     </div>
