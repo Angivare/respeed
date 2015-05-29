@@ -21,9 +21,9 @@ if ($jvc->is_connected()) {
     <div class="salespage">
 
 
-      <h1>Respawn a détruit les forums.</h1>
+      <h1>Pas satisfait de Respawn ?</h1>
 
-      <p>JVForum vous redonne des forums agréables à utiliser.
+      <p>JVForum vous propose des forums plus agréables à utiliser.
 
 
       <h2>Une version mobile complète</h2>
@@ -33,9 +33,9 @@ if ($jvc->is_connected()) {
         <a href="http://image.noelshack.com/fichiers/2015/16/1429342674-screenshot-2015-04-18-09-04-21-jvshack.png" class="screen-mobile"><img src="http://image.noelshack.com/fichiers/2015/16/1429342674-screenshot-2015-04-18-09-04-21-jvshack.png"></img></a>
         <a href="http://image.noelshack.com/fichiers/2015/16/1429342685-screenshot-2015-04-18-09-04-54-jvshack.png" class="screen-mobile"><img src="http://image.noelshack.com/fichiers/2015/16/1429342685-screenshot-2015-04-18-09-04-54-jvshack.png"></img></a>
 
-      <p>La version mobile des forums est fortement amputée. JVForum veut vous offrir une expérience complète sur tous vos appareils.
+      <p>Citer et ignorer sur mobile sont désormais possibles. JVForum veut offrir une expérience complète sur tous vos appareils.
 
-      <p>(Fait : Citer, Ignorer. À venir : Édit, MP.)
+      <p>(À venir : Édit, MP.)
 
 
       <h2>Une version PC adaptée aux grands écrans</h2>
@@ -56,9 +56,9 @@ if ($jvc->is_connected()) {
 
       <h2>Un design efficient, et très rapide</h2>
 
-      <p>Respawn est une purée. JVForum se concentre sur l’essentiel et vous émancipe des folles idées de JVC et Webedia. De plus, les pages s’affichent à une vitesse folle.
+      <p>Respawn est trop chargé. JVForum se concentre sur l’essentiel, et la vitesse. Les pages sont préchargées juste avant votre clic/appui pour s’afficher instantanément.
       
-      <h3><a href="/connexion">Commencez à utiliser JVForum</a></h3>
+      <h3 class="cta"><a href="/connexion">Commencez à utiliser JVForum &gt;</a></h3>
     </div>
   </div>
 </div>
