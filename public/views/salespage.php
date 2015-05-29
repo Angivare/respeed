@@ -44,7 +44,7 @@ if ($jvc->is_connected()) {
         <a href="http://image.noelshack.com/fichiers/2015/16/1429342319-capture-d-ecran-2015-04-18-a-09-26-14-jvshack.png" class="screen-desktop"><img src="http://image.noelshack.com/fichiers/2015/16/1429342319-capture-d-ecran-2015-04-18-a-09-26-14-jvshack.png"></img></a>
         <a href="http://image.noelshack.com/fichiers/2015/16/1429342472-capture-d-ecran-2015-04-18-a-09-33-52-jvshack.png" class="screen-desktop"><img src="http://image.noelshack.com/fichiers/2015/16/1429342472-capture-d-ecran-2015-04-18-a-09-33-52-jvshack.png"></img></a>
       
-      <p>Le design de Respawn a été pensé pour les tablettes, et gaspille l’espace disponible sur un grand écran. JVForum vous permet de voir plus d’informations d’un coup, et de moins avoir à scroller.
+      <p>Le design de Respawn gaspille l’espace disponible sur un grand écran. JVForum vous permet de voir plus d’informations d’un coup, et de moins avoir à scroller.
 
 
       <h2>Rafraîchissement en temps réel</h2>
@@ -56,7 +56,7 @@ if ($jvc->is_connected()) {
 
       <h2>Un design efficient, et très rapide</h2>
 
-      <p>Respawn est trop chargé. JVForum se concentre sur l’essentiel, et la vitesse. Les pages sont préchargées juste avant votre clic/appui pour s’afficher instantanément.
+      <p>JVForum se concentre sur l’essentiel, et la vitesse. Les pages sont préchargées juste avant votre clic/appui pour s’afficher instantanément.
       
       <h3 class="cta"><a href="/connexion">Commencez à utiliser JVForum &gt;</a></h3>
     </div>
