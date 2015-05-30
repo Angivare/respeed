@@ -21,6 +21,17 @@ $jvc = new Jvc();
     
     <h2>Mai 2015</h2>
     
+    <h3>Samedi 30</h3>
+    <ul>
+      <li>Résolution de l’erreur 502 à la connexion.
+    </ul>
+    
+    <h3>Vendredi 29</h3>
+    <ul>
+      <li>Ajout d’un timeout de deux secondes aux requêtes faites vers JVC.
+      <li><strong>Sortie de JVForum</strong>
+    </ul>
+    
     <h3>Jeudi 28</h3>
     <ul>
       <li>iOS : Correction du bug qui empêchait de déplacer le curseur dans le formulaire de réponse.
