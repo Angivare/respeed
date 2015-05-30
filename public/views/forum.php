@@ -11,6 +11,10 @@ foreach(fetch_forum($forum, $page, $slug) as $k => $v) {
   $$k = $v;
 }
 
+if ($title === false) {
+  exit('Timeout de JVC. <a href="javascript:location.href = location.href">Rafra&icirc;chir la page</a>');
+}
+
 echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->";
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;

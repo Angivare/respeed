@@ -18,10 +18,6 @@ function ajax(action, data, success) {
   if(typeof(success) !== 'undefined')
     var dataType = 'json'
   $.post('/ajax/' + action + '.php?hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, data, success, dataType)
-    .fail(function(xhr) {
-      if(xhr.status == 504)
-        success({'rep':false,'err':'Timeout de JVC'})
-    })
 }
 
 function updateLocalBlacklist() {
@@ -332,6 +328,11 @@ function topicRefresh() {
   }
 
   ajax('topic_get', {forum: $forum, topic: $topic, slug: $slug, page: $page, liste_messages: liste_messages}, function(data) {
+    if (data.title === false) {
+      // Timeout
+      return
+    }
+
     if (data.topicNew != $topicNew || data.page != $page) {
       // On est plus sur le topic, ou alors plus sur la même page, quand la requête se termine
       return

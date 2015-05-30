@@ -51,7 +51,7 @@ function parse_forum($got) {
   $ret = [];
 
   // Nom du forum
-  $ret['title'] = 'Communauté';
+  $ret['title'] = false;
   if (preg_match('#<h1 class="highlight">Forum (.+)</h1>#Usi', $got, $matches)) {
       $ret['title'] = $matches[1];
       $pos = strpos($ret['title'], ' - Page ');
@@ -124,7 +124,7 @@ function parse_topic($got) {
   $ret = [];
 
   // Titre du topic
-  $ret['title'] = 'Topic';
+  $ret['title'] = false;
   if (preg_match('#<span id="bloc-title-forum">(.+)</span>#Usi', $got, $matches)) {
       $ret['title'] = $matches[1];
   }
