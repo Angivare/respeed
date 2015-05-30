@@ -11,10 +11,6 @@ foreach(fetch_topic($topic, $page, $slug, $forum) as $k => $v) {
   $$k = $v;
 }
 
-if ($title === false) {
-  exit('Timeout de JVC. <a href="javascript:location.href = location.href">Rafra&icirc;chir la page</a>');
-}
-
 echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->";
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
@@ -29,6 +25,15 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 </header>
 
 <div class="sheet">
+<? if ($title === false): ?>
+  <div class="timeout">
+    <h3>Timeout.</h3>
+    
+    <p>La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a dû être arrêtée.</p>
+    
+    <p><a href="<?= $_SERVER['REQUEST_URI'] ?>">Réessayer</a></p>
+  </div>
+<? else: ?>
   <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
 
   <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
@@ -115,6 +120,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <?php endif ?>
 
   </aside>
+<? endif // $title === false ?>
 </div>
 
 <script>

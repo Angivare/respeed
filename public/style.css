@@ -184,6 +184,16 @@ h1, h2, h3 {
   }
 }
 
+.timeout {
+  padding: 10px;
+}
+
+@media (min-width: 1025px) {
+  .timeout {
+    padding: 30px;
+  }
+}
+
 /* MENU */
 
 .sheet > .aside {
