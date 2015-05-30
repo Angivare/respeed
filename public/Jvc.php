@@ -615,6 +615,14 @@ class Jvc {
     }
 
     $rep = curl_exec($ch);
+    if(!$rep) {
+      //FATAL ERROR
+      echo curl_errno($ch);
+      if(curl_errno($ch) === CURLE_OPERATION_TIMEOUTED)
+        $this->fatal_err('JVC a mis plus de deux secondes à répondre.', '504 Gateway Timeout');
+      else
+        $this->fatal_err('Erreur réseau avec JVC.', '502 Bad Gateway');
+    }
     $ret = array(
       'header' => substr($rep, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
       'body' => substr($rep, curl_getinfo($ch, CURLINFO_HEADER_SIZE))
@@ -627,6 +635,26 @@ class Jvc {
   private function _err($err) {
     $this->err = $err;
     return FALSE;
+  }
+
+  private function fatal_err($err, $http_err = NULL) {
+    if($http_err)
+      header("HTTP/1.0 {$http_err}");
+    $body = <<<HTML
+      <header class="site-header">
+        <h2 class="site-title">
+          <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
+        </h2>
+      </header>
+
+      <div class="sheet">
+        {$err}
+        <br>
+        <a href="javascript:void(0)" onclick="window.location.reload()">Recharger la page</a>
+      </div>
+HTML;
+    include 'views/layout.php';
+    exit;
   }
 
   private function refresh_cookie($hdr) {

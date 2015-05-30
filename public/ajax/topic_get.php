@@ -20,8 +20,8 @@ if($forum && $topic && $slug) {
   $t['page'] = (int)$page; // Pour vérifier simplement qu’on a la bonne page dans app.js
   $t['paginationMarkup'] = generate_topic_pagination_markup($page, $t['last_page'], $forum, $topic, $topic_mode, $slug);
 
-  echo json_encode($t);
+  echo json_encode(['rep' => $t, 'err' => 'Indéfinie']);
 }
 else if ($forum && $slug) {
-  echo json_encode(fetch_forum($forum, $page, $slug));
+  echo json_encode(['rep' => fetch_forum($forum, $page, $slug), 'err' => 'Indéfinie']);
 }

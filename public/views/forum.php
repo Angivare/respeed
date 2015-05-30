@@ -25,15 +25,6 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 </header>
 
 <div class="sheet">
-<? if ($title === false): ?>
-  <div class="timeout">
-    <h3>Timeout.</h3>
-    
-    <p>La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a dû être arrêtée.</p>
-    
-    <p><a href="<?= $_SERVER['REQUEST_URI'] ?>">Réessayer</a></p>
-  </div>
-<? else: ?>
   <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
   <h1 class="sheet-title forum-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?> <span class="reload-sign">↻</span></a></h1>
   <div class="content">
@@ -110,7 +101,6 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 <?php endif ?>
 
   </aside>
-<? endif // $title === false ?>
 </div>
 
 <script>
