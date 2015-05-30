@@ -10,9 +10,11 @@ if(!$page) $page = 1;
 
 if($forum && $topic && $slug) {
   $t = fetch_topic($topic, $page, $slug, $forum);
-  for ($i = 0; $i < count($t['messages']); $i++) {
-    if (!in_array($t['messages'][$i]['id'], $liste_messages)) {
-      $t['messages'][$i]['markup'] = generate_message_markup($t['messages'][$i]);
+  if ($liste_messages) { // N’est pas là en cas de timeout
+    for ($i = 0; $i < count($t['messages']); $i++) {
+      if (!in_array($t['messages'][$i]['id'], $liste_messages)) {
+        $t['messages'][$i]['markup'] = generate_message_markup($t['messages'][$i]);
+      }
     }
   }
   $t['page'] = (int)$page; // Pour vérifier simplement qu’on a la bonne page dans app.js
