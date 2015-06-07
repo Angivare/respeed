@@ -617,7 +617,6 @@ class Jvc {
     $rep = curl_exec($ch);
     if(!$rep) {
       //FATAL ERROR
-      echo curl_errno($ch);
       if(curl_errno($ch) === CURLE_OPERATION_TIMEOUTED)
         $this->fatal_err('JVC a mis plus de deux secondes à répondre.', '504 Gateway Timeout');
       else
@@ -653,6 +652,9 @@ class Jvc {
         <a href="javascript:void(0)" onclick="window.location.reload()">Recharger la page</a>
       </div>
 HTML;
+    $jvc = new Jvc();
+    $forum = $topic = $topicNew = $slug = $title = $page = NULL;
+    $token = [];
     include 'views/layout.php';
     exit;
   }
