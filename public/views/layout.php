@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <title><?= $title ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/style-5.css">
+<link rel="stylesheet" href="/style-<?= REVISION_NUMBER_STYLE ?>.css">
 <meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
 <?= $body ?>
 <script>
@@ -21,4 +21,4 @@ var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
 <script src="/scripts/fastclick.js" data-no-instant></script>
 <script src="/scripts/instantclick.js" data-no-instant></script>
 <script src="/scripts/jvcode.js" data-no-instant></script>
-<script src="/scripts/app-2.js" data-no-instant></script>
+<script src="/scripts/app-<?= REVISION_NUMBER_JS_APP ?>.js" data-no-instant></script>

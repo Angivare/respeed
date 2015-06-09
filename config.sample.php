@@ -9,4 +9,7 @@ define('DB_NAME', 'jvforum');
 
 define('GOOGLE_ANALYTICS_ID', '');
 
+define('REVISION_NUMBER_STYLE', 0);
+define('REVISION_NUMBER_JS_APP', 0);
+
 date_default_timezone_set('Europe/Paris');
