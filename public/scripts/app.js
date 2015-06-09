@@ -456,7 +456,7 @@ function postEdit(e) {
     form: edit_form_data,
   }
   if ($('#ccode_edit').val()) {
-    params.ccode = $('#ccode').val()
+    params.ccode = $('#ccode_edit').val()
   }
   ajax('message_edit', params, function(data) {
     $('#captcha-container-edit').html('')
