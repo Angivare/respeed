@@ -25,6 +25,7 @@ $jvc = new Jvc();
     <ul>
       <li>Correction de bug : Les messages d’erreur lors d’un édit s’affichent désormais là où il faut.
       <li>Lors d’un édit, le captcha est désormais géré.
+      <li>Le captcha est désormais visible correctement sur mobile.
     </ul>
 
     <h2>Mai 2015</h2>
