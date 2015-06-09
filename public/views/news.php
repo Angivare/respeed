@@ -24,6 +24,7 @@ $jvc = new Jvc();
     <h3>Mardi 9</h3>
     <ul>
       <li>Correction de bug : Les messages d’erreur lors d’un édit s’affichent désormais là où il faut.
+      <li>Lors d’un édit, le captcha est désormais géré.
     </ul>
 
     <h2>Mai 2015</h2>
