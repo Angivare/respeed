@@ -29,10 +29,6 @@ function parse_forum($got) {
       }
   }
 
-  $ret['connected'] = connected($got);
-  $ret['moderators'] = moderators($got);
-  $ret['hot_topics'] = hot_topics($got);
-
   // Topics
   $regex = '#<tr class=".*" data-id=".+">.+' .
            '<img src="/img/forums/topic-(?P<label>.+)\.png".+' .
@@ -106,11 +102,7 @@ function parse_topic($got) {
       $ret['forum_name'] = $matches[2];
   }
 
-  $ret['connected'] = connected($got);
-  $ret['moderators'] = moderators($got);
-  $ret['hot_topics'] = hot_topics($got);
-
-  //Sondages
+  // Sondages
   $ret['question'] = '';
   if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches))
     $ret['question'] = $matches[1];
