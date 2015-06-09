@@ -263,7 +263,7 @@ function request_edit_form_data(e) {
   ajax('message_edit', {id_message: id}, function(data) {
     edit_form_data = data.rep
     if (edit_form_data.fs_signature) {
-      $('#captcha-container').html('<br><input class="input input-captcha" id="ccode_edit" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
+      $('#captcha-container-edit').html('<br><input class="input input-captcha" id="ccode_edit" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
         + 'signature=' + encodeURIComponent(edit_form_data.fs_signature)
         + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
         + '" class="captcha">')
@@ -460,17 +460,17 @@ function postEdit(e) {
     params.ccode = $('#ccode').val()
   }
   ajax('message_edit', params, function(data) {
-    $('#captcha-container').html('')
+    $('#captcha-container-edit').html('')
     edit_form_data = null
 
     if (data.rep) {
-      $('.form-error').hide()
+      $('.form-error-edit').hide()
       cancelEdit()
       return
     }
 
-    $('.form-error p').html(data.err)
-    $('.form-error').show()
+    $('.form-error-edit p').html(data.err)
+    $('.form-error-edit').show()
     $('#editmessage').focus()
   })
 }
@@ -531,9 +531,10 @@ function edit() {
 
   var text = JVCode.he(toJVCode(html))
 
-  var htmlTextarea = '<p>\
+  var htmlTextarea = '<div class="form-error form-error-edit"><p></p></div>\
+  <p>\
     <textarea class="input textarea" id="editmessage">' + text + '</textarea>\
-    <span id="captcha-container"></span>\
+    <span id="captcha-container-edit"></span>\
     <br><input class="submit submit-main submit-big" id="post_edit" type="submit" value="Poster">\
   </p>'
   $('#' + id + ' .js-content').html(htmlTextarea).addClass('js-isEditing').data('html', html)
