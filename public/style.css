@@ -978,6 +978,8 @@ h1, h2, h3 {
 @media (min-width: 1025px) {
   .message .meta-author .avatar a {
     padding: initial;
+    cursor: -webkit-zoom-in;
+    cursor:         zoom-in;
   }
 }
 
