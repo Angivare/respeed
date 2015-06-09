@@ -15,37 +15,6 @@ function sub_forums($body) {
   return $matches;
 }
 
-function connected($body) {
-  $re = '#<span class="nb-connect-fofo">([0-9]+) connecté(s)</span>#Usi';
-  return preg_match($re, $body, $match) ? $match[1] : 0;
-}
-
-function moderators($body) {
-  $re = '#<span class="liste-modo-fofo">(.*)</span>#Usi';
-  if(!preg_match($re, $body, $match)) return [];
-  $body = $match[1];
-  $body = str_replace('<!--', '', $body);
-  $body = str_replace('-->', '', $body);
-  $body = str_replace(',', '', $body);
-  $re = '#[^\s]+#si';
-  if(!preg_match_all($re, $body, $matches)) return [];
-  return $matches[0];
-}
-
-function hot_topics($body) {
-  $beg = strpos($body, '<h4 class="titre-info-fofo">');
-  $end = strpos($body, '</ul>', $beg);
-  $body = substr($body, $beg, $end-$beg);
-  $re = '#<li class="line-ellipsis" data-id="(?P<id>[0-9]+)">\s+' .
-        '<a href="//www\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)' .
-        '-0-1-0-(?P<slug>[0-9a-z-]+)\.htm"[^<]*>' .
-        '(?P<human>[^<]+)</a>\s+</li>#Usi';
-  preg_match_all($re, $body, $matches, PREG_SET_ORDER);
-  foreach($matches as $k => $v)
-    $matches[$k] = strip_matches($matches[$k]);
-  return $matches;
-}
-
 function parse_forum($got) {
   global $forum, $page, $slug;
   $ret = [];
@@ -59,10 +28,6 @@ function parse_forum($got) {
         $ret['title'] = substr($ret['title'], 0, $pos);
       }
   }
-
-  $ret['connected'] = connected($got);
-  $ret['moderators'] = moderators($got);
-  $ret['hot_topics'] = hot_topics($got);
 
   // Topics
   $regex = '#<tr class=".*" data-id=".+">.+' .
@@ -137,11 +102,7 @@ function parse_topic($got) {
       $ret['forum_name'] = $matches[2];
   }
 
-  $ret['connected'] = connected($got);
-  $ret['moderators'] = moderators($got);
-  $ret['hot_topics'] = hot_topics($got);
-
-  //Sondages
+  // Sondages
   $ret['question'] = '';
   if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches))
     $ret['question'] = $matches[1];
