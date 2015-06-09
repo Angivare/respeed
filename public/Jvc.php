@@ -616,7 +616,7 @@ class Jvc {
 
     $rep = curl_exec($ch);
     if (!$rep) {
-      if(curl_errno($ch) !== CURLE_OPERATION_TIMEOUTED) {
+      if(curl_errno($ch) === CURLE_OPERATION_TIMEOUTED) {
         $this->fatal_err('Timeout.', 'La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a dû être arrêtée.', 504);
       }
       else {
