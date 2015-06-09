@@ -443,7 +443,6 @@ function post(e) {
 }
 
 function postEdit(e) {
-  e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
   if (!edit_form_data) {
     $('#editmessage').focus()
     return
@@ -457,7 +456,7 @@ function postEdit(e) {
     form: edit_form_data,
   }
   if ($('#ccode_edit').val()) {
-    params.ccode = $('#ccode').val()
+    params.ccode = $('#ccode_edit').val()
   }
   ajax('message_edit', params, function(data) {
     $('#captcha-container-edit').html('')
