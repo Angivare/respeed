@@ -615,17 +615,18 @@ class Jvc {
     }
 
     $rep = curl_exec($ch);
-    if(!$rep) {
-      //FATAL ERROR
-      if(curl_errno($ch) === CURLE_OPERATION_TIMEOUTED)
-        $this->fatal_err('JVC a mis plus de deux secondes à répondre.', '504 Gateway Timeout');
-      else
-        $this->fatal_err('Erreur réseau avec JVC.', '502 Bad Gateway');
+    if (!$rep) {
+      if(curl_errno($ch) !== CURLE_OPERATION_TIMEOUTED) {
+        $this->fatal_err('Timeout.', 'La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a dû être arrêtée.', 504);
+      }
+      else {
+        $this->fatal_err('Problème réseau.', 'JVForum n’a pas réussi à charger la page depuis jeuxvideo.com.', 502);
+      }
     }
-    $ret = array(
+    $ret = [
       'header' => substr($rep, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
-      'body' => substr($rep, curl_getinfo($ch, CURLINFO_HEADER_SIZE))
-    );
+      'body' => substr($rep, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
+    ];
     curl_close($ch);
     $this->refresh_cookie($ret['header']);
     return $ret;
@@ -636,9 +637,8 @@ class Jvc {
     return FALSE;
   }
 
-  private function fatal_err($err, $http_err = NULL) {
-    if($http_err)
-      header("HTTP/1.0 {$http_err}");
+  private function fatal_err($title, $message, $http_status_code = 200) {
+    http_response_code($http_status_code);
     $body = <<<HTML
       <header class="site-header">
         <h2 class="site-title">
@@ -647,14 +647,19 @@ class Jvc {
       </header>
 
       <div class="sheet">
-        {$err}
-        <br>
-        <a href="javascript:void(0)" onclick="window.location.reload()">Recharger la page</a>
+        <div class="timeout">
+          <h3>{$title}</h3>
+
+          <p>{$message}</p>
+
+          <p><a href="{$_SERVER['REQUEST_URI']}">Réessayer</a></p>
+        </div>
       </div>
 HTML;
     $jvc = new Jvc();
-    $forum = $topic = $topicNew = $slug = $title = $page = NULL;
+    $forum = $topic = $topicNew = $slug = $page = NULL;
     $token = [];
+    $title = 'Erreur';
     include 'views/layout.php';
     exit;
   }
