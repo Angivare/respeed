@@ -1461,9 +1461,30 @@ h1, h2, h3 {
   }
 }
 
+.form-post-inner #captcha-container {
+  display: inline-block;
+  text-align: center;
+}
+
+@media (min-width: 550px) {
+  .form-post-inner #captcha-container {
+    display: inline;
+    text-align: right;
+  }
+}
+
 .form-post-inner .captcha {
-  position: absolute;
+  /* Empêcher que le captcha et l’input soient sur une même ligne, sinon ça pose problème. */
   margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media (min-width: 550px) {
+  .form-post-inner .captcha {
+    margin-right: 0;
+
+    position: absolute;
+  }
 }
 
 /* NOUVEAUTÉS */
