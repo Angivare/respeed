@@ -443,7 +443,6 @@ function post(e) {
 }
 
 function postEdit(e) {
-  e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
   if (!edit_form_data) {
     $('#editmessage').focus()
     return
