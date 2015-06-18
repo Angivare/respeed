@@ -135,15 +135,24 @@ function relative_date_timestamp($timestamp, $topicList = false) {
 
   // Hier
   if (date('dmy', $timestamp) == date('dmy', $now - 60 * 60 * 24)) {
-    return $topicList ? 'hier' : ('hier, ' . date('H:i', $timestamp));
+    if ($topicList) {
+      return 'hier';
+    }
+    return 'hier, ' . date('H:i', $timestamp);
   }
 
   // De cette année
   if (date('Y', $timestamp) == date('Y')) {
-    return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1];
+    if ($topicList) {
+      return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1];
+    }
+    return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1] . ', ' . date('H:i', $timestamp);
   }
 
-  return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
+  if ($topicList) {
+    return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
+  }
+  return date('j', $timestamp) . ' ' . $mois[date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp) . ', ' . date('H:i', $timestamp);
 }
 
 function relative_date_topic_list($str_date) {
