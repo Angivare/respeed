@@ -1462,12 +1462,16 @@ h1, h2, h3 {
 }
 
 .form-post-inner #captcha-container {
+  display: none;
+}
+
+.form-post-inner #captcha-container.shown {
   display: inline-block;
   text-align: center;
 }
 
 @media (min-width: 550px) {
-  .form-post-inner #captcha-container {
+  .form-post-inner #captcha-container.shown {
     display: inline;
     text-align: right;
   }

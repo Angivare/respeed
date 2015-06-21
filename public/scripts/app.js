@@ -245,10 +245,12 @@ function request_form_data() {
     }
     form_data = data.rep
     if (form_data.fs_signature) {
-      $('#captcha-container').html('<input class="input input-captcha" id="ccode" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
+      $('#captcha-container')
+      .html('<input class="input input-captcha" id="ccode" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
         + 'signature=' + encodeURIComponent(form_data.fs_signature)
         + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
         + '" class="captcha">')
+      .addClass('shown')
     }
   })
 }
@@ -427,7 +429,10 @@ function post(e) {
   }
   var action = $('#newsujet').length ? 'topic_post' : 'message_post'
   ajax(action, params, function(data) {
-    $('#captcha-container').html('')
+    $('#captcha-container')
+    .html('')
+    .removeClass('shown')
+
     form_data = null
 
     if (data.rep) {
