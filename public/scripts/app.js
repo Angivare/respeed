@@ -26,6 +26,12 @@ function ajax(action, data, success) {
     })
 }
 
+function htmlentities(str) {
+  return str.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+    return '&#'+i.charCodeAt(0)+';'
+  })
+}
+
 function updateLocalBlacklist() {
   blacklist = (localStorage.blacklist || '').split(' ')
   if (!blacklist[blacklist.length - 1]) {
@@ -505,7 +511,7 @@ function quote() {
     html = html.substr(0, pos)
   }
 
-  var text = toJVCode(html)
+  var text = JVCode.toJVCode(html)
 
   var citation = ""
   if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
@@ -533,7 +539,7 @@ function edit() {
     html = html.substr(0, pos)
   }
 
-  var text = JVCode.he(toJVCode(html))
+  var text = htmlentities(JVCode.toJVCode(html))
 
   var htmlTextarea = '<div class="form-error form-error-edit"><p></p></div>\
   <p>\
