@@ -162,9 +162,6 @@ h1, h2, h3 {
   }
 }
 
-.sheet > .content {
-}
-
 @media (min-width: 1025px) {
   .sheet > .content {
     width: calc(80% - 15px);
@@ -1060,7 +1057,8 @@ h1, h2, h3 {
 }
 
 .message .meta-actions .meta-permalink {
-  display: initial;
+  display: inline;
+  
 }
 
 @media (min-width: 1025px) {
