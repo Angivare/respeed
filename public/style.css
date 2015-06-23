@@ -1169,6 +1169,15 @@ h1, h2, h3 {
   background-image: url(/images/edit.svg);
 }
 
+/* TOPIC - Message - edit */
+
+@media (MAX-width: 1024px) {
+  #editmessage {
+    margin-left: -10px;
+    width: calc(100% + 20px);
+  }
+}
+
 /* TOPIC - Message - border */
 
 .message-border {
