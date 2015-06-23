@@ -567,13 +567,13 @@ function openProfile() {
   return false
 }
 
-function toggleMenu(e) {
-  var id = e.target.parentNode.parentNode.parentNode.parentNode.id
+function toggleMenu() {
+  var id = $(this).closest('.message').attr('id')
   $('#' + id).toggleClass('show-menu')
 }
 
 function closeMenu(e) {
-  if (e.target.className == 'meta-menu') {
+  if ($(e.target).hasClass('meta-menu')) {
     return
   }
   var id = this.id

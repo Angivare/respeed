@@ -1038,11 +1038,11 @@ h1, h2, h3 {
 }
 
 .message .meta-actions span, .ignored-message span {
+  cursor: pointer;
 }
 
 @media (min-width: 1025px) {
   .message .meta-actions span, .ignored-message span {
-    cursor: pointer;
     font-size: 12px;
   }
 }
@@ -1058,27 +1058,15 @@ h1, h2, h3 {
 
 .message .meta-actions .meta-permalink {
   display: inline;
-  
+  padding: 10px;
+  color: #0A77B8;
 }
 
 @media (min-width: 1025px) {
   .message .meta-actions .meta-permalink {
+    padding: 0;
+
     white-space: nowrap;
-  }
-}
-
-.message .meta-actions .meta-menu {
-  display: inline-block;
-  width: 34px;
-  height: 34px;
-  background: url(/images/ic_menu_24px.svg) center no-repeat;
-  margin-right: 5px;
-  vertical-align: middle;
-}
-
-@media (min-width: 1025px) {
-  .message .meta-actions .meta-menu {
-    display: none;
   }
 }
 

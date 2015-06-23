@@ -271,8 +271,7 @@ MESSAGE;
         <!-- --><span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
       </div>
       <div class="meta-actions">
-        <span class="meta-permalink" title="{$message['dateRaw']}"><a href="#{$message['id']}" class="js-date">{$message['date']}</a></span>
-        <span class="meta-menu"></span>
+        <span class="meta-permalink meta-menu js-date" title="{$message['dateRaw']}">{$message['date']}</span>
         <span class="meta-quote">Citer</span>
 MESSAGE;
   if ($is_ours) {
