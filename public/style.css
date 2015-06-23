@@ -1221,17 +1221,12 @@ h1, h2, h3 {
 }
 
 .message .content > .blockquote-jv {
-  margin-left: -10px;
-  margin-right: -10px;
-  padding-right: 10px;
+  background: rgba(0,0,64,.035);
 }
 
 @media (min-width: 1025px) {
   .message .content > .blockquote-jv {
     font-size: 95%;
-    margin-left: -8px;
-    margin-right: -7px;
-    padding-right: .5em;
   }
 }
 
