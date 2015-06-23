@@ -272,16 +272,6 @@ MESSAGE;
       </div>
       <div class="meta-actions">
         <span class="meta-permalink meta-menu js-date" title="{$message['dateRaw']}">{$message['date']}</span>
-        <span class="meta-quote">Citer</span>
-MESSAGE;
-  if ($is_ours) {
-    $markup .= '<span class="meta-ignore">Ignorer</span>';
-  }
-  else {
-    $markup .= '<span class="meta-edit">Modifier</span>';
-    $markup .= '<span class="meta-delete">Supprimer</span>';
-  }
-  $markup .= <<<MESSAGE
       </div>
     </div>
     <div class="mobile message-border"></div>

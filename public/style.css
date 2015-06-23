@@ -926,7 +926,7 @@ h1, h2, h3 {
     display: initial;
     padding-left: initial;
 
-    width: 10%;
+    width: 15%;
     float: left;
     text-align: center;
   }
@@ -1018,22 +1018,10 @@ h1, h2, h3 {
     display: initial;
     text-align: initial;
 
-    width: 8.5%;
-    margin-left: 1.5%;
     float: right;
-    overflow: hidden;
-    margin-bottom: 12px;
-  }
-}
-
-.message .meta-actions span {
-  display: none;
-}
-
-@media (min-width: 1025px) {
-  .message .meta-actions span {
-    display: block;
-    padding: 1px 0;
+    position: absolute;
+    right: 34px;
+    top: 3px;
   }
 }
 
@@ -1057,16 +1045,21 @@ h1, h2, h3 {
 }
 
 .message .meta-actions .meta-permalink {
-  display: inline;
   padding: 10px;
   color: #0A77B8;
 }
 
 @media (min-width: 1025px) {
   .message .meta-actions .meta-permalink {
-    padding: 0;
+    background: hsl(217, 68%, 98%);
+    padding: 2px 4px;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 3px;
+    color: #333;
+  }
 
-    white-space: nowrap;
+  .message.odd .meta-actions .meta-permalink {
+    background: hsl(0, 0%, 99%);
   }
 }
 
@@ -1139,7 +1132,8 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .message .content {
-    width: 80%;
+    width: 83%;
+    width: calc(85% - 30px);
     float: left;
     border: 1px solid #d1d1d1;
     background: #F9F9F9;
@@ -1253,7 +1247,8 @@ h1, h2, h3 {
     border: 1px solid #d1d1d1;
     background: #F9F9F9;
     margin-bottom: 12px;
-    width: 80%;
+    width: 83%;
+    width: calc(85% - 30px);
     margin-left: 10%;
   }
 }
