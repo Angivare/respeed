@@ -1142,6 +1142,7 @@ h1, h2, h3 {
   .message .action-menu .action {
     margin-top: 0;
     border-color: transparent;
+    cursor: pointer;
   }
 }
 
