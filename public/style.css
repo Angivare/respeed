@@ -1066,19 +1066,56 @@ h1, h2, h3 {
 /* TOPIC - Message - mobile menu */
 
 .message .not-action-menu {
-  -webkit-transition: -webkit-transform .1s;
-          transition: transform .1s, -webkit-transform .1s;
+  -webkit-transition: -webkit-transform .1s ease-in;
+          transition: transform .1s ease-in, -webkit-transform .1s ease-in;
 }
 
 .message.show-menu .not-action-menu {
-  -webkit-transform: translateX(-200px);
-          transform: translateX(-200px);
+  -webkit-transform: translateX(-160px);
+          transform: translateX(-160px);
+}
+
+@media (min-width: 1025px) {
+  .message.show-menu .not-action-menu {
+    -webkit-transform: translateX(-80px);
+            transform: translateX(-80px);
+  }
 }
 
 .message .action-menu {
   position: absolute;
-  left: calc(100% - 200px);
+  left: calc(100% - 160px);
   display: none;
+}
+
+@media (min-width: 1025px) {
+  .message .action-menu {
+    left: calc(100% - 100px);
+  }
+}
+
+.message.mine.show-menu .not-action-menu {
+  -webkit-transform: translateX(-240px);
+          transform: translateX(-240px);
+}
+
+@media (min-width: 1025px) {
+  .message.mine.show-menu .not-action-menu {
+    -webkit-transform: translateX(-160px);
+            transform: translateX(-160px);
+  }
+}
+
+.message.mine .action-menu {
+  position: absolute;
+  left: calc(100% - 240px);
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .message.mine .action-menu {
+    left: calc(100% - 180px);
+  }
 }
 
 .message.show-menu .action-menu {
@@ -1087,9 +1124,10 @@ h1, h2, h3 {
 
 .message .action-menu .action {
   display: inline-block;
-  width: 90px;
+  width: 70px;
   text-align: center;
   font-weight: bold;
+  font-size: 12px;
   vertical-align: bottom;
   border: 1px solid rgba(0,0,0,.1);
   margin-right: 10px;
@@ -1101,8 +1139,22 @@ h1, h2, h3 {
   background-repeat: no-repeat;
 }
 
+@media (min-width: 1025px) {
+  .message .action-menu .action {
+    margin-top: 0;
+    border-color: transparent;
+  }
+}
+
 .message .action-menu .meta-quote {
   background-image: url(/images/ic_reply_24px.svg);
+  margin-right: 0;
+}
+
+@media (min-width: 1025px) {
+  .message .action-menu .meta-quote {
+    display: none;
+  }
 }
 
 .message .action-menu .meta-ignore {
@@ -1111,6 +1163,10 @@ h1, h2, h3 {
 
 .message .action-menu .meta-delete {
   background-image: url(/images/ic_delete_24px.svg);
+}
+
+.message .action-menu .meta-edit {
+  background-image: url(/images/edit.svg);
 }
 
 /* TOPIC - Message - border */

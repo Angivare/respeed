@@ -239,23 +239,25 @@ function delay($f, &$t) {
 }
 
 function generate_message_markup($message) {
-  $is_ours = strcasecmp(isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '', $message['pseudo']) != 0;
+  $is_ours = strcasecmp(isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '', $message['pseudo']) == 0;
   $odd_or_even = ($message['pos'] % 2 == 0) ? 'odd' : 'even';
+  $is_ours_text = $is_ours ? 'mine' : '';
   $pseudoLowercase = strtolower($message['pseudo']);
   $pseudoWbr = wbr_pseudo($message['pseudo']);
   $markup = <<<MESSAGE
-<div class="message {$odd_or_even}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-date="{$message['date']}"  data-content-md5="{$message['contentMd5']}">
+<div class="message {$odd_or_even} {$is_ours_text}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-date="{$message['date']}"  data-content-md5="{$message['contentMd5']}">
   <div class="action-menu">
-    <span class="action meta-quote">Citer</span><!--
 MESSAGE;
 
-  if ($is_ours) {
-    $markup .= '--><span class="action meta-ignore">Ignorer</span>';
+  if (!$is_ours) {
+    $markup .= '<span class="action meta-ignore">Ignorer</span>';
   }
   else {
-    $markup .= '--><span class="action meta-delete">Supprimer</span>';
+    $markup .= '<span class="action meta-delete">Supprimer</span>';
+    $markup .= '<span class="action meta-edit">Modifier</span>';
   }
   $markup .= <<<MESSAGE
+<span class="action meta-quote">Citer</span>
   </div>
   <div class="not-action-menu">
     <div class="message-header">
