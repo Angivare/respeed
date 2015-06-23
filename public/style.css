@@ -1227,6 +1227,23 @@ h1, h2, h3 {
   }
 }
 
+@media (min-width: 1025px) {
+  .message .desktop-quote {
+    width: 24px;
+    height: 24px;
+    background: url(/images/reply_18px.svg) center no-repeat;
+    position: absolute;
+    bottom: 12px;
+    right: 31px;
+    cursor: pointer;
+    opacity: .2;
+  }
+
+  .message .desktop-quote:hover {
+    opacity: .4;
+  }
+}
+
 .message .ignored-message {
   display: none;
 }
