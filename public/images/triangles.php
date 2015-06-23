@@ -1,13 +1,5 @@
 <?php
 
-function arg($varname) {
-  for($i = 0; $i < func_num_args(); $i++) {
-    $varname = func_get_arg($i);
-    global $$varname;
-    $$varname = isset($_GET[$varname]) ? $_GET[$varname] : 0;
-  }
-}
-
 function char_to_int($c) {
   switch($c) {
     case '[': return 0;
@@ -57,9 +49,10 @@ function draw($x, $y, $o) {
   $imd->polygon($p);
 }
 
-arg('q', 's');
+$s = isset($_GET['s']) ? $_GET['s'] : 0;
+$q = 2; //linear quality factor
 
-$w = $q ? 40 * $q : 40;
+$w = $q * 40;
 $h = $w;
 
 $_w = ($w/2.0) / sqrt(3.0/4.0);

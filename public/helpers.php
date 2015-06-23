@@ -260,7 +260,7 @@ MESSAGE;
 MESSAGE;
   } else {
     $markup .= <<<MESSAGE
-          <img class="js-avatarDefault" src="/images/triangles.php?q=2&s={$message['pseudo']}">
+          <img class="js-avatarDefault" src="/images/triangles.php?s={$message['pseudo']}">
 MESSAGE;
   }
   $markup .= <<<MESSAGE

@@ -569,7 +569,7 @@ function errorAvatar(e) {
 
     el.removeClass('js-avatarImg')
     el.addClass('js-avatarDefault')
-    el.attr('src', '/images/triangles.php?q=2&s=' + nick)
+    el.attr('src', '/images/triangles.php?s=' + nick)
   } else {
     //class is .js-avatarDefault
     $(e.target).remove()
