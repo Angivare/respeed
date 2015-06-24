@@ -607,6 +607,11 @@ if (googleAnalyticsID) {
   ga('create', 'UA-63457513-1', 'auto');
   
   InstantClick.on('change', function() {
+    if($is_connected) {
+      ga('set', 'dimension1', 'Member')
+    } else {
+      ga('set', 'dimension1', 'Guest')
+    }
     ga('send', 'pageview', location.pathname + location.search);
   });
 }
