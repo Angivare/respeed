@@ -1215,7 +1215,7 @@ h1, h2, h3 {
 
 .message .blockquote-jv {
   margin: 1em 0;
-  border-left: 4px solid rgba(0,0,64,.4);
+  border-left: 3px solid rgba(0,0,64,.4);
   padding: 1px 6px;
   background: rgba(0,0,64,.025);
 }
