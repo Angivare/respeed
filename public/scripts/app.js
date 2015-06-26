@@ -26,6 +26,18 @@ function ajax(action, data, success) {
     })
 }
 
+function tokenRefresh() {
+  ajax('token_generate', {}, function(data) {
+    if(data.rep) {
+      $hash = data.rep.hash
+      $ts = data.rep.ts
+      $rand = data.rep.rand
+    } else {
+      //TODO: erreur à afficher
+    }
+  })
+}
+
 function htmlentities(str) {
   return str.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
     return '&#'+i.charCodeAt(0)+';'
@@ -598,6 +610,7 @@ if (!$is_connected) {
 
 updateRemoteBlacklist()
 setInterval(topicRefresh, 2500)
+setInterval(tokenRefresh, (30-2)*60*1000)
 
 if (googleAnalyticsID) {
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
