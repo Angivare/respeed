@@ -272,7 +272,7 @@ function request_edit_form_data(e) {
   ajax('message_edit', {id_message: id}, function(data) {
     edit_form_data = data.rep
     if (edit_form_data.fs_signature) {
-      $('#captcha-container-edit').html('<input class="input input-captcha" "' + (isIPhone ? 'tel' : 'number') + '" id="ccode_edit" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
+      $('#captcha-container-edit').html('<input class="input input-captcha" type="' + (isIPhone ? 'tel' : 'number') + '" id="ccode_edit" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
         + 'signature=' + encodeURIComponent(edit_form_data.fs_signature)
         + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
         + '" class="captcha">')
