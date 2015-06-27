@@ -53,7 +53,7 @@ h1, h2, h3 {
   }
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .desktop {
     display: none;
   }
@@ -281,7 +281,7 @@ h1, h2, h3 {
   color: #333;
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .ouvrir-jvc {
     display: none;
   }
@@ -457,7 +457,7 @@ h1, h2, h3 {
 
 /* FORUM */
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   h1.forum-title {
     font-size: 1.5em;
   }
@@ -514,7 +514,7 @@ h1, h2, h3 {
   }
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .liste-topics .label {
     display: table-cell;
     width: 4px;
@@ -526,7 +526,7 @@ h1, h2, h3 {
   display: table-cell;
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .topic-main-link, .topic-last-page {
     color: hsl(202, 90%, 20%);
   }
@@ -536,7 +536,7 @@ h1, h2, h3 {
   }
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .topic-main-link {
     padding: 4px 0;
     padding-left: 5px;
@@ -558,7 +558,7 @@ h1, h2, h3 {
   text-align: center;
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .topic-last-page {
     padding: 0 5px;
   }
@@ -600,7 +600,7 @@ h1, h2, h3 {
   white-space: nowrap;
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .liste-topics .nb-answers {
     font-size: 13px;
   }
@@ -613,7 +613,7 @@ h1, h2, h3 {
   }
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .liste-topics .nb-answers .rep {
     display: none;
   }
@@ -623,7 +623,7 @@ h1, h2, h3 {
   white-space: nowrap;
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .liste-topics .date {
     font-size: 12px;
   }
@@ -674,7 +674,7 @@ h1, h2, h3 {
   border-color: #0cf;
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   .label-dossier1 .label {
     background: #ffcc00;
   }
@@ -770,7 +770,7 @@ h1, h2, h3 {
   color: #9c0;
 }
 
-@media (max-width: 1024px) {
+@media (MAX-width: 1024px) {
   h2.forum-title {
     font-size: 1.17em;
     padding: 0 10px;
@@ -818,7 +818,7 @@ h1, h2, h3 {
   margin-left: 5px;
 }
 
-@media (max-width: 700px) {
+@media (MAX-width: 700px) {
   .pages .faketable {
     width: 30px;
     height: 30px;
