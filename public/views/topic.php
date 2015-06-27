@@ -66,7 +66,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
       <div class="form-post-inner">
         <textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
         <span id="captcha-container"></span>
-        <br><input class="submit submit-main submit-big" id="post" type="submit" value="Poster">
+        <div class="form-post-button"><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></div>
       </div>
     </div>
 <?php endif ?>
