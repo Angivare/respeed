@@ -553,6 +553,21 @@ h1, h2, h3 {
   }
 }
 
+@media (MAX-width: 1024px) {
+  .pseudo-status-modo .title:before, .pseudo-status-admin .title:before {
+    content: '• ';
+    opacity: .5;
+  }
+  
+  .pseudo-status-modo .title:before {
+    color: #080;
+  }
+  
+  .pseudo-status-admin .title:before {
+    color: #c00;
+  }
+}
+
 .topic-last-page {
   display: table-cell;
   vertical-align: middle;
@@ -561,7 +576,7 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .topic-last-page {
-    padding: 3px 5px;
+    padding: 5px 5px;
   }
 }
 

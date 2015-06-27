@@ -37,16 +37,16 @@ if ($page > 1) {
 
     <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches['topic']); $i++): ?>
-      <div class="topic label-<?= $matches['label'][$i] ?> <?= ($i % 2 == 0) ? 'odd' : 'even' ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
-        <div class="label"></div>
-        <a class="topic-main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
-          <div class="title"><?= $matches['title'][$i] ?></div>
 <?php
 $pseudo_status = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $pseudo_status = trim(substr($matches['pseudo_span'][$i], $pos + 6, 5), '"');
 }
 ?>
+      <div class="topic label-<?= $matches['label'][$i] ?> <?= ($i % 2 == 0) ? 'odd' : 'even' ?> pseudo-status-<?= $pseudo_status ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
+        <div class="label"></div>
+        <a class="topic-main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
+          <div class="title"><?= $matches['title'][$i] ?></div>
           <div class="author pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?></div>
         </a>
         <a class="topic-last-page" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
