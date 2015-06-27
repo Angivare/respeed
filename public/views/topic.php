@@ -54,7 +54,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
 <?php if ($locked): ?>
     <div class="form-post locked">
-      <label class="titre-bloc" for="newmessage">Topic verrouillé</label>
+      <label class="titre-bloc" for="newmessage">Sujet verrouillé</label>
       <div class="form-post-inner">
         <p><?= $lock_raison ?>
       </div>
