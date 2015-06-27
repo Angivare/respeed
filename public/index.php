@@ -5,7 +5,6 @@ $slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slu
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $connexion = isset($_GET['connexion']);
 $deconnexion = isset($_GET['deconnexion']);
-$news = isset($_GET['news']);
 $accueil = isset($_GET['accueil']);
 $salespage = isset($_GET['salespage']);
 
@@ -24,8 +23,6 @@ if ($connexion)
   require 'views/connexion.php';
 elseif ($deconnexion)
   require 'views/deconnexion.php';
-elseif ($news)
-  require 'views/news.php';
 elseif ($forum && $topic)
   require 'views/topic.php';
 elseif ($forum)
