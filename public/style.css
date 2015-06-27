@@ -1475,6 +1475,10 @@ h1, h2, h3 {
   }
 }
 
+.form-post.locked .form-post-inner {
+  padding: 0 10px;
+}
+
 .form-error {
   margin: 10px;
   background: #fdfdf0;
