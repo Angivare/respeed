@@ -541,6 +541,7 @@ h1, h2, h3 {
     padding: 4px 0;
     padding-left: 5px;
     border-right: 1px solid rgba(0,0,32,.03);
+    vertical-align: middle;
   }
 }
 
@@ -560,7 +561,7 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .topic-last-page {
-    padding: 0 5px;
+    padding: 3px 5px;
   }
 }
 
@@ -585,14 +586,22 @@ h1, h2, h3 {
   }
 }
 
-.liste-topics .author {
-  font-size: 12px;
+@media (MAX-width: 1024px) {
+  .liste-topics .author {
+    display: none;
+  }
 }
 
 @media (min-width: 1025px) {
   .liste-topics .author {
     width: 19%;
     font-size: 13px;
+  }
+}
+
+@media (MAX-width: 1024px) {
+  .liste-topics .nb-answers, .liste-topics .date {
+    line-height: 1.2;
   }
 }
 
