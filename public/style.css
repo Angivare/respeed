@@ -494,6 +494,7 @@ h1, h2, h3 {
 @media (min-width: 1025px) {
   .topic {
     display: block;
+    font-size: 13px;
   }
 }
 
@@ -572,6 +573,7 @@ h1, h2, h3 {
 }
 
 .liste-topics .title {
+  font-weight: bold;
 }
 
 @media (min-width: 1025px) {
@@ -579,6 +581,7 @@ h1, h2, h3 {
     width: 80%;
     padding-left: 8px;
     padding-top: 4px;
+    padding-bottom: 1px;
   }
 }
 
@@ -589,7 +592,7 @@ h1, h2, h3 {
 @media (min-width: 1025px) {
   .liste-topics .author {
     width: 19%;
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
