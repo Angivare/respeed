@@ -1337,7 +1337,7 @@ h1, h2, h3 {
   display: none;
 }
 
-.message.ignored .meta-author, .message.ignored .meta-actions, .message.ignored .message-border, .message.ignored .content {
+.message.ignored .meta-author, .message.ignored .meta-actions, .message.ignored .message-border, .message.ignored .content, .message.ignored .desktop-quote {
   display: none;
 }
 
@@ -1355,7 +1355,7 @@ h1, h2, h3 {
     margin-bottom: 12px;
     width: 83%;
     width: calc(85% - 30px);
-    margin-left: 10%;
+    margin-left: 15%;
   }
 }
 
