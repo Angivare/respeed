@@ -560,6 +560,22 @@ class Jvc {
   }
 
   /**
+   * Transforme le lien en lien jvf
+   * @param string $link Lien jvc à transformer
+   * @return mixed Le lien jvf correspondant ou FALSE
+   */
+  public static function toJvf($link) {
+    if(!preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $link, $matches))
+      return FALSE;
+    if($matches['topic_mode'] == '1') $matches['topic'] = '0' . $matches['topic'];
+    $link = "/{$matches['forum']}";
+    if($matches['topic'] != 0) $link .= "/{$matches['topic']}";
+    $link .= "-{$matches['slug']}";
+    if($matches['page'] > 1) $link .= "/{$matches['page']}";
+    return $link;
+  }
+
+  /**
    * Effectue une requête POST
    * @param string $url 
    * @param mixed $data champ à envoyer, urlencodé ou un tableau associatif 
