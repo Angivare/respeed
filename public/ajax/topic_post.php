@@ -16,13 +16,21 @@ if ($url && $msg && $form) {
   $insert_id = $db->log_message($forum_id);
   
   $location = '';
-  echo json_encode([
-    'rep' => $jvc->topic_post_finish($url, $title, $msg, $form, '', [], $ccode, $location),
-    'err' => $jvc->err()
-  ]);
+  $rep = $jvc->topic_post_finish($url, $title, $msg, $form, '', [], $ccode, $location);
 
-  if ($location && preg_match('#/forums/(?P<topic_mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+).htm#', $location, $matches)) {
+  $link = Jvc::toJvf($location);
+  if($rep && $link) {
+    preg_match('#/forums/(?P<topic_mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+).htm#', $location, $matches);
     $db->log_message_update($insert_id, null, $matches['topic_mode'], $matches['topic']);
+    echo json_encode([
+      'rep' => $link,
+      'err' => $jvc->err()
+    ]);
+  } else {
+    echo json_encode([
+      'rep' => $rep,
+      'err' => $jvc->err()
+    ]);
   }
 } else if ($url) {
   echo json_encode([

@@ -445,6 +445,10 @@ function post(e) {
     if (data.rep) {
       $('.form-error').hide()
       $('#newmessage').val('')
+
+      if (data.rep !== true)
+        window.location.href = data.rep
+
       return
     }
 
