@@ -69,7 +69,7 @@ function fetch_forum($forum, $page, $slug) {
     $header = &$rep['header'];
     $got = &$rep['body'];
 
-    $location = Jvc::toJvf(JVc::redirects($header));
+    $location = Jvc::toJvf(Jvc::redirects($header));
     if($location) {
       header("Location: {$location}");
       exit;
