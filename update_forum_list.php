@@ -12,6 +12,7 @@ curl_setopt($ch, CURLOPT_HEADER, true);
 function getForum($id) {
   global $ch;
   curl_setopt($ch, CURLOPT_URL, "http://www.jeuxvideo.com/forums/0-$id-0-1-0-1-0-0.htm");
+  curl_setopt($ch, CURLOPT_TIMEOUT, 3);
   $rep = curl_exec($ch);
   $location = Jvc::redirects($rep);
   if(preg_match('#/forums/0-(?P<forum>.+)-0-1-0-1-0-(?P<slug>.+).htm#U', $location, $matches))
