@@ -553,21 +553,6 @@ h1, h2, h3 {
   }
 }
 
-@media (MAX-width: 1024px) {
-  .pseudo-status-modo .title:before, .pseudo-status-admin .title:before {
-    content: '• ';
-    opacity: .5;
-  }
-  
-  .pseudo-status-modo .title:before {
-    color: #080;
-  }
-  
-  .pseudo-status-admin .title:before {
-    color: #c00;
-  }
-}
-
 .topic-last-page {
   display: table-cell;
   vertical-align: middle;
@@ -592,6 +577,12 @@ h1, h2, h3 {
   font-weight: bold;
 }
 
+@media (MAX-width: 1024px) {
+  .liste-topics .title {
+    padding-right: 2px;
+  }
+}
+
 @media (min-width: 1025px) {
   .liste-topics .title {
     width: 80%;
@@ -603,7 +594,8 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .liste-topics .author {
-    display: none;
+    font-size: 12px;
+    white-space: nowrap;
   }
 }
 
