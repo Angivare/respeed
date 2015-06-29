@@ -1287,6 +1287,7 @@ h1, h2, h3 {
   padding: 0 2px;
   margin-bottom: 1em;
   display: inline-block;
+  max-width: 100%;
 }
 
 .message .bloc-spoil-jv.en-ligne {
