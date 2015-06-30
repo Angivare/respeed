@@ -1610,7 +1610,13 @@ h1, h2, h3 {
   }
 }
 
+.rechercheforum-q {
+  width: calc(100% - 50px);
+  vertical-align: middle;
+}
+
 .validate {
+  vertical-align: middle;
   border: 1px solid #6f6f6f;
   background: #464646;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9b9b9b), color-stop(50%, #949494), color-stop(50%, #595959), color-stop(50%, #464646));
@@ -1629,10 +1635,6 @@ h1, h2, h3 {
 
 .validate:active {
   text-shadow: 0 1px 10px white;
-}
-
-.rechercheforum-q {
-  width: calc(100% - 50px);
 }
 
 .rechercheforum-form-accueil {
