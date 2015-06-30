@@ -7,7 +7,7 @@ if (!$jvc->is_connected()) {
   exit();
 }
 
-$q = isset($_GET['q']) ? $_GET['q'] : '';
+$q = isset($_GET['q']) ? trim($_GET['q']) : '';
 ?>
 <header class="site-header">
   <h2 class="site-title">
