@@ -1,5 +1,5 @@
 <?php
-$title = 'Rechercher un forum';
+$title = 'Recherche d’un forum';
 $jvc = new Jvc();
 
 if (!$jvc->is_connected()) {
@@ -44,9 +44,11 @@ if ($q) {
   if ($results): ?>
   <ul>
 <?php endif;
-  foreach ($results as $result): ?>
-  <li><a href="/<?= $result['forum_id'] ?>-<?= $result['slug'] ?>"><?= preg_replace($replace_patterns, '<strong>$0</strong>', h($result['human'])) ?></a></li>
-<? endforeach;
+  foreach ($results as $result) {
+    $name = str_replace(['__STRONG__', '__/STRONG__'], ['<strong>', '</strong>'], h(preg_replace($replace_patterns, '__STRONG__$0__/STRONG__', $result['human'])));
+    ?>
+  <li><a href="/<?= $result['forum_id'] ?>-<?= $result['slug'] ?>"><?= $name ?></a></li>
+<? }
   if ($results): ?>
   </ul>
 <?php else: ?>
