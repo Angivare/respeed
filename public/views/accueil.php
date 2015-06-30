@@ -30,7 +30,7 @@ if (!$jvc->is_connected()) {
 
 
     <form class="rechercheforum-form-accueil" action="/recherche_forum" method="get">
-      <input class="rechercheforum-q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q" value="<?= h($q) ?>">
+      <input class="rechercheforum-q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q">
       <input type="submit" class="validate" value="Go">
     </form>
   </div>
