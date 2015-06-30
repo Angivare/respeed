@@ -26,6 +26,7 @@ class Db {
   }
 
   public function search_forum($str) {
+    $str = str_replace(['_', '%'], ['\\_', '\\%'], $str);
     $keywords = explode(' ', $str);
     foreach ($keywords as $k => $v) {
       $keywords[$k] = '%' . $v . '%';
