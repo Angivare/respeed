@@ -26,11 +26,11 @@ class Db {
   }
 
   public function search_forum($str) {
-    $keywords = preg_split('[-\s\',"]', $str);
-    foreach($keywords as $k => $v)
-      if(strlen($v) <= 3) unset($keywords[$k]);
-      else $keywords[$k] = '%' . $v . '%';
-    $sql = str_repeat('human LIKE ? AND ', count($keywords)-1);
+    $keywords = explode(' ', $str);
+    foreach ($keywords as $k => $v) {
+      $keywords[$k] = '%' . $v . '%';
+    }
+    $sql = str_repeat('human LIKE ? AND ', count($keywords) - 1);
     return $this->query(
       'SELECT * FROM forums WHERE ' . $sql . 'human LIKE ? ',
       $keywords
