@@ -35,7 +35,7 @@ if ($q) {
   
   if (count($results) > 100) {
 ?>
-  <p>Plus de 100 résultats, veullez affiner votre recherche.
+  <p>Plus de 100 résultats. Affinez votre recherche.
 <?php
     $results = array_slice($results, 0, 100);
   }
