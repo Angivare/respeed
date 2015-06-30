@@ -28,12 +28,14 @@ $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 if ($q) {
   $db = new Db();
   $results = $db->search_forum($q);
+  $count = count($results);
+  $db->log_forum_search($q, $count);
   $replace_patterns = explode(' ', $q);
   foreach ($replace_patterns as $k => $v) {
     $replace_patterns[$k] = '#' . str_replace('#', '\#', preg_quote($v)) . '#i';
   }
   
-  if (count($results) > 100) {
+  if ($count > 100) {
 ?>
   <p>Plus de 100 résultats. Affinez votre recherche.
 <?php
