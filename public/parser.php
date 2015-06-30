@@ -115,6 +115,9 @@ function parse_topic($got) {
     if(preg_match_all($regex, $got, $matches))
       for($i = 0; $i < count($matches[0]); $i++)
         $ret['poll']['answers'][] = [ 'value' => $matches['pourcent'][$i], 'human' => $matches['human'][$i] ];
+    $ret['poll']['ans_count'] = false;
+    if(preg_match('#<div class="pied-result">.+([0-9]+).+?vote.+?</div>#Usi', $got, $matches))
+      $ret['poll']['ans_count'] = $matches[1];
   }
 
   // Messages
