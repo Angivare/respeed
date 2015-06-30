@@ -1,6 +1,7 @@
 RewriteEngine On
 
 RewriteRule ^accueil$ /index.php?accueil [L]
+RewriteRule ^recherche_forum$ /index.php?recherche_forum [L]
 
 RewriteRule ^([0-9]+)$ /index.php?forum=$1 [L]
 RewriteRule ^([0-9]+)-([a-z0-9-]+)$ /index.php?forum=$1&slug=$2 [L]
