@@ -6,6 +6,8 @@ if (!$jvc->is_connected()) {
   header('Location: /');
   exit();
 }
+
+$q = isset($_GET['q']) ? $_GET['q'] : '';
 ?>
 <header class="site-header">
   <h2 class="site-title">
@@ -16,6 +18,13 @@ if (!$jvc->is_connected()) {
   </div>
 </header>
 
-<div class="sheet">
-  <h2>Recherche forum</h2>
+<div class="sheet rechercheforum">
+  <form action="/recherche_forum" method="get">
+    <input class="q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q" value="<?= h($q) ?>" autofocus>
+    <input type="submit" class="validate" value="Go">
+  </form>
+  
+  <p><?= h($q) ?></p>
+  
+  <p>Plus de 100 résultats, veullez affiner votre recherche.
 </div>

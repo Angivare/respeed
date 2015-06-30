@@ -1597,3 +1597,40 @@ h1, h2, h3 {
   color: inherit;
   text-decoration: underline;
 }
+
+/* RECHERCHE FORUM */
+
+.rechercheforum {
+  padding: 10px;
+}
+
+@media (min-width: 1025px) {
+  .rechercheforum {
+    padding: 30px;
+  }
+}
+
+.validate {
+  border: 1px solid #6f6f6f;
+  background: #464646;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9b9b9b), color-stop(50%, #949494), color-stop(50%, #595959), color-stop(50%, #464646));
+  background: -webkit-linear-gradient(#9b9b9b 0%, #949494 50%, #595959 50%, #464646 100%);
+  background:         linear-gradient(#9b9b9b 0%, #949494 50%, #595959 50%, #464646 100%);
+  color: white;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 40px; /* Original : 60px */
+  height: 34px; /* Original : 19px */
+  -webkit-appearance: none; /* iOS 6 */
+}
+
+.validate:active {
+  text-shadow: 0 1px 10px white;
+}
+
+.rechercheforum .q {
+  width: calc(100% - 50px);
+}
