@@ -103,18 +103,19 @@ function parse_topic($got) {
   }
 
   // Sondages
-  $ret['question'] = '';
-  if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches))
-    $ret['question'] = $matches[1];
-  $regex = '#<tr>.+' .
-           '<td class="result-pourcent">.+' .
-           '<div class="pourcent">(?P<pourcent>[0-9]{1,3})\s*%</div>.+' .
-           '</td>.+<td class="reponse">(?P<human>.+)</td>.+' .
-           '</tr>#Usi';
-  $ret['answers'] = [];
-  if(preg_match_all($regex, $got, $matches))
-    for($i = 0; $i < count($matches[0]); $i++)
-      $ret['answers'][] = ['pourcent' => $matches['pourcent'][$i], 'human' => $matches['human'][$i] ];
+  $ret['poll'] = false;
+  if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches)) {
+    $ret['poll'] = ['question' => $matches[1]];
+    $regex = '#<tr>.+' .
+             '<td class="result-pourcent">.+' .
+             '<div class="pourcent">(?P<pourcent>[0-9]{1,3})\s*%</div>.+' .
+             '</td>.+<td class="reponse">(?P<human>.+)</td>.+' .
+             '</tr>#Usi';
+    $ret['poll']['answers'] = [];
+    if(preg_match_all($regex, $got, $matches))
+      for($i = 0; $i < count($matches[0]); $i++)
+        $ret['poll']['answers'][] = [ 'value' => $matches['pourcent'][$i], 'human' => $matches['human'][$i] ];
+  }
 
   // Messages
   $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+>\s+<div class="conteneur-message">\s+' .
