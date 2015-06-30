@@ -1631,6 +1631,10 @@ h1, h2, h3 {
   text-shadow: 0 1px 10px white;
 }
 
-.rechercheforum .q {
+.rechercheforum-q {
   width: calc(100% - 50px);
+}
+
+.rechercheforum-form-accueil {
+  padding: 20px 0;
 }

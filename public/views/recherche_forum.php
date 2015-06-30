@@ -20,7 +20,7 @@ $q = isset($_GET['q']) ? $_GET['q'] : '';
 
 <div class="sheet rechercheforum">
   <form action="/recherche_forum" method="get">
-    <input class="q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q" value="<?= h($q) ?>" autofocus>
+    <input class="rechercheforum-q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q" value="<?= h($q) ?>" autofocus>
     <input type="submit" class="validate" value="Go">
   </form>
 
