@@ -87,15 +87,16 @@ function updateRemoteBlacklist() {
   }
   var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
   var now = +new Date
-  if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
-    ajax('blacklist_get', {}, function(data) {
-      var remoteBlacklist = data.rep
-      for (var i = 0; i < remoteBlacklist.length; i++) {
-        addToBlacklist(remoteBlacklist[i].human)
-      }
-      localStorage.remoteBlacklistLastUpdate = now
-    })
+  if (remoteBlacklistLastUpdate - now + (1000 * 60 * 60) > 0) {
+    return
   }
+  ajax('blacklist_get', {}, function(data) {
+    var remoteBlacklist = data.rep
+    for (var i = 0; i < remoteBlacklist.length; i++) {
+      addToBlacklist(remoteBlacklist[i].human)
+    }
+    localStorage.remoteBlacklistLastUpdate = now
+  })
 }
 
 function updateFavorites() {
@@ -110,7 +111,7 @@ function updateFavorites() {
   }
   var favoritesLastUpdate = localStorage.favoritesLastUpdate || 0
   var now = +new Date
-  if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
+  if (favoritesLastUpdate - now + (1000 * 60 * 60) > 0) {
     return
   }
   ajax('favorites_get', {}, function(data) {
