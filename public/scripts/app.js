@@ -375,6 +375,7 @@ function topicRefresh() {
           // Mise à jour
           $('#' + message.id).data('contentMd5', message.contentMd5)
           $('#' + message.id + ' .js-content').html(message.content)
+          $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
         }
       }
       else {
