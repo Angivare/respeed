@@ -56,3 +56,11 @@ CREATE TABLE `logs_recherche_forum` (
   `ip` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `icstats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ts` int(11) DEFAULT NULL,
+  `clicks_minus_touchstart` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -10,6 +10,8 @@ var form_data
   , liste_messages = liste_messages || []
   , googleAnalyticsID = $('meta[name="google-analytics-id"]').attr('content')
   , isIPhone = navigator.userAgent.indexOf(' (iPhone; ') > -1
+  , ICStatsClicksMinusTouchstart = []
+  , ICStatsLastFetch
 
 
 
@@ -413,6 +415,23 @@ function cancelEdit() {
   return false
 }
 
+function processICStats() {
+  localStorage.ICStatsClicksMinusTouchstart = ICStatsClicksMinusTouchstart.join(' ')
+  
+  if (ICStatsClicksMinusTouchstart.length >= 20) {
+    $.post('/collect_icstats.php', {clicks_minus_touchstart: localStorage.ICStatsClicksMinusTouchstart})
+    ICStatsClicksMinusTouchstart = []
+    localStorage.removeItem('ICStatsClicksMinusTouchstart')
+  }
+}
+
+function getLinkTarget(target) {
+  while (target && target.nodeName != 'A') {
+    target = target.parentNode
+  }
+  return target
+}
+
 
 
 /*** Fonctions pour events ***/
@@ -640,3 +659,21 @@ InstantClick.on('change', function() {
 })
 
 InstantClick.init()
+
+document.addEventListener('touchstart', function(e) {
+  if (!getLinkTarget(e.target)) {
+    return
+  }
+  ICStatsLastFetch = +new Date
+}, true)
+
+document.addEventListener('touchend', function(e) {
+  if (!getLinkTarget(e.target)) {
+    return
+  }
+  if ('ICStatsClicksMinusTouchstart' in localStorage && localStorage.ICStatsClicksMinusTouchstart != ICStatsClicksMinusTouchstart.join(' ')) {
+    ICStatsClicksMinusTouchstart = localStorage.ICStatsClicksMinusTouchstart.split(' ')
+  }
+  ICStatsClicksMinusTouchstart.push(+new Date - ICStatsLastFetch)
+  processICStats()
+}, true)
