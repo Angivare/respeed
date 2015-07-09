@@ -57,7 +57,7 @@ CREATE TABLE `logs_recherche_forum` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `icstats` (
+CREATE TABLE `icstats2` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ts` int(11) DEFAULT NULL,
   `clicks_minus_touchstart` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

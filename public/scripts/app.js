@@ -416,12 +416,12 @@ function cancelEdit() {
 }
 
 function processICStats() {
-  localStorage.ICStatsClicksMinusTouchstart = ICStatsClicksMinusTouchstart.join(' ')
+  localStorage.ICStatsClicksMinusTouchstart2 = ICStatsClicksMinusTouchstart.join(' ')
   
   if (ICStatsClicksMinusTouchstart.length >= 20) {
-    $.post('/collect_icstats.php', {clicks_minus_touchstart: localStorage.ICStatsClicksMinusTouchstart})
+    $.post('/collect_icstats.php', {clicks_minus_touchstart: localStorage.ICStatsClicksMinusTouchstart2})
     ICStatsClicksMinusTouchstart = []
-    localStorage.removeItem('ICStatsClicksMinusTouchstart')
+    localStorage.removeItem('ICStatsClicksMinusTouchstart2')
   }
 }
 
@@ -677,13 +677,16 @@ document.addEventListener('touchstart', function(e) {
   ICStatsLastFetch = +new Date
 }, true)
 
-document.addEventListener('touchend', function(e) {
-  if (!getLinkTarget(e.target)) {
+document.addEventListener('click', function(e) {
+  if (!getLinkTarget(e.target) || !ICStatsLastFetch) {
     return
   }
-  if ('ICStatsClicksMinusTouchstart' in localStorage && localStorage.ICStatsClicksMinusTouchstart != ICStatsClicksMinusTouchstart.join(' ')) {
-    ICStatsClicksMinusTouchstart = localStorage.ICStatsClicksMinusTouchstart.split(' ')
+  if ('ICStatsClicksMinusTouchstart' in localStorage && localStorage.ICStatsClicksMinusTouchstart2 != ICStatsClicksMinusTouchstart.join(' ')) {
+    ICStatsClicksMinusTouchstart = localStorage.ICStatsClicksMinusTouchstart2.split(' ')
   }
   ICStatsClicksMinusTouchstart.push(+new Date - ICStatsLastFetch)
+  ICStatsLastFetch = false
   processICStats()
 }, true)
+
+localStorage.removeItem('ICStatsClicksMinusTouchstart')
