@@ -419,7 +419,7 @@ function cancelEdit() {
 function processICStats() {
   localStorage.ICStatsClicksMinusTouchstart2 = ICStatsClicksMinusTouchstart.join(' ')
   
-  if (ICStatsClicksMinusTouchstart.length >= 20) {
+  if (ICStatsClicksMinusTouchstart.length >= 15) {
     $.post('/collect_icstats.php', {clicks_minus_touchstart: localStorage.ICStatsClicksMinusTouchstart2})
     ICStatsClicksMinusTouchstart = []
     localStorage.removeItem('ICStatsClicksMinusTouchstart2')
