@@ -12,6 +12,7 @@ var form_data
   , hasNiceTelInputType = navigator.userAgent.indexOf(' (iPhone; ') > -1 || navigator.userAgent.indexOf(' (iPod; ') > -1
   , ICStatsClicksMinusTouchstart = []
   , ICStatsLastFetch
+  , hasTouch = 'createTouch' in document
 
 
 
@@ -670,23 +671,25 @@ InstantClick.on('change', function() {
 
 InstantClick.init()
 
-document.addEventListener('touchstart', function(e) {
-  if (!getLinkTarget(e.target)) {
-    return
-  }
-  ICStatsLastFetch = +new Date
-}, true)
+if (hasTouch) {
+  document.addEventListener('touchstart', function(e) {
+    if (!getLinkTarget(e.target)) {
+      return
+    }
+    ICStatsLastFetch = +new Date
+  }, true)
 
-document.addEventListener('click', function(e) {
-  if (!getLinkTarget(e.target) || !ICStatsLastFetch) {
-    return
-  }
-  if ('ICStatsClicksMinusTouchstart' in localStorage && localStorage.ICStatsClicksMinusTouchstart2 != ICStatsClicksMinusTouchstart.join(' ')) {
-    ICStatsClicksMinusTouchstart = localStorage.ICStatsClicksMinusTouchstart2.split(' ')
-  }
-  ICStatsClicksMinusTouchstart.push(+new Date - ICStatsLastFetch)
-  ICStatsLastFetch = false
-  processICStats()
-}, true)
+  document.addEventListener('click', function(e) {
+    if (!ICStatsLastFetch || !getLinkTarget(e.target)) {
+      return
+    }
+    if ('ICStatsClicksMinusTouchstart' in localStorage && localStorage.ICStatsClicksMinusTouchstart2 != ICStatsClicksMinusTouchstart.join(' ')) {
+      ICStatsClicksMinusTouchstart = localStorage.ICStatsClicksMinusTouchstart2.split(' ')
+    }
+    ICStatsClicksMinusTouchstart.push(+new Date - ICStatsLastFetch)
+    ICStatsLastFetch = false
+    processICStats()
+  }, true)
 
-localStorage.removeItem('ICStatsClicksMinusTouchstart')
+  localStorage.removeItem('ICStatsClicksMinusTouchstart')
+}
