@@ -73,10 +73,10 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
     <div class="bottom-back-buttons">
       <span>
-        <a class="submit" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour forum</a>
+        <a class="js-bottom-back-button submit" data-stats-label="forum" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour forum</a>
       </span>
       <span class="align-right">
-        <a class="submit" href="/accueil">Accueil</a>
+        <a class="js-bottom-back-button submit" data-stats-label="home" href="/accueil">Accueil</a>
       </span>
     </div>
 

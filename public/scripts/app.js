@@ -608,6 +608,13 @@ function toggleSpoil() {
   $(this).toggleClass('shown')
 }
 
+function statsClick() {
+  if (!googleAnalyticsID) {
+    return
+  }
+  ga('send', 'event', 'Bottom back buttons', 'click', $(this).data('stats-label'), {'nonInteraction': 1})
+}
+
 
 
 /*** App ***/
@@ -656,6 +663,9 @@ InstantClick.on('change', function() {
   $('.message').click(closeMenu)
   $('.js-avatarImg').error(remove404Avatar)
   $('.bloc-spoil-jv').click(toggleSpoil)
+
+  // Stats bottom back buttons
+  $('.js-bottom-back-button').click(statsClick)
 })
 
 InstantClick.init()
