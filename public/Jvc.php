@@ -40,7 +40,6 @@ class Jvc {
 
     if(!isset($this->cookie['dlrowolleh']) || !$this->cookie['dlrowolleh']) {
       $this->cookie['dlrowolleh'] = NULL;
-      $this->get($this->domain . '/login');
     }
 
   }
