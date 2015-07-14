@@ -1,5 +1,11 @@
 <?php
 
+if (!class_exists('Imagick')) {
+  header('Content-Type: image/jpeg');
+  echo file_get_contents('avatar-default.jpg');
+  exit;
+}
+
 function char_to_int($c) {
   switch($c) {
     case '[': return 0;
