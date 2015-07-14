@@ -90,7 +90,7 @@ function updateRemoteBlacklist() {
   }
   var remoteBlacklistLastUpdate = parseInt(localStorage.remoteBlacklistLastUpdate, 10) || 0
   var now = +new Date
-  if (remoteBlacklistLastUpdate + (1000 * 60 * 60) > now) {
+  if (remoteBlacklistLastUpdate + (1000 * 60 * 10) > now) {
     return
   }
   ajax('blacklist_get', {}, function(data) {
@@ -114,7 +114,7 @@ function updateFavorites() {
   }
   var favoritesLastUpdate = parseInt(localStorage.favoritesLastUpdate, 10) || 0
   var now = +new Date
-  if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
+  if (favoritesLastUpdate + (1000 * 60 * 10) > now) {
     return
   }
   ajax('favorites_get', {}, function(data) {
