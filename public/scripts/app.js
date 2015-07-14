@@ -13,7 +13,7 @@ var form_data
   , ICStatsClicksMinusTouchstart = []
   , ICStatsLastFetch
   , hasTouch = 'createTouch' in document
-  , isPageVisible = true
+  , isPageVisible = 'hidden' in document ? !document.hidden : true
   , originalPageTitle
 
 
