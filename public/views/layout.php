@@ -6,6 +6,7 @@
 <meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
 <link rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
+<meta name="format-detection" content="telephone=no">
 <?= $body ?>
 <script>
 var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
