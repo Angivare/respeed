@@ -13,6 +13,8 @@ var form_data
   , ICStatsClicksMinusTouchstart = []
   , ICStatsLastFetch
   , hasTouch = 'createTouch' in document
+  , isPageVisible = true
+  , originalPageTitle
 
 
 
@@ -380,12 +382,16 @@ function topicRefresh() {
           $('#' + message.id).data('contentMd5', message.contentMd5)
           $('#' + message.id + ' .js-content').html(message.content)
           $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
+
+          triggerTabAlertForNewPosts()
         }
       }
       else {
         // Création
         $('.js-listeMessages').append(message.markup)
         liste_messages.push(message.id)
+
+        triggerTabAlertForNewPosts()
 
         $('#' + message.id + ' .meta-quote').click(quote)
         $('#' + message.id + ' .meta-ignore').click(ignore)
@@ -406,6 +412,7 @@ function topicRefresh() {
     if (data.last_page > last_page) {
       last_page = data.last_page
       $('.pages-container').html(data.paginationMarkup)
+      triggerTabAlertForNewPosts()
     }
   })
 }
@@ -433,6 +440,24 @@ function getLinkTarget(target) {
     target = target.parentNode
   }
   return target
+}
+
+function triggerTabAlertForNewPosts() {
+  if (isPageVisible || originalPageTitle) {
+    return
+  }
+  $('.js-favicon').prop('href', '/images/favicon-newposts.png')
+  originalPageTitle = document.title
+  document.title = '♥ ' + originalPageTitle
+}
+
+function removeTabAlertForNewPosts() {
+  if (!originalPageTitle) {
+    return
+  }
+  $('.js-favicon').prop('href', '/images/favicon.png')
+  document.title = originalPageTitle
+  originalPageTitle = false
 }
 
 
@@ -622,6 +647,13 @@ function statsClick() {
   ga('send', 'event', 'Bottom back buttons', 'click', $(this).data('stats-label'), {'nonInteraction': 1})
 }
 
+function handleVisibilityChange() {
+  isPageVisible = !document.hidden
+  if (isPageVisible) {
+    removeTabAlertForNewPosts()
+  }
+}
+
 
 
 /*** App ***/
@@ -700,3 +732,5 @@ if (hasTouch) {
 
   localStorage.removeItem('ICStatsClicksMinusTouchstart')
 }
+
+document.addEventListener('visibilitychange', handleVisibilityChange)

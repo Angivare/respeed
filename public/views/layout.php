@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/style-<?= REVISION_NUMBER_STYLE ?>.css">
 <meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
-<link rel="icon" href="/images/favicon.png">
+<link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
 <?= $body ?>
