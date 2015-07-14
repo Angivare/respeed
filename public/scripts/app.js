@@ -635,8 +635,9 @@ if (googleAnalyticsID) {
   ga('create', 'UA-63457513-1', 'auto');
   
   InstantClick.on('change', function() {
-    ga('send', 'pageview', location.pathname + location.search);
-  });
+    ga('set', 'dimension1', $is_connected ? 'Member' : 'Guest')
+    ga('send', 'pageview', location.pathname + location.search)
+  })
 }
 
 InstantClick.on('change', function(isInitialLoad) {
