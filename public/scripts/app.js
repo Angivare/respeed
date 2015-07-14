@@ -88,17 +88,18 @@ function updateRemoteBlacklist() {
   if (!$is_connected) {
     return
   }
-  var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
+  var remoteBlacklistLastUpdate = parseInt(localStorage.remoteBlacklistLastUpdate, 10) || 0
   var now = +new Date
-  if (remoteBlacklistLastUpdate + (1000 * 60 * 60) < now) {
-    ajax('blacklist_get', {}, function(data) {
-      var remoteBlacklist = data.rep
-      for (var i = 0; i < remoteBlacklist.length; i++) {
-        addToBlacklist(remoteBlacklist[i].human)
-      }
-      localStorage.remoteBlacklistLastUpdate = now
-    })
+  if (remoteBlacklistLastUpdate + (1000 * 60 * 60) > now) {
+    return
   }
+  ajax('blacklist_get', {}, function(data) {
+    var remoteBlacklist = data.rep
+    for (var i = 0; i < remoteBlacklist.length; i++) {
+      addToBlacklist(remoteBlacklist[i].human)
+    }
+    localStorage.remoteBlacklistLastUpdate = now
+  })
 }
 
 function updateFavorites() {
@@ -111,7 +112,7 @@ function updateFavorites() {
   if (localStorage.favoritesTopics) {
     favoritesTopics = JSON.parse(localStorage.favoritesTopics)
   }
-  var favoritesLastUpdate = localStorage.favoritesLastUpdate || 0
+  var favoritesLastUpdate = parseInt(localStorage.favoritesLastUpdate, 10) || 0
   var now = +new Date
   if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
     return
@@ -378,6 +379,7 @@ function topicRefresh() {
           // Mise à jour
           $('#' + message.id).data('contentMd5', message.contentMd5)
           $('#' + message.id + ' .js-content').html(message.content)
+          $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
         }
       }
       else {
