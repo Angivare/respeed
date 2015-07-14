@@ -69,10 +69,9 @@ function fetch_forum($forum, $page, $slug) {
     $header = &$rep['header'];
     $got = &$rep['body'];
 
-    $location = JVc::redirects($header);
+    $location = Jvc::toJvf(Jvc::redirects($header));
     if($location) {
-      preg_match('#/forums/0-(?P<forum>.+)-0-1-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
-      header("Location: /{$matches['forum']}-{$matches['slug']}");
+      header("Location: {$location}");
       exit;
     }
 
@@ -203,14 +202,8 @@ function fetch_topic($topic, $page, $slug, $forum) {
     $header = &$rep['header'];
     $got = &$rep['body'];
 
-    $location = Jvc::redirects($header);
+    $location = Jvc::toJvf(Jvc::redirects($header));
     if($location) {
-      preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $location, $matches);
-      if($matches['topic_mode'] == '1') $matches['topic'] = '0' . $matches['topic'];
-      $location = "/{$matches['forum']}/{$matches['topic']}-{$matches['slug']}";
-      if ($matches['page'] > 1) {
-        $location .= "/{$matches['page']}";
-      }
       header("Location: {$location}");
       exit;
     }
