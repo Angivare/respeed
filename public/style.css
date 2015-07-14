@@ -12,7 +12,7 @@ html {
 }
 
 body {
-  font: 16px/1.4 sans-serif;
+  font: 16px/1.4 -apple-system, sans-serif;
   margin: 0;
   overflow-y: scroll;
   color: #333;
@@ -1506,7 +1506,7 @@ h1, h2, h3 {
 }
 
 .input.textarea {
-  font-size: 19px;
+  font: 18px -apple-system, sans-serif;
   width: 100%;
   resize: vertical;
   height: 200px;
@@ -1519,6 +1519,7 @@ h1, h2, h3 {
 @media (min-width: 1025px) {
   .input.textarea {
     border-width: 1px;
+    font-size: 19px;
   }
 }
 
