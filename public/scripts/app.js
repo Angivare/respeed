@@ -85,7 +85,7 @@ function updateRemoteBlacklist() {
   if (!$is_connected) {
     return
   }
-  var remoteBlacklistLastUpdate = localStorage.remoteBlacklistLastUpdate || 0
+  var remoteBlacklistLastUpdate = parseInt(localStorage.remoteBlacklistLastUpdate, 10) || 0
   var now = +new Date
   if (remoteBlacklistLastUpdate + (1000 * 60 * 60) > now) {
     return
@@ -109,7 +109,7 @@ function updateFavorites() {
   if (localStorage.favoritesTopics) {
     favoritesTopics = JSON.parse(localStorage.favoritesTopics)
   }
-  var favoritesLastUpdate = localStorage.favoritesLastUpdate || 0
+  var favoritesLastUpdate = parseInt(localStorage.favoritesLastUpdate, 10) || 0
   var now = +new Date
   if (favoritesLastUpdate + (1000 * 60 * 60) > now) {
     return
