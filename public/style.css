@@ -16,9 +16,8 @@ body {
   margin: 0;
   overflow-y: scroll;
   color: #333;
-  background: #ff9025;
-  padding-bottom: 5px;
   -webkit-text-size-adjust: 100%;
+  padding-bottom: 15px;
 }
 
 @media (min-width: 1025px) {
@@ -26,7 +25,7 @@ body {
     background-color: #ffac2f;
     background-repeat: no-repeat;
     background-image: linear-gradient(#ff9025, #ffac2f);
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 }
 
@@ -68,6 +67,12 @@ h1, h2, h3 {
 .site-header {
   display: table;
   width: 100%;
+}
+
+@media (MAX-width: 1024px) {
+  .site-header {
+    background: #ff9025;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -120,11 +125,10 @@ h1, h2, h3 {
   background: white;
   border: solid rgba(0,0,0,.3);
   border-color: #ea3f00;
-  border-width: 1px 0;
+  border-width: 1px 0 0;
   padding: 5px 0 10px;
   position: relative;
   overflow: auto;
-  margin-bottom: 10px;
 }
 
 @media (min-width: 1025px) {
@@ -1587,6 +1591,14 @@ h1, h2, h3 {
 .site-footer {
   text-align: center;
   font-size: 13px;
+}
+
+@media (MAX-width: 1024px) {
+  .site-footer {
+    border-top: 1px solid #ea3f00;
+    padding: .75em 0;
+    background: #ff9025;
+  }
 }
 
 .site-footer a {
