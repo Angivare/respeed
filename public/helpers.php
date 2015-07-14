@@ -320,42 +320,28 @@ function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $to
         <span class="faketable empty">
           <span class="link"></span>
         </span>
+
 MARKUP;
       continue;
     }
     $number = $i;
-    if ($i == $last_page) {
-      $number = '»';
-    }
-    if ($i == 1) {
-      $number = '«';
-    }
-    if ($i == $page - 1) {
-      $number = '‹';
-    }
-    if ($i == $page + 1) {
-      $number = '›';
-    }
-    if ($i == $page) {
-      $number = $i;
-    }
     $is_sign = (int)$number != $i;
     $topic_id = ($topic_mode == 1 ? '0' : '') . $topic;
     $page_trail = $i > 1 ? "/{$i}" : '';
-    $class = $i == $page ? ' active' : '';
-    $class .= $is_sign ? ' sign' : '';
     if ($i != $page) {
       $markup .= <<<MARKUP
-          <span class="faketable">
-            <a href="/{$forum}/{$topic_id}-{$slug}{$page_trail}" class="link {$class}">{$number}</a>
-          </span>
+        <span class="faketable">
+          <a href="/{$forum}/{$topic_id}-{$slug}{$page_trail}" class="link">{$number}</a>
+        </span>
+
 MARKUP;
     }
     else {
       $markup .= <<<MARKUP
-          <span class="faketable">
-            <span class="link {$class}">{$number}</span>
-          </span>
+        <span class="faketable">
+          <span class="link active">{$number}</span>
+        </span>
+
 MARKUP;
     }
   }

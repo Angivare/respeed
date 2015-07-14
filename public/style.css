@@ -853,11 +853,6 @@ h1, h2, h3 {
   padding: 2px;
 }
 
-.pages .link.sign {
-  font-size: 32px;
-  line-height: 16px;
-}
-
 .pages :visited {
   color: #888;
 }
