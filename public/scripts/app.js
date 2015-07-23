@@ -567,7 +567,12 @@ function quote() {
 
   var citation = ""
   if ($('#newmessage').val() && !/\n\n$/.test($('#newmessage').val())) {
-    citation += "\n\n"
+    if (!/\n$/.test($('#newmessage').val())) {
+      citation = "\n"
+    }
+    else {
+      citation = "\n\n"
+    }
   }
   citation += "> '''" + pseudo + "''' :\n"
   citation += "> \n"
