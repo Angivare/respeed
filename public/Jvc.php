@@ -632,7 +632,7 @@ class Jvc {
     $rep = curl_exec($ch);
     if (!$rep) {
       if(curl_errno($ch) === CURLE_OPERATION_TIMEOUTED) {
-        $this->fatal_err('Timeout.', 'La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a dû être arrêtée.', 504);
+        $this->fatal_err('Timeout.', 'La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a été arrêtée.', 504);
       }
       else {
         $this->fatal_err('Problème réseau.', 'JVForum n’a pas réussi à charger la page depuis jeuxvideo.com.', 502);
