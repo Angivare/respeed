@@ -467,16 +467,6 @@ h1, h2, h3 {
   }
 }
 
-.sheet-title .reload-sign {
-  font-size: .8em;
-  padding-left: 10px;
-  color: #888;
-}
-
-.sheet-title a:hover .reload-sign {
-  color: inherit;
-}
-
 .liste-topics {
   display: table;
   width: 100%;
