@@ -391,7 +391,9 @@ function topicRefresh() {
         $('.js-listeMessages').append(message.markup)
         liste_messages.push(message.id)
 
-        triggerTabAlertForNewPosts()
+        if (message.pseudo.toLowerCase() != myPseudo.toLowerCase()) {
+          triggerTabAlertForNewPosts()
+        }
 
         $('#' + message.id + ' .meta-quote').click(quote)
         $('#' + message.id + ' .meta-ignore').click(ignore)
