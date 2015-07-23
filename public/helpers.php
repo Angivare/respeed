@@ -49,12 +49,15 @@ $superlatifs = [
   'stupéfiant',
   'sensationnel',
 ];
+$new_smileys = ['cimer', 'ddb', 'pave', 'siffle', 'objection'];
 
 function h($string) {
   return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5);
 }
 
 function adapt_html($message, $date) {
+  global $new_smileys;
+
   // Mise en forme édition
   preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<span class="JvCare [0-9A-F]*" target="_blank">(?P<pseudo>.*)</span>#Usi', $message, $matches_edit);
   if ($matches_edit) {
@@ -99,7 +102,12 @@ function adapt_html($message, $date) {
     $new_str = str_replace($matches['url'], $path, $new_str);
     return $new_str;
   }, $message);
-  
+
+  // Smileys à venir
+  foreach ($new_smiley as $code) {
+    $message = str_ireplace(":{$code}:", '<img src="//image.jeuxvideo.com/smileys_img/.gif" alt=":' . $code . ':" data-def="SMILEYS" data-code=":' . $code . ':" title=":' . $code . ':">', $message);
+  }
+
   return $message;
 }
 
