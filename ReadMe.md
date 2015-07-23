@@ -18,10 +18,6 @@ Si vous ne l’avez pas encore appris, la meilleure intro de Git qui soit est [G
 
 Pour plus de détails sur comment participer, voir le fichier [Contributing](Contributing.md).
 
-## Liste de choses à faire
-
-À venir.
-
 ## License
 
 Le projet n’est pas sous license libre. Ceci à cause des icônes Material Design qui sont sous CC-BY, ce qui ne peut se mélanger avec une license MIT/GPL (je crois). Aussi dans le futur il pourrait y avoir d’autres choses non redistribuables sous licence libre (comme des smileys supplémentaires, peut-être).
