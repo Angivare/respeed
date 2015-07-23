@@ -7,6 +7,8 @@ if ($jvc->is_connected()) {
   exit;
 }
 ?>
+<meta name="description" content="Les forums de jeuxvideo.com, en bien.">
+
 <header class="site-header">
   <h2 class="site-title">
     <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
