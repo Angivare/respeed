@@ -283,7 +283,7 @@ MESSAGE;
       <div class="meta-actions">
         <span class="meta-permalink meta-menu js-date" title="{$message['dateRaw']}">{$message['date']}</span>
       </div>
-      <div class="desktop-quote meta-quote"></div>
+      <div class="desktop-quote meta-quote" title="Citer"></div>
     </div>
     <div class="mobile message-border"></div>
     <div class="js-content content">{$message['content']}</div>
