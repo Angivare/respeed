@@ -104,8 +104,8 @@ function adapt_html($message, $date) {
   }, $message);
 
   // Smileys à venir
-  foreach ($new_smiley as $code) {
-    $message = str_ireplace(":{$code}:", '<img src="//image.jeuxvideo.com/smileys_img/.gif" alt=":' . $code . ':" data-def="SMILEYS" data-code=":' . $code . ':" title=":' . $code . ':">', $message);
+  foreach ($new_smileys as $code) {
+    $message = str_ireplace(":{$code}:", '<img src="//image.jeuxvideo.com/smileys_img/' . $code . '.gif" alt=":' . $code . ':" data-def="SMILEYS" data-code=":' . $code . ':" title=":' . $code . ':">', $message);
   }
 
   return $message;
