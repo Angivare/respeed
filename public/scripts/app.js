@@ -559,11 +559,7 @@ function quote() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
   
-  var html = $('#' + id + ' .content').html()
-    , pos = html.indexOf('<p class="edit-mention">')
-  if (pos > -1) {
-    html = html.substr(0, pos)
-  }
+  var html = $('#' + id + ' .contentest').html().trim()
 
   var text = JVCode.toJVCode(html)
 
@@ -592,11 +588,7 @@ function edit() {
 
   var id = $(this).closest('.message').attr('id')
   
-  var html = $('#' + id + ' .content').html()
-    , pos = html.indexOf('<p class="edit-mention">')
-  if (pos > -1) {
-    html = html.substr(0, pos)
-  }
+  var html = $('#' + id + ' .contentest').html().trim()
 
   var text = htmlentities(JVCode.toJVCode(html))
 
