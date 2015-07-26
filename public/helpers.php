@@ -104,6 +104,15 @@ function adapt_html($message, $date) {
     $new_str = str_replace($matches['url'], $path, $new_str);
     return $new_str;
   }, $message);
+  
+  // Fix liens mails, il manque le "mailto:" car on prend le contenu de l’élement a (pour outrepasser JvCare) et pas son attribut href
+  $message = preg_replace_callback('`<a href="(?P<url>(&#[x0-9a-f]+;)+)"`Usi', function ($matches) {
+    echo 'x';
+    $new_str = str_replace($matches['url'], 'mailto:' . $matches['url'], $matches[0]);
+    return $new_str;
+  }, $message);
+  
+  
 
   // Smileys à venir
   foreach ($new_smileys as $code) {
