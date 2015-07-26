@@ -112,7 +112,8 @@ function adapt_html($message, $date) {
     return $new_str;
   }, $message);
   
-  
+  // Transformation des miniatures YouTube en lien
+  $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a href="http://youtu.be/$1" class="xXx" target="_blank" title="http://youtu.be/$1">http://youtu.be/$1</a>', $message);
 
   // Smileys à venir
   foreach ($new_smileys as $code) {
