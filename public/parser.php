@@ -164,7 +164,6 @@ function parse_topic($got) {
 
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
   $ret['has_parent'] = strip_matches($ret['has_parent']);
-  $ret['sous_forums'] = sub_forums($got);
 
   preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
   if ($matches_id) {

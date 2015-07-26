@@ -29,7 +29,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <div class="sheet">
   <div class="content">
     <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
+
     <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
+
     <div class="pages">
       <div class="pages-container">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
@@ -98,23 +100,6 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
         <ul class="menu-content">
         </ul>
     </div>
-
-<?php if ($sous_forums): ?>
-    <div class="menu desktop">
-      <h3 class="title">Sous-forums</h3>
-        <ul class="menu-content">
-<?php if ($has_parent): ?>
-          <li><a href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a></li>
-<?php else: ?>
-          <li><a href="/<?= $forum ?>-<?= $slug ?>"><?= $forum_name ?></a></li>
-<?php endif ?>
-<?php foreach ($sous_forums as $sous_forum): ?>
-          <li><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
-<?php endforeach ?>
-        </ul>
-    </div>
-<?php endif ?>
-
   </aside>
 </div>
 

@@ -29,6 +29,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <div class="sheet">
   <div class="content">
     <h1 class="sheet-title forum-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
+
 <?php
 if ($page > 1) {
   include 'forum_pagination.php';
