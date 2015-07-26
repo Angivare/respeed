@@ -34,10 +34,6 @@ a {
   text-decoration: none;
 }
 
-.liste-topics a:visited {
-  color: #888;
-}
-
 h1, h2, h3 {
   margin: 0;
 }
@@ -498,7 +494,7 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .topic:hover {
-    background-image: linear-gradient(rgba(255, 85, 0, 0.05), rgba(255, 85, 0, 0.05));
+    
   }
 }
 
@@ -516,17 +512,32 @@ h1, h2, h3 {
   }
 }
 
+.liste-topics a:visited {
+  color: #888;
+}
+
 .topic-main-link {
   display: table-cell;
 }
 
 @media (MAX-width: 1024px) {
   .topic-main-link, .topic-last-page {
-    color: hsl(202, 90%, 20%);
+    color: hsl(202, 90%, 20%);    
+    -webkit-tap-highlight-color: transparent;
   }
   
   .topic-main-link:visited, .topic-last-page:visited {
     color: hsl(202, 20%, 48%) !important;
+  }
+  
+  .topic-main-link:active, .topic-last-page:active {
+    background-color: rgba(255, 0, 0, .1);
+  }
+}
+
+@media (min-width: 1025px) {
+  .topic-main-link:hover, .topic-last-page:hover {
+    background: rgba(255, 85, 0, .04);
   }
 }
 
@@ -563,7 +574,8 @@ h1, h2, h3 {
   .topic-last-page {
     display: inline-block;
     width: 24%;
-    padding-bottom: 2px;
+    padding-bottom: 3px;
+    padding-top: 2px;
   }
 }
 
