@@ -384,6 +384,11 @@ h1, h2, h3 {
   background: #EFF4FC;
 }
 
+.homepage-links {
+  margin: 10px 0;
+  text-align: center;
+}
+
 /* CONNEXION */
 
 .form-container {
@@ -1641,5 +1646,22 @@ h1, h2, h3 {
 }
 
 .rechercheforum-form-accueil {
-  padding: 20px 0;
+  margin: 20px 0;
+}
+
+/* À Propos */
+.apropos {
+  padding: 0 20px;
+}
+
+@media (min-width: 700px) {
+  .apropos {
+    padding: 0 30px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .apropos {
+    padding: 0 calc((100% - 900px) / 2);
+  }
 }

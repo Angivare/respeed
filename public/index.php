@@ -6,6 +6,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $connexion = isset($_GET['connexion']);
 $deconnexion = isset($_GET['deconnexion']);
 $accueil = isset($_GET['accueil']);
+$apropos = isset($_GET['apropos']);
 $recherche_forum = isset($_GET['recherche_forum']);
 $salespage = isset($_GET['salespage']);
 
@@ -30,6 +31,8 @@ elseif ($forum)
   require 'views/forum.php';
 elseif ($accueil)
   require 'views/accueil.php';
+elseif ($apropos)
+  require 'views/apropos.php';
 elseif ($recherche_forum)
   require 'views/recherche_forum.php';
 else

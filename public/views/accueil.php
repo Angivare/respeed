@@ -32,5 +32,9 @@ if (!$jvc->is_connected()) {
       <input class="rechercheforum-q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q">
       <input type="submit" class="validate" value="Go">
     </form>
+
+    <div class="homepage-links">
+      <a href="/apropos">À propos</a>
+    </div>
   </div>
 </div>
