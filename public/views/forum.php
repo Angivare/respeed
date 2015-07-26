@@ -27,10 +27,8 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 </header>
 
 <div class="sheet">
-  <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
-  <h1 class="sheet-title forum-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
   <div class="content">
-
+    <h1 class="sheet-title forum-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
 <?php
 if ($page > 1) {
   include 'forum_pagination.php';
@@ -73,7 +71,12 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
       </div>
     </div>
   </div>
+
   <aside class="aside">
+    <div class="ouvrir-jvc">
+      <a href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
+    </div>
+
     <div class="menu" id="forums_pref">
       <h3 class="title">Mes forums préférés</h3>
       <ul class="menu-content">

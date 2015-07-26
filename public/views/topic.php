@@ -27,11 +27,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 </header>
 
 <div class="sheet">
-  <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
-
-  <a class="ouvrir-jvc" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
-  <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
   <div class="content">
+    <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
+    <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
     <div class="pages">
       <div class="pages-container">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
@@ -83,7 +81,12 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     </div>
 
   </div>
+
   <aside class="aside">
+    <div class="ouvrir-jvc">
+      <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
+    </div>
+
     <div class="menu" id="forums_pref">
       <h3 class="title">Mes forums préférés</h3>
         <ul class="menu-content">
