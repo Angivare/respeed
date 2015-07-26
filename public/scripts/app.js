@@ -639,13 +639,6 @@ function toggleSpoil() {
   $(this).toggleClass('shown')
 }
 
-function statsClick() {
-  if (!googleAnalyticsID) {
-    return
-  }
-  ga('send', 'event', 'Bottom back buttons', 'click', $(this).data('stats-label'), {'nonInteraction': 1})
-}
-
 function handleVisibilityChange() {
   isPageVisible = !document.hidden
   if (isPageVisible) {
