@@ -11,10 +11,12 @@ foreach(fetch_topic($topic, $page, $slug, $forum) as $k => $v) {
   $$k = $v;
 }
 
-echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->";
+echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->\n";
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 ?>
+<body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?>">
+
 <header class="site-header">
   <h2 class="site-title">
     <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
