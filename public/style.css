@@ -38,10 +38,6 @@ a {
   color: #888;
 }
 
-a:hover, a:active {
-  color: #F50 !important;
-}
-
 h1, h2, h3 {
   margin: 0;
 }
@@ -91,10 +87,6 @@ h1, h2, h3 {
   color: white;
   padding: 5px 10px;
   display: inline-block;
-}
-
-.site-title-link:hover, .site-title-link:active {
-  color: white !important;
 }
 
 .site-title-spacer {
@@ -284,7 +276,7 @@ h1, h2, h3 {
 }
 
 .aside .menu .menu-content a:hover, .aside .menu .menu-content span:hover {
-  color: white !important;
+  color: white;
   background: #59AAC6;
 }
 
@@ -881,16 +873,10 @@ h1, h2, h3 {
 
 /* TOPIC - Messages */
 
-.liste-messages {
-}
-
 @media (min-width: 1025px) {
   .liste-messages {
     margin: 0 -30px;
   }
-}
-
-@media (min-width: 1025px) {
 }
 
 .message {
