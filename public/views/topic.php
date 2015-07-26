@@ -107,6 +107,6 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm' 
   , tokens = <?= json_encode($jvc->tokens()) ?> 
   , tokens_last_update = <?= $jvc->tokens_last_update() ?> 
-  , last_page = <?= $last_page ?> 
+  , lastPage = <?= $last_page ?> 
   , myPseudo = '<?= $pseudo ?>' 
 </script>
