@@ -702,9 +702,6 @@ InstantClick.on('change', function() {
   $('.message').click(closeMenu)
   $('.js-avatarImg').error(remove404Avatar)
   $('.bloc-spoil-jv').click(toggleSpoil)
-
-  // Stats bottom back buttons
-  $('.js-bottom-back-button').click(statsClick)
 })
 
 InstantClick.init()
