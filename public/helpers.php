@@ -106,11 +106,7 @@ function adapt_html($message, $date, $id) {
   }, $message);
   
   // Fix liens mails, il manque le "mailto:" car on prend le contenu de l’élement a (pour outrepasser JvCare) et pas son attribut href
-  $message = preg_replace_callback('`<a href="(?P<url>(&#[x0-9a-f]+;)+)"`Usi', function ($matches) {
-    echo 'x';
-    $new_str = str_replace($matches['url'], 'mailto:' . $matches['url'], $matches[0]);
-    return $new_str;
-  }, $message);
+  $message = preg_replace('`<a href="((&#[x0-9a-f]+;)+)"`Usi', '<a href="mailto:$1"', $message);
   
   // Transformation des miniatures YouTube en lien
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a href="http://youtu.be/$1" class="xXx" target="_blank" title="http://youtu.be/$1">http://youtu.be/$1</a>', $message);
