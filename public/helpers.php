@@ -306,7 +306,7 @@ MESSAGE;
   return $markup;
 }
 
-function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug, $highlight_next_page = false) {
+function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) {
   $pages = [];
   for ($i = $page; $i < 7; $i++) {
     $pages[] = ' ';
@@ -349,7 +349,7 @@ MARKUP;
     $page_trail = $i > 1 ? "/{$i}" : '';
     $markup .= '        <span class="faketable">' . "\n          ";
     if ($i != $page) {
-      if ($highlight_next_page && $i == $page + 1) {
+      if ($i == $page + 1) {
         $markup .= "<a href='/{$forum}/{$topic_id}-{$slug}{$page_trail}' class='link next-page'>{$number}</a>";
       }
       else {

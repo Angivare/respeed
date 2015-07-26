@@ -47,9 +47,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <?php endforeach ?>
     </div>
 
-    <div class="pages">
+    <div class="pages pages-bottom">
       <div class="pages-container">
-<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug, true) ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
       <div class="clearfix"></div>
     </div>
