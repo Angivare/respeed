@@ -3,10 +3,10 @@ $title = 'Connexion';
 
 $jvc = new Jvc();
 
-$ccode = isset($_POST['ccode']) ? $_POST['ccode'] : NULL;
+$ccode = isset($_POST['ccode']) ? (int)$_POST['ccode'] : NULL;
 $form = isset($_POST['form']) ? $_POST['form'] : NULL;
-$nick = isset($_POST['nick']) ? $_POST['nick'] : NULL;
-$pass = isset($_POST['pass']) ? $_POST['pass'] : NULL;
+$nick = isset($_POST['nick']) ? trim($_POST['nick']) : NULL;
+$pass = isset($_POST['pass']) ? trim($_POST['pass']) : NULL;
 $err_nick = '';
 $err_pass = '';
 $err = NULL;
