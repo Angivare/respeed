@@ -137,7 +137,8 @@ function parse_topic($got) {
       $avatar = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]);
       $avatarBig = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]);
     }
-    $content = adapt_html($matches['message'][$i], $dateRaw);
+    $id = (int)$matches['post'][$i];
+    $content = adapt_html($matches['message'][$i], $dateRaw, $id);
     $ret['messages'][] = [
       'pos' => $i,
       'pseudo' => htmlspecialchars(trim($matches['pseudo'][$i])),
@@ -147,7 +148,7 @@ function parse_topic($got) {
       'date' => relative_date_messages($dateRaw),
       'content' => $content,
       'contentMd5' => md5($content),
-      'id' => (int)$matches['post'][$i],
+      'id' => $id,
       'status' => $matches['status'][$i],
     ];
   }
