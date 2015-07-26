@@ -1316,21 +1316,38 @@ h1, h2, h3 {
   }
 }
 
-@media (min-width: 1025px) {
-  .message .desktop-quote {
-    width: 24px;
-    height: 24px;
-    background: url(/images/reply_18px.svg) center no-repeat;
-    position: absolute;
-    bottom: 12px;
-    right: 31px;
-    cursor: pointer;
-    opacity: .2;
-  }
+.actions-desktop {
+  display: none;
+}
 
-  .message .desktop-quote:hover {
-    opacity: .4;
+@media (min-width: 1025px) {
+  .actions-desktop {
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    right: 29px;
   }
+}
+
+.action-desktop {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  opacity: .2;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.action-desktop:hover {
+  opacity: .5;
+}
+
+.action-desktop-quote {
+  background: url(/images/reply_18px.svg) center no-repeat;
+}
+
+.action-desktop-edit {
+  background: url(/images/edit_18px.svg) center no-repeat;
 }
 
 .message .ignored-message {

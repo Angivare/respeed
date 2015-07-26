@@ -294,7 +294,14 @@ MESSAGE;
       <div class="meta-actions">
         <span class="meta-permalink meta-menu js-date" title="{$message['dateRaw']}">{$message['date']}</span>
       </div>
-      <div class="desktop-quote meta-quote" title="Citer"></div>
+      <div class="actions-desktop">
+        <div class="action-desktop action-desktop-quote meta-quote" title="Citer"></div>
+MESSAGE;
+  if ($is_ours) {
+    $markup .= '<div class="action-desktop action-desktop-edit meta-edit" title="Modifier"></div>';
+  }
+  $markup .= <<<MESSAGE
+      </div>
     </div>
     <div class="mobile message-border"></div>
     <div class="js-content content">{$message['content']}</div>
