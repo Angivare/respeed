@@ -348,7 +348,14 @@ function topicRefresh() {
     return
   }
 
-  ajax('topic_get', {forum: $forum, topic: $topic, slug: $slug, page: $page, last_page: lastPage, liste_messages: liste_messages}, function(data) {
+  ajax('topic_get', {
+    forum: $forum,
+    topic: $topic,
+    slug: $slug,
+    page: $page,
+    last_page: lastPage,
+    liste_messages: liste_messages,
+  }, function(data) {
     if (!data.rep) {
       // Erreur
       return
@@ -411,7 +418,7 @@ function topicRefresh() {
     }
     
     // Pagination
-    if (data.last_page > lastPage) {
+    if (data.last_page != lastPage) {
       lastPage = data.last_page
       $('.pages-container').html(data.paginationMarkup)
       triggerTabAlertForNewPosts()
