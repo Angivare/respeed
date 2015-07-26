@@ -297,7 +297,7 @@ MESSAGE;
   return $markup;
 }
 
-function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) {
+function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug, $highlight_next_page = false) {
   $pages = [];
   for ($i = $page; $i < 7; $i++) {
     $pages[] = ' ';
@@ -338,22 +338,19 @@ MARKUP;
     $is_sign = (int)$number != $i;
     $topic_id = ($topic_mode == 1 ? '0' : '') . $topic;
     $page_trail = $i > 1 ? "/{$i}" : '';
+    $markup .= '        <span class="faketable">' . "\n          ";
     if ($i != $page) {
-      $markup .= <<<MARKUP
-        <span class="faketable">
-          <a href="/{$forum}/{$topic_id}-{$slug}{$page_trail}" class="link">{$number}</a>
-        </span>
-
-MARKUP;
+      if ($highlight_next_page && $i == $page + 1) {
+        $markup .= "<a href='/{$forum}/{$topic_id}-{$slug}{$page_trail}' class='link next-page'>{$number}</a>";
+      }
+      else {
+        $markup .= "<a href='/{$forum}/{$topic_id}-{$slug}{$page_trail}' class='link'>{$number}</a>";
+      }
     }
     else {
-      $markup .= <<<MARKUP
-        <span class="faketable">
-          <span class="link active">{$number}</span>
-        </span>
-
-MARKUP;
+      $markup .= "<span class='link active'>{$number}</span>";
     }
+    $markup .= "\n" . '        </span>' . "\n";
   }
 
   return $markup;

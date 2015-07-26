@@ -49,7 +49,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
     <div class="pages">
       <div class="pages-container">
-<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug, true) ?>
       </div>
       <div class="clearfix"></div>
     </div>
