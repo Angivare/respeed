@@ -58,7 +58,7 @@ function h($string) {
 function adapt_html($message, $date, $id) {
   global $new_smileys;
   
-  $message = '<div class="contentest">' . $message . '</div>';
+  $message = '<div class="contentest">' . $message . '</div><!-- anti clash regex signature -->';
 
   // Mise en forme édition
   preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<span class="JvCare [0-9A-F]*" target="_blank">(?P<pseudo>.*)</span>#Usi', $message, $matches_edit);
