@@ -1275,9 +1275,9 @@ h1, h2, h3 {
 .message .contentest > .pre-jv, .message .contentest p > .code-jv {
   font-size: 95%;
   font-family: Menlo, Consolas, monospace;
-  border: 1px solid rgba(0,0,0,.2);
-  border-radius: 3px;
-  background: rgba(239,239,239,.8);
+  border: 1px solid rgba(0,0,0,.25);
+  border-radius: 2px;
+  background: rgba(230,230,235,.5);
 }
 
 .message .pre-jv {
