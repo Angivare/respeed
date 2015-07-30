@@ -214,8 +214,10 @@ function displayFavoritesTopics() {
   $('#topics_pref').show()
   $('#topics_pref').css('width', $('#topics_pref').width()) // La taille ne dépend plus du parent en position fixed et donc change
 
-  sliderTopOffset = $('.js-slider').offset().top - 15
-  makeFavoritesSlideable()
+  if ($('.js-slider').length) {
+    sliderTopOffset = $('.js-slider').offset().top - 15
+    makeFavoritesSlideable()
+  }
 }
 
 function displayFavoritesOnIndex() {
