@@ -1272,7 +1272,7 @@ h1, h2, h3 {
   margin: .5em 0;
 }
 
-.message .content > .pre-jv, .message .content p > .code-jv {
+.message .contentest > .pre-jv, .message .contentest p > .code-jv {
   font-size: 95%;
   font-family: Menlo, Consolas, monospace;
   border: 1px solid rgba(0,0,0,.2);
