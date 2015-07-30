@@ -608,6 +608,13 @@ h1, h2, h3 {
 }
 
 @media (MAX-width: 1024px) {
+  .liste-topics .label-marque-on .title, .liste-topics .label-marque-off .title {
+    max-height: 1.4em;
+    overflow-y: hidden;
+  }
+}
+
+@media (MAX-width: 1024px) {
   .liste-topics .author {
     font-size: 12px;
     white-space: nowrap;
