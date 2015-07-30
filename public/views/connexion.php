@@ -31,11 +31,7 @@ if($nick && $pass && $form && $ccode):
     }
   endif;
 endif; ?>
-<header class="site-header">
-  <h2 class="site-title">
-    <a href="<?= $jvc->is_connected() ? '/accueil' : '/' ?>" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
-  </h2>
-</header>
+<?php include '_header.php' ?>
 
 <div class="sheet">
   <h1 class="sheet-title"><a href="/connexion"><?= $title ?></a></h1>

@@ -9,11 +9,7 @@ if (!$jvc->is_connected()) {
 
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 ?>
-<header class="site-header">
-  <h2 class="site-title">
-    <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
-  </h2>
-</header>
+<?php include '_header.php' ?>
 
 <div class="sheet rechercheforum">
   <form action="/recherche_forum" method="get">

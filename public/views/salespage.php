@@ -9,14 +9,7 @@ if ($jvc->is_connected()) {
 ?>
 <meta name="description" content="Les forums de jeuxvideo.com, en bien.">
 
-<header class="site-header">
-  <h2 class="site-title">
-    <a href="/" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
-  </h2>
-  <div class="site-login-container">
-    <a href="/connexion" class="site-login-link">Se connecter</a>
-  </div>
-</header>
+<?php include '_header.php' ?>
 
 <div class="sheet">
   <div class="content no-menu">

@@ -7,7 +7,9 @@
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
+
 <?= $body ?>
+
 <script>
 var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
   , $forum = <?= $forum ? $forum : 'false' ?>
