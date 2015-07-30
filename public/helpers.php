@@ -58,7 +58,7 @@ function h($string) {
 function adapt_html($message, $date, $id) {
   global $new_smileys;
   
-  $message = '<div class="contentest">' . $message . '</div><!-- anti clash regex signature -->';
+  $message = '<div class="contentest">' . $message . '</div>';
 
   // Mise en forme édition
   preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<span class="JvCare [0-9A-F]*" target="_blank">(?P<pseudo>.*)</span>#Usi', $message, $matches_edit);
@@ -73,7 +73,7 @@ function adapt_html($message, $date, $id) {
   // Vire la signature qui apparaît parfois
   $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
   if ($pos_signature !== false) {
-    $message = substr($message, 0, $pos_signature);
+    $message = substr($message, 0, $pos_signature) . '</div>'; // </div> for .contentest
   }
   
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
