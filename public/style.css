@@ -56,46 +56,46 @@ h1, h2, h3 {
 
 /* HEADER */
 
-.site-header {
+.header {
   display: table;
   width: 100%;
 }
 
 @media (MAX-width: 1024px) {
-  .site-header {
+  .header {
     background: #ff9025;
   }
 }
 
 @media (min-width: 1025px) {
-  .site-header {
+  .header {
     max-width: 1420px;
     margin: auto;
     padding: 0 10px;
   }
 }
 
-.site-title {
+.header-title {
   display: table-cell;
 }
 
-.site-title-link {
+.header-title__link {
   color: white;
   padding: 5px 10px;
   display: inline-block;
 }
 
-.site-title-spacer {
+.header-title__link .spacer {
   padding-right: 1px;
 }
 
-.site-login-container {
+.header-login {
   display: table-cell;
   vertical-align: middle;
   text-align: right;
 }
 
-.site-login-link {
+.header-login__link {
   padding: 5px 10px;
   color: white;
   border-radius: 5px;
