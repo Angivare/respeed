@@ -212,7 +212,6 @@ function displayFavoritesTopics() {
     }
   }
   $('#topics_pref').show()
-  $('#topics_pref').css('width', $('#topics_pref').width()) // La taille ne dépend plus du parent en position fixed et donc change
 
   if ($('.js-slider').length) {
     sliderTopOffset = $('.js-slider').offset().top - 15
@@ -482,6 +481,9 @@ function makeFavoritesSlideable() {
     return
   }
 
+  adjustSliderWidth()
+  $(window).resize(adjustSliderWidth)
+
   makeFavoritesSlide()
   $(window).scroll(makeFavoritesSlide)
   $(window).resize(makeFavoritesSlide)
@@ -500,6 +502,10 @@ function makeFavoritesSlide() {
       isSliderSliding = false
     }
   }
+}
+
+function adjustSliderWidth() {
+  $('#topics_pref').css('width', $('#forums_pref').width()) // La taille ne dépend plus du parent en position fixed et donc change
 }
 
 
