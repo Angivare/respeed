@@ -11,9 +11,6 @@ if (!$jvc->is_connected()) {
   <h2 class="site-title">
     <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
   </h2>
-  <div class="site-login-container">
-    <a href="/deconnexion/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" class="site-login-link logout" data-no-instant>Se déconnecter</a>
-  </div>
 </header>
 
 <div class="sheet">
@@ -35,6 +32,10 @@ if (!$jvc->is_connected()) {
 
     <div class="homepage-links">
       <a href="/apropos">À propos</a>
+    </div>
+
+    <div class="logout-container">
+      <a class="logout2" href="/deconnexion/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" data-no-instant>Déconnexion</a>
     </div>
   </div>
 </div>

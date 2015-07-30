@@ -103,10 +103,6 @@ h1, h2, h3 {
   font-size: 14px;
 }
 
-.site-login-link.logout {
-  font-weight: normal;
-}
-
 /* SHEET */
 
 .sheet {
@@ -387,6 +383,15 @@ h1, h2, h3 {
 .homepage-links {
   margin: 10px 0;
   text-align: center;
+}
+
+.logout-container {
+  margin: 20px 0 10px;
+  text-align: center;
+}
+
+.logout-container a {
+  color: #ff3b30;
 }
 
 /* CONNEXION */
