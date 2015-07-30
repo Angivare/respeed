@@ -1074,6 +1074,8 @@ h1, h2, h3 {
 
 .message .meta-actions .meta-permalink {
   padding: 10px;
+  padding-right: 20px;
+  background: url(/images/more_vert_18px_blue.svg) no-repeat right 3px center;
   color: #0A77B8;
 }
 
@@ -1081,13 +1083,15 @@ h1, h2, h3 {
   .message .meta-actions .meta-permalink {
     background: hsl(217, 68%, 98%);
     padding: 2px 4px;
+    color: #333;
+
     border: 1px solid rgba(192, 215, 237, .8);
     border-radius: 2px;
-    color: #333;
   }
 
   .message.odd .meta-actions .meta-permalink {
     background: hsl(0, 0%, 99%);
+
     border-color: rgba(209, 209, 209, .8);
   }
 }
