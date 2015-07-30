@@ -280,6 +280,15 @@ h1, h2, h3 {
   display: none;
 }
 
+.slider.sliding {
+  position: fixed;
+  top: 15px;
+  max-height: 90%;
+  max-height: -webkit-calc(100% - 30px);
+  max-height:         calc(100% - 30px);
+  overflow-y: auto;
+}
+
 
 /* DIVERS */
 

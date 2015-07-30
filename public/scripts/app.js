@@ -15,6 +15,8 @@ var form_data
   , hasTouch = 'createTouch' in document
   , isPageVisible = 'hidden' in document ? !document.hidden : true
   , originalPageTitle
+  , sliderTopOffset = 999
+  , isSliderSliding = false
 
 
 
@@ -210,6 +212,10 @@ function displayFavoritesTopics() {
     }
   }
   $('#topics_pref').show()
+  $('#topics_pref').css('width', $('#topics_pref').width()) // La taille ne dépend plus du parent en position fixed et donc change
+
+  sliderTopOffset = $('.js-slider').offset().top - 15
+  makeFavoritesSlideable()
 }
 
 function displayFavoritesOnIndex() {
@@ -467,6 +473,31 @@ function removeTabAlertForNewPosts() {
   $('.js-favicon').prop('href', '/images/favicon.png')
   document.title = originalPageTitle
   originalPageTitle = false
+}
+
+function makeFavoritesSlideable() {
+  if (!isBigScreen) {
+    return
+  }
+
+  makeFavoritesSlide()
+  $(window).scroll(makeFavoritesSlide)
+  $(window).resize(makeFavoritesSlide)
+}
+
+function makeFavoritesSlide() {
+  if (scrollY > sliderTopOffset) {
+    if (!isSliderSliding) {
+      $('.js-slider').addClass('sliding')
+      isSliderSliding = true
+    }
+  }
+  else {
+    if (isSliderSliding) {
+      $('.js-slider').removeClass('sliding')
+      isSliderSliding = false
+    }
+  }
 }
 
 

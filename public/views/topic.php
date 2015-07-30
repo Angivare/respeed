@@ -95,7 +95,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
         </ul>
     </div>
 
-    <div class="menu" id="topics_pref">
+    <div class="js-slider slider menu" id="topics_pref">
       <h3 class="title">Mes topics préférés</h3>
         <ul class="menu-content">
         </ul>
