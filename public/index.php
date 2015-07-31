@@ -20,23 +20,29 @@ $db = new Db();
 $auth = new Auth($db);
 $token = $auth->generate();
 
-ob_start();
+$view = false;
+
 if ($connexion)
-  require 'views/connexion.php';
+  $view = 'connexion';
 elseif ($deconnexion)
-  require 'views/deconnexion.php';
+  $view = 'deconnexion';
 elseif ($forum && $topic)
-  require 'views/topic.php';
+  $view = 'topic';
 elseif ($forum)
-  require 'views/forum.php';
+  $view = 'forum';
 elseif ($accueil)
-  require 'views/accueil.php';
+  $view = 'accueil';
 elseif ($apropos)
-  require 'views/apropos.php';
+  $view = 'apropos';
 elseif ($recherche_forum)
-  require 'views/recherche_forum.php';
-else
+  $view = 'recherche_forum';
+
+if (!$view) {
   require 'views/salespage.php';
+}
+
+ob_start();
+require 'views/' . $view . '.php';
 $body = ob_get_contents();
 ob_end_clean();
 require 'views/layout.php';
