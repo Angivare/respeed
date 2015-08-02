@@ -241,6 +241,12 @@ h1, h2, h3 {
   font-size: 15px;
 }
 
+@media (MAX-width: 1250px) {
+  .aside .menu .title .mine {
+    display: none;
+  }
+}
+
 .aside .menu .menu-content {
   margin: 0;
   padding: 0;
