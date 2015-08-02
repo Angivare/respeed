@@ -1,3 +1,11 @@
+<?php
+$jvc = new Jvc();
+
+if ($jvc->is_connected()) {
+  header('Location: /accueil');
+  exit;
+}
+?>
 <!doctype html>
 <meta charset="utf-8">
 <title>JVForum</title>
