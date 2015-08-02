@@ -22,6 +22,7 @@ var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
   , $<?= $k ?> = '<?= $v ?>'
 <?php endforeach ?>
 </script>
+
 <script src="/scripts/jquery-<?= REVISION_NUMBER_JS_JQUERY ?>.js" data-no-instant></script>
 <script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" data-no-instant></script>
 <script src="/scripts/instantclick-<?= REVISION_NUMBER_JS_INSTANTCLICK ?>.js" data-no-instant></script>
