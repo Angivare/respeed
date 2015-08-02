@@ -276,6 +276,12 @@ h1, h2, h3 {
   display: none;
 }
 
+@media (min-width: 1025px) {
+  #forums_pref.loaded, #topics_pref.loaded {
+    display: block;
+  }
+}
+
 .slider.sliding {
   position: fixed;
   top: 15px;

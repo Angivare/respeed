@@ -178,7 +178,7 @@ function displayFavoritesForums() {
       $('#add_or_del_forum').click(addForum)
     }
   }
-  $('#forums_pref').show()
+  $('#forums_pref').addClass('loaded')
 }
 
 function displayFavoritesTopics() {
@@ -211,7 +211,7 @@ function displayFavoritesTopics() {
       $('#add_or_del_topic').click(addTopic)
     }
   }
-  $('#topics_pref').show()
+  $('#topics_pref').addClass('loaded')
 
   if ($('.js-slider').length) {
     sliderTopOffset = $('.js-slider').offset().top - 15
