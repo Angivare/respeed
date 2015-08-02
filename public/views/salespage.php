@@ -1,4 +1,3 @@
-<?php include 'config.php' ?>
 <!doctype html>
 <meta charset="utf-8">
 <title>JVForum</title>
@@ -20,36 +19,10 @@ body {
   }
 }
 
-.header {
-  display: table;
-  width: 100%;
-  border-bottom: 1px solid black;
-  background: #445;
-  color: white;
-  padding: 7px 0;
-  box-shadow: inset 0 -2px 2px rgba(0,0,0,.15);
-}
-
-.header__title {
-  display: table-cell;
-  font-size: 1.5em;
-  font-weight: bold;
-  padding-left: 15px;
-}
-
-.header__connect-button {
-  display: table-cell;
-  text-align: right;
-  padding-right: 15px;
-  color: rgba(255,255,255,.75);
-  font-size: 14px;
-  vertical-align: middle;
-}
-
 .article {
   margin: auto;
   padding: 0 15px;
-  max-width: 700px;
+  max-width: 600px;
   color: #111;
 }
 
@@ -68,6 +41,65 @@ body {
   margin-bottom: 1.5em;
 }
 
+
+.article__hero-container {
+  margin: 2em 0;
+}
+
+@media (MAX-width: 1024px) {
+  .article__hero-container {
+    text-align: center;
+  }
+}
+
+.article__hero {
+  display: inline-block;
+  box-shadow: 0 0 50px rgba(0,0,0,.2);
+}
+
+.article__hero--mobile {
+  background: red;
+}
+
+.article__hero--mobile img {
+  max-height: 250px;
+}
+
+@media (min-width: 1024px) {
+  .article__hero--mobile {
+    display: none;
+  }
+}
+
+@media (MAX-width: 1024px) {
+  .article__hero--desktop {
+    display: none;
+  }
+}
+
+.article__hero img {
+  display: block;
+}
+
+.article__hero--desktop img {
+  width: 500px;
+  height: 304px;
+}
+
+.desktop-twist {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .mobile-twist {
+    display: none;
+  }
+
+  .desktop-twist {
+    display: block;
+  }
+}
+
 .article__subheadline {
   font-size: 1.2em;
 }
@@ -84,26 +116,51 @@ body {
   margin-right: 4px;
 }
 
-.article__subheadline--social-proof {
+.article__image {
+  margin: 1em -15px;
+  border: solid rgba(0,0,0,.2);
+  border-width: 1px 0;
+  box-shadow: 0 0 5px rgba(0,0,0,.2);
+}
+
+@media (min-width: 362px) {
+  .article__image {
+    border-width: 1px;
+    margin: 1em auto;
+  }
+}
+
+@media (min-width: 500px) {
+  .article__image {
+    margin: 1em 0;
+  }
+}
+
+.article__image--options-mobile {
+  /* The delimitation between .article__image & .article__image--options-mobile is a mess */
+
+  background: url(/images/salespage/options_mobile.png) right;
+  background-size: 360px;
+  height: 71px;
+  max-width: 360px;
+}
+
+.article__subheadline--gnap_gnap {
   text-align: center;
 }
 
 .article__nb-messages {
   text-align: center;
-  font-size: .9em;
+  font-size: .95em;
   font-weight: bold;
   margin: 2em 0;
-}
-
-.article__nb-messages--skeptical {
-  font-size: 1em;
 }
 
 .number {
   word-spacing: -1px;
 }
 
-.gnap-youtube {
+.gnap_gnap-youtube {
   width: 100%;
   width: -webkit-calc(100% + 30px);
   width:         calc(100% + 30px);
@@ -111,8 +168,15 @@ body {
   margin: 0 -15px;
 }
 
+@media (min-width: 600px) {
+  .gnap_gnap-youtube {
+    height: 340px;
+  }
+}
+
 .article__cta {
-  background: #007aff;
+  display: block;
+  background: #288FFF;
   color: white;
   text-decoration: none;
   font-weight: bold;
@@ -132,6 +196,11 @@ body {
   }
 }
 
+.article__cta:hover {
+  box-shadow: 0 3px 10px rgba(0,0,0,.3);
+  background: #007aff;
+}
+
 .article__legalese {
   font-size: .75em;
   text-align: center;
@@ -143,25 +212,42 @@ body {
 }
 </style>
 
-<header class="header">
-  <div class="header__title">JVForum</div>
-  <div class="header__connect-button">Connexion</div>
-</header>
-
 <article class="article">
   <h1 class="article__headline">Pas satisfait de Respawn ?</h1>
 
-  <p class="article__tagline">JVForum rend les forums meilleurs.</p>
+  <p class="article__tagline">JVForum rend les forums plus agréables à utiliser.</p>
 
-  <h2 class="article__subheadline"><span class="article__subheadline-number">1</span> Version mobile complète</h2>
+  <div class="article__hero-container"><a class="article__hero article__hero--mobile" href="/images/salespage/screen_mobile_full.png" target="_blank"><img src="/images/salespage/screen_mobile_full.png"></a></div>
 
-  <p>Modifiez. Supprimez. Citez. <!--Votez. Conversez en privé.--> Tout y est.</p>
+  <div class="article__hero-container"><a class="article__hero article__hero--desktop" href="/images/salespage/screen_desktop_full.png" target="_blank"><img src="/images/salespage/screen_desktop_full.png"></a></div>
 
-  <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Messages en temps réel</h2>
+  <div class="mobile-twist">
+    <h2 class="article__subheadline"><span class="article__subheadline-number">1</span> Version mobile complète</h2>
+    
+    <figure class="article__image article__image--options-mobile"></figure>
 
-  <p>Plus besoin de rafraîchir.</p>
-  
-  <p>Sur PC, l’onglet vous notifie des nouvelles réponses.</p>
+    <p>Modifiez. Supprimez. Citez. <!--Votez. Conversez en privé.--> <!--Tout y est.--> Et plus à venir.</p>
+
+    <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Messages en temps réel</h2>
+
+    <p>Plus besoin de rafraîchir.</p>
+    
+    <p>Sur PC, l’onglet vous notifie des nouvelles réponses.</p>
+  </div>
+
+  <div class="desktop-twist">
+    <h2 class="article__subheadline"><span class="article__subheadline-number">1</span> Messages en temps réel</h2>
+
+    <p>Plus besoin de rafraîchir.</p>
+    
+    <p>Sur PC, l’onglet vous notifie des nouvelles réponses.</p>
+
+    <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Version mobile complète</h2>
+    
+    <figure class="article__image article__image--options-mobile"></figure>
+
+    <p>Modifiez. Supprimez. Citez. <!--Votez. Conversez en privé.--> <!--Tout y est.--> Et plus à venir.</p>
+  </div>
 
   <h2 class="article__subheadline"><span class="article__subheadline-number">3</span> Hyper fluide</h2>
 
@@ -169,21 +255,28 @@ body {
 
   <h2 class="article__subheadline"><span class="article__subheadline-number">4</span> Et plus. Bien plus</h2>
 
-  <p>Liens directs NoelShack. Avatars en grand… Tout est repensé.</p>
+  <p>Liens directs NoelShack. Avatars en grand. Design qui s’étire pour les grands écrans… Tout est repensé.</p>
+
+  <h2 class="article__subheadline article__subheadline--gnap_gnap">L’avis de Gnap_Gnap :</h2>
+
+  <iframe class="gnap_gnap-youtube" width="420" height="315" src="https://www.youtube.com/embed/U0QA6OMEP1c?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
   
   <p class="article__nb-messages">Plus de <span class="number">200 000</span> messages postés.</p>
 
-  <!--<h2 class="article__subheadline article__subheadline--social-proof">L’avis de Gnap_Gnap :</h2>
-
-  <iframe class="gnap-youtube" width="420" height="315" src="https://www.youtube.com/embed/U0QA6OMEP1c" frameborder="0" allowfullscreen></iframe>-->
-
-  <div class="article__cta" href="/connexion">Démarrez l’expérience JVForum</div>
+  <a class="article__cta" id="cta" href="/connexion">Démarrez l’expérience JVForum</a>
   
   <div class="article__legalese">JVForum n’est pas affilié à <a class="article__legalese-link" href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</div>
 </article>
 
+<?php if (GOOGLE_ANALYTICS_ID): ?>
 <script>
-var googleAnalyticsID = '<?= GOOGLE_ANALYTICS_ID ?>'
-
-// Preload style and scripts
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '<?= GOOGLE_ANALYTICS_ID ?>', 'auto');
+ga('set', 'dimension1', 'Guest')
+ga('send', 'pageview')
 </script>
+<?php endif ?>
+<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)"></script>
