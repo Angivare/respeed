@@ -1,3 +1,8 @@
+<?php
+if (!isset($jvc)) {
+  $jvc = new Jvc();
+}
+?>
 <header class="header">
   <h2 class="header-title">
     <a class="header-title__link" href="<?= $jvc->is_connected() ? '/accueil' : '/' ?>" <?= $jvc->is_connected() ? '' : 'data-no-instant' ?>><span class="spacer">JV</span>Forum</a>
