@@ -6,7 +6,6 @@ var form_data
   , favoritesForums = []
   , favoritesTopics = []
   , isBigScreen = screen.width > 1024
-  , topicRefreshes = []
   , liste_messages = liste_messages || []
   , googleAnalyticsID = $('meta[name="google-analytics-id"]').attr('content')
   , hasNiceTelInputType = navigator.userAgent.indexOf(' (iPhone; ') > -1 || navigator.userAgent.indexOf(' (iPod; ') > -1
@@ -17,6 +16,11 @@ var form_data
   , originalPageTitle
   , sliderTopOffset = 999
   , isSliderSliding = false
+  , refreshXhr
+  , lastRefreshTimestamp = 0
+  , handleRefreshInterval
+  , handleRefreshTimeout
+  , topicRefreshTimeout
 
 
 
@@ -349,13 +353,40 @@ function delTopic() {
   ajax('favorites_update', {id: $topicNew, type:'topic', action: 'delete'})
 }
 
-function topicRefresh() {
+/** Refresh **/
+
+function handleRefreshOnPageChange(isInitialLoad) {
+  console.log('handleRefreshOnPageChange ' + isInitialLoad)
   if (!$topic) {
-    // On est pas sur un topic
+    clearTimeout(handleRefreshTimeout)
+    clearInterval(handleRefreshInterval)
+    clearTimeout(topicRefreshTimeout)
+    if (refreshXhr) {
+      refreshXhr.abort()
+      refreshXhr = undefined // pour pas que cette condition soit true à chaque changement de page non-topic après la première
+      lastRefreshTimestamp = 0
+    }
     return
   }
 
-  ajax('topic_get', {
+  clearTimeout(handleRefreshTimeout)
+  clearInterval(handleRefreshInterval)
+  clearTimeout(topicRefreshTimeout)
+  handleRefreshTimeout = setTimeout(handleRefresh, 2050)
+  handleRefreshInterval = setInterval(handleRefresh, 4000)
+}
+
+function handleRefresh() {
+  console.log('handleRefresh')
+  if (lastRefreshTimestamp < +new Date - 8000) {
+    topicRefresh()
+  }
+}
+
+function topicRefresh() {
+  console.log('topicRefresh ' + parseInt(+new Date / 10) / 100 % 100)
+  lastRefreshTimestamp = +new Date
+  refreshXhr = ajax('topic_get', {
     forum: $forum,
     topic: $topic,
     slug: $slug,
@@ -423,15 +454,19 @@ function topicRefresh() {
         applyBlacklist()
       }
     }
-    
+
     // Pagination
     if (data.last_page != lastPage) {
       lastPage = data.last_page
       $('.pages-container').html(data.paginationMarkup)
       triggerTabAlertForNewPosts()
     }
+
+    topicRefreshTimeout = setTimeout(topicRefresh, 2050)
   })
 }
+
+/** /Refresh **/
 
 function cancelEdit() {
   if ($('.js-isEditing').length) {
@@ -505,7 +540,8 @@ function makeFavoritesSlide() {
 }
 
 function adjustSliderWidth() {
-  $('#topics_pref').css('width', $('#forums_pref').width()) // La taille ne dépend plus du parent en position fixed et donc change
+  // Parce que la taille ne dépend plus du parent en position fixed
+  $('#topics_pref').css('width', $('#forums_pref').width())
 }
 
 
@@ -701,7 +737,6 @@ if (!$is_connected) {
 }
 
 updateRemoteBlacklist()
-setInterval(topicRefresh, 2500)
 
 if (googleAnalyticsID) {
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -723,6 +758,7 @@ InstantClick.on('change', function(isInitialLoad) {
   updateLocalBlacklist()
   applyBlacklist()
   displayFavoritesOnIndex()
+  handleRefreshOnPageChange(isInitialLoad)
 })
 
 InstantClick.on('change', function() {
