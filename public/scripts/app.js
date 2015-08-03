@@ -356,7 +356,6 @@ function delTopic() {
 /** Refresh **/
 
 function handleRefreshOnPageChange(isInitialLoad) {
-  console.log('handleRefreshOnPageChange ' + isInitialLoad)
   if (!$topic) {
     clearTimeout(handleRefreshTimeout)
     clearInterval(handleRefreshInterval)
@@ -377,14 +376,12 @@ function handleRefreshOnPageChange(isInitialLoad) {
 }
 
 function handleRefresh() {
-  console.log('handleRefresh')
   if (lastRefreshTimestamp < +new Date - 8000) {
     topicRefresh()
   }
 }
 
 function topicRefresh() {
-  console.log('topicRefresh ' + parseInt(+new Date / 10) / 100 % 100)
   lastRefreshTimestamp = +new Date
   refreshXhr = ajax('topic_get', {
     forum: $forum,
