@@ -1,6 +1,5 @@
 <?php
 $jvc = new Jvc();
-
 if ($jvc->is_connected()) {
   header('Location: /accueil');
   exit;
@@ -267,7 +266,7 @@ body {
 
   <h2 class="article__subheadline article__subheadline--gnap_gnap">L’avis de Gnap_Gnap :</h2>
 
-  <iframe class="gnap_gnap-youtube" width="420" height="315" src="https://www.youtube.com/embed/U0QA6OMEP1c?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+  <iframe class="gnap_gnap-youtube" width="420" height="315" src="https://www.youtube.com/embed/U0QA6OMEP1c?rel=0&amp;showinfo=0&amp;cc_load_policy=1" frameborder="0" allowfullscreen></iframe>
   
   <p class="article__nb-messages">Plus de <span class="number">200 000</span> messages postés.</p>
 
