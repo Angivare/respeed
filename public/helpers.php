@@ -282,14 +282,20 @@ MESSAGE;
     <div class="message-header">
       <div class="meta-author">
         <span class="author pseudo-{$message['status']} desktop"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" target="_blank" class="m-profil">{$pseudoWbr}</a></span>
+        <span class="avatar">
 MESSAGE;
   if ($message['avatar']) {
     $markup .= <<<MESSAGE
-          <span class="avatar"><a href="{$message['avatarBig']}"><img class="js-avatarImg" src="{$message['avatar']}"></a></span><!--
+          <a href="{$message['avatarBig']}"><img class="js-avatarImg" src="{$message['avatar']}"></a>
+MESSAGE;
+  } else {
+    $markup .= <<<MESSAGE
+          <img class="js-avatarDefault" src="/images/triangles.php?s={$message['pseudo']}">
 MESSAGE;
   }
   $markup .= <<<MESSAGE
-        <!-- --><span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
+        </span>
+        <span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
       </div>
       <div class="meta-actions">
         <span class="meta-permalink meta-menu js-date" title="{$message['dateRaw']}">{$message['date']}</span>
