@@ -28,13 +28,12 @@ function ajax(action, data, success) {
 
 function tokenRefresh() {
   ajax('token_generate', {}, function(data) {
-    if(data.rep) {
-      $hash = data.rep.hash
-      $ts = data.rep.ts
-      $rand = data.rep.rand
-    } else {
-      //TODO: erreur à afficher
+    if (!data.rep) {
+      return
     }
+    $hash = data.rep.hash
+    $ts = data.rep.ts
+    $rand = data.rep.rand
   })
 }
 
