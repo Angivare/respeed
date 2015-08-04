@@ -287,7 +287,7 @@ MESSAGE;
   if ($message['avatar']) {
     $markup .= '<a href="' . $message['avatarBig'] . '"><img class="js-avatarImg" src="' . $message['avatar'] . '"></a><!--';
   } else {
-    $markup .= '<img class="js-avatarDefault" src="/images/triangles.php?s=' . $message['pseudo'] . '"><!--';
+    $markup .= '<span class="default-avatar"><img class="js-avatarDefault" src="/images/triangles.php?s=' . $message['pseudo'] . '"></span><!--';
   }
   $markup .= <<<MESSAGE
         --></span><!--
