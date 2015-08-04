@@ -116,7 +116,7 @@ function adapt_html($message, $date, $id) {
 
   // Smileys à venir
   foreach ($new_smileys as $code) {
-    $message = str_ireplace(":{$code}:", '<img src="//image.jeuxvideo.com/smileys_img/' . $code . '.gif" alt=":' . $code . ':" data-def="SMILEYS" data-code=":' . $code . ':" title=":' . $code . ':">', $message);
+    $message = preg_replace('#([^=][^"])?:' . $code . ':([^"])?#Usi', '$1<img src="//image.jeuxvideo.com/smileys_img/' . $code . '.gif" alt=":' . $code . ':" data-def="SMILEYS" data-code=":' . $code . ':" title=":' . $code . ':">$2', $message);
   }
 
   return $message;
