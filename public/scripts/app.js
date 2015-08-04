@@ -127,7 +127,6 @@ function updateFavorites() {
   }
   ajax('favorites_get', {}, function(data) {
     if (!data.rep) {
-      alert('Erreur lors de la synchronisation des favoris : ' + data.err)
       return
     }
     favoritesForums = []
