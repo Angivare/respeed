@@ -29,7 +29,7 @@ var form_data
 function ajax(action, data, success) {
   if(typeof(success) !== 'undefined')
     var dataType = 'json'
-  $.post('/ajax/' + action + '.php?hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, data, success, dataType)
+  return $.post('/ajax/' + action + '.php?hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, data, success, dataType)
     .fail(function(xhr) {
       if(xhr.status == 504)
         success({'rep':false,'err':'Timeout de JVC'})
