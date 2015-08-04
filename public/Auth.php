@@ -50,6 +50,11 @@ class Auth {
       return TRUE;
   }
 
+  public function discard($hash) {
+    //needs validation beforehand
+    $this->db->query('DELETE FROM tokens WHERE token=?', [$hash]);
+  }
+
   private function _err($err) {
     $this->err = $err;
     return FALSE;
