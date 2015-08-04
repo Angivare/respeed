@@ -356,23 +356,18 @@ function delTopic() {
 /** Refresh **/
 
 function handleRefreshOnPageChange(isInitialLoad) {
-  if (!$topic) {
-    clearTimeout(handleRefreshTimeout)
-    clearInterval(handleRefreshInterval)
-    clearTimeout(topicRefreshTimeout)
-    if (refreshXhr) {
-      refreshXhr.abort()
-      refreshXhr = undefined // pour pas que cette condition soit true à chaque changement de page non-topic après la première
-      lastRefreshTimestamp = 0
-    }
-    return
-  }
-
   clearTimeout(handleRefreshTimeout)
   clearInterval(handleRefreshInterval)
   clearTimeout(topicRefreshTimeout)
-  handleRefreshTimeout = setTimeout(handleRefresh, 2050)
-  handleRefreshInterval = setInterval(handleRefresh, 4000)
+  if (refreshXhr) {
+    refreshXhr.abort()
+    refreshXhr = undefined // pour pas que cette condition soit true à chaque changement de page après la première
+    lastRefreshTimestamp = 0
+  }
+  if ($topic) {
+    handleRefreshTimeout = setTimeout(handleRefresh, 2050)
+    handleRefreshInterval = setInterval(handleRefresh, 4000)
+  }
 }
 
 function handleRefresh() {
@@ -756,6 +751,10 @@ InstantClick.on('change', function(isInitialLoad) {
   applyBlacklist()
   displayFavoritesOnIndex()
   handleRefreshOnPageChange(isInitialLoad)
+})
+
+InstantClick.on('restore', function() {
+  handleRefreshOnPageChange()
 })
 
 InstantClick.on('change', function() {
