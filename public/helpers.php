@@ -264,7 +264,7 @@ function generate_message_markup($message) {
   $pseudoLowercase = strtolower($message['pseudo']);
   $pseudoWbr = wbr_pseudo($message['pseudo']);
   $markup = <<<MESSAGE
-<div class="message {$odd_or_even} {$is_ours_text}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-date="{$message['date']}"  data-content-md5="{$message['contentMd5']}">
+<div class="message {$odd_or_even} {$is_ours_text}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
   <div class="action-menu">
 MESSAGE;
 
