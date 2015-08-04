@@ -285,17 +285,13 @@ MESSAGE;
         <span class="avatar">
 MESSAGE;
   if ($message['avatar']) {
-    $markup .= <<<MESSAGE
-          <a href="{$message['avatarBig']}"><img class="js-avatarImg" src="{$message['avatar']}"></a>
-MESSAGE;
+    $markup .= '<a href="' . $message['avatarBig'] . '"><img class="js-avatarImg" src="' . $message['avatar'] . '"></a><!--';
   } else {
-    $markup .= <<<MESSAGE
-          <img class="js-avatarDefault" src="/images/triangles.php?s={$message['pseudo']}">
-MESSAGE;
+    $markup .= '<img class="js-avatarDefault" src="/images/triangles.php?s=' . $message['pseudo'] . '"><!--';
   }
   $markup .= <<<MESSAGE
-        </span>
-        <span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
+        --></span><!--
+        --><span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
       </div>
       <div class="meta-actions">
         <span class="meta-permalink meta-menu js-date" title="{$message['dateRaw']}">{$message['date']}</span>
