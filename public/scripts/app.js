@@ -450,7 +450,6 @@ function topicRefresh() {
         $('#' + message.id + ' .m-profil').click(openProfile)
         $('#' + message.id + ' .meta-menu').click(toggleMenu)
         $('#' + message.id).click(closeMenu)
-        $('#' + message.id + ' .js-avatarImg').error(errorAvatar)
         $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
 
         applyBlacklist()
@@ -715,21 +714,6 @@ function closeMenu(e) {
   $('#' + id).removeClass('show-menu')
 }
 
-function errorAvatar(e) {
-  if(el.hasClass('js-avatarImg'))
-  {
-    var el = $(e.target),
-      nick = el.parents('.message').attr('data-pseudo')
-
-    el.removeClass('js-avatarImg')
-    el.addClass('js-avatarDefault')
-    el.attr('src', '/images/triangles.php?s=' + nick)
-  } else {
-    //class is .js-avatarDefault
-    $(e.target).remove()
-  }
-}
-
 function toggleSpoil() {
   $(this).toggleClass('shown')
 }
@@ -793,7 +777,6 @@ InstantClick.on('change', function() {
   $('.m-profil').click(openProfile)
   $('.meta-menu').click(toggleMenu)
   $('.message').click(closeMenu)
-  $('.js-avatarImg').error(errorAvatar)
   $('.bloc-spoil-jv').click(toggleSpoil)
 })
 
