@@ -309,6 +309,7 @@ MESSAGE;
     <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> {$message['pseudo']} parle mais se fait ignorer.</div>
   </div>
 </div>
+<script>liste_messages.push({$message['id']})</script>
 MESSAGE;
   return $markup;
 }

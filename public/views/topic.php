@@ -36,7 +36,6 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     <div class="js-listeMessages liste-messages">
 <?php foreach ($messages as $message): ?>
 <?= generate_message_markup($message) ?>
-<script>liste_messages.push(<?= $message['id'] ?>)</script>
 <?php endforeach ?>
     </div>
 
