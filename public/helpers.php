@@ -119,6 +119,18 @@ function adapt_html($message, $date, $id) {
     $message = preg_replace('#([^=][^"])?:' . $code . ':([^"])?#Usi', '$1<img src="//image.jeuxvideo.com/smileys_img/' . $code . '.gif" alt=":' . $code . ':" data-def="SMILEYS" data-code=":' . $code . ':" title=":' . $code . ':">$2', $message);
   }
 
+  // Rajout de target="_blank" aux liens externes
+  $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
+    $ret = $matches[0];
+    $has_blank = (strpos($ret, 'target="_blank"') !== false) ? true : false;
+    if(preg_match('#^https?://' . $_SERVER['HTTP_HOST'] .'#Usi', $matches['url'])) {
+      if($has_blank) return str_replace('target="_blank"', '', $ret);
+    } else {
+      if(!$has_blank) return str_replace('>', ' target="_blank">', $ret);
+    }
+    return $ret;
+  }, $message);
+
   return $message;
 }
 
