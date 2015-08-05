@@ -82,7 +82,7 @@ function adapt_html($message, $date, $id) {
   // Réparation des liens en /profil/pseudo.html
   $message = preg_replace('#(<a href="https?://www\.jeuxvideo\.com/profil/.+)\.html"#Usi', '$1?mode=page_perso"', $message);
 
-  // Transformations liens vers topics en liens internes
+  // Transformations liens vers topics & forums en liens internes
   $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
     $new_str = $matches[0];
     $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'];
