@@ -1345,9 +1345,11 @@ h1, h2, h3 {
   visibility: visible;
 }
 
-
-.message.even .content {
+.message .img-stickers {
+  max-width: 35px;
+  max-height: 35px;
 }
+
 
 @media (min-width: 1025px) {
   .message.even .content {
