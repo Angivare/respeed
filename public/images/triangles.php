@@ -65,11 +65,19 @@ $_w = ($w/2.0) / sqrt(3.0/4.0);
 $_h = $_w * sqrt(3.0/4.0);
 
 $colors = [
-  '#FA6E69',
-  '#FFCE74',
-  '#97D17A',
-  '#4C8DA6',
-  '#5B608C'
+  // http://gamedev.stackexchange.com/a/46469
+  // http://i.stack.imgur.com/oSJ1o.png
+  '#ff8080',
+  '#ffae80',
+  '#ffdd80',
+  '#d5ff80',
+  '#80ffb7',
+  '#80fffd',
+  '#80d0ff',
+  '#8097ff',
+  '#c680ff',
+  '#ff80ca',
+  '#ff8080',
 ];
 if($s !== 0)
   mt_srand(str_to_int(strtolower($s)));
