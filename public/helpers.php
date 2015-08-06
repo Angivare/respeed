@@ -49,15 +49,12 @@ $superlatifs = [
   'stupéfiant',
   'sensationnel',
 ];
-$new_smileys = ['cimer', 'ddb', 'pave', 'siffle', 'objection'];
 
 function h($string) {
   return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5);
 }
 
 function adapt_html($message, $date, $id) {
-  global $new_smileys;
-  
   $message = '<div class="contentest">' . $message . '</div>';
 
   // Mise en forme édition
@@ -113,11 +110,6 @@ function adapt_html($message, $date, $id) {
   
   // Transformation des miniatures vidéos jeuxvideo.com en lien
   $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="/contenu/medias/video.php\?q=config&amp;id=[0-9]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur jeuxvideo.com</a></p>', $message);
-
-  // Smileys à venir
-  foreach ($new_smileys as $code) {
-    $message = preg_replace('#([^=][^"])?:' . $code . ':([^"])?#Usi', '$1<img src="//image.jeuxvideo.com/smileys_img/' . $code . '.gif" alt=":' . $code . ':" data-def="SMILEYS" data-code=":' . $code . ':" title=":' . $code . ':">$2', $message);
-  }
 
   return $message;
 }
