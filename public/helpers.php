@@ -112,7 +112,7 @@ function adapt_html($message, $date, $id) {
   $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="/contenu/medias/video.php\?q=config&amp;id=[0-9]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur jeuxvideo.com</a></p>', $message);
   
   // Faire stickers agrandissable
-  $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<a href="http://jv.stkr.fr/p3w/$1" target="_blank" data-sticker="$1"><img class="img-stickers" src="http://jv.stkr.fr/p/$1"/></a>', $message);
+  $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<a href="http://jv.stkr.fr/p7s/$1" target="_blank" data-sticker="$1"><img class="img-stickers" src="http://jv.stkr.fr/p/$1"/></a>', $message);
 
   return $message;
 }
