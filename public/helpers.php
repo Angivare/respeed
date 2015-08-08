@@ -79,7 +79,7 @@ function adapt_html($message, $date, $id) {
   // Réparation des liens en /profil/pseudo.html
   $message = preg_replace('#(<a href="https?://www\.jeuxvideo\.com/profil/.+)\.html"#Usi', '$1?mode=page_perso"', $message);
 
-  // Transformations liens vers topics en liens internes
+  // Transformations liens vers topics & forums en liens internes
   $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
     $new_str = $matches[0];
     $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'];
@@ -119,6 +119,18 @@ function adapt_html($message, $date, $id) {
 
   // Ajout classe CSS aux smileys
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" alt="$2" data-code="$2" title="$2">', $message);
+
+  // Rajout de target="_blank" aux liens externes
+  $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
+    $ret = $matches[0];
+    $has_blank = (strpos($ret, 'target="_blank"') !== false) ? true : false;
+    if(preg_match('#^https?://' . $_SERVER['HTTP_HOST'] .'#Usi', $matches['url'])) {
+      if($has_blank) return str_replace('target="_blank"', '', $ret);
+    } else {
+      if(!$has_blank) return str_replace('>', ' target="_blank">', $ret);
+    }
+    return $ret;
+  }, $message);
 
   return $message;
 }
