@@ -429,6 +429,7 @@ function topicRefresh() {
           $('#' + message.id).data('contentMd5', message.contentMd5)
           $('#' + message.id + ' .js-content').html(message.content)
           $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
+          $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
 
           triggerTabAlertForNewPosts()
         }
@@ -451,6 +452,7 @@ function topicRefresh() {
         $('#' + message.id + ' .meta-menu').click(toggleMenu)
         $('#' + message.id).click(closeMenu)
         $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
+        $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
 
         applyBlacklist()
       }
@@ -718,6 +720,21 @@ function toggleSpoil() {
   $(this).toggleClass('shown')
 }
 
+function toggleStickerSize() {
+  var isAlreadyEnlarged = $(this).hasClass('sticker--enlarged')
+    , isBig = $(this).hasClass('sticker--big')
+    , code = $(this).data('sticker-id')
+
+  if (!isAlreadyEnlarged) {
+    $(this).prop('src', 'http://jv.stkr.fr/p7s/' + code)
+    $(this).addClass('sticker--enlarged')
+  }
+  else {
+    $(this).prop('src', 'http://jv.stkr.fr/' + (isBig ? 'p3w' : 'p') + '/' + code)
+    $(this).removeClass('sticker--enlarged')
+  }
+}
+
 function handleVisibilityChange() {
   isPageVisible = !document.hidden
   if (isPageVisible) {
@@ -778,6 +795,7 @@ InstantClick.on('change', function() {
   $('.meta-menu').click(toggleMenu)
   $('.message').click(closeMenu)
   $('.bloc-spoil-jv').click(toggleSpoil)
+  $('.js-sticker').click(toggleStickerSize)
 })
 
 InstantClick.init()

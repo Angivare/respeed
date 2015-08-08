@@ -1345,11 +1345,6 @@ h1, h2, h3 {
   visibility: visible;
 }
 
-.message .img-stickers {
-  width: 35px;
-  height: 35px;
-}
-
 .smiley {
   min-width: 16px;
   min-height: 16px;
@@ -1390,6 +1385,22 @@ h1, h2, h3 {
 .smiley--siffle { width: 22px; } /* :siffle: */
 .smiley--loveyou { width: 64px; height: 30px; } /* :loveyou: */
 .smiley--hapoelparty { width: 45px; height: 27px; } /* :hapoelparty: */
+
+.sticker {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.sticker--big {
+  width: 70px;
+  height: 70px;
+}
+
+.sticker--enlarged {
+  width: 140px;
+  height: 140px;
+}
 
 
 @media (min-width: 1025px) {

@@ -95,7 +95,7 @@ var JVCode = (function() {
         var src = $(this).attr('src').split('/'),
             id  = src.pop(),
             grp = src.pop()
-        this.parentNode.outerHTML = '[[sticker:' + grp + '/' + id + ']]'
+        this.outerHTML = '[[sticker:' + grp + '/' + id + ']]'
       })
       base.find('img').each(function() {
         this.outerHTML = $(this).attr('data-code')
