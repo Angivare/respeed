@@ -94,6 +94,7 @@ function adapt_html($message, $date, $id) {
       $path .= '/' . $matches['page'];
     }
     $new_str = str_replace($matches['url'], $path, $new_str);
+    $new_str .= ' data-link-jvc="true"';
     return $new_str;
   }, $message);
 
