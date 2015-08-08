@@ -70,7 +70,7 @@ function adapt_html($message, $date, $id) {
   // Vire la signature qui apparaît parfois
   $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
   if ($pos_signature !== false) {
-    $message = substr($message, 0, $pos_signature) . '</div>'; // </div> for .contentest
+    $message = substr($message, 0, $pos_signature) . '</div>'; // </div> pour .contentest
   }
   
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
@@ -113,6 +113,9 @@ function adapt_html($message, $date, $id) {
   
   // Faire stickers agrandissable
   $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<a href="http://jv.stkr.fr/p7s/$1" target="_blank" data-sticker="$1"><img class="img-stickers" src="http://jv.stkr.fr/p/$1"/></a>', $message);
+  
+  // Ajout classe CSS aux smileys
+  $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" alt="$2" data-def="SMILEYS" data-code="$2" title="$2" />', $message);
 
   return $message;
 }

@@ -1346,8 +1346,13 @@ h1, h2, h3 {
 }
 
 .message .img-stickers {
-  max-width: 35px;
-  max-height: 35px;
+  width: 35px;
+  height: 35px;
+}
+
+.message .smiley {
+  min-width: 16px;
+  min-height: 16px;
 }
 
 
