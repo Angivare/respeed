@@ -79,7 +79,7 @@ function adapt_html($message, $date, $id) {
   // Réparation des liens en /profil/pseudo.html
   $message = preg_replace('#(<a href="https?://www\.jeuxvideo\.com/profil/.+)\.html"#Usi', '$1?mode=page_perso"', $message);
 
-  // Transformations liens vers topics & forums en liens internes
+  // Transformations liens vers topics en liens internes
   $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
     $new_str = $matches[0];
     $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'];
@@ -114,23 +114,13 @@ function adapt_html($message, $date, $id) {
   // Faire stickers agrandissable
   $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<img class="js-sticker sticker img-stickers" src="http://jv.stkr.fr/p/$1" data-sticker-id="$1">', $message);
 
-  // Sticker plus grand si c’est tout ce qu’il y a dans le message
+  // Sticker plus grand si c’est tout ce qu’il y a dans le message (un ou deux stickers)
   $message = preg_replace('#^<div class="contentest">(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)</div>#Usi', '<div class="contentest">$1<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$2" data-sticker-id="$2">$3</div>', $message);
+  $message = preg_replace('#^<div class="contentest">(<p>)?(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)(</p>)?</div>#Usi', '<div class="contentest">$1$2<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$3" data-sticker-id="$3">$4<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$5" data-sticker-id="$5">$6$7</div>', $message);
+  $message = preg_replace('#^<div class="contentest">(<p>)?(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)(</p>)?</div>#Usi', '<div class="contentest">$1$2<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$3" data-sticker-id="$3">$4<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$5" data-sticker-id="$5">$6$7</div>', $message);
 
   // Ajout classe CSS aux smileys
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" alt="$2" data-code="$2" title="$2">', $message);
-
-  // Rajout de target="_blank" aux liens externes
-  $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
-    $ret = $matches[0];
-    $has_blank = (strpos($ret, 'target="_blank"') !== false) ? true : false;
-    if(preg_match('#^https?://' . $_SERVER['HTTP_HOST'] .'#Usi', $matches['url'])) {
-      if($has_blank) return str_replace('target="_blank"', '', $ret);
-    } else {
-      if(!$has_blank) return str_replace('>', ' target="_blank">', $ret);
-    }
-    return $ret;
-  }, $message);
 
   return $message;
 }
