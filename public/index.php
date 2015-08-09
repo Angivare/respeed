@@ -20,7 +20,7 @@ $db = new Db();
 $auth = new Auth($db);
 $token = $auth->generate();
 
-$view = false;
+$view = 'salespage';
 
 if ($connexion)
   $view = 'connexion';
@@ -37,8 +37,9 @@ elseif ($apropos)
 elseif ($recherche_forum)
   $view = 'recherche_forum';
 
-if (!$view) {
-  require 'views/salespage.php';
+if (in_array($view, ['salespage', 'connexion'])) {
+  require 'views/' . $view . '.php';
+  exit;
 }
 
 ob_start();

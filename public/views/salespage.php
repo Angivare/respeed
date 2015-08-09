@@ -68,7 +68,7 @@ if ($jvc->is_connected()) {
 
   <a class="article__cta" id="cta" href="/connexion">Démarrez l’expérience JVForum</a>
   
-  <div class="article__legalese">JVForum n’est pas affilié à <a class="article__legalese-link" href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</div>
+  <div class="legalese">JVForum n’est pas affilié à <a class="legalese__link" href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</div>
 </article>
 
 <?php if (GOOGLE_ANALYTICS_ID): ?>
