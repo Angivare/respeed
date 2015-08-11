@@ -26,7 +26,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
 
     <div class="pagination-topic">
-      <div class="pagination-topic__action-button"><span class="js-button-go-to-form button">Poster</span></div>
+      <div class="pagination-topic__action-button"><span class="js-button-go-to-form button button--raised button--cta button--scale">Poster</span></div>
       <div class="pagination-topic__pages">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
@@ -40,7 +40,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     </div>
 
     <div class="pagination-topic pagination-topic--bottom">
-      <div class="pagination-topic__action-button"><span class="js-button-go-to-form button">Poster</span></div>
+      <div class="pagination-topic__action-button"><a class="button button--scale" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour</a></div>
       <div class="pagination-topic__pages">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
@@ -64,15 +64,6 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
       </div>
     </div>
 <?php endif ?>
-
-    <div class="bottom-back-buttons">
-      <span>
-        <a class="submit" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour forum</a>
-      </span>
-      <span class="align-right">
-        <a class="submit" href="/accueil">Accueil</a>
-      </span>
-    </div>
 
   </div>
 
