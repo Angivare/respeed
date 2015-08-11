@@ -455,7 +455,7 @@ function topicRefresh() {
     // Pagination
     if (data.last_page != lastPage) {
       lastPage = data.last_page
-      $('.pages-container').html(data.paginationMarkup)
+      $('.pagination-topic__pages').html(data.paginationMarkup)
       triggerTabAlertForNewPosts()
     }
 
