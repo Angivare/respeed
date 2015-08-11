@@ -101,7 +101,10 @@ var JVCode = (function() {
         this.outerHTML = $(this).attr('data-code')
       })
       base.find('a').each(function() {
-        this.outerHTML = $(this).attr('href')
+        if($(this).attr('data-link-jvc'))
+          this.outerHTML = $(this).text()
+        else
+          this.outerHTML = $(this).attr('href')
       })
     },
 
