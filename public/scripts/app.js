@@ -278,14 +278,7 @@ function request_form_data() {
       return
     }
     form_data = data.rep
-    if (form_data.fs_signature) {
-      $('.js-captcha-container-post')
-      .html('<input class="input input-captcha" type="' + (hasNiceTelInputType ? 'tel' : 'number') + '" id="ccode" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
-        + 'signature=' + encodeURIComponent(form_data.fs_signature)
-        + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
-        + '" class="captcha">')
-      .addClass('shown')
-    }
+    showCaptcha(form_data.fs_signature, 'post')
   })
 }
 
@@ -547,6 +540,30 @@ function adjustSliderWidth() {
   $('#topics_pref').css('width', $('#forums_pref').width())
 }
 
+function showCaptcha(signature, location) {
+  if (!signature) {
+    return
+  }
+  if (!location) {
+    location = 'post' // Raccourci pour pouvoir débug rapidement en console
+  }
+  $('.js-captcha-container-' + location)
+  .html('<input class="js-captcha-' + location + ' input input-captcha" type="' + (hasNiceTelInputType ? 'tel' : 'number') + '" id="ccode" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
+    + 'signature=' + encodeURIComponent(signature)
+    + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
+    + '" class="captcha">')
+  .addClass('shown')
+}
+
+function showErrors(errors, location) {
+  if (!location) {
+    location = 'post' // Raccourci pour pouvoir débug rapidement en console
+  }
+  $('.form-' + location + '__errors p').html(errors)
+  $('.form-' + location + '__errors').show()
+  $('.form-' + location + '__textarea').focus()
+}
+
 
 
 /*** Fonctions pour events ***/
@@ -586,9 +603,7 @@ function post(e) {
       return
     }
 
-    $('.form-post__errors p').html(data.err)
-    $('.form-post__errors').show()
-    $('.form-post__textarea').focus()
+    showErrors(data.err, 'post')
   })
 }
 
