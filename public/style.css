@@ -132,7 +132,7 @@ h1, h2, h3 {
     max-width: 1400px;
     border: 1px solid black;
     border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,.5);
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
     padding: 10px 30px;
   }
 
@@ -1618,6 +1618,20 @@ h1, h2, h3 {
   }
 }
 
+.form-post__errors {
+  display: none;
+  color: #d32f2f;
+  background: #ffebee;
+  padding: 1px 1em;
+  margin-bottom: .5em;
+  border: 1px solid #f7b4b6; /* Red 150 */
+  border-radius: 2px;
+}
+
+.form-post__errors.shown {
+  display: block;
+}
+
 .form-post__textarea {
   -webkit-appearance: none;
   font: 14px/1.4 -apple-system, sans-serif;
@@ -1711,7 +1725,8 @@ h1, h2, h3 {
   margin: 20px 0;
 }
 
-/* À Propos */
+/* À PROPOS */
+
 .apropos {
   padding: 0 20px;
 }

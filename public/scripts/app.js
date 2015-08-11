@@ -279,7 +279,7 @@ function request_form_data() {
     }
     form_data = data.rep
     if (form_data.fs_signature) {
-      $('#captcha-container')
+      $('.js-captcha-container-post')
       .html('<input class="input input-captcha" type="' + (hasNiceTelInputType ? 'tel' : 'number') + '" id="ccode" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
         + 'signature=' + encodeURIComponent(form_data.fs_signature)
         + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
@@ -552,14 +552,14 @@ function adjustSliderWidth() {
 /*** Fonctions pour events ***/
 
 function post(e) {
-  e.preventDefault() // Pas sûr que ce soit nécessaire, cliquer le bouton ne fait rien au moins sur Chrome
+  e.preventDefault()
   if (!form_data) {
-    $('#newmessage').focus()
+    $('.form-post__textarea').focus()
     return
   }
   var params = {
     url: url,
-    msg: $('#newmessage').val(),
+    msg: $('.form-post__textarea').val(),
     form: form_data,
   }
   if ($('#ccode').val()) {
@@ -570,15 +570,15 @@ function post(e) {
   }
   var action = $('#newsujet').length ? 'topic_post' : 'message_post'
   ajax(action, params, function(data) {
-    $('#captcha-container')
+    $('.js-captcha-container-post')
     .html('')
     .removeClass('shown')
 
     form_data = null
 
     if (data.rep) {
-      $('.form-error').hide()
-      $('#newmessage').val('')
+      $('.form-post__errors').hide()
+      $('.form-post__textarea').val('')
 
       if (data.rep !== true)
         window.location.href = data.rep
@@ -586,9 +586,9 @@ function post(e) {
       return
     }
 
-    $('.form-error p').html(data.err)
-    $('.form-error').show()
-    $('#newmessage').focus()
+    $('.form-post__errors p').html(data.err)
+    $('.form-post__errors').show()
+    $('.form-post__textarea').focus()
   })
 }
 
@@ -789,9 +789,9 @@ InstantClick.on('restore', function() {
 })
 
 InstantClick.on('change', function() {
-  $('#post').click(post)
+  $('.form-post').submit(post)
   $('#newsujet').focus(request_form_data)
-  $('#newmessage').focus(request_form_data)
+  $('.form-post__textarea').focus(request_form_data)
 
   // Messages
   $('.meta-quote').click(quote)
