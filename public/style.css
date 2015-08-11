@@ -879,11 +879,51 @@ h1, h2, h3 {
 
 .pagination-topic__action-button {
   display: table-cell;
+  width: 1px; /* Pour que la case reste aussi petite que possible et que celle d’a côté ai l’air plus ou moins centrée sur tablette/desktop */
 }
 
 .pagination-topic__pages {
   display: table-cell;
   text-align: center;
+  cursor: default;
+}
+
+.pagination-topic__page {
+  display: inline-block;
+  min-width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: .95em;
+  border-radius: 9em;
+}
+
+.pagination-topic__page-link {
+  display: block;
+  border-radius: 9em;
+  padding: 0 2px;
+}
+
+.pagination-topic__page-link:visited {
+  color: #888;
+}
+
+.pagination-topic__page-link:hover {
+  background: #eee;
+}
+
+.pagination-topic__page-link--active {
+  background: #f60;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination-topic__page-link--active:hover {
+  background: #f60;
+}
+
+.pagination-topic--bottom .pagination-topic__page-link--next {
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 

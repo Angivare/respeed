@@ -321,58 +321,37 @@ MESSAGE;
 
 function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) {
   $pages = [];
-  for ($i = $page; $i < 7; $i++) {
-    $pages[] = ' ';
-  }
-  if ($page != 1) {
+
+  if ($page > 4) {
     $pages[] = 1;
-    for ($i = $page - 5; $i < $page; $i++) {
-      if ($i > 1) {
-        $pages[] = $i;
-      }
-    }
   }
+
+  for ($i = max(1, $page - 3); $i < $page; $i++) {
+    $pages[] = $i;
+  }
+
   $pages[] = $page;
+
   if ($page != $last_page) {
-    for ($i = $page + 1; $i <= $page + 5; $i++) {
-      if ($i < $last_page) {
-        $pages[] = $i;
-      }
+    for ($i = $page + 1; $i < min($page + 4, $last_page); $i++) {
+      $pages[] = $i;
     }
-    $pages[] = $last_page;
-  }
-  for ($i = $last_page - $page; $i < $last_page - $last_page + 6; $i++) {
-    $pages[] = ' ';
+
+    $pages[] .= $last_page;
   }
 
   $markup = '';
+  $topic_id = ($topic_mode == 1 ? '0' : '') . $topic;
+  $page_trail = $i > 1 ? "/{$i}" : '';
   foreach ($pages as $i) {
-    if ($i == ' ') {
-      $markup .= <<<MARKUP
-        <span class="faketable empty">
-          <span class="link"></span>
-        </span>
-
-MARKUP;
-      continue;
-    }
-    $number = $i;
-    $is_sign = (int)$number != $i;
-    $topic_id = ($topic_mode == 1 ? '0' : '') . $topic;
-    $page_trail = $i > 1 ? "/{$i}" : '';
-    $markup .= '        <span class="faketable">' . "\n          ";
-    if ($i != $page) {
-      if ($i == $page + 1) {
-        $markup .= "<a href='/{$forum}/{$topic_id}-{$slug}{$page_trail}' class='link next-page'>{$number}</a>";
-      }
-      else {
-        $markup .= "<a href='/{$forum}/{$topic_id}-{$slug}{$page_trail}' class='link'>{$number}</a>";
-      }
+    $markup .= "        ";
+    if ($i == $page) {
+      $markup .= '<span class="pagination-topic__page"><span class="pagination-topic__page-link pagination-topic__page-link--active">' . $page . '</span></span>';
     }
     else {
-      $markup .= "<span class='link active'>{$number}</span>";
+      $markup .= '<span class="pagination-topic__page"><a class="pagination-topic__page-link ' . ($i == $page + 1 ? 'pagination-topic__page-link--next' : '') . '" href="/' . $forum . '/' . $topic_id . '-' . $slug . ($i > 1 ? ('/' . $i) : '') . '">' . $i . '</a></span>';
     }
-    $markup .= "\n" . '        </span>' . "\n";
+    $markup .= "\n";
   }
 
   return $markup;
