@@ -949,13 +949,13 @@ h1, h2, h3 {
 }
 
 .pagination-topic__page-link--active {
-  background: #f60;
+  background: #ff5722;
   color: white;
   font-weight: bold;
 }
 
 .pagination-topic__page-link--active:hover {
-  background: #f60;
+  background: #ff5722;
 }
 
 .pagination-topic--bottom .pagination-topic__page-link--next {
