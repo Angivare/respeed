@@ -57,9 +57,9 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
       <label class="titre-bloc" for="newsujet">Créer un nouveau sujet</label>
       <div class="form-error"><p></p></div>
       <div class="form-post-inner">
-        <input class="input newsujet" type="text" name="newsujet" id="newsujet" maxlength="100" placeholder="Titre">
+        <input class="input newsujet" type="text" name="newsujet" id="newsujet" maxlength="100" placeholder="Mon sujet">
         
-        <textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
+        <textarea class="input textarea" id="newmessage" placeholder="Mon <?= superlatif() ?> message."></textarea>
         <span id="captcha-container"></span>
         <div class="form-post-button"><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></div>
       </div>
