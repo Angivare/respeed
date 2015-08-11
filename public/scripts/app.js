@@ -742,6 +742,14 @@ function handleVisibilityChange() {
   }
 }
 
+function goToForm() {
+  if (!$('#newmessage')) {
+    return
+  }
+  $('#newmessage').focus()
+  scrollTo(0, $('#newmessage').offset().top)
+}
+
 
 
 /*** App ***/
@@ -796,6 +804,7 @@ InstantClick.on('change', function() {
   $('.message').click(closeMenu)
   $('.bloc-spoil-jv').click(toggleSpoil)
   $('.js-sticker').click(toggleStickerSize)
+  $('.js-button-go-to-form').click(goToForm)
 })
 
 InstantClick.init()

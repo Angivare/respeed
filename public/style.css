@@ -819,6 +819,31 @@ h1, h2, h3 {
   background: url(/images/page_suiv.svg) right -8px center no-repeat;
 }
 
+/* BOUTONS */
+
+.button {
+  background: #00e676;
+  color: white;
+  font-weight: bold;
+  padding: 5px 8px;
+  border-radius: 3px;
+  letter-spacing: .5px;
+  cursor: pointer;
+  text-shadow: 0 0 2px #00c853;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+  text-transform: uppercase;
+  font-size: .9em;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition: all .1s ease-out;
+          transition: all .1s ease-out;
+}
+
+.button:hover {
+  background: #69f0ae;
+  text-shadow: 0 0 2px #00e676;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,.15);
+}
+
 /* TOPIC */
 
 .forum-title a {
@@ -844,6 +869,24 @@ h1, h2, h3 {
 }
 
 /* TOPIC - Pagination */
+
+.pagination-topic {
+  display: table;
+  width: 100%;
+  margin: 1em 10px;
+  width: calc(100% - 20px);
+}
+
+.pagination-topic__action-button {
+  display: table-cell;
+}
+
+.pagination-topic__pages {
+  display: table-cell;
+  text-align: center;
+}
+
+
 
 .pages {
   margin-bottom: 10px;

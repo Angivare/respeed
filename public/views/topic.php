@@ -24,6 +24,19 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
 
     <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
+    
+    <div class="pagination-topic">
+      <div class="pagination-topic__action-button"><span class="js-button-go-to-form button">Poster</span></div>
+      <div class="pagination-topic__pages">
+        <span><a href="">1</a></span>
+        <span><a href="">3198</a></span>
+        <span><a href="">3199</a></span>
+        <span><a href="">3200</a></span>
+        <span><a href="">3201</a></span>
+        <span><a href="">3202</a></span>
+        <span><a href="">3203</a></span>
+      </div>
+    </div>
 
     <div class="pages">
       <div class="pages-container">
