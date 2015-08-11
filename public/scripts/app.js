@@ -277,7 +277,9 @@ function request_form_data() {
       return
     }
     form_data = data.rep
-    showCaptcha(form_data.fs_signature)
+    if (form_data.fs_signature) {
+      showCaptcha(form_data.fs_signature)
+    }
   })
 }
 
