@@ -746,8 +746,8 @@ function goToForm() {
   if (!$('#newmessage')) {
     return
   }
-  $('#newmessage').focus()
-  scrollTo(0, $('#newmessage').offset().top)
+  $('.form-post__textarea').focus()
+  scrollTo(0, $('.form-post').offset().top + 1)
 }
 
 

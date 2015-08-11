@@ -15,7 +15,7 @@ echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->\n"
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 ?>
-<body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?>">
+<body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?> body--no-bottom">
 
 <?php include '_header.php' ?>
 
@@ -54,7 +54,15 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
       </div>
     </div>
 <?php else: ?>
-    <div class="form-post">
+    <form class="form-post">
+      <textarea class="form-post__textarea" placeholder="Mon <?= superlatif() ?> message."></textarea>
+      <span class="js-captcha-container-post"></span>
+      <div class="form-post__submit-container">
+        <input class="button button--raised button--cta button--large button--scale" type="submit" value="Poster">
+      </div>
+    </form>
+
+<!--    <div class="form-post">
       <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
       <div class="form-error"><p></p></div>
       <div class="form-post-inner">
@@ -62,12 +70,12 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
         <span id="captcha-container"></span>
         <div class="form-post-button"><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></div>
       </div>
-    </div>
+    </div>-->
 <?php endif ?>
 
   </div>
 
-  <aside class="aside">
+  <aside class="aside desktop">
     <div class="ouvrir-jvc">
       <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
     </div>
