@@ -54,24 +54,14 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
       </div>
     </div>
 <?php else: ?>
-    <form class="form-post">
-      <div class="form-post__errors"><p></p></div>
-      <textarea class="form-post__textarea" placeholder="Mon <?= superlatif() ?> message."></textarea>
-      <span class="js-captcha-container-post"></span>
-      <div class="form-post__submit-container">
-        <input class="button button--raised button--cta button--large button--scale" type="submit" value="Poster">
+    <form class="js-form-post form">
+      <div class="form__errors"><p></p></div>
+      <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="1"></textarea>
+      <span class="form__captcha-container"></span>
+      <div class="form__submit-container">
+        <input class="button button--raised button--cta button--large button--scale" type="submit" value="Poster" tabindex="4">
       </div>
     </form>
-
-<!--    <div class="form-post">
-      <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
-      <div class="form-error"><p></p></div>
-      <div class="form-post-inner">
-        <textarea class="input textarea" id="newmessage" placeholder="Mon <?= superlatif() ?> message."></textarea>
-        <span id="captcha-container"></span>
-        <div class="form-post-button"><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></div>
-      </div>
-    </div>-->
 <?php endif ?>
 
   </div>

@@ -268,17 +268,16 @@ function request_form_data() {
   if (form_data) {
     return
   }
-  var action = $('#newsujet').length ? 'topic_post' : 'message_post'
+  var action = $('.form__topic').length ? 'topic_post' : 'message_post'
   ajax(action, {url: url}, function(data) {
     if (data.err == 'Forum fermé') {
-      $('.form-error p').html('Ce forum est fermé, vous ne pouvez pas y poster.')
-      $('#newsujet').attr('disabled', '')
-      $('#newmessage').attr('disabled', '')
-      $('.form-error').show()
+      showErrors('Ce forum est fermé, vous ne pouvez pas y poster.', 'topic')
+      $('.js-form-topic .form__topic').attr('disabled', '')
+      $('.js-form-topic .form__textarea').attr('disabled', '')
       return
     }
     form_data = data.rep
-    showCaptcha(form_data.fs_signature, 'post')
+    showCaptcha(form_data.fs_signature)
   })
 }
 
@@ -540,28 +539,20 @@ function adjustSliderWidth() {
   $('#topics_pref').css('width', $('#forums_pref').width())
 }
 
-function showCaptcha(signature, location) {
-  if (!signature) {
-    return
-  }
-  if (!location) {
-    location = 'post' // Raccourci pour pouvoir débug rapidement en console
-  }
-  $('.js-captcha-container-' + location)
-  .html('<input class="js-captcha-' + location + ' input input-captcha" type="' + (hasNiceTelInputType ? 'tel' : 'number') + '" id="ccode" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
+function showCaptcha(signature) {
+  $('.form__captcha-container')
+  .html('<input class="js-captcha input input-captcha" type="' + (hasNiceTelInputType ? 'tel' : 'number') + '" id="ccode" name="ccode" placeholder="Code" autocomplete="off" tabindex="3"> '
+    + '<img src="/ajax/captcha_get.php?'
     + 'signature=' + encodeURIComponent(signature)
     + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
     + '" class="captcha">')
   .addClass('shown')
 }
 
-function showErrors(errors, location) {
-  if (!location) {
-    location = 'post' // Raccourci pour pouvoir débug rapidement en console
-  }
-  $('.form-' + location + '__errors p').html(errors)
-  $('.form-' + location + '__errors').show()
-  $('.form-' + location + '__textarea').focus()
+function showErrors(errors) {
+  $('.form .form__errors p').html(errors)
+  $('.form .form__errors').show()
+  $('.form .form__textarea').focus()
 }
 
 
@@ -571,31 +562,31 @@ function showErrors(errors, location) {
 function post(e) {
   e.preventDefault()
   if (!form_data) {
-    $('.form-post__textarea').focus()
+    $('.form .form__textarea').focus()
     return
   }
   var params = {
     url: url,
-    msg: $('.form-post__textarea').val(),
+    msg: $('.form .form__textarea').val(),
     form: form_data,
   }
-  if ($('#ccode').val()) {
-    params.ccode = $('#ccode').val()
+  if ($('.js-captcha').val()) {
+    params.ccode = $('.js-captcha').val()
   }
-  if ($('#newsujet')) {
-    params.title = $('#newsujet').val()
+  if ($('.form__topic').length) {
+    params.title = $('.form__topic').val()
   }
-  var action = $('#newsujet').length ? 'topic_post' : 'message_post'
+  var action = $('.form__topic').length ? 'topic_post' : 'message_post'
   ajax(action, params, function(data) {
-    $('.js-captcha-container-post')
+    $('.form .form__captcha-container')
     .html('')
     .removeClass('shown')
 
     form_data = null
 
     if (data.rep) {
-      $('.form-post__errors').hide()
-      $('.form-post__textarea').val('')
+      $('.form .form__errors').hide()
+      $('.form .form__textarea').val('')
 
       if (data.rep !== true)
         window.location.href = data.rep
@@ -677,8 +668,8 @@ function quote() {
   citation += "> " + text.split("\n").join("\n> ")
   citation += "\n\n"
   
-  $('#newmessage').focus() // Doit être avant .val pour avoir le curseur placé en bas
-  $('#newmessage').val($('#newmessage').val() + citation)
+  $('.js-form-post .form__textarea').focus() // Doit être avant .val pour avoir le curseur placé en bas
+  $('.js-form-post .form__textarea').val($('.js-form-post .form__textarea').val() + citation)
 }
 
 function edit() {
@@ -761,8 +752,8 @@ function goToForm() {
   if (!$('#newmessage')) {
     return
   }
-  $('.form-post__textarea').focus()
-  scrollTo(0, $('.form-post').offset().top + 1)
+  $('.js-form-post .form__textarea').focus()
+  scrollTo(0, $('.js-form-post').offset().top + 1)
 }
 
 
@@ -801,12 +792,13 @@ InstantClick.on('change', function(isInitialLoad) {
 
 InstantClick.on('restore', function() {
   handleRefreshOnPageChange()
+  $('.form').submit(post)
 })
 
 InstantClick.on('change', function() {
-  $('.form-post').submit(post)
-  $('#newsujet').focus(request_form_data)
-  $('.form-post__textarea').focus(request_form_data)
+  $('.form').submit(post)
+  $('.js-form-topic .form__topic').focus(request_form_data)
+  $('.js-form-post .form__textarea').focus(request_form_data)
 
   // Messages
   $('.meta-quote').click(quote)

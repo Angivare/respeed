@@ -1358,7 +1358,7 @@ h1, h2, h3 {
     background: #F9F9F9;
     margin-bottom: 12px;
     padding: 0 .5em;
-    color: black;
+    color: #111;
   }
 }
 
@@ -1610,26 +1610,26 @@ h1, h2, h3 {
 
 /* FORUM/TOPIC - Formulaire de post */
 
-.form-post {
+.form {
   width: 100%;
-  background: #cfd8dc;
-  _background: #eceff1;
-  background: #eee;
-  background: #E8F5E9;
   background: #f7f7f7;
   padding: 7px;
   border: 0 solid #acacac;
   border-top-width: 1px;
 }
 
+.form--topic {
+  border-bottom-width: 1px;
+}
+
 @media (min-width: 1025px) {
-  .form-post {
+  .form {
     border-width: 1px;
     border-radius: 4px;
   }
 }
 
-.form-post__errors {
+.form__errors {
   display: none;
   color: #d32f2f;
   background: #ffebee;
@@ -1639,37 +1639,51 @@ h1, h2, h3 {
   border-radius: 2px;
 }
 
-.form-post__errors.shown {
+.form__errors.shown {
   display: block;
 }
 
-.form-post__textarea {
+.form__topic, .form__textarea {
   -webkit-appearance: none;
   font: 14px/1.4 -apple-system, sans-serif;
   width: 100%;
   border: 1px solid #c7c7cc;
-  _background: #fafafa;
-  border-radius: 5px;
   padding: 2px;
-  resize: vertical;
-  height: 142px;
   outline: none;
 }
 
-.form-post__textarea:focus {
+.form__topic {
+  margin-bottom: .5em;
+  border-radius: 3px;
+}
+
+.form__textarea {
+  resize: vertical;
+  height: 142px;
+  border-radius: 5px;
+}
+
+.form__topic:focus, .form__textarea:focus {
   border-color: #bdbdbd;
   box-shadow: inset 0 2px 5px 0 rgba(0,0,0,.1);
 }
 
 @media (min-width: 1025px) {
-  .form-post__textarea {
+  .form__topic, .form__textarea {
     font-size: 18px;
-    padding: 7px 10px;
+  }
+
+  .form__topic {
+    padding: 3px 10px;
+  }
+
+  .form__textarea {
     height: 170px;
+    padding: 7px 10px;
   }
 }
 
-.form-post__submit-container {
+.form__submit-container {
   text-align: center;
 }
 
