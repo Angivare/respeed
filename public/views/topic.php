@@ -15,7 +15,7 @@ echo "<!-- JVC request delay: {$t_req}ms | MySQL request delay: {$t_db}ms -->\n"
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 ?>
-<body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?>">
+<body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?> body--no-bottom">
 
 <?php include '_header.php' ?>
 
@@ -25,11 +25,11 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
     <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
 
-    <div class="pages">
-      <div class="pages-container">
+    <div class="pagination-topic">
+      <div class="pagination-topic__action-button"><span class="js-button-go-to-form button button--raised button--cta button--scale">Poster</span></div>
+      <div class="pagination-topic__pages">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
-      <div class="clearfix"></div>
     </div>
 
 <script>var liste_messages = []</script>
@@ -39,11 +39,11 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <?php endforeach ?>
     </div>
 
-    <div class="pages pages-bottom">
-      <div class="pages-container">
+    <div class="pagination-topic pagination-topic--bottom">
+      <div class="pagination-topic__action-button"><a class="button button--scale" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour<span class="pagination-topic__action-button-additional-text"> forum</span></a></div>
+      <div class="pagination-topic__pages">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
-      <div class="clearfix"></div>
     </div>
 
 <?php if ($locked): ?>
@@ -54,29 +54,19 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
       </div>
     </div>
 <?php else: ?>
-    <div class="form-post">
-      <label class="titre-bloc" for="newmessage">Répondre sur ce sujet</label>
-      <div class="form-error"><p></p></div>
-      <div class="form-post-inner">
-        <textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
-        <span id="captcha-container"></span>
-        <div class="form-post-button"><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></div>
+    <form class="js-form-post form">
+      <div class="form__errors"><p></p></div>
+      <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="1"></textarea>
+      <span class="form__captcha-container"></span>
+      <div class="form__submit-container">
+        <input class="button button--raised button--cta button--large button--scale" type="submit" value="Poster" tabindex="4">
       </div>
-    </div>
+    </form>
 <?php endif ?>
-
-    <div class="bottom-back-buttons">
-      <span>
-        <a class="submit" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour forum</a>
-      </span>
-      <span class="align-right">
-        <a class="submit" href="/accueil">Accueil</a>
-      </span>
-    </div>
 
   </div>
 
-  <aside class="aside">
+  <aside class="aside desktop">
     <div class="ouvrir-jvc">
       <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans JVC</a>
     </div>

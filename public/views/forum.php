@@ -53,17 +53,15 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 
 <?php include 'forum_pagination.php' ?>
 
-    <div class="form-post">
-      <label class="titre-bloc" for="newsujet">Créer un nouveau sujet</label>
-      <div class="form-error"><p></p></div>
-      <div class="form-post-inner">
-        <input class="input newsujet" type="text" name="newsujet" id="newsujet" maxlength="100" placeholder="Titre">
-        
-        <textarea class="input textarea" id="newmessage" placeholder="Postez ici votre <?= superlatif() ?> message."></textarea>
-        <span id="captcha-container"></span>
-        <div class="form-post-button"><input class="submit submit-main submit-big" id="post" type="submit" value="Poster"></div>
+    <form class="js-form-topic form form--topic">
+      <div class="form__errors"><p></p></div>
+      <input class="form__topic" maxlength="100" placeholder="Mon sujet" tabindex="1">
+      <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="2"></textarea>
+      <span class="form__captcha-container"></span>
+      <div class="form__submit-container">
+        <input class="button button--raised button--cta button--large button--scale" type="submit" value="Poster" tabindex="4">
       </div>
-    </div>
+    </form>
   </div>
 
   <aside class="aside">

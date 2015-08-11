@@ -2,12 +2,13 @@
 <html lang="fr">
 <meta charset="utf-8">
 <title><?= $title ?></title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link rel="stylesheet" href="/style-<?= REVISION_NUMBER_STYLE ?>.css">
 <meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#2196F3">
 
 <?= $body ?>
 
