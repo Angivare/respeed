@@ -26,9 +26,7 @@ body {
 
 @media (min-width: 1025px) {
   body {
-    background-color: #ffac2f;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(#ff9025, #ffac2f);
+    background: #444349 url(/images/background_stardust.png);
     padding-bottom: 10px;
   }
 
@@ -132,9 +130,9 @@ h1, h2, h3 {
     width: calc(100% - 20px);
     margin: 0 auto 10px;
     max-width: 1400px;
-    border-width: 1px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(234, 63, 0, 0.5);
+    border: 1px solid black;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,.5);
     padding: 10px 30px;
   }
 
@@ -1640,7 +1638,7 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .form-post__textarea {
-    font-size: 16px;
+    font-size: 18px;
     padding: 7px 10px;
     height: 170px;
   }
