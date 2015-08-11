@@ -30,7 +30,7 @@ body {
 }
 
 a {
-  color: #0A77B8;
+  color: #1976d2;
   text-decoration: none;
 }
 
@@ -539,7 +539,7 @@ h1, h2, h3 {
 }
 
 .liste-topics a:visited {
-  color: #888;
+  color: #757575;
 }
 
 .topic-main-link {
@@ -548,12 +548,8 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .topic-main-link, .topic-last-page {
-    color: hsl(202, 90%, 20%);    
+    color: #1565C0;
     -webkit-tap-highlight-color: transparent;
-  }
-  
-  .topic-main-link:visited, .topic-last-page:visited {
-    color: hsl(202, 20%, 48%) !important;
   }
   
   .topic-main-link:active, .topic-last-page:active {
@@ -837,7 +833,7 @@ h1, h2, h3 {
 }
 
 .button:hover {
-  color: #1976d2;
+  color: #64b5f6;
 }
 
 
@@ -945,7 +941,7 @@ h1, h2, h3 {
 }
 
 .pagination-topic__page-link:visited {
-  color: #888;
+  color: #757575;
 }
 
 .pagination-topic__page-link:hover {
