@@ -57,7 +57,13 @@ h1, h2, h3 {
 }
 
 #instantclick-bar {
-  background: #9c0;
+  background: #cfd8dc;
+}
+
+@media (MAX-width: 1024px) {
+  #instantclick-bar {
+    background: #b0beb5;
+  }
 }
 
 /* HEADER */
@@ -69,7 +75,7 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .header {
-    background: #ff9025;
+    background: #444349;
   }
 }
 
@@ -113,8 +119,7 @@ h1, h2, h3 {
 
 .sheet {
   background: white;
-  border: solid rgba(0,0,0,.3);
-  border-color: #ea3f00;
+  border: solid black;
   border-width: 1px 0 0;
   padding: 5px 0 10px;
   position: relative;
@@ -130,9 +135,9 @@ h1, h2, h3 {
     width: calc(100% - 20px);
     margin: 0 auto 10px;
     max-width: 1400px;
-    border: 1px solid black;
+    border-width: 1px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    box-shadow: 0 0 20px rgba(0,0,0,.5);
     padding: 10px 30px;
   }
 
@@ -521,6 +526,12 @@ h1, h2, h3 {
   font-size: 14px;
 }
 
+@media (MAX-width: 1024px) {
+  .topic {
+    height: 48px;
+  }
+}
+
 @media (min-width: 1025px) {
   .topic {
     display: block;
@@ -530,12 +541,6 @@ h1, h2, h3 {
 
 .topic.even {
   background: #f5f5f5;
-}
-
-@media (min-width: 1025px) {
-  .topic:hover {
-    
-  }
 }
 
 @media (min-width: 1025px) {
@@ -562,7 +567,7 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .topic-main-link, .topic-last-page {
-    color: #1565C0;
+    color: #1156b1; /* Blue 850 */
     -webkit-tap-highlight-color: transparent;
   }
   
@@ -944,6 +949,12 @@ h1, h2, h3 {
 .pagination-topic__action-button {
   display: table-cell;
   width: 1px; /* Pour que la case reste aussi petite que possible et que celle d’a côté ai l’air plus ou moins centrée sur tablette/desktop */
+}
+
+@media (MAX-width: 650px) {
+  .pagination-topic__action-button-additional-text {
+    display: none;
+  }
 }
 
 .pagination-topic__pages {
@@ -1362,13 +1373,13 @@ h1, h2, h3 {
 
 .message .blockquote-jv {
   margin: 1em 0;
-  border-left: 3px solid rgba(0,0,64,.4);
+  border-left: 3px solid rgba(33,150,243,.25); /* Blue 500 */
   padding: 1px 6px;
-  background: rgba(0,0,64,.025);
+  background: rgba(33,150,243,.03);
 }
 
-.message .content > .blockquote-jv {
-  background: rgba(0,0,64,.035);
+.message .contentest > .blockquote-jv {
+  background: rgba(33,150,243,.05);
 }
 
 @media (min-width: 1025px) {

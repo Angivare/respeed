@@ -40,7 +40,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     </div>
 
     <div class="pagination-topic pagination-topic--bottom">
-      <div class="pagination-topic__action-button"><a class="button button--scale" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour</a></div>
+      <div class="pagination-topic__action-button"><a class="button button--scale" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour<span class="pagination-topic__action-button-additional-text"> forum</span></a></div>
       <div class="pagination-topic__pages">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>

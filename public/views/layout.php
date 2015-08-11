@@ -8,6 +8,7 @@
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#2196F3">
 
 <?= $body ?>
 
