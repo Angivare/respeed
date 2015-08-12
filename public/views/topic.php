@@ -26,7 +26,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
 
     <div class="pagination-topic">
+<?php if (!$locked): ?>
       <div class="pagination-topic__action-button"><span class="js-button-go-to-form button button--raised button--cta button--scale">Poster</span></div>
+<?php endif ?>
       <div class="pagination-topic__pages">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
       </div>
@@ -47,11 +49,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     </div>
 
 <?php if ($locked): ?>
-    <div class="form-post locked">
-      <label class="titre-bloc" for="newmessage">Sujet verrouillé</label>
-      <div class="form-post-inner">
-        <p><?= $lock_raison ?>
-      </div>
+    <div class="lock-alert">
+      <div class="lock-alert__title">Sujet verrouillé</div>
+      <div class="lock-alert__cause"><?= $lock_raison ?></div>
     </div>
 <?php else: ?>
     <form class="js-form-post form">

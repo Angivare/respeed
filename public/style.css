@@ -1597,6 +1597,39 @@ h1, h2, h3 {
   background: rgba(255, 85, 0, .07);
 }
 
+/* TOPIC - Motif de lock */
+
+.lock-alert {
+  border: 0 solid #4e342e;
+  margin-top: 1em;
+}
+
+@media (min-width: 1025px) {
+  .lock-alert {
+    border-width: 1px;
+    border-radius: 2px;
+  }
+}
+
+.lock-alert__title {
+  padding: 8px 10px;
+  padding-left: 35px;
+  background-color: #4e342e;
+  background-image: url(/images/lock_18px.svg);
+  background-repeat: no-repeat;
+  background-position: center left 10px;
+  color: #d7ccc8;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.lock-alert__cause {
+  padding: 1em 10px;
+  font-size: 14px;
+  background: #efebe9;
+  color: #3e2723;
+}
+
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
 
 .pseudo-modo, .message .meta-author .author.pseudo-modo {
