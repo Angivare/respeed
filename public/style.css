@@ -1633,12 +1633,12 @@ h1, h2, h3 {
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
 
 .pseudo-modo, .message .meta-author .author.pseudo-modo {
-  color: #080;
+  color: #43A047;
 }
 
 .pseudo-admin, .message .meta-author .author.pseudo-admin,
 .pseudo-staff, .message .meta-author .author.pseudo-staff {
-  color: #c00;
+  color: #C62828;
 }
 
 /* FORUM/TOPIC - Formulaire de post */
