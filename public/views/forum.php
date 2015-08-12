@@ -58,8 +58,10 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
       <input class="form__topic" maxlength="100" placeholder="Mon sujet" tabindex="1">
       <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="2"></textarea>
       <span class="form__captcha-container"></span>
-      <div class="form__submit-container">
-        <input class="button button--raised button--cta button--large button--scale" type="submit" value="Poster" tabindex="4">
+      <div class="form__actions">
+        <div class="form__action"></div>
+        <div class="form__action form__action--submit"><input class="button button--raised button--cta button--large button--scale" type="submit" value="Poster" tabindex="4"></div>
+        <div class="form__action"></div>
       </div>
     </form>
   </div>

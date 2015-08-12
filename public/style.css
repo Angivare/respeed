@@ -1716,8 +1716,19 @@ h1, h2, h3 {
   }
 }
 
-.form__submit-container {
+.form__actions {
+  display: table;
+  width: 100%;
+}
+
+.form__action {
+  display: table-cell;
+  width: 20%;
+}
+
+.form__action--submit {
   text-align: center;
+  width: 60%;
 }
 
 /* FOOTER */
