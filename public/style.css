@@ -717,60 +717,60 @@ h1, h2, h3 {
 /* FORUM - Dossiers sur la liste des topics */
 
 .liste-topics .label-dossier1 {
-  border-color: #ffcc00;
+  border-color: #fdd835;
 }
 
 .liste-topics .label-dossier2 {
-  border-color: #e36254;
+  border-color: #e65100;
 }
 
 .liste-topics .label-lock {
-  border-color: #333;
+  border-color: #4e342e;
 }
 
 .liste-topics .label-marque-on {
-  border-color: #7cac37;
+  border-color: #8bc34a;
 }
 
 .liste-topics .label-marque-off {
-  border-color: #b72a2a;
+  border-color: #e57373;
 }
 
 .liste-topics .label-resolu {
-  border-color: #5aa02c;
+  border-color: #388e3c;
 }
 
 .liste-topics .label-ghost {
-  border-color: #0cf;
+  border-color: #80deea;
 }
 
 @media (MAX-width: 1024px) {
   .label-dossier1 .label {
-    background: #ffcc00;
+    background: #fdd835;
   }
 
   .label-dossier2 .label {
-    background: #e36254;
+    background: #e65100;
   }
 
   .label-lock .label {
-    background: #333;
+    background: #4e342e;
   }
 
   .label-marque-on .label {
-    background: #7cac37;
+    background: #8bc34a;
   }
 
   .label-marque-off .label {
-    background: #b72a2a;
+    background: #e57373;
   }
 
   .label-resolu .label {
-    background: #5aa02c;
+    background: #388e3c;
   }
 
   .label-ghost .label {
-    background: #0cf;
+    background: #80deea;
   }
 }
 
