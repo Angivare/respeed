@@ -115,9 +115,6 @@ function adapt_html($message, $date, $id) {
   // Faire stickers agrandissable
   $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<img class="js-sticker sticker img-stickers" src="http://jv.stkr.fr/p3w/$1" data-sticker-id="$1">', $message);
 
-  // Sticker plus grand s’il n’y a qu’un sticker dans le message
-  $message = preg_replace('#^<div class="contentest">(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p3w/([^"]+)" data-sticker-id="[^"]+">(\s*)</div>#Usi', '<div class="contentest">$1<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$2" data-sticker-id="$2">$3</div>', $message);
-
   // Ajout classe CSS aux smileys
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" alt="$2" data-code="$2" title="$2">', $message);
 
