@@ -734,11 +734,13 @@ function toggleStickerSize() {
     , code = $(this).data('sticker-id')
 
   if (!isAlreadyEnlarged) {
-    $(this).prop('src', 'http://jv.stkr.fr/p7s/' + code)
+    if (devicePixelRatio > 1.5) {
+      $(this).prop('src', 'http://jv.stkr.fr/p7s/' + code)
+    }
     $(this).addClass('sticker--enlarged')
   }
   else {
-    $(this).prop('src', 'http://jv.stkr.fr/' + (isBig ? 'p3w' : 'p') + '/' + code)
+    $(this).prop('src', 'http://jv.stkr.fr/p3w/' + code)
     $(this).removeClass('sticker--enlarged')
   }
 }

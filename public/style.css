@@ -1485,12 +1485,17 @@ h1, h2, h3 {
   cursor: pointer;
 }
 
+.contentest > .sticker {
+  width: 70px;
+  height: 70px;
+}
+
 .sticker--big {
   width: 70px;
   height: 70px;
 }
 
-.sticker--enlarged {
+.sticker--enlarged, .contentest > .sticker--enlarged {
   width: 140px;
   height: 140px;
 }

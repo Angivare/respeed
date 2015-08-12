@@ -113,11 +113,10 @@ function adapt_html($message, $date, $id) {
   $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="/contenu/medias/video.php\?q=config&amp;id=[0-9]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur jeuxvideo.com</a></p>', $message);
 
   // Faire stickers agrandissable
-  $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<img class="js-sticker sticker img-stickers" src="http://jv.stkr.fr/p/$1" data-sticker-id="$1">', $message);
+  $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<img class="js-sticker sticker img-stickers" src="http://jv.stkr.fr/p3w/$1" data-sticker-id="$1">', $message);
 
-  // Sticker plus grand si c’est tout ce qu’il y a dans le message (un ou deux stickers)
-  $message = preg_replace('#^<div class="contentest">(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)</div>#Usi', '<div class="contentest">$1<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$2" data-sticker-id="$2">$3</div>', $message);
-  $message = preg_replace('#^<div class="contentest">(<p>)?(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p/([^"]+)" data-sticker-id="[^"]+">(\s*)(</p>)?</div>#Usi', '<div class="contentest">$1$2<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$3" data-sticker-id="$3">$4<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$5" data-sticker-id="$5">$6$7</div>', $message);
+  // Sticker plus grand s’il n’y a qu’un sticker dans le message
+  $message = preg_replace('#^<div class="contentest">(\s*)<img class="js-sticker sticker img-stickers" src="http://jv\.stkr\.fr/p3w/([^"]+)" data-sticker-id="[^"]+">(\s*)</div>#Usi', '<div class="contentest">$1<img class="js-sticker sticker sticker--big img-stickers" src="http://jv.stkr.fr/p3w/$2" data-sticker-id="$2">$3</div>', $message);
 
   // Ajout classe CSS aux smileys
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" alt="$2" data-code="$2" title="$2">', $message);
