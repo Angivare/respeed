@@ -1027,6 +1027,12 @@ h1, h2, h3 {
   -webkit-tap-highlight-color: transparent;
 }
 
+@media (min-width: 768px) {
+  .message {
+    margin-bottom: 12px;
+  }
+}
+
 @media (min-width: 1025px) {
   .message {
     border: initial;
@@ -1064,6 +1070,12 @@ h1, h2, h3 {
   display: table-cell;
   vertical-align: middle;
   padding-left: 5px;
+}
+
+@media (min-width: 768px) {
+  .message .meta-author {
+    padding-left: 10px;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -1159,6 +1171,12 @@ h1, h2, h3 {
   display: table-cell;
   vertical-align: middle;
   text-align: right;
+}
+
+@media (min-width: 768px) {
+  .message .meta-actions {
+    padding-right: 5px;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -1328,9 +1346,17 @@ h1, h2, h3 {
 .message-border {
   border-bottom: 1px dotted #444;
   border-color: rgba(0,0,0,.4);
-  width: calc(100% - 20px);
+  width: -webkit-calc(100% - 20px);
+  width:         calc(100% - 20px);
   margin: auto;
   margin-bottom: 1em;
+}
+
+@media (min-width: 768px) {
+  .message-border {
+    width: -webkit-calc(100% - 30px);
+    width:         calc(100% - 30px);
+  }
 }
 
 /* TOPIC - Message - content */
@@ -1338,6 +1364,12 @@ h1, h2, h3 {
 .message .content {
   padding: 0 10px;
   word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .message .content {
+    padding: 0 15px;
+  }
 }
 
 @media (min-width: 1025px) {
