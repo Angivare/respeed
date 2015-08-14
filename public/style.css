@@ -136,7 +136,7 @@ h1, h2, h3 {
     margin: 0 auto 10px;
     max-width: 1400px;
     border-width: 1px;
-    border-radius: 8px;
+    border-radius: 6px;
     box-shadow: 0 0 20px rgba(0,0,0,.5);
     padding: 10px 30px;
   }
