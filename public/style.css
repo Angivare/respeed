@@ -1425,6 +1425,9 @@ h1, h2, h3 {
 
 .message .pre-jv {
   padding: .5em 7px;
+  word-wrap: normal;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .message .code-jv {
