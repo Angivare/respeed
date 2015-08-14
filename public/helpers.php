@@ -316,7 +316,6 @@ MESSAGE;
   $markup .= <<<MESSAGE
       </div>
     </div>
-    <div class="mobile message-border"></div>
     <div class="js-content content">{$message['content']}</div>
     <div class="clearfix"></div>
     <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> {$message['pseudo']} parle mais se fait ignorer.</div>
