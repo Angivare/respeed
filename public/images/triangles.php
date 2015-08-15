@@ -21,10 +21,11 @@ function char_to_int($c) {
 }
 
 function str_to_int($s) {
+  $s = strtolower($s);
   $ret = 0;
   for($n = 0; $n < strlen($s); $n++)
     $ret += (1 + char_to_int($s[$n])) * pow(41, $n);
-  return $ret;
+  return (int) fmod($ret, PHP_INT_MAX);
 }
 
 function random_color() {
@@ -80,7 +81,7 @@ $colors = [
   '#ff8080',
 ];
 if($s !== 0)
-  mt_srand(str_to_int(strtolower($s)));
+  mt_srand(str_to_int($s));
 
 $imd = new ImagickDraw();
 $imd->setStrokeWidth(0);
