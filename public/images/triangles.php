@@ -6,6 +6,54 @@ if (!class_exists('Imagick')) {
   exit;
 }
 
+class Palette {
+  public function __construct() {
+    $d = [];
+
+    $dist = 30;
+    $off  = 0;
+
+    $h_r = 360*0.33;
+
+    $scheme = mt_rand(0, 0);
+
+    $d[] = [ mt_rand(0, 360), 255*mt_rand(60, 100)/100, 255*mt_rand(40, 60)/100 ];
+
+    switch($scheme) {
+      /* Additional color scheme types implementable here */
+
+      case 0: //mono
+        foreach([-0.5, -0.3, 0.3, 0.5] as $r)
+          $d[] = [ $d[0][0], $d[0][1], $d[0][2] + $d[0][2]*$r ];
+        //Additional high lighted hue-altered color
+        $d[] = [ $d[0][0] + mt_rand(-$h_r, $h_r), $d[0][1], $d[0][2] * (1+(mt_rand(70, 100))/100) ];
+      break;
+    }
+
+    $this->d = [];
+    foreach($d as $hsl)
+      $this->d[] = self::from_hsl($hsl);
+  }
+
+  public function get() {
+    return $this->d[mt_rand(0, count($this->d)-1)];
+  }
+
+  private static function from_hsl($hsl) {
+    $h = array_shift($hsl);
+    while($h > 360) $h -= 360;
+    while($h < 0) $h += 360;
+    $s = array_shift($hsl);
+    if($s < 0) $s = 0;
+    if($s > 255) $s = 255;
+    $l = array_shift($hsl);
+    if($l < 0) $l = 0;
+    if($l > 255) $l = 255;
+
+    return new ImagickPixel("hsl($h, $s, $l)");
+  }
+}
+
 function char_to_int($c) {
   switch($c) {
     case '[': return 0;
@@ -28,15 +76,10 @@ function str_to_int($s) {
   return (int) fmod($ret, PHP_INT_MAX);
 }
 
-function random_color() {
-  global $colors;
-  return $colors[mt_rand(0, count($colors)-1)];
-}
-
 function draw($x, $y, $o) {
-  global $_w, $_h, $imd;
+  global $_w, $_h, $imd, $pal;
 
-  $color = random_color();
+  $color = $pal->get();
   $imd->setStrokeColor($color);
   $imd->setFillColor($color);
 
@@ -68,34 +111,7 @@ $_h = $_w * sqrt(3.0/4.0);
 if($s !== 0)
   mt_srand(str_to_int($s));
 
-$colors = [
-  [
-    '#dec583',
-    '#41a4e6',
-    '#a49494',
-    '#f6deac',
-    '#d5cdc5',
-  ], [
-    '#cdbd20',
-    '#835a10',
-    '#5a3908',
-    '#ac8329',
-    '#f6f6a4',
-  ], [
-    '#e6cd94',
-    '#6ad531',
-    '#f6ee8b',
-    '#185a41',
-    '#52624a',
-  ], [
-    '#ee8b4a',
-    '#eebd8b',
-    '#ffe6b4',
-    '#832908',
-    '#735210',
-  ],
-];
-$colors = $colors[mt_rand(0, count($colors)-1)];
+$pal = new Palette();
 
 $imd = new ImagickDraw();
 $imd->setStrokeWidth(0);
