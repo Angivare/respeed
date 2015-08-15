@@ -65,23 +65,37 @@ $h = $w;
 $_w = ($w/2.0) / sqrt(3.0/4.0);
 $_h = $_w * sqrt(3.0/4.0);
 
-$colors = [
-  // http://gamedev.stackexchange.com/a/46469
-  // http://i.stack.imgur.com/oSJ1o.png
-  '#ff8080',
-  '#ffae80',
-  '#ffdd80',
-  '#d5ff80',
-  '#80ffb7',
-  '#80fffd',
-  '#80d0ff',
-  '#8097ff',
-  '#c680ff',
-  '#ff80ca',
-  '#ff8080',
-];
 if($s !== 0)
   mt_srand(str_to_int($s));
+
+$colors = [
+  [
+    '#dec583',
+    '#41a4e6',
+    '#a49494',
+    '#f6deac',
+    '#d5cdc5',
+  ], [
+    '#cdbd20',
+    '#835a10',
+    '#5a3908',
+    '#ac8329',
+    '#f6f6a4',
+  ], [
+    '#e6cd94',
+    '#6ad531',
+    '#f6ee8b',
+    '#185a41',
+    '#52624a',
+  ], [
+    '#ee8b4a',
+    '#eebd8b',
+    '#ffe6b4',
+    '#832908',
+    '#735210',
+  ],
+];
+$colors = $colors[mt_rand(0, count($colors)-1)];
 
 $imd = new ImagickDraw();
 $imd->setStrokeWidth(0);
