@@ -9,26 +9,30 @@ if (!class_exists('Imagick')) {
 class Palette {
   public function __construct() {
     $d = [];
+    $b = [ mt_rand(0, 360), 255*mt_rand(80, 90)/100, 255*mt_rand(40, 60)/100 ];
 
-    $dist = 30;
-    $off  = 0;
-
-    $h_r = 360*0.33;
-
-    $scheme = mt_rand(0, 0);
-
-    $d[] = [ mt_rand(0, 360), 255*mt_rand(60, 100)/100, 255*mt_rand(40, 60)/100 ];
-
-    switch($scheme) {
+    switch(mt_rand(0, 1)) {
       /* Additional color scheme types implementable here */
 
-      case 0: //mono
-        foreach([-0.5, -0.3, 0.3, 0.5] as $r)
-          $d[] = [ $d[0][0], $d[0][1], $d[0][2] + $d[0][2]*$r ];
+      case 0: //mono, total 6 colors
+        foreach(self::l(0.5, 0.66, 1.0, 1.33, 1.5) as $w)
+          $d[] = self::blend($b, $w);
         //Additional high lighted hue-altered color
-        $d[] = [ $d[0][0] + mt_rand(-$h_r, $h_r), $d[0][1], $d[0][2] * (1+(mt_rand(70, 100))/100) ];
+        $h_d = mt_rand(90, 120) * (mt_rand(0,1) ? 1 : -1);
+        $d[] = [ $b[0] + $h_d, $b[1], mt_rand(225, 255) ];
+      break;
+      case 1: //analogous, total 6 colors
+        $t = [];
+        foreach([-30, -15, 0, 15, 30] as $off)
+          $t[] = [ $b[0] + $off + mt_rand(-5, 5), $b[1], $b[2] ];
+        foreach([ [0.66, 1.8], [1.33, 1.0], [1.33, 0.66], [0.66, 1.33] ] as $w) {
+          $hsl = array_splice($t, mt_rand(0, count($t)-1), 1)[0];
+          $d[] = self::blend($hsl, $w);
+        }
+        foreach($t as $c) $d[] = $c;
       break;
     }
+
 
     $this->d = [];
     foreach($d as $hsl)
@@ -37,6 +41,25 @@ class Palette {
 
   public function get() {
     return $this->d[mt_rand(0, count($this->d)-1)];
+  }
+
+  private static function blend($hsl, $w) {
+    foreach($w as $k => $v)
+      $hsl[$k+1] = $hsl[$k+1] * $v;
+    return $hsl;
+  }
+
+  private static function s() {
+    return self::from_comp(0, func_get_args());
+  } private static function l() {
+    return self::from_comp(1, func_get_args());
+  } private static function from_comp($i, $val) {
+    $ret = [];
+    foreach($val as $v) {
+      $r = [ 1.0, 1.0 ];
+      $r[$i] = $v;
+      $ret[] = $r;
+    } return $ret;
   }
 
   private static function from_hsl($hsl) {
