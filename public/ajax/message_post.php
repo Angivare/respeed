@@ -4,7 +4,7 @@ require 'common.php';
 require '../helpers.php';
 require '../parser.php';
 
-$re = '#https?://' . $_SERVER['HTTP_HOST'] . '/(?P<forum>[0-9]+)(/(?P<mode>0)?(?P<topic>[0-9]+))?-(?P<slug>[a-z]+(-[a-z0-9]+)*)(/(?P<page>[0-9]+))?(\#(?P<message>[0-9]+))?#i';
+$re = '#https?://' . $_SERVER['HTTP_HOST'] . '/(?P<forum>[0-9]+)(/(?P<mode>0)?(?P<topic>[0-9]+))?-(?P<slug>[a-z0-9]+(-[a-z0-9]+)*)(/(?P<page>[0-9]+))?(\#(?P<message>[0-9]+))?#i';
 
 arg('url', 'msg', 'form', 'ccode');
 
