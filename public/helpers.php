@@ -133,7 +133,7 @@ function adapt_html($message, $date, $id) {
   // Faille 23 août
   $x = "[[m:<script>alert('lel')]]";
   if (strpos($message, '[[') !== false) {
-    $message = preg_replace_callback('#\[\[([^\]]+)#si', function($matches) {
+    $message = preg_replace_callback('#\[\[([^\] /]+)#si', function($matches) {
       $ret = $matches[0];
       $x = str_replace(['<', '>'], ['&lt;', '&gt;'], $matches[1]);
       $ret = str_replace($matches[1], $x, $ret);
