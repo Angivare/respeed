@@ -129,6 +129,9 @@ function adapt_html($message, $date, $id) {
     }
     return $ret;
   }, $message);
+  
+  // Suppression de potentielles failles
+  $message = str_replace(['<style>', '</style>', '<script>', '</script>'], '', $message);
 
   return $message;
 }
