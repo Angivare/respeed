@@ -64,3 +64,12 @@ CREATE TABLE `icstats2` (
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `logs_requests` (
+  `id` int unsigned NOT NULL auto_increment,
+  `path` varchar(128) NOT NULL,
+  `t_req` double NOT NULL,
+  `t_db` double NOT NULL,
+  `t` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

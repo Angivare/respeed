@@ -170,4 +170,11 @@ class Db {
       );
     }
   }
+
+  public function log_request($path, $t_req, $t_db) {
+    $this->query(
+      'INSERT INTO logs_requests(path, t_req, t_db, t) VALUES(?, ?, ?, ?)',
+      [$path, $t_req, $t_db, microtime(TRUE)]
+    );
+  }
 }
