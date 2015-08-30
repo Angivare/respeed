@@ -6,6 +6,77 @@ if (!class_exists('Imagick')) {
   exit;
 }
 
+class Palette {
+  public function __construct() {
+    $d = [];
+    $b = [ mt_rand(0, 360), 255*mt_rand(80, 90)/100, 255*mt_rand(40, 60)/100 ];
+
+    switch(mt_rand(0, 1)) {
+      /* Additional color scheme types implementable here */
+
+      case 0: //mono, total 6 colors
+        foreach(self::l(0.5, 0.66, 1.0, 1.33, 1.5) as $w)
+          $d[] = self::blend($b, $w);
+        //Additional high lighted hue-altered color
+        $h_d = mt_rand(90, 120) * (mt_rand(0,1) ? 1 : -1);
+        $d[] = [ $b[0] + $h_d, $b[1], mt_rand(225, 255) ];
+      break;
+      case 1: //analogous, total 6 colors
+        $t = [];
+        foreach([-30, -15, 0, 15, 30] as $off)
+          $t[] = [ $b[0] + $off + mt_rand(-5, 5), $b[1], $b[2] ];
+        foreach([ [0.66, 1.8], [1.33, 1.0], [1.33, 0.66], [0.66, 1.33] ] as $w) {
+          $hsl = array_splice($t, mt_rand(0, count($t)-1), 1)[0];
+          $d[] = self::blend($hsl, $w);
+        }
+        foreach($t as $c) $d[] = $c;
+      break;
+    }
+
+
+    $this->d = [];
+    foreach($d as $hsl)
+      $this->d[] = self::from_hsl($hsl);
+  }
+
+  public function get() {
+    return $this->d[mt_rand(0, count($this->d)-1)];
+  }
+
+  private static function blend($hsl, $w) {
+    foreach($w as $k => $v)
+      $hsl[$k+1] = $hsl[$k+1] * $v;
+    return $hsl;
+  }
+
+  private static function s() {
+    return self::from_comp(0, func_get_args());
+  } private static function l() {
+    return self::from_comp(1, func_get_args());
+  } private static function from_comp($i, $val) {
+    $ret = [];
+    foreach($val as $v) {
+      $r = [ 1.0, 1.0 ];
+      $r[$i] = $v;
+      $ret[] = $r;
+    } return $ret;
+  }
+
+  private static function from_hsl($hsl) {
+    $h = array_shift($hsl);
+    while($h > 360) $h -= 360;
+    while($h < 0) $h += 360;
+    $s = array_shift($hsl);
+    if($s < 0) $s = 0;
+    if($s > 255) $s = 255;
+    $l = array_shift($hsl);
+    if($l < 0) $l = 0;
+    if($l > 255) $l = 255;
+
+    return new ImagickPixel("hsl($h, $s, $l)");
+  }
+}
+
 function char_to_int($c) {
   switch($c) {
     case '[': return 0;
@@ -21,21 +92,17 @@ function char_to_int($c) {
 }
 
 function str_to_int($s) {
+  $s = strtolower($s);
   $ret = 0;
   for($n = 0; $n < strlen($s); $n++)
     $ret += (1 + char_to_int($s[$n])) * pow(41, $n);
-  return $ret;
-}
-
-function random_color() {
-  global $colors;
-  return $colors[mt_rand(0, count($colors)-1)];
+  return (int) fmod($ret, PHP_INT_MAX);
 }
 
 function draw($x, $y, $o) {
-  global $_w, $_h, $imd;
+  global $_w, $_h, $imd, $pal;
 
-  $color = random_color();
+  $color = $pal->get();
   $imd->setStrokeColor($color);
   $imd->setFillColor($color);
 
@@ -64,23 +131,10 @@ $h = $w;
 $_w = ($w/2.0) / sqrt(3.0/4.0);
 $_h = $_w * sqrt(3.0/4.0);
 
-$colors = [
-  // http://gamedev.stackexchange.com/a/46469
-  // http://i.stack.imgur.com/oSJ1o.png
-  '#ff8080',
-  '#ffae80',
-  '#ffdd80',
-  '#d5ff80',
-  '#80ffb7',
-  '#80fffd',
-  '#80d0ff',
-  '#8097ff',
-  '#c680ff',
-  '#ff80ca',
-  '#ff8080',
-];
 if($s !== 0)
-  mt_srand(str_to_int(strtolower($s)));
+  mt_srand(str_to_int($s));
+
+$pal = new Palette();
 
 $imd = new ImagickDraw();
 $imd->setStrokeWidth(0);
