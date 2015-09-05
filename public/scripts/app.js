@@ -778,13 +778,13 @@ if (googleAnalyticsID) {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', googleAnalyticsID, 'auto');
   
-  InstantClick.on('change', function() {
+  instantClick.on('change', function() {
     ga('set', 'dimension1', $is_connected ? 'Member' : 'Guest')
     ga('send', 'pageview', location.pathname + location.search)
   })
 }
 
-InstantClick.on('change', function(isInitialLoad) {
+instantClick.on('change', function(isInitialLoad) {
   FastClick.attach(document.body)
   updateFavorites()
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
@@ -794,12 +794,12 @@ InstantClick.on('change', function(isInitialLoad) {
   handleRefreshOnPageChange(isInitialLoad)
 })
 
-InstantClick.on('restore', function() {
+instantClick.on('restore', function() {
   handleRefreshOnPageChange()
   $('.form').submit(post)
 })
 
-InstantClick.on('change', function() {
+instantClick.on('change', function() {
   $('.form').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
@@ -818,7 +818,7 @@ InstantClick.on('change', function() {
   $('.js-button-go-to-form').click(goToForm)
 })
 
-InstantClick.init()
+instantClick.init()
 
 if (hasTouch) {
   document.addEventListener('touchstart', function(e) {
