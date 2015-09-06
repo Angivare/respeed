@@ -28,5 +28,6 @@ var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
 <script src="/scripts/jquery-<?= REVISION_NUMBER_JS_JQUERY ?>.js" data-no-instant></script>
 <script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" data-no-instant></script>
 <script src="/scripts/instantclick-<?= REVISION_NUMBER_JS_INSTANTCLICK ?>.js" data-no-instant></script>
+<script src="/scripts/loading-indicator-<?= REVISION_NUMBER_JS_LOADING_INDICATOR ?>.js" data-no-instant></script>
 <script src="/scripts/jvcode-<?= REVISION_NUMBER_JS_JVCODE ?>.js" data-no-instant></script>
 <script src="/scripts/app-<?= REVISION_NUMBER_JS_APP ?>.js" data-no-instant></script>
