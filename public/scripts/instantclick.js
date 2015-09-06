@@ -1,34 +1,32 @@
 /* InstantClick 3.1.0 | (C) 2014-2015 Alexandre Dieulot | http://instantclick.io/license */
 
-var InstantClick // Declared before assignment to not be forced to be global
-
-var instantClick = InstantClick = function(document, location) {
+var instantClick
+  , InstantClick = instantClick = function(document, location, $userAgent) {
   // Internal variables
-  var $ua = navigator.userAgent,
-      $isChromeForIOS = $ua.indexOf(' CriOS/') > -1,
-      $hasTouch = 'createTouch' in document,
-      $currentLocationWithoutHash,
-      $urlToPreload,
-      $preloadTimer,
-      $lastTouchTimestamp,
+  var $isChromeForIOS = $userAgent.indexOf(' CriOS/') > -1
+    , $hasTouch = 'createTouch' in document
+    , $currentLocationWithoutHash
+    , $urlToPreload
+    , $preloadTimer
+    , $lastTouchTimestamp
 
   // Preloading-related variables
-      $history = {},
-      $xhr,
-      $url = false,
-      $title = false,
-      $mustRedirect = false,
-      $body = false,
-      $timing = {},
-      $isPreloading = false,
-      $isWaitingForCompletion = false,
-      $trackedAssets = [],
+    , $history = {}
+    , $xhr
+    , $url = false
+    , $title = false
+    , $mustRedirect = false
+    , $body = false
+    , $timing = {}
+    , $isPreloading = false
+    , $isWaitingForCompletion = false
+    , $trackedAssets = []
 
   // Variables defined by public functions
-      $useWhitelist,
-      $preloadOnMousedown,
-      $delayBeforePreload,
-      $eventsCallbacks = {
+    , $useWhitelist
+    , $preloadOnMousedown
+    , $delayBeforePreload
+    , $eventsCallbacks = {
         fetch: [],
         receive: [],
         wait: [],
@@ -67,7 +65,7 @@ var instantClick = InstantClick = function(document, location) {
         return true
       }
     }
-    while (elem = elem.parentNode);
+    while (elem = elem.parentNode)
     return false
   }
 
@@ -83,7 +81,7 @@ var instantClick = InstantClick = function(document, location) {
         return true
       }
     }
-    while (elem = elem.parentNode);
+    while (elem = elem.parentNode)
     return false
   }
 
@@ -137,10 +135,10 @@ var instantClick = InstantClick = function(document, location) {
     if (newUrl) {
       history.pushState(null, null, newUrl)
 
-      var hashIndex = newUrl.indexOf('#'),
-          hashElem = hashIndex > -1
-                     && document.getElementById(newUrl.substr(hashIndex + 1)),
-          offset = 0
+      var hashIndex = newUrl.indexOf('#')
+        , hashElem = hashIndex > -1
+                     && document.getElementById(newUrl.substr(hashIndex + 1))
+        , offset = 0
 
       if (hashElem) {
         while (hashElem.offsetParent) {
@@ -162,8 +160,8 @@ var instantClick = InstantClick = function(document, location) {
        *
        * 1. Removes title on pushState, so the title needs to be set after.
        *
-       * 2. Will not set the title if it’s identical when trimmed, so
-       *    appending a space won't do, but a non-breaking space works.
+       * 2. Will not set the title if it's identical when trimmed, so
+       *    appending a space won't do; but a non-breaking space works.
        */
       document.title = title + String.fromCharCode(160)
     }
@@ -179,11 +177,6 @@ var instantClick = InstantClick = function(document, location) {
     else {
       triggerPageEvent('change', false)
     }
-
-    // Real event, useful for combining userscripts, but only for that so it’s undocumented.
-    var userscriptEvent = document.createEvent('HTMLEvents')
-    userscriptEvent.initEvent('instantclick:newpage', true, true)
-    dispatchEvent(userscriptEvent)
   }
 
   function setPreloadingAsHalted() {
@@ -195,16 +188,16 @@ var instantClick = InstantClick = function(document, location) {
     /* Must be done on text, not on a node's innerHTML, otherwise strange
      * things happen with implicitly closed elements (see the Noscript test).
      */
-    return html.replace(/<noscript[\s\S]+<\/noscript>/gi, '')
+    return html.replace(/<noscript[\s\S]+?<\/noscript>/gi, '')
   }
 
 
-  ////////// EVENT HANDLERS //////////
+  ////////// EVENT LISTENERS //////////
 
 
-  function mousedown(e) {
+  function mousedownListener(e) {
     if ($lastTouchTimestamp > (+new Date - 500)) {
-      return // Otherwise, click doesn’t fire
+      return // Otherwise, click doesn't fire
     }
 
     var a = getLinkTarget(e.target)
@@ -216,9 +209,9 @@ var instantClick = InstantClick = function(document, location) {
     preload(a.href)
   }
 
-  function mouseover(e) {
+  function mouseoverListener(e) {
     if ($lastTouchTimestamp > (+new Date - 500)) {
-      return // Otherwise, click doesn’t fire
+      return // Otherwise, click doesn't fire
     }
 
     var a = getLinkTarget(e.target)
@@ -227,7 +220,7 @@ var instantClick = InstantClick = function(document, location) {
       return
     }
 
-    a.addEventListener('mouseout', mouseout)
+    a.addEventListener('mouseout', mouseoutListener)
 
     if (!$delayBeforePreload) {
       preload(a.href)
@@ -238,7 +231,7 @@ var instantClick = InstantClick = function(document, location) {
     }
   }
 
-  function touchstart(e) {
+  function touchstartListener(e) {
     $lastTouchTimestamp = +new Date
 
     var a = getLinkTarget(e.target)
@@ -248,15 +241,15 @@ var instantClick = InstantClick = function(document, location) {
     }
 
     if ($preloadOnMousedown) {
-      a.removeEventListener('mousedown', mousedown)
+      a.removeEventListener('mousedown', mousedownListener)
     }
     else {
-      a.removeEventListener('mouseover', mouseover)
+      a.removeEventListener('mouseover', mouseoverListener)
     }
     preload(a.href)
   }
 
-  function click(e) {
+  function clickListener(e) {
     var a = getLinkTarget(e.target)
 
     if (!a || !isPreloadable(a)) {
@@ -270,7 +263,7 @@ var instantClick = InstantClick = function(document, location) {
     display(a.href)
   }
 
-  function mouseout() {
+  function mouseoutListener() {
     if ($preloadTimer) {
       clearTimeout($preloadTimer)
       $preloadTimer = false
@@ -284,7 +277,7 @@ var instantClick = InstantClick = function(document, location) {
     setPreloadingAsHalted()
   }
 
-  function readystatechange() {
+  function readystatechangeListener() {
     if ($xhr.readyState < 4) {
       return
     }
@@ -318,16 +311,16 @@ var instantClick = InstantClick = function(document, location) {
         scrollY: urlWithoutHash in $history ? $history[urlWithoutHash].scrollY : 0
       }
 
-      var elems = doc.head.children,
-          found = 0,
-          elem,
-          data
+      var elems = doc.head.children
+        , found = 0
+        , elem
+        , data
 
-      for (var i = elems.length - 1; i >= 0; i--) {
+      for (var i = 0; i < elems.length; i++) {
         elem = elems[i]
         if (elem.hasAttribute('data-instant-track')) {
           data = elem.getAttribute('href') || elem.getAttribute('src') || elem.innerHTML
-          for (var j = $trackedAssets.length - 1; j >= 0; j--) {
+          for (var j = 0; j < $trackedAssets.length; j++) {
             if ($trackedAssets[j] == data) {
               found++
             }
@@ -353,23 +346,23 @@ var instantClick = InstantClick = function(document, location) {
 
 
   function instantanize(isInitializing) {
-    document.body.addEventListener('touchstart', touchstart, true)
+    document.body.addEventListener('touchstart', touchstartListener, true)
     if ($preloadOnMousedown) {
-      document.body.addEventListener('mousedown', mousedown, true)
+      document.body.addEventListener('mousedown', mousedownListener, true)
     }
     else {
-      document.body.addEventListener('mouseover', mouseover, true)
+      document.body.addEventListener('mouseover', mouseoverListener, true)
     }
-    document.body.addEventListener('click', click, true)
+    document.body.addEventListener('click', clickListener, true)
 
     if (!isInitializing) {
-      var scripts = document.body.getElementsByTagName('script'),
-          script,
-          copy,
-          parentNode,
-          nextSibling
+      var scripts = document.body.getElementsByTagName('script')
+        , script
+        , copy
+        , parentNode
+        , nextSibling
 
-      for (i = 0, j = scripts.length; i < j; i++) {
+      for (i = 0; i < scripts.length; i++) {
         script = scripts[i]
         if (script.hasAttribute('data-no-instant')) {
           continue
@@ -408,8 +401,7 @@ var instantClick = InstantClick = function(document, location) {
          - Opera 12.16: triggers when cursor moved
 
          To remedy to this, we do not start preloading if last display
-         occurred less than 100 ms ago. If they happen to click on the link,
-         they will be redirected.
+         occurred less than 100 ms ago.
       */
 
       return
@@ -446,16 +438,16 @@ var instantClick = InstantClick = function(document, location) {
     }
     if ($preloadTimer || !$isPreloading) {
       /* $preloadTimer:
-         Happens when there’s a delay before preloading and that delay
+         Happens when there's a delay before preloading and that delay
          hasn't expired (preloading didn't kick in).
 
          !$isPreloading:
-         A link has been clicked, and preloading hasn’t been initiated.
+         A link has been clicked, and preloading hasn't been initiated.
          It happens with touch devices when a user taps *near* the link,
          Safari/Chrome will trigger mousedown, mouseover, click (and others),
          but when that happens we ignore mousedown/mouseover (otherwise click
-         doesn’t fire). Maybe there’s a way to make the click event fire, but
-         that’s not worth it as mousedown/over happen just 1ms before click
+         doesn't fire). Maybe there's a way to make the click event fire, but
+         that's not worth it as mousedown/over happen just 1ms before click
          in this situation.
 
          It also happens when a user uses his keyboard to navigate (with Tab
@@ -481,7 +473,7 @@ var instantClick = InstantClick = function(document, location) {
     if ($isWaitingForCompletion) {
       /* The user clicked on a link while a page was preloading. Either on
          the same link or on another link. If it's the same link something
-         might have gone wrong (or he could have double clicked, we don’t
+         might have gone wrong (or he could have double clicked, we don't
          handle that case), so we send him to the page without pjax.
          If it's another link, it hasn't been preloaded, so we redirect the
          user to it.
@@ -509,11 +501,11 @@ var instantClick = InstantClick = function(document, location) {
 
 
   var bar = function() {
-    var $barContainer,
-        $barElement,
-        $barTransformProperty,
-        $barProgress,
-        $barTimer
+    var $barContainer
+      , $barElement
+      , $barTransformProperty
+      , $barProgress
+      , $barTimer
 
     function init() {
       $barContainer = document.createElement('div')
@@ -527,7 +519,7 @@ var instantClick = InstantClick = function(document, location) {
 
       $barTransformProperty = 'transform'
       if (!($barTransformProperty in $barElement.style)) {
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < vendors.length; i++) {
           if (vendors[i] + 'Transform' in $barElement.style) {
             $barTransformProperty = vendors[i] + 'Transform'
           }
@@ -536,7 +528,7 @@ var instantClick = InstantClick = function(document, location) {
 
       var transitionProperty = 'transition'
       if (!(transitionProperty in $barElement.style)) {
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < vendors.length; i++) {
           if (vendors[i] + 'Transition' in $barElement.style) {
             transitionProperty = '-' + vendors[i].toLowerCase() + '-' + transitionProperty
           }
@@ -572,7 +564,7 @@ var instantClick = InstantClick = function(document, location) {
       update()
       if (jump) {
         setTimeout(jumpStart, 0)
-        /* Must be done in a timer, otherwise the CSS animation doesn't happen. */
+        /* Must be done in a timer, otherwise the CSS animation doesn't happen (I don't know why). */
       }
       clearTimeout($barTimer)
       $barTimer = setTimeout(inc, 500)
@@ -607,7 +599,7 @@ var instantClick = InstantClick = function(document, location) {
         $barProgress = 100
         update()
         $barContainer.style.opacity = '0'
-        /* If you're debugging, setting this to 0.5 is handy. */
+        /* When you're debugging, setting this to 0.5 is handy. */
         return
       }
 
@@ -619,7 +611,7 @@ var instantClick = InstantClick = function(document, location) {
     }
 
     function updatePositionAndScale() {
-      /* Adapted from code by Sam Stephenson and Mislav Marohnić
+      /* Adapted from code by Sam Stephenson and Mislav Marohnic
          http://signalvnoise.com/posts/2407
       */
 
@@ -627,8 +619,8 @@ var instantClick = InstantClick = function(document, location) {
       $barContainer.style.width = innerWidth + 'px'
       $barContainer.style.top = pageYOffset + 'px'
 
-      var landscape = 'orientation' in window && Math.abs(orientation) == 90,
-          scaleY = innerWidth / screen[landscape ? 'height' : 'width'] * 2
+      var landscape = 'orientation' in window && Math.abs(orientation) == 90
+        , scaleY = innerWidth / screen[landscape ? 'height' : 'width'] * 2
       /* We multiply the size by 2 because the progress bar is harder
          to notice on a mobile device.
       */
@@ -646,7 +638,7 @@ var instantClick = InstantClick = function(document, location) {
   ////////// PUBLIC VARIABLE AND FUNCTIONS //////////
 
   var supported = 'pushState' in history
-                  && (!$ua.match('Android') || $ua.match('Chrome/'))
+                  && (!$userAgent.match('Android') || $userAgent.match('Chrome/'))
                   && location.protocol != "file:"
 
   /* The state of Android's AOSP browsers:
@@ -687,7 +679,7 @@ var instantClick = InstantClick = function(document, location) {
       triggerPageEvent('change', true)
       return
     }
-    for (var i = arguments.length - 1; i >= 0; i--) {
+    for (var i = 0; i < arguments.length; i++) {
       var arg = arguments[i]
       if (arg === true) {
         $useWhitelist = true
@@ -706,10 +698,10 @@ var instantClick = InstantClick = function(document, location) {
       scrollY: pageYOffset
     }
 
-    var elems = document.head.children,
-        elem,
-        data
-    for (var i = elems.length - 1; i >= 0; i--) {
+    var elems = document.head.children
+      , elem
+      , data
+    for (var i = 0; i < elems.length; i++) {
       elem = elems[i]
       if (elem.hasAttribute('data-instant-track')) {
         data = elem.getAttribute('href') || elem.getAttribute('src') || elem.innerHTML
@@ -721,7 +713,7 @@ var instantClick = InstantClick = function(document, location) {
     }
 
     $xhr = new XMLHttpRequest()
-    $xhr.addEventListener('readystatechange', readystatechange)
+    $xhr.addEventListener('readystatechange', readystatechangeListener)
 
     instantanize(true)
 
@@ -762,4 +754,4 @@ var instantClick = InstantClick = function(document, location) {
     on: on
   }
 
-}(document, location);
+}(document, location, navigator.userAgent);
