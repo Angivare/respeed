@@ -1,4 +1,6 @@
-var instantClickLoadingIndicator = function() {
+/* InstantClick's loading indicator | (C) 2014-2015 Alexandre Dieulot | http://instantclick.io/license */
+
+;(function() {
   var $container
     , $element
     , $transformProperty
@@ -126,9 +128,20 @@ var instantClickLoadingIndicator = function() {
     $container.style[$transformProperty] = 'scaleY(' + scaleY  + ')'
   }
 
-  return {
-    init: init,
-    start: start,
-    done: done
-  }
-}()
+
+  ////////////////////
+
+
+  instantClick.on('change', function(isInitialPage) {
+    if (isInitialPage && instantClick.supported) {
+      init()
+    }
+    if (!isInitialPage) {
+      done()
+    }
+  })
+
+  instantClick.on('wait', function() {
+    start(0, true)
+  })
+})();
