@@ -1,4 +1,4 @@
-var bar = function() {
+var instantClickLoadingIndicator = function() {
   var $container
     , $element
     , $transformProperty

@@ -169,7 +169,7 @@ var instantClick
     }
 
     instantanize()
-    bar.done()
+    instantClickLoadingIndicator.done()
     if (pop) {
       triggerPageEvent('restore')
     }
@@ -464,7 +464,7 @@ var instantClick
       }
 
       preload(url)
-      bar.start(0, true)
+      instantClickLoadingIndicator.start(0, true)
       triggerPageEvent('wait')
       $isWaitingForCompletion = true // Must be set *after* calling `preload`
       return
@@ -485,7 +485,7 @@ var instantClick
       return
     }
     if (!$body) {
-      bar.start(0, true)
+      instantClickLoadingIndicator.start(0, true)
       triggerPageEvent('wait')
       $isWaitingForCompletion = true
       return
@@ -578,7 +578,7 @@ var instantClick
 
     instantanize(true)
 
-    bar.init()
+    instantClickLoadingIndicator.init()
 
     triggerPageEvent('change', true)
 
