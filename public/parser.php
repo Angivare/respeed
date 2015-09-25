@@ -32,7 +32,7 @@ function parse_forum($got) {
   // Topics
   $regex = '#<tr class=".*" data-id=".+">.+' .
            '<img src="/img/forums/topic-(?P<label>.+)\.png".+' .
-           '<a href="/forums/(?P<mode>.+)-.+-(?P<topic>.+)-1-0-1-0-(?P<slug>.+)\.htm" title="(?P<title>.+)">.+' .
+           '<a href="/forums/(?P<mode>.+)-.+-(?P<topic>.+)-1-0-1-0-(?P<slug>.+)\.htm" title="(?P<title>.+)".+' .
            '(?P<pseudo_span><span .+>)\s*(?P<pseudo>\S.*)\s*</span>.+' .
            '<td class="nb-reponse-topic">\s+(?P<nb_reponses>.+)\s+</td>.+' .
            '<td class="dernier-msg-topic">.+<span .+>\s+(?P<date>.+)</span>.+' .
