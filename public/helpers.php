@@ -282,10 +282,7 @@ function generate_message_markup($message) {
   <div class="action-menu">
 MESSAGE;
 
-  if (!$is_ours) {
-    $markup .= '<span class="action meta-ignore">Ignorer</span>';
-  }
-  else {
+  if ($is_ours) {
     $markup .= '<span class="action meta-delete">Supprimer</span>';
     $markup .= '<span class="action meta-edit">Modifier</span>';
   }
@@ -321,7 +318,6 @@ MESSAGE;
     </div>
     <div class="js-content content">{$message['content']}</div>
     <div class="clearfix"></div>
-    <div class="ignored-message"><span class="meta-unignore">Ne plus ignorer</span> {$message['pseudo']} parle mais se fait ignorer.</div>
   </div>
 </div>
 <script>liste_messages.push({$message['id']})</script>

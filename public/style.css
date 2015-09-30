@@ -707,14 +707,6 @@ h1, h2, h3 {
   }
 }
 
-.topic.ignored a {
-  opacity: 0;
-}
-
-.topic.ignored:hover a {
-  opacity: 1;
-}
-
 /* FORUM - Dossiers sur la liste des topics */
 
 .liste-topics .label-dossier1 {
@@ -1194,21 +1186,26 @@ h1, h2, h3 {
   }
 }
 
-.message .meta-actions span, .ignored-message span {
+.message .meta-actions span {
   cursor: pointer;
 }
 
 @media (min-width: 1025px) {
-  .message .meta-actions span, .ignored-message span {
+  .message .meta-actions span {
     font-size: 12px;
+    cursor: default;
+  }
+
+  .message.mine .meta-actions span {
+    cursor: pointer;
   }
 }
 
-.message .meta-actions span:hover, .ignored-message span:hover {
+.message .meta-actions span:hover {
 }
 
 @media (min-width: 1025px) {
-  .message .meta-actions span:hover, .ignored-message span:hover {
+  .message .meta-actions span:hover {
     color: #111;
   }
 }
@@ -1242,20 +1239,20 @@ h1, h2, h3 {
 }
 
 .message.show-menu .not-action-menu {
-  -webkit-transform: translateX(-160px);
-          transform: translateX(-160px);
+  -webkit-transform: translateX(-80px);
+          transform: translateX(-80px);
 }
 
 @media (min-width: 1025px) {
   .message.show-menu .not-action-menu {
-    -webkit-transform: translateX(-80px);
-            transform: translateX(-80px);
+    -webkit-transform: translateX(-0px);
+            transform: translateX(-0px);
   }
 }
 
 .message .action-menu {
   position: absolute;
-  left: calc(100% - 160px);
+  left: calc(100% - 80px);
   display: none;
 }
 
@@ -1285,7 +1282,7 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .message.mine .action-menu {
-    left: calc(100% - 180px);
+    left: calc(100% - 160px);
   }
 }
 
@@ -1327,10 +1324,6 @@ h1, h2, h3 {
   .message .action-menu .meta-quote {
     display: none;
   }
-}
-
-.message .action-menu .meta-ignore {
-  background-image: url(/images/ic_visibility_off_24px.svg);
 }
 
 .message .action-menu .meta-delete {
@@ -1537,62 +1530,6 @@ h1, h2, h3 {
 
 .action-desktop-edit {
   background: url(/images/edit_18px.svg) center no-repeat;
-}
-
-.message .ignored-message {
-  display: none;
-}
-
-.message.ignored .meta-author, .message.ignored .meta-actions, .message.ignored .message-border, .message.ignored .content, .message.ignored .desktop-quote {
-  display: none;
-}
-
-.message.ignored .ignored-message {
-  display: block;
-  line-height: 24px;
-  padding: 0 10px;
-}
-
-@media (min-width: 1025px) {
-  .message.ignored .ignored-message {
-    padding: 0 .5em;
-    border: 1px solid #d1d1d1;
-    background: #F9F9F9;
-    margin-bottom: 12px;
-    width: 83%;
-    width: calc(85% - 30px);
-    margin-left: 15%;
-  }
-}
-
-.message.even.ignored .ignored-message {
-}
-
-@media (min-width: 1025px) {
-  .message.even.ignored .ignored-message {
-    background: #EFF4FC;
-    border-color: #C0D7ED;
-  }
-}
-
-.message.ignored .ignored-message .meta-unignore {
-  float: right;
-  width: 24px;
-  height: 24px;
-  overflow: hidden;
-  background-image: url(/images/ic_visibility_24px.svg?);
-  color: transparent;
-  opacity: .25;
-}
-
-@media (min-width: 1025px) {
-  .message.ignored .ignored-message .meta-unignore {
-    width: initial;
-    height: initial;
-    background-image: initial;
-    color: inherit;
-    opacity: initial;
-  }
 }
 
 .message:target {

@@ -2,7 +2,6 @@
 
 var form_data
   , edit_form_data
-  , blacklist
   , favoritesForums = []
   , favoritesTopics = []
   , isBigScreen = screen.width > 1024
@@ -52,72 +51,6 @@ function tokenRefresh() {
 function htmlentities(str) {
   return str.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
     return '&#'+i.charCodeAt(0)+';'
-  })
-}
-
-function updateLocalBlacklist() {
-  blacklist = (localStorage.blacklist || '').split(' ')
-  if (!blacklist[blacklist.length - 1]) {
-    blacklist.pop()
-  }
-}
-
-function addToBlacklist(pseudo, id_message) {
-  pseudo = pseudo.toLowerCase()
-  if ($.inArray(pseudo, blacklist) >= 0) {
-    return
-  }
-  localStorage.blacklist = pseudo + ' ' + (localStorage.blacklist || '')
-  updateLocalBlacklist()
-  if (id_message) {
-    ajax('blacklist_add', {id_message: id_message})
-  }
-}
-
-function removeFromBlacklist(pseudo) {
-  updateLocalBlacklist()
-  pseudo = pseudo.toLowerCase()
-  var index = $.inArray(pseudo, blacklist)
-  if (index == -1) {
-    return
-  }
-  var blacklistString = ''
-  blacklist.splice(index, 1)
-  localStorage.blacklist = blacklist.join(' ')
-  ajax('blacklist_remove', {nick: pseudo})
-}
-
-function applyBlacklist() {
-  $('[data-pseudo]').each(function(i, element) {
-    var pseudo = ($(element).data('pseudo') + '').toLowerCase()
-
-    if ($(element).hasClass('ignored')) {
-      if ($.inArray(pseudo, blacklist) == -1) {
-        $(element).removeClass('ignored')
-      }
-    }
-
-    if ($.inArray(pseudo, blacklist) >= 0) {
-      $(element).addClass('ignored')
-    }
-  })
-}
-
-function updateRemoteBlacklist() {
-  if (!$is_connected) {
-    return
-  }
-  var remoteBlacklistLastUpdate = parseInt(localStorage.remoteBlacklistLastUpdate, 10) || 0
-  var now = +new Date
-  if (remoteBlacklistLastUpdate + (1000 * 60 * 10) > now) {
-    return
-  }
-  ajax('blacklist_get', {}, function(data) {
-    var remoteBlacklist = data.rep
-    for (var i = 0; i < remoteBlacklist.length; i++) {
-      addToBlacklist(remoteBlacklist[i].human)
-    }
-    localStorage.remoteBlacklistLastUpdate = now
   })
 }
 
@@ -438,8 +371,6 @@ function topicRefresh() {
         }
 
         $('#' + message.id + ' .meta-quote').click(quote)
-        $('#' + message.id + ' .meta-ignore').click(ignore)
-        $('#' + message.id + ' .meta-unignore').click(unignore)
         $('#' + message.id + ' .meta-edit').click(edit)
         $('#' + message.id + ' .meta-delete').click(deleteMessage)
         $('#' + message.id + ' .m-profil').click(openProfile)
@@ -447,8 +378,6 @@ function topicRefresh() {
         $('#' + message.id).click(closeMenu)
         $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
         $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
-
-        applyBlacklist()
       }
     }
 
@@ -632,22 +561,6 @@ function postEdit(e) {
   })
 }
 
-function ignore() {
-  var id = $(this).closest('.message').attr('id')
-    , pseudo = $('#' + id).data('pseudo')
-
-  addToBlacklist(pseudo, id)
-  applyBlacklist()
-}
-
-function unignore() {
-  var id = $(this).closest('.message').attr('id')
-    , pseudo = $('#' + id).data('pseudo')
-
-  removeFromBlacklist(pseudo)
-  applyBlacklist()
-}
-
 function quote() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
@@ -768,7 +681,6 @@ if (!$is_connected) {
   localStorage.clear()
 }
 
-updateRemoteBlacklist()
 setInterval(tokenRefresh, (30-2)*60*1000)
 
 if (googleAnalyticsID) {
@@ -788,8 +700,6 @@ instantClick.on('change', function(isInitialLoad) {
   FastClick.attach(document.body)
   updateFavorites()
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
-  updateLocalBlacklist()
-  applyBlacklist()
   displayFavoritesOnIndex()
   handleRefreshOnPageChange(isInitialLoad)
 })
@@ -806,8 +716,6 @@ instantClick.on('change', function() {
 
   // Messages
   $('.meta-quote').click(quote)
-  $('.meta-ignore').click(ignore)
-  $('.meta-unignore').click(unignore)
   $('.meta-edit').click(edit)
   $('.meta-delete').click(deleteMessage)
   $('.m-profil').click(openProfile)
