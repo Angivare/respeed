@@ -272,22 +272,22 @@ function delay($f, &$t) {
 }
 
 function generate_message_markup($message) {
-  $is_ours = strcasecmp(isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '', $message['pseudo']) == 0;
-  $odd_or_even = ($message['pos'] % 2 == 0) ? 'odd' : 'even';
-  $is_ours_text = $is_ours ? 'mine' : '';
+  $mine = strcasecmp(isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '', $message['pseudo']) == 0;
+  $even_modifier = ($message['pos'] % 2 == 0) ? '' : 'message--even';
+  $mine_modifier = $mine ? 'message--mine' : '';
   $pseudoLowercase = strtolower($message['pseudo']);
   $pseudoWbr = wbr_pseudo($message['pseudo']);
   $markup = <<<MESSAGE
-<div class="message {$odd_or_even} {$is_ours_text}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
-  <div class="action-menu">
+<div class="message {$mine_modifier} {$even_modifier}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
+  <div class="message-actions">
 MESSAGE;
 
-  if ($is_ours) {
-    $markup .= '<span class="action meta-delete">Supprimer</span>';
-    $markup .= '<span class="action meta-edit">Modifier</span>';
+  if ($mine) {
+    $markup .= '<span class="js-delete message-actions__action message-actions__action--delete">Supprimer</span>';
+    $markup .= '<span class="js-edit message-actions__action message-actions__action--edit">Modifier</span>';
   }
   $markup .= <<<MESSAGE
-<span class="action meta-quote">Citer</span>
+<span class="js-quote message-actions__action message-actions__action--quote">Citer</span>
   </div>
   <div class="not-action-menu">
     <div class="message-header">
@@ -305,19 +305,19 @@ MESSAGE;
         --><span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
       </div>
       <div class="meta-actions">
-        <span class="meta-permalink meta-menu js-date" title="{$message['dateRaw']}">{$message['date']}</span>
-      </div>
-      <div class="actions-desktop">
-        <div class="action-desktop action-desktop-quote meta-quote" title="Citer"></div>
-MESSAGE;
-  if ($is_ours) {
-    $markup .= '<div class="action-desktop action-desktop-edit meta-edit" title="Modifier"></div>';
-  }
-  $markup .= <<<MESSAGE
+        <span class="js-menu js-date meta-permalink" title="{$message['dateRaw']}">{$message['date']}</span>
       </div>
     </div>
     <div class="js-content content">{$message['content']}</div>
     <div class="clearfix"></div>
+    <div class="quick-message-actions">
+      <div class="js-quote quick-message-actions__action quick-message-actions__action--quote" title="Citer"></div>
+MESSAGE;
+if ($mine) {
+  $markup .= '<div class="js-edit quick-message-actions__action quick-message-actions__action--edit" title="Modifier"></div>';
+}
+$markup .= <<<MESSAGE
+    </div>
   </div>
 </div>
 <script>liste_messages.push({$message['id']})</script>

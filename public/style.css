@@ -1027,7 +1027,7 @@ h1, h2, h3 {
   }
 }
 
-.message.even {
+.message--even {
   background: hsl(209, 56%, 94%);
 }
 
@@ -1196,7 +1196,7 @@ h1, h2, h3 {
     cursor: default;
   }
 
-  .message.mine .meta-actions span {
+  .message--mine .meta-actions span {
     cursor: pointer;
   }
 }
@@ -1226,7 +1226,7 @@ h1, h2, h3 {
     border-radius: 2px;
   }
 
-  .message.even .meta-actions .meta-permalink {
+  .message--even .meta-actions .meta-permalink {
     background: hsl(209, 56%, 95%);
   }
 }
@@ -1250,47 +1250,47 @@ h1, h2, h3 {
   }
 }
 
-.message .action-menu {
+.message-actions {
   position: absolute;
   left: calc(100% - 80px);
   display: none;
 }
 
 @media (min-width: 1025px) {
-  .message .action-menu {
+  .message-actions {
     left: calc(100% - 100px);
   }
 }
 
-.message.mine.show-menu .not-action-menu {
+.message--mine.show-menu .not-action-menu {
   -webkit-transform: translateX(-240px);
           transform: translateX(-240px);
 }
 
 @media (min-width: 1025px) {
-  .message.mine.show-menu .not-action-menu {
+  .message--mine.show-menu .not-action-menu {
     -webkit-transform: translateX(-160px);
             transform: translateX(-160px);
   }
 }
 
-.message.mine .action-menu {
+.message--mine .message-actions {
   position: absolute;
   left: calc(100% - 240px);
   display: none;
 }
 
 @media (min-width: 1025px) {
-  .message.mine .action-menu {
+  .message--mine .message-actions {
     left: calc(100% - 160px);
   }
 }
 
-.message.show-menu .action-menu {
+.message.show-menu .message-actions {
   display: block;
 }
 
-.message .action-menu .action {
+.message-actions__action {
   display: inline-block;
   width: 70px;
   text-align: center;
@@ -1308,29 +1308,29 @@ h1, h2, h3 {
 }
 
 @media (min-width: 1025px) {
-  .message .action-menu .action {
+  .message-actions__action {
     margin-top: 0;
     border-color: transparent;
     cursor: pointer;
   }
 }
 
-.message .action-menu .meta-quote {
+.message-actions__action--quote {
   background-image: url(/images/ic_reply_24px.svg);
   margin-right: 0;
 }
 
 @media (min-width: 1025px) {
-  .message .action-menu .meta-quote {
+  .message-actions__action--quote {
     display: none;
   }
 }
 
-.message .action-menu .meta-delete {
+.message-actions__action--delete {
   background-image: url(/images/ic_delete_24px.svg);
 }
 
-.message .action-menu .meta-edit {
+.message-actions__action--edit {
   background-image: url(/images/edit.svg);
 }
 
@@ -1498,12 +1498,12 @@ h1, h2, h3 {
   height: 140px;
 }
 
-.actions-desktop {
+.quick-message-actions {
   display: none;
 }
 
 @media (min-width: 1025px) {
-  .actions-desktop {
+  .quick-message-actions {
     display: block;
     position: absolute;
     bottom: -2px;
@@ -1511,7 +1511,7 @@ h1, h2, h3 {
   }
 }
 
-.action-desktop {
+.quick-message-actions__action {
   width: 28px;
   height: 28px;
   cursor: pointer;
@@ -1520,15 +1520,15 @@ h1, h2, h3 {
   margin-left: 5px;
 }
 
-.action-desktop:hover {
+.quick-message-actions__action:hover {
   opacity: .5;
 }
 
-.action-desktop-quote {
+.quick-message-actions__action--quote {
   background: url(/images/reply_18px.svg) center no-repeat;
 }
 
-.action-desktop-edit {
+.quick-message-actions__action--edit {
   background: url(/images/edit_18px.svg) center no-repeat;
 }
 

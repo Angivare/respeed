@@ -370,11 +370,11 @@ function topicRefresh() {
           triggerTabAlertForNewPosts()
         }
 
-        $('#' + message.id + ' .meta-quote').click(quote)
-        $('#' + message.id + ' .meta-edit').click(edit)
-        $('#' + message.id + ' .meta-delete').click(deleteMessage)
+        $('#' + message.id + ' .js-quote').click(quote)
+        $('#' + message.id + ' .js-edit').click(edit)
+        $('#' + message.id + ' .js-delete').click(deleteMessage)
         $('#' + message.id + ' .m-profil').click(openProfile)
-        $('#' + message.id + ' .meta-menu').click(toggleMenu)
+        $('#' + message.id + ' .js-menu').click(toggleMenu)
         $('#' + message.id).click(closeMenu)
         $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
         $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
@@ -630,7 +630,7 @@ function toggleMenu() {
 }
 
 function closeMenu(e) {
-  if ($(e.target).hasClass('meta-menu')) {
+  if ($(e.target).hasClass('js-menu')) {
     return
   }
   var id = this.id
@@ -715,11 +715,11 @@ instantClick.on('change', function() {
   $('.js-form-post .form__textarea').focus(request_form_data)
 
   // Messages
-  $('.meta-quote').click(quote)
-  $('.meta-edit').click(edit)
-  $('.meta-delete').click(deleteMessage)
+  $('.js-quote').click(quote)
+  $('.js-edit').click(edit)
+  $('.js-delete').click(deleteMessage)
   $('.m-profil').click(openProfile)
-  $('.meta-menu').click(toggleMenu)
+  $('.js-menu').click(toggleMenu)
   $('.message').click(closeMenu)
   $('.bloc-spoil-jv').click(toggleSpoil)
   $('.js-sticker').click(toggleStickerSize)
