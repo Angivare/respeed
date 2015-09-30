@@ -1229,60 +1229,60 @@ h1, h2, h3 {
 
 /* TOPIC - Message - mobile menu */
 
-.message .not-action-menu {
+.message__visible {
   -webkit-transition: -webkit-transform .1s ease-in;
           transition: transform .1s ease-in, -webkit-transform .1s ease-in;
 }
 
-.message.show-menu .not-action-menu {
+.message.show-menu .message__visible {
   -webkit-transform: translateX(-80px);
           transform: translateX(-80px);
 }
 
 @media (min-width: 1025px) {
-  .message.show-menu .not-action-menu {
+  .message.show-menu .message__visible {
     -webkit-transform: none;
             transform: none;
   }
 }
 
-.message-actions {
+.message__actions {
   position: absolute;
   left: calc(100% - 80px);
   display: none;
 }
 
 @media (min-width: 1025px) {
-  .message-actions {
+  .message__actions {
     left: calc(100% - 100px);
   }
 }
 
-.message--mine.show-menu .not-action-menu {
+.message--mine.show-menu .message__visible {
   -webkit-transform: translateX(-240px);
           transform: translateX(-240px);
 }
 
 @media (min-width: 1025px) {
-  .message--mine.show-menu .not-action-menu {
+  .message--mine.show-menu .message__visible {
     -webkit-transform: none;
             transform: none;
   }
 }
 
-.message--mine .message-actions {
+.message--mine .message__actions {
   position: absolute;
   left: calc(100% - 240px);
   display: none;
 }
 
 @media (MAX-width: 1024px) {
-  .message.show-menu .message-actions {
+  .message.show-menu .message__actions {
     display: block;
   }
 }
 
-.message-actions__action {
+.message__actions-action {
   display: inline-block;
   width: 70px;
   text-align: center;
@@ -1299,30 +1299,16 @@ h1, h2, h3 {
   background-repeat: no-repeat;
 }
 
-@media (min-width: 1025px) {
-  .message-actions__action {
-    margin-top: 0;
-    border-color: transparent;
-    cursor: pointer;
-  }
-}
-
-.message-actions__action--quote {
+.message__actions-action--quote {
   background-image: url(/images/ic_reply_24px.svg);
   margin-right: 0;
 }
 
-@media (min-width: 1025px) {
-  .message-actions__action--quote {
-    display: none;
-  }
-}
-
-.message-actions__action--delete {
+.message__actions-action--delete {
   background-image: url(/images/ic_delete_24px.svg);
 }
 
-.message-actions__action--edit {
+.message__actions-action--edit {
   background-image: url(/images/edit.svg);
 }
 

@@ -279,17 +279,17 @@ function generate_message_markup($message) {
   $pseudoWbr = wbr_pseudo($message['pseudo']);
   $markup = <<<MESSAGE
 <div class="message {$mine_modifier} {$even_modifier}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
-  <div class="message-actions">
+  <div class="message__actions">
 MESSAGE;
 
   if ($mine) {
-    $markup .= '<span class="js-delete message-actions__action message-actions__action--delete">Supprimer</span>';
-    $markup .= '<span class="js-edit message-actions__action message-actions__action--edit">Modifier</span>';
+    $markup .= '<span class="js-delete message__actions-action message__actions-action--delete">Supprimer</span>';
+    $markup .= '<span class="js-edit message__actions-action message__actions-action--edit">Modifier</span>';
   }
   $markup .= <<<MESSAGE
-<span class="js-quote message-actions__action message-actions__action--quote">Citer</span>
+<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>
   </div>
-  <div class="not-action-menu">
+  <div class="message__visible">
     <div class="message-header">
       <div class="meta-author">
         <span class="author pseudo-{$message['status']} desktop"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" target="_blank" class="m-profil">{$pseudoWbr}</a></span>
