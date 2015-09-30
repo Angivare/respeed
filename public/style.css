@@ -1195,10 +1195,6 @@ h1, h2, h3 {
     font-size: 12px;
     cursor: default;
   }
-
-  .message--mine .meta-actions span {
-    cursor: pointer;
-  }
 }
 
 .message .meta-actions span:hover {
@@ -1245,8 +1241,8 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .message.show-menu .not-action-menu {
-    -webkit-transform: translateX(-0px);
-            transform: translateX(-0px);
+    -webkit-transform: none;
+            transform: none;
   }
 }
 
@@ -1269,8 +1265,8 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .message--mine.show-menu .not-action-menu {
-    -webkit-transform: translateX(-160px);
-            transform: translateX(-160px);
+    -webkit-transform: none;
+            transform: none;
   }
 }
 
@@ -1280,14 +1276,10 @@ h1, h2, h3 {
   display: none;
 }
 
-@media (min-width: 1025px) {
-  .message--mine .message-actions {
-    left: calc(100% - 160px);
+@media (MAX-width: 1024px) {
+  .message.show-menu .message-actions {
+    display: block;
   }
-}
-
-.message.show-menu .message-actions {
-  display: block;
 }
 
 .message-actions__action {
