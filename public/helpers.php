@@ -61,7 +61,7 @@ function adapt_html($message, $date, $id) {
   preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<span class="JvCare [0-9A-F]*" target="_blank">(?P<pseudo>.*)</span>#Usi', $message, $matches_edit);
   if ($matches_edit) {
     $message = str_replace($matches_edit[0], '', $message);
-    $message .= '<p class="edit-mention" title="' . $date . '">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</p>';
+    $message .= '<p class="edit-mention"><span title="' . $date . '">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</span></p>';
   }
 
   // JVCare
