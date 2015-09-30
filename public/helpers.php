@@ -283,12 +283,15 @@ function generate_message_markup($message) {
 MESSAGE;
 
   if ($mine) {
-    $markup .= '<span class="js-delete message__actions-action message__actions-action--delete">Supprimer</span>';
+    $markup .= '<span class="js-delete message__actions-action message__actions-action--delete">Suppr.</span>';
+    $markup .= '<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>';
     $markup .= '<span class="js-edit message__actions-action message__actions-action--edit">Modifier</span>';
   }
+  else {
+    $markup .= '<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>';
+  }
   $markup .= <<<MESSAGE
-<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>
-  </div>
+</div>
   <div class="message__visible">
     <div class="message-header">
       <div class="meta-author">

@@ -626,7 +626,7 @@ function openProfile() {
 
 function toggleMenu() {
   var id = $(this).closest('.message').attr('id')
-  $('#' + id).toggleClass('show-menu')
+  $('#' + id).toggleClass('message--menu-opened')
 }
 
 function closeMenu(e) {
@@ -634,7 +634,7 @@ function closeMenu(e) {
     return
   }
   var id = this.id
-  $('#' + id).removeClass('show-menu')
+  $('#' + id).removeClass('message--menu-opened')
 }
 
 function toggleSpoil() {
