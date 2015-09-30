@@ -1173,6 +1173,13 @@ h1, h2, h3 {
   border-radius: 4px;
 }
 
+@media (min-width: 1025px) {
+  .message .meta-author .avatar .default-avatar img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
 .message .meta-author .author.mobile a {
   padding: 5px;
   display: inline-block;
