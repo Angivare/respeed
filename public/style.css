@@ -1006,6 +1006,10 @@ h1, h2, h3 {
 
 .liste-messages {
   overflow-x: hidden;
+
+  /* Ombre du dernier message */
+  padding-bottom: 5px;
+  margin-bottom: -5px;
 }
 
 @media (min-width: 1025px) {
@@ -1045,6 +1049,10 @@ h1, h2, h3 {
     display: table;
     width: 100%;
   }
+}
+
+.message:last-of-type {
+  margin-bottom: 0;
 }
 
 .message--even {
