@@ -288,8 +288,8 @@ MESSAGE;
       <div class="message__byline-date">
         <span class="js-menu js-date message__byline-date-inline" title="{$message['dateRaw']}">{$message['date']}</span>
       </div>
-    </div>
-    <div class="js-content message__content">{$message['content']}</div>
+    </div><!--
+    --><div class="js-content message__content">{$message['content']}</div>
     <div class="clearfix"></div>
     <div class="message__quick-actions">
 MESSAGE;
