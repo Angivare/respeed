@@ -1035,151 +1035,80 @@ h1, h2, h3 {
   background: hsl(209, 56%, 94%);
 }
 
-.message-header {
-  display: table;
+.message__byline {
   width: 100%;
 }
 
 @media (MAX-width: 1024px) {
-  .message-header {
-    padding-top: 3px;
-    margin-bottom: -6px;
-  }
-}
-
-@media (min-width: 1025px) {
-  .message-header {
-    display: initial;
-    padding-top: initial;
+  .message__byline {
+    display: table;
+    margin-bottom: -10px;
   }
 }
 
 /* TOPIC - Message - author */
 
-.message .meta-author {
+.message__byline-author {
   display: table-cell;
   vertical-align: middle;
-  padding-left: 5px;
 }
 
 @media (min-width: 768px) {
-  .message .meta-author {
-    padding-left: 10px;
+  .message__byline-author {
+    padding-left: 5px;
   }
 }
 
-@media (min-width: 1025px) {
-  .message .meta-author {
-    display: initial;
-    padding-left: initial;
-
-    width: 15%;
-    float: left;
-    text-align: center;
-  }
-}
-
-.message .meta-author .author {
-  font-weight: bold;
-}
-
-.message .meta-author .author .m-profil {
-  color: inherit;
-}
-
-@media (MAX-width: 1024px) {
-  .message .meta-author .author {
-    font-size: 15px;
-  }
-}
-
-@media (min-width: 1025px) {
-  .message .meta-author .author {
-    word-wrap: break-word;
-    padding: 0 3px;
-  }
-  
-  .message .meta-author .author.desktop {
-    display: block;
-  }
-}
-
-@media (min-width: 1025px) {
-  .message .meta-author .avatar {
-    margin-left: initial;
-
-    display: inline-block;
-    margin-bottom: 5px;
-  }
-}
-
-.message .meta-author .avatar a, .message .meta-author .avatar .default-avatar {
-  padding: 5px;
+.message__byline-author-link {
+  padding: 8px 10px 10px 10px;
   display: inline-block;
 }
 
-@media (min-width: 1025px) {
-  .message .meta-author .avatar a, .message .meta-author .avatar .default-avatar {
-    padding: initial;
-  }
+.message__byline-author-link--no-link {
+  cursor: default;
 }
 
-.message .meta-author .avatar a {
-  cursor: -webkit-zoom-in;
-  cursor:         zoom-in;
+.message__byline-author-avatar {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin-right: 5px;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.message .meta-author .avatar img {
+.message__byline-author-avatar-image {
   max-width: 30px;
   max-height: 30px;
-  vertical-align: middle;
   border-radius: 2px;
 }
 
-@media (min-width: 1025px) {
-  .message .meta-author .avatar img {
-    display: initial;
-
-    max-width: 40px;
-    max-height: 40px;
-    border-radius: 3px;
-  }
+.message__byline-author-avatar-image--default {
+  border-radius: 3px;
 }
 
-.message .meta-author .avatar .default-avatar img {
-  max-width: 30px;
-  max-height: 30px;
-  border-radius: 4px;
-}
-
-@media (min-width: 1025px) {
-  .message .meta-author .avatar .default-avatar img {
-    width: 30px;
-    height: 30px;
-  }
-}
-
-.message .meta-author .author.mobile a {
-  padding: 5px;
-  display: inline-block;
+.message__byline-author-pseudo {
+  color: #212121;
+  font-weight: bold;
+  line-height: 30px;
 }
 
 /* TOPIC - Message - actions */
 
-.message .meta-actions {
+.message__byline-date {
   display: table-cell;
   vertical-align: middle;
   text-align: right;
 }
 
 @media (min-width: 768px) {
-  .message .meta-actions {
+  .message__byline-date {
     padding-right: 5px;
   }
 }
 
-@media (min-width: 1025px) {
-  .message .meta-actions {
+/*@media (min-width: 1025px) {
+  .message__byline-date {
     display: initial;
     text-align: initial;
 
@@ -1188,37 +1117,29 @@ h1, h2, h3 {
     right: 5px;
     top: -6px;
   }
-}
+}*/
 
-.message .meta-actions span {
+.message__byline-date-inline {
   cursor: pointer;
-}
-
-@media (min-width: 1025px) {
-  .message .meta-actions span {
-    font-size: 12px;
-    cursor: default;
-  }
-}
-
-.message .meta-actions span:hover {
-}
-
-@media (min-width: 1025px) {
-  .message .meta-actions span:hover {
-    color: #111;
-  }
-}
-
-.message .meta-actions .meta-permalink {
   padding: 10px;
   padding-right: 20px;
   background: url(/images/more_vert_18px_blue.svg) no-repeat right 3px center;
   color: #0A77B8;
+  font-size: 13px;
+  vertical-align: top;
 }
 
-@media (min-width: 1025px) {
-  .message .meta-actions .meta-permalink {
+/*@media (min-width: 1025px) {
+  .message__byline-date-inline {
+    font-size: 12px;
+    cursor: default;
+  }
+
+  .message__byline-date-inline:hover {
+    color: #111;
+  }
+
+  .message__byline-date-inline {
     background: white;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
     padding: 2px 4px;
@@ -1226,10 +1147,10 @@ h1, h2, h3 {
     border-radius: 2px;
   }
 
-  .message--even .meta-actions .meta-permalink {
+  .message--even .message__byline-date-inline {
     background: hsl(209, 56%, 95%);
   }
-}
+}*/
 
 /* TOPIC - Message - mobile menu */
 
@@ -1240,8 +1161,8 @@ h1, h2, h3 {
   }
 
   .message--mine {
-    -webkit-transition: -webkit-transform .2s ease-out;
-            transition: transform .2s ease-out, -webkit-transform .2s ease-out;
+    -webkit-transition: -webkit-transform .15s ease-out;
+            transition: transform .15s ease-out, -webkit-transform .15s ease-out;
   }
 
   .message--menu-opened {
@@ -1315,6 +1236,7 @@ h1, h2, h3 {
 .message .content {
   padding: 0 10px;
   word-wrap: break-word;
+  margin-bottom: -0px;
 }
 
 @media (min-width: 768px) {
@@ -1325,6 +1247,8 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .message .content {
+    margin-bottom: 0;
+
     width: 85%;
     float: left;
     padding: 0 .5em;
@@ -1547,12 +1471,12 @@ h1, h2, h3 {
 
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
 
-.pseudo-modo, .message .meta-author .author.pseudo-modo {
+.pseudo-modo, .message__byline-author-pseudo--modo {
   color: #43A047;
 }
 
-.pseudo-admin, .message .meta-author .author.pseudo-admin,
-.pseudo-staff, .message .meta-author .author.pseudo-staff {
+.pseudo-admin, .message__byline-author-pseudo--admin,
+.pseudo-staff, .message__byline-author-pseudo--staff {
   color: #C62828;
 }
 

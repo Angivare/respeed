@@ -229,26 +229,6 @@ function superlatif() {
   return $superlatifs[mt_rand(0, count($superlatifs) - 1)];
 }
 
-function wbr_pseudo($pseudo) {
-  $wbr_pseudo = '<wbr>';
-  for ($i = 0; $i < strlen($pseudo); $i++) {
-    $char = $pseudo[$i];
-    if ($i > 0) {
-      $old_char = $pseudo[$i - 1];
-      if (
-        (($char >= 'a' && $char <= 'z') && !($old_char >= 'a' && $old_char <= 'z') && !($old_char >= 'A' && $old_char <= 'Z')) ||
-        (($char >= 'A' && $char <= 'Z') && !($old_char >= 'A' && $old_char <= 'Z')) ||
-        (($char >= '0' && $char <= '9') && !($old_char >= '0' && $old_char <= '9')) ||
-        (strpos('-_[]', $char) !== false && strpos('-_[]', $old_char) === false)) {
-        $wbr_pseudo .= '</wbr><wbr>';
-      }
-    }
-    $wbr_pseudo .= $char;
-  }
-  $wbr_pseudo .= '</wbr>';
-  return $wbr_pseudo;
-}
-
 function array_max($array, $comp_func) {
   reset($array);
   $max = each($array)[1];
@@ -276,7 +256,12 @@ function generate_message_markup($message) {
   $even_modifier = ($message['pos'] % 2 == 0) ? '' : 'message--even';
   $mine_modifier = $mine ? 'message--mine' : '';
   $pseudoLowercase = strtolower($message['pseudo']);
-  $pseudoWbr = wbr_pseudo($message['pseudo']);
+  $pseudoDeleted = strpos($pseudoLowercase, ' ') !== false;
+  $authorLinkTag = $pseudoDeleted ? 'span' : 'a';
+  $authorLinkClass = $pseudoDeleted ? 'message__byline-author-link--no-link' : 'js-profile';
+  $avatar = $message['avatar'] ? $message['avatar'] : ('/images/triangles.php?s=' . $pseudoLowercase);
+  $pseudo_modifier = $message['status'] != 'user' ? ('message__byline-author-pseudo--' . $message['status']) : '';
+  $default_avatar_modifier = $message['avatar'] ? '' : 'message__byline-author-avatar-image--default';
   $markup = <<<MESSAGE
 <div class="message {$mine_modifier} {$even_modifier}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
   <div class="message__actions">
@@ -293,22 +278,15 @@ MESSAGE;
   $markup .= <<<MESSAGE
 </div>
   <div class="message__visible">
-    <div class="message-header">
-      <div class="meta-author">
-        <span class="author pseudo-{$message['status']} desktop"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" target="_blank" class="m-profil">{$pseudoWbr}</a></span>
-        <span class="avatar">
-MESSAGE;
-  if ($message['avatar']) {
-    $markup .= '<a href="' . $message['avatarBig'] . '"><img src="' . $message['avatar'] . '"></a><!--';
-  } else {
-    $markup .= '<span class="default-avatar"><img src="/images/triangles.php?s=' . $message['pseudo'] . '"></span><!--';
-  }
-  $markup .= <<<MESSAGE
-        --></span><!--
-        --><span class="author pseudo-{$message['status']} mobile"><a href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" class="m-profil">{$pseudoWbr}</a></span>
+    <div class="message__byline">
+      <div class="message__byline-author">
+        <{$authorLinkTag} class="message__byline-author-link {$authorLinkClass}" href="http://m.jeuxvideo.com/profil/{$pseudoLowercase}.html" target="_blank">
+          <span class="message__byline-author-avatar"><img class="message__byline-author-avatar-image {$default_avatar_modifier}" src="{$avatar}"></span>
+          <span class="message__byline-author-pseudo {$pseudo_modifier}">{$message['pseudo']}</span>
+        </{$authorLinkTag}>
       </div>
-      <div class="meta-actions">
-        <span class="js-menu js-date meta-permalink" title="{$message['dateRaw']}">{$message['date']}</span>
+      <div class="message__byline-date">
+        <span class="js-menu js-date message__byline-date-inline" title="{$message['dateRaw']}">{$message['date']}</span>
       </div>
     </div>
     <div class="js-content content">{$message['content']}</div>
