@@ -1266,13 +1266,13 @@ h1, h2, h3 {
   }
 
   .message--menu-opened {
-    -webkit-transform: translateX(-63px);
-            transform: translateX(-63px);
+    -webkit-transform: translateX(-62px);
+            transform: translateX(-62px);
   }
 
   .message--menu-opened.message--mine {
-    -webkit-transform: translateX(-183px);
-            transform: translateX(-183px);
+    -webkit-transform: translateX(-182px);
+            transform: translateX(-182px);
   }
 
   .message__actions {
@@ -1280,14 +1280,36 @@ h1, h2, h3 {
   }
 }
 
+@media (MAX-width: 767px) {
+  .message--menu-opened {
+    -webkit-transform: translateX(-60px);
+            transform: translateX(-60px);
+  }
+
+  .message--menu-opened.message--mine {
+    -webkit-transform: translateX(-180px);
+            transform: translateX(-180px);
+  }
+}
+
 .message__actions {
   position: absolute;
-  right: -73px; /* 60 + 13 */
+  right: -72px;
 }
 
 .message--mine .message__actions {
   position: absolute;
-  right: -193px; /* 60 * 3 + 13 */
+  right: -192px;
+}
+
+@media (MAX-width: 767px) {
+  .message__actions {
+    right: -70px;
+  }
+
+  .message--mine .message__actions {
+    right: -190px;
+  }
 }
 
 .message__actions-action {
