@@ -291,11 +291,11 @@ MESSAGE;
     </div>
     <div class="js-content message__content">{$message['content']}</div>
     <div class="clearfix"></div>
-    <div class="quick-message-actions">
-      <div class="js-quote quick-message-actions__action quick-message-actions__action--quote" title="Citer"></div>
+    <div class="message__quick-actions">
+      <div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>
 MESSAGE;
 if ($mine) {
-  $markup .= '<div class="js-edit quick-message-actions__action quick-message-actions__action--edit" title="Modifier"></div>';
+  $markup .= '<div class="js-edit message__quick-action message__quick-action--edit" title="Modifier"></div>';
 }
 $markup .= <<<MESSAGE
     </div>

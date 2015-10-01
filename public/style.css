@@ -1035,6 +1035,10 @@ h1, h2, h3 {
   background: hsl(209, 56%, 94%);
 }
 
+.message:target {
+  background: rgba(255, 85, 0, .07);
+}
+
 .message__byline {
   width: 100%;
 }
@@ -1398,12 +1402,12 @@ h1, h2, h3 {
   height: 140px;
 }
 
-.quick-message-actions {
+.message__quick-actions {
   display: none;
 }
 
 @media (min-width: 1025px) {
-  .quick-message-actions {
+  .message__quick-actions {
     display: block;
     position: absolute;
     bottom: -2px;
@@ -1411,7 +1415,7 @@ h1, h2, h3 {
   }
 }
 
-.quick-message-actions__action {
+.message__quick-action {
   width: 28px;
   height: 28px;
   cursor: pointer;
@@ -1420,20 +1424,16 @@ h1, h2, h3 {
   margin-left: 5px;
 }
 
-.quick-message-actions__action:hover {
+.message__quick-action:hover {
   opacity: .5;
 }
 
-.quick-message-actions__action--quote {
+.message__quick-action--quote {
   background: url(/images/reply_18px.svg) center no-repeat;
 }
 
-.quick-message-actions__action--edit {
+.message__quick-action--edit {
   background: url(/images/edit_18px.svg) center no-repeat;
-}
-
-.message:target {
-  background: rgba(255, 85, 0, .07);
 }
 
 /* TOPIC - Motif de lock */
