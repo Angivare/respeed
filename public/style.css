@@ -1016,7 +1016,7 @@ h1, h2, h3 {
   border-radius: 2px;
   box-shadow: 0 1px 2px rgba(0,0,0,.2);
   -webkit-tap-highlight-color: transparent;
-  border: 1px solid transparent; /* pour prendre en compte margin de .contentest > p */
+  border: 1px solid transparent; /* pour prendre en compte margin de .message__content-text > p */
 }
 
 @media (min-width: 768px) {
@@ -1233,20 +1233,20 @@ h1, h2, h3 {
 
 /* TOPIC - Message - content */
 
-.message .content {
+.message__content {
   padding: 0 10px;
   word-wrap: break-word;
   margin-bottom: -0px;
 }
 
 @media (min-width: 768px) {
-  .message .content {
+  .message__content {
     padding: 0 15px;
   }
 }
 
 @media (min-width: 1025px) {
-  .message .content {
+  .message__content {
     margin-bottom: 0;
 
     width: 85%;
@@ -1256,11 +1256,11 @@ h1, h2, h3 {
   }
 }
 
-.message .contentest {
+.message__content-text {
   margin: 1em 0;
 }
 
-.message .edit-mention {
+.message__content-edit-mention {
   font-size: .8em;
   color: rgba(0,0,0,.5);
 }
@@ -1278,12 +1278,12 @@ h1, h2, h3 {
   }
 }
 
-.message .contentest > .blockquote-jv {
+.message__content-text > .blockquote-jv {
   background: rgba(33,150,243,.05);
 }
 
 @media (min-width: 1025px) {
-  .message .content > .blockquote-jv {
+  .message__content > .blockquote-jv {
     font-size: 95%;
   }
 }
@@ -1292,7 +1292,7 @@ h1, h2, h3 {
   margin: .5em 0;
 }
 
-.message .contentest > .pre-jv, .message .contentest p > .code-jv {
+.message__content-text > .pre-jv, .message__content-text p > .code-jv {
   font-size: 95%;
   font-family: Menlo, Consolas, monospace;
   border: 1px solid rgba(0,0,0,.25);
@@ -1388,12 +1388,12 @@ h1, h2, h3 {
   cursor: pointer;
 }
 
-.contentest > .sticker {
+.message__content-text > .sticker {
   width: 70px;
   height: 70px;
 }
 
-.sticker--enlarged, .contentest > .sticker--enlarged {
+.sticker--enlarged, .message__content-text > .sticker--enlarged {
   width: 140px;
   height: 140px;
 }

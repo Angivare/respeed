@@ -55,13 +55,13 @@ function h($string) {
 }
 
 function adapt_html($message, $date, $id) {
-  $message = '<div class="contentest">' . $message . '</div>';
+  $message = '<div class="message__content-text">' . $message . '</div>';
 
   // Mise en forme édition
   preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<span class="JvCare [0-9A-F]*" target="_blank">(?P<pseudo>.*)</span>#Usi', $message, $matches_edit);
   if ($matches_edit) {
     $message = str_replace($matches_edit[0], '', $message);
-    $message .= '<p class="edit-mention"><span title="' . $date . '">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</span></p>';
+    $message .= '<p class="message__content-edit-mention"><span title="' . $date . '">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</span></p>';
   }
 
   // JVCare
@@ -70,7 +70,7 @@ function adapt_html($message, $date, $id) {
   // Vire la signature qui apparaît parfois
   $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
   if ($pos_signature !== false) {
-    $message = substr($message, 0, $pos_signature) . '</div>'; // </div> pour .contentest
+    $message = substr($message, 0, $pos_signature) . '</div>'; // </div> pour .message__content-text
   }
   
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
@@ -289,7 +289,7 @@ MESSAGE;
         <span class="js-menu js-date message__byline-date-inline" title="{$message['dateRaw']}">{$message['date']}</span>
       </div>
     </div>
-    <div class="js-content content">{$message['content']}</div>
+    <div class="js-content message__content">{$message['content']}</div>
     <div class="clearfix"></div>
     <div class="quick-message-actions">
       <div class="js-quote quick-message-actions__action quick-message-actions__action--quote" title="Citer"></div>

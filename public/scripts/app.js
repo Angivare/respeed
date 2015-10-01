@@ -565,7 +565,7 @@ function quote() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
   
-  var html = $('#' + id + ' .contentest').html().trim()
+  var html = $('#' + id + ' .message__content-text').html().trim()
 
   var text = JVCode.toJVCode(html)
 
@@ -594,7 +594,7 @@ function edit() {
 
   var id = $(this).closest('.message').attr('id')
   
-  var html = $('#' + id + ' .contentest').html().trim()
+  var html = $('#' + id + ' .message__content-text').html().trim()
 
   var text = htmlentities(JVCode.toJVCode(html))
 
