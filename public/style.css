@@ -944,7 +944,7 @@ h1, h2, h3 {
   width: 1px; /* Pour que la case reste aussi petite que possible et que celle d’a côté ai l’air plus ou moins centrée sur tablette/desktop */
 }
 
-@media (MAX-width: 650px) {
+@media (MAX-width: 1024px) {
   .pagination-topic__action-button-additional-text {
     display: none;
   }
