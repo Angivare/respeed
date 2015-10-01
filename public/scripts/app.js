@@ -26,6 +26,10 @@ var form_data
 /*** Helpers ***/
 
 function ajax(action, data, success) {
+  if (typeof $hash == 'undefined') { // Page d’erreur
+    return
+  }
+
   if(typeof(success) !== 'undefined')
     var dataType = 'json'
   return $.post('/ajax/' + action + '.php?hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, data, success, dataType)
