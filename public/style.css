@@ -1550,6 +1550,7 @@ h1, h2, h3 {
   .lock-alert {
     border-width: 1px;
     border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
   }
 }
 
