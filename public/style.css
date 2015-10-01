@@ -1512,8 +1512,8 @@ h1, h2, h3 {
   height: 35px;
   cursor: -webkit-zoom-in;
   cursor:         zoom-in;
-  -webkit-transform-origin: top left;
-          transform-origin: top left;
+  -webkit-transform-origin: left;
+          transform-origin: left;
 }
 
 @-webkit-keyframes sticker-zoom {
