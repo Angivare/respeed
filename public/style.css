@@ -1176,13 +1176,13 @@ h1, h2, h3 {
   }
 
   .message--menu-opened {
-    -webkit-transform: translateX(-60px);
-            transform: translateX(-60px);
+    -webkit-transform: translateX(-63px);
+            transform: translateX(-63px);
   }
 
   .message--menu-opened.message--mine {
-    -webkit-transform: translateX(-180px);
-            transform: translateX(-180px);
+    -webkit-transform: translateX(-183px);
+            transform: translateX(-183px);
   }
 
   .message__actions {
@@ -1192,12 +1192,12 @@ h1, h2, h3 {
 
 .message__actions {
   position: absolute;
-  right: -70px;
+  right: -73px; /* 60 + 13 */
 }
 
 .message--mine .message__actions {
   position: absolute;
-  right: -190px;
+  right: -193px; /* 60 * 3 + 13 */
 }
 
 .message__actions-action {
