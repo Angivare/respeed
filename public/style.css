@@ -1056,7 +1056,7 @@ h1, h2, h3 {
 }
 
 .message--even {
-  background: hsl(209, 56%, 94%);
+  background: hsl(207, 90%, 98%);
 }
 
 @media (min-width: 1025px) {
@@ -1355,7 +1355,7 @@ h1, h2, h3 {
   }
 
   .message--even .message__content {
-    background: hsl(209, 56%, 94%);
+    background: hsl(207, 90%, 98%);
   }
 }
 
