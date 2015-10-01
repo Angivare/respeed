@@ -1543,10 +1543,17 @@ h1, h2, h3 {
   opacity: .2;
   display: inline-block;
   margin-left: 5px;
+  -webkit-transition: -webkit-transform .075s ease-out;
+          transition: transform .075s ease-out, -webkit-transform .075s ease-out;
 }
 
 .message__quick-action:hover {
-  opacity: .5;
+  opacity: .75;
+}
+
+.message__quick-action:active {
+  -webkit-transform: scale(.7);
+          transform: scale(.7);
 }
 
 .message__quick-action--quote {
