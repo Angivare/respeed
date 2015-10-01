@@ -76,6 +76,9 @@ function adapt_html($message, $date, $id) {
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
   $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 
+  // Conversion balise miniature NoelShack
+  $message = preg_replace('#<a href="([^"]+)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="([^"]+)" alt="[^"]+"/></a>#Usi', '<a class="noelshack-link" href="$1" target="_blank"><img class="noelshack-link__thumb" src="$2"></a>');
+
   // Réparation des liens en /profil/pseudo.html
   $message = preg_replace('#(<a href="https?://www\.jeuxvideo\.com/profil/.+)\.html"#Usi', '$1?mode=page_perso"', $message);
 
@@ -113,7 +116,7 @@ function adapt_html($message, $date, $id) {
   $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="/contenu/medias/video.php\?q=config&amp;id=[0-9]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur jeuxvideo.com</a></p>', $message);
 
   // Faire stickers agrandissable
-  $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<img class="js-sticker sticker img-stickers" src="http://jv.stkr.fr/p3w/$1" data-sticker-id="$1">', $message);
+  $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<img class="js-sticker sticker" src="http://jv.stkr.fr/p3w/$1" data-sticker-id="$1">', $message);
 
   // Ajout classe CSS aux smileys
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" alt="$2" data-code="$2" title="$2">', $message);

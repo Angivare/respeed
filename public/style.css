@@ -1466,6 +1466,11 @@ h1, h2, h3 {
   visibility: visible;
 }
 
+.noelshack-link__thumb {
+  width: 68px;
+  height: 51px;
+}
+
 .smiley {
   min-width: 16px;
   min-height: 16px;
