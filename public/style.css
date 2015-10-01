@@ -1081,6 +1081,12 @@ h1, h2, h3 {
   vertical-align: middle;
 }
 
+@media (min-width: 768px) {
+  .message__byline-author-avatar {
+    margin-right: 8px;
+  }
+}
+
 .message__byline-author-avatar-image {
   max-width: 30px;
   max-height: 30px;
