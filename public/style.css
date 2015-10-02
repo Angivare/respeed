@@ -1477,6 +1477,14 @@ h1, h2, h3 {
   visibility: visible;
 }
 
+.spoil__content :first-child {
+  margin-top: 0;
+}
+
+.spoil__content :last-child {
+  margin-bottom: 0;
+}
+
 .noelshack-link__thumb {
   width: 68px;
   height: 51px;
