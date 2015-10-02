@@ -102,7 +102,7 @@ function adapt_html($message, $date, $id) {
   }, $message);
 
   // Transformation des liens NoelShack en liens directs
-  $message = preg_replace_callback('#<a href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
+  $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
     $new_str = $matches[0];
     $path = 'http://image.noelshack.com/fichiers/' . $matches['year'] . '/' . $matches['container'] . '/' . $matches['path'];
     $new_str = str_replace($matches['url'], $path, $new_str);
