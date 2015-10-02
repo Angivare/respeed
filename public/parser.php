@@ -139,7 +139,7 @@ function parse_topic($got) {
     $dateRaw = strip_tags(trim($matches['date'][$i]));
     $avatar = $avatarBig = false;
     if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false) {
-      $avatar = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars-md/', '/avatar-md/'], $matches['avatar'][$i]);
+      $avatar = $matches['avatar'][$i];
       $avatarBig = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]);
     }
     $id = (int)$matches['post'][$i];
