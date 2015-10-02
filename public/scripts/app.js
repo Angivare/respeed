@@ -20,6 +20,7 @@ var form_data
   , handleRefreshInterval
   , handleRefreshTimeout
   , topicRefreshTimeout
+  , draftWatcherInterval
 
 
 
@@ -253,6 +254,46 @@ function request_edit_form_data(e) {
         + '" class="captcha">')
     }
   })
+}
+
+function startDraftWatcher() {
+  draftWatcherInterval = setInterval(saveDraft, 1000)
+  $('.form__textarea').blur(stopDraftWatcher)
+}
+
+function stopDraftWatcher() {
+  clearInterval(draftWatcherInterval)
+}
+
+function getDraftName() {
+  if ($topic) {
+    return 'draft_' + $topic
+  }
+  if ($forum) {
+    return 'draft_f' + $forum
+  }
+}
+
+function saveDraft() {
+  var draft = $('.form__textarea').val()
+  if (draft) {
+    localStorage.setItem(getDraftName(), draft)
+  }
+}
+
+function clearDraft() {
+  localStorage.removeItem(getDraftName())
+}
+
+function insertDraft() {
+  var draftName = getDraftName()
+  if (!draftName) {
+    return
+  }
+  var draft = localStorage.getItem(draftName)
+  if (draft) {
+    $('.form__textarea').val(draft)
+  }
 }
 
 function addForum() {
@@ -539,6 +580,8 @@ function post(e) {
       $('.form .form__errors').hide()
       $('.form .form__textarea').val('')
 
+      clearDraft()
+
       if (data.rep !== true)
         window.location.href = data.rep
 
@@ -727,6 +770,8 @@ instantClick.on('change', function(isInitialLoad) {
   setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
   displayFavoritesOnIndex()
   handleRefreshOnPageChange(isInitialLoad)
+  stopDraftWatcher()
+  insertDraft()
 })
 
 instantClick.on('restore', function() {
@@ -738,6 +783,7 @@ instantClick.on('change', function() {
   $('.form').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
+  $('.form__textarea').focus(startDraftWatcher)
 
   // Messages
   $('.js-quote').click(quote)
