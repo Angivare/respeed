@@ -1067,10 +1067,6 @@ h1, h2, h3 {
   }
 }
 
-.message:target {
-  background: rgba(255, 85, 0, .07);
-}
-
 .message__byline {
   width: 100%;
   display: table;
