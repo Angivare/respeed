@@ -17,6 +17,12 @@ if ($url && $msg && $form) {
             (isset($m['page']) ? $m['page'] : '1') . '-0-1-0-' . $m['slug'] . '.htm' . (isset($m['message']) ? ('#post_'.$m['message']) : '');
   }, $msg);
 
+  foreach ($stickers as $stickers_category) {
+    foreach ($stickers_category as $id => $shortcut) {
+      $msg = str_replace(':' . $shortcut . ':', '[[sticker:p/' . $id . ']]', $msg);
+    }
+  }
+
   $url_end = explode('/', $url);
   $url_end = array_pop($url_end);
   $url_end = explode('-', $url_end);
