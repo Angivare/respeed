@@ -1393,13 +1393,13 @@ h1, h2, h3 {
 .message .blockquote-jv {
   margin: 1em 0;
   border-left: 3px solid rgba(33,150,243,.25); /* Blue 500 */
-  padding: 1px 6px;
+  padding: 1px 7px;
   background: rgba(33,150,243,.03);
 }
 
 @media (min-width: 768px) {
   .message .blockquote-jv {
-    padding-right: 10px;
+    padding: 1px 10px;
   }
 }
 
