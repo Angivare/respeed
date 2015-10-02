@@ -30,15 +30,31 @@ function ajax(action, data, success) {
     return
   }
 
-  if(typeof(success) !== 'undefined')
+  if (typeof success != 'undefined') {
     var dataType = 'json'
-  return $.post('/ajax/' + action + '.php?hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand, data, success, dataType)
-    .fail(function(xhr) {
-      if(xhr.status == 504)
-        success({'rep':false,'err':'Timeout de JVC'})
-      else
-        success({'rep':false,'err':'Erreur réseau'})
-    })
+  }
+
+  return $.ajax({
+    method: 'POST',
+    url: '/ajax/' + action + '.php?hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand,
+    data: data,
+    success: success,
+    dataType: dataType,
+  })
+  .fail(function(xhr) {
+    if(xhr.status == 504) {
+      success({
+        rep: false,
+        err: 'Timeout de JVC',
+      })
+    }
+    else {
+      success({
+        rep: false,
+        err: 'Erreur réseau',
+      })
+    }
+  })
 }
 
 function tokenRefresh() {
