@@ -40,6 +40,7 @@ function ajax(action, data, success) {
     data: data,
     success: success,
     dataType: dataType,
+    timeout: 9000,
   })
   .fail(function(xhr) {
     if(xhr.status == 504) {
@@ -322,13 +323,12 @@ function handleRefreshOnPageChange(isInitialLoad) {
     lastRefreshTimestamp = 0
   }
   if ($topic) {
-    handleRefreshTimeout = setTimeout(handleRefresh, 2050)
-    handleRefreshInterval = setInterval(handleRefresh, 4000)
+    handleRefreshInterval = setInterval(handleRefresh, 2000)
   }
 }
 
 function handleRefresh() {
-  if (lastRefreshTimestamp < +new Date - 8000) {
+  if (lastRefreshTimestamp < +new Date - 9050) {
     topicRefresh()
   }
 }
@@ -408,7 +408,7 @@ function topicRefresh() {
       triggerTabAlertForNewPosts()
     }
 
-    topicRefreshTimeout = setTimeout(topicRefresh, 2050)
+    topicRefreshTimeout = setTimeout(topicRefresh, 2000)
   })
 }
 
