@@ -1453,15 +1453,10 @@ h1, h2, h3 {
   display: inline;
 }
 
-.spoil--inline.spoil--revealed {
-  margin: 0;
-}
-
 .spoil--block.spoil--revealed {
   display: block;
   width: auto;
   height: auto;
-  margin: 0;
 }
 
 .spoil__content {
