@@ -772,3 +772,6 @@ if (hasTouch) {
 }
 
 document.addEventListener('visibilitychange', handleVisibilityChange)
+
+localStorage.removeItem('blacklist')
+localStorage.removeItem('remoteBlacklistLastUpdate')
