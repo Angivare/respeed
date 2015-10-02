@@ -1436,33 +1436,44 @@ h1, h2, h3 {
   padding: 2px 3px;
 }
 
-.message .bloc-spoil-jv {
-  background: #fcc;
-  background: linear-gradient(rgba(255,64,64, .7), rgba(255,96,96,.8));
-  border: 1px solid red;
-  border-radius: 2px;
-  padding: 0 2px;
+.spoil {
+  background: #EF9A9A;
   display: inline-block;
-  max-width: 100%;
-  max-height: 100px;
+  width: 80px;
+  height: 22px;
+  margin: -4px 0;
+  border-radius: 2px;
   overflow: hidden;
+  padding: 3px;
 }
 
-.message .bloc-spoil-jv.en-ligne {
-  margin-bottom: 0;
+.spoil--block {
+  display: block;
+  margin: 1em 0;
 }
 
-.message .bloc-spoil-jv .contenu-spoil {
+.spoil--revealed {
+  overflow: visible;
+  background: #FFEBEE;
+  display: inline;
+}
+
+.spoil--inline.spoil--revealed {
+  margin: 0;
+}
+
+.spoil--block.spoil--revealed {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+.spoil__content {
   visibility: hidden;
 }
 
-.message .bloc-spoil-jv.shown {
-  background: transparent;
-  max-height: none;
-  overflow: visible;
-}
-
-.message .bloc-spoil-jv.shown .contenu-spoil {
+.spoil--revealed .spoil__content {
   visibility: visible;
 }
 

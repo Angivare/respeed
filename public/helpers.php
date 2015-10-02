@@ -76,8 +76,10 @@ function adapt_html($message, $date, $id) {
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
   $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 
-  // Conversion balise miniature NoelShack
+  // Conversion balises
   $message = preg_replace('#<a href="([^"]+)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="([^"]+)" alt="[^"]+"/></a>#Usi', '<a class="noelshack-link" href="$1" target="_blank"><img class="noelshack-link__thumb" src="$2"></a>', $message);
+  $message = str_replace('<span class="bloc-spoil-jv en-ligne"><span class="contenu-spoil">', '<span class="spoil spoil--inline"><span class="spoil__content">', $message);
+  $message = str_replace('<span class="bloc-spoil-jv"><span class="contenu-spoil">', '<span class="spoil spoil--block"><span class="spoil__content">', $message);
 
   // Réparation des liens en /profil/pseudo.html
   $message = preg_replace('#(<a href="https?://www\.jeuxvideo\.com/profil/.+)\.html"#Usi', '$1?mode=page_perso"', $message);

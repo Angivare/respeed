@@ -375,7 +375,7 @@ function topicRefresh() {
           // Mise à jour
           $('#' + message.id).data('contentMd5', message.contentMd5)
           $('#' + message.id + ' .js-content').html(message.content)
-          $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
+          $('#' + message.id + ' .spoil').click(toggleSpoil)
           $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
 
           triggerTabAlertForNewPosts()
@@ -396,7 +396,7 @@ function topicRefresh() {
         $('#' + message.id + ' .js-profile').click(openProfile)
         $('#' + message.id + ' .js-menu').click(toggleMenu)
         $('#' + message.id).click(closeMenu)
-        $('#' + message.id + ' .bloc-spoil-jv').click(toggleSpoil)
+        $('#' + message.id + ' .spoil').click(toggleSpoil)
         $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
       }
     }
@@ -658,7 +658,7 @@ function closeMenu(e) {
 }
 
 function toggleSpoil() {
-  $(this).toggleClass('shown')
+  $(this).toggleClass('spoil--revealed')
 }
 
 function toggleStickerSize() {
@@ -741,7 +741,7 @@ instantClick.on('change', function() {
   $('.js-profile').click(openProfile)
   $('.js-menu').click(toggleMenu)
   $('.message').click(closeMenu)
-  $('.bloc-spoil-jv').click(toggleSpoil)
+  $('.spoil').click(toggleSpoil)
   $('.js-sticker').click(toggleStickerSize)
   $('.js-button-go-to-form').click(goToForm)
 })
