@@ -22,8 +22,8 @@ var JVCode = (function() {
     new Markup('ol', '<ol>', '</ol>', true, true),
     new Markup('ul', '<ul>', '</ul>', true, true),
     new Markup('li', '<li>', '</li>', false, true),
-    new Markup('.bloc-spoil-jv', '', '', true),
-    new Markup('.contenu-spoil', '<spoil>', '</spoil>'),
+    new Markup('.spoil', '', '', true),
+    new Markup('.spoil__content', '<spoil>', '</spoil>'),
     new Markup('.blockquote-jv', '<q>', '</q>', true, true),
   ]
 
