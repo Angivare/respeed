@@ -1390,7 +1390,7 @@ h1, h2, h3 {
   color: rgba(0,0,0,.5);
 }
 
-.message .blockquote-jv {
+.quote {
   margin: 1em 0;
   border-left: 3px solid rgba(33,150,243,.25); /* Blue 500 */
   padding: 1px 7px;
@@ -1398,22 +1398,22 @@ h1, h2, h3 {
 }
 
 @media (min-width: 768px) {
-  .message .blockquote-jv {
+  .quote {
     padding: 1px 10px;
   }
 }
 
-.message__content-text > .blockquote-jv {
-  background: rgba(33,150,243,.05);
-}
-
 @media (min-width: 1025px) {
-  .message__content > .blockquote-jv {
-    font-size: 95%;
+  .quote {
+    font-size: 13px;
   }
 }
 
-.message .blockquote-jv > p {
+.message__content-text > .quote {
+  background: rgba(33,150,243,.05);
+}
+
+.quote > p {
   margin: .5em 0;
 }
 

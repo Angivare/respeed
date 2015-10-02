@@ -24,7 +24,7 @@ var JVCode = (function() {
     new Markup('li', '<li>', '</li>', false, true),
     new Markup('.spoil', '', '', true),
     new Markup('.spoil__content', '<spoil>', '</spoil>'),
-    new Markup('.blockquote-jv', '<q>', '</q>', true, true),
+    new Markup('.quote', '<q>', '</q>', true, true),
   ]
 
   function what(e) {
