@@ -657,7 +657,12 @@ function closeMenu(e) {
   $('#' + id).removeClass('message--menu-opened')
 }
 
-function toggleSpoil() {
+function toggleSpoil(event) {
+  event.stopPropagation()
+  var target = $(event.target)
+  if (target.is('.sticker') || target.is('a')) {
+    return
+  }
   $(this).toggleClass('spoil--revealed')
 }
 
