@@ -1465,11 +1465,11 @@ h1, h2, h3 {
 }
 
 .spoil__content {
-  visibility: hidden;
+  display: none;
 }
 
-.spoil--revealed .spoil__content {
-  visibility: visible;
+.spoil--revealed > .spoil__content {
+  display: inline;
 }
 
 .spoil__content :first-child {
