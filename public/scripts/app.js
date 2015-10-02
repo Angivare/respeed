@@ -257,7 +257,7 @@ function request_edit_form_data(e) {
 }
 
 function startDraftWatcher() {
-  draftWatcherInterval = setInterval(saveDraft, 1000)
+  draftWatcherInterval = setInterval(saveDraft, 500)
   $('.form__textarea').blur(stopDraftWatcher)
 }
 
