@@ -275,10 +275,7 @@ function getDraftName() {
 }
 
 function saveDraft() {
-  var draft = $('.form__textarea').val()
-  if (draft) {
-    localStorage.setItem(getDraftName(), draft)
-  }
+  localStorage.setItem(getDraftName(), $('.form__textarea').val())
 }
 
 function clearDraft() {
