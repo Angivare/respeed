@@ -41,7 +41,7 @@ function ajax(action, data, success) {
     data: data,
     success: success,
     dataType: dataType,
-    timeout: 9000,
+    timeout: 5000,
   })
   .fail(function(xhr) {
     if(xhr.status == 504) {
