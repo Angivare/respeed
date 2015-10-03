@@ -231,3 +231,49 @@ function fetch_topic($topic, $page, $slug, $forum) {
   $ret['t_req'] = $t_req;
   return $ret;
 }
+
+function parse_profile($body) {
+  $ret = [];
+
+  if (preg_match('#<img alt="Avatar de (?P<pseudo>[^"]+)" src="(?P<avatar>[^"]+)">#Usi', $body, $matches)) {
+    $ret['pseudo'] = $matches['pseudo'];
+    if ($matches['avatar'] != '//image.jeuxvideo.com/avatar-md/default.jpg') {
+      $ret['avatar'] = str_replace('/avatars-md/', '/avatars/', $matches['avatar']);
+    }
+  }
+
+  if (preg_match('#<div class="info-lib">Messages Forums :</div><div class="info-value">(?P<messages>[0-9.]+) messages</div>#Usi', $body, $matches)) {
+    $ret['messages'] = str_replace('.', '', $matches['messages']);
+  }
+
+  if (preg_match('#<div class="info-lib">Membre depuis :</div><div class="info-value">\S+ (?P<month>\S+) (?P<year>[0-9]+) \((?P<days>[0-9.]+) jours\)</div>#Usi', $body, $matches)) {
+    $ret['month'] = $matches['month'];
+    $ret['year'] = $matches['year'];
+    $ret['days'] = str_replace('.', '', $matches['days']);
+  }
+  
+  if (isset($ret['messages'], $ret['days'])) {
+    $ret['ratio'] = $ret['messages'] / ($ret['days'] + 1);
+  }
+
+  if (preg_match('#<div class="bloc-description-desc txt-enrichi-desc-profil">(?P<description>.+)</div>\s{32}#Usi', $body, $matches)) {
+    $ret['description'] = adapt_html($matches['description']);
+  }
+
+  if (preg_match('#<p>Signature dans les forums :</p>\s+<div>(?P<signature>.+)</div>\s+</div>\s{20}#Usi', $body, $matches)) {
+    $ret['signature'] = adapt_html($matches['signature']);
+  }
+
+  if (preg_match('#<div class="alert-row"> Le pseudo est banni. </div>#Usi', $body)) {
+    $ret['banned'] = true;
+  }
+
+  return $ret;
+}
+
+function fetch_profile($pseudo) {
+  $pseudo = strtolower($pseudo);
+  $jvc = new Jvc();
+  $rep = $jvc->get('http://www.jeuxvideo.com/profil/' . $pseudo, 'mode=infos', false, false);
+  return parse_profile($rep['body']);
+}

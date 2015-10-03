@@ -96,11 +96,11 @@ function h($string) {
   return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5);
 }
 
-function n($number, $decimals) {
+function n($number, $decimals = 0) {
   return number_format($number, $decimals, ',', ' ');
 }
 
-function adapt_html($message, $date, $id) {
+function adapt_html($message, $date = '', $id = 0) {
   $message = '<div class="message__content-text">' . $message . '</div>';
 
   // Mise en forme édition
