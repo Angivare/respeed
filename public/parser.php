@@ -238,7 +238,7 @@ function parse_profile($body) {
   if (preg_match('#<img alt="Avatar de (?P<pseudo>[^"]+)" src="(?P<avatar>[^"]+)">#Usi', $body, $matches)) {
     $ret['pseudo'] = $matches['pseudo'];
     if ($matches['avatar'] != '//image.jeuxvideo.com/avatar-md/default.jpg') {
-      $ret['avatar'] = str_replace('/avatars-md/', '/avatars/', $matches['avatar']);
+      $ret['avatar'] = str_replace(['/avatar-md/', '/avatars-md/'], ['/avatar/', '/avatars/'], $matches['avatar']);
     }
   }
 
