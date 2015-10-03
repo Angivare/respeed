@@ -8,6 +8,7 @@ $deconnexion = isset($_GET['deconnexion']);
 $accueil = isset($_GET['accueil']);
 $apropos = isset($_GET['apropos']);
 $recherche_forum = isset($_GET['recherche_forum']);
+$smileys = isset($_GET['smileys']);
 $salespage = isset($_GET['salespage']);
 
 require 'helpers.php';
@@ -36,6 +37,8 @@ elseif ($apropos)
   $view = 'apropos';
 elseif ($recherche_forum)
   $view = 'recherche_forum';
+elseif ($smileys)
+  $view = 'smileys';
 
 if (!$view) {
   require 'views/salespage.php';
