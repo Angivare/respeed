@@ -1884,42 +1884,6 @@ h1, h2, h3 {
   padding: 10px 0;
 }
 
-.sticker-cell__code span {
-  border-radius: 4px;
-  background: rgba(255,255,255,.8);
-  padding: 0 2px;
-}
-
-.sticker-cell__code--highlight {
-  -webkit-animation: sticker-code-highlight .5s ease-out;
-          animation: sticker-code-highlight .5s ease-out;
-  color: black;
-}
-
-@-webkit-keyframes sticker-code-highlight {
-  0% {
-    -webkit-transform: scale(1);
-  }
-  30%, 60% {
-    -webkit-transform: scale(1.4);
-  }
-  100% {
-    -webkit-transform: scale(1);
-  }
-}
-
-@keyframes sticker-code-highlight {
-  0% {
-    transform: scale(1);
-  }
-  30%, 60% {
-    transform: translateY(-85px) scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 .sticker--demo {
   width: 70px;
   height: 70px;

@@ -21,7 +21,6 @@ var form_data
   , handleRefreshTimeout
   , topicRefreshTimeout
   , draftWatcherInterval
-  , highlightStickerCodeTimeout
 
 
 
@@ -548,18 +547,6 @@ function showErrors(errors) {
   $('.form .form__textarea').focus()
 }
 
-function highlightStickerCode() {
-  var codeElement = $(this).parent().parent().children('.sticker-cell__code')
-  codeElement.addClass('sticker-cell__code--highlight')
-  if (!highlightStickerCodeTimeout) {
-    highlightStickerCodeTimeout = setTimeout(function() {
-      codeElement.removeClass('sticker-cell__code--highlight')
-      clearTimeout(highlightStickerCodeTimeout)
-      highlightStickerCodeTimeout = false
-    }, 500)
-  }
-}
-
 
 
 /*** Fonctions pour events ***/
@@ -808,7 +795,6 @@ instantClick.on('change', function() {
   $('.spoil').click(toggleSpoil)
   $('.js-sticker').click(toggleStickerSize)
   $('.js-button-go-to-form').click(goToForm)
-  $('.sticker--demo').click(highlightStickerCode)
 })
 
 instantClick.init()
