@@ -1778,6 +1778,33 @@ h1, h2, h3 {
   width: 20%;
 }
 
+.form__action--left {
+  padding-left: 2px;
+  position: relative;
+}
+
+.smileys-link {
+  display: inline-block;
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  margin: -10px;
+  background: url('/images/smileys.png') center no-repeat;
+  background-size: 15px;
+  opacity: .75;
+  top: 5px;
+}
+
+@media (min-width: 560px) { /* Pour suivre le bouton qui grossit */
+  .smileys-link {
+    top: 8px;
+  }
+}
+
+.smileys-link:hover, .smileys-link:active {
+  opacity: 1;
+}
+
 .form__action--submit {
   text-align: center;
   width: 60%;
