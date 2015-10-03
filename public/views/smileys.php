@@ -4,6 +4,8 @@ if (!isset($jvc)) {
   $jvc = new Jvc();
 }
 ?>
+<body class="body--no-bottom"></body>
+<div class="sheet sheet--nothing-over">
 <?php foreach ($stickers as $stickers_category): ?>
 <?php $i = 0 ?>
 <table class="smileys-card">
@@ -19,3 +21,4 @@ if (!isset($jvc)) {
 <?php endforeach ?>
 </table>
 <?php endforeach ?>
+</div>

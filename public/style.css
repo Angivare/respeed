@@ -131,6 +131,11 @@ h1, h2, h3 {
   padding-bottom: 0;
 }
 
+.sheet--nothing-over {
+  border-width: 0;
+  padding-top: 0;
+}
+
 @media (min-width: 1025px) {
   .sheet {
     width: calc(100% - 20px);
@@ -144,6 +149,12 @@ h1, h2, h3 {
 
   .body--no-bottom .sheet {
     padding-bottom: 10px;
+  }
+
+  .sheet--nothing-over {
+    border-width: 0;
+    padding-top: 0;
+    margin-top: 15px;
   }
 }
 
@@ -1900,6 +1911,7 @@ h1, h2, h3 {
 
 .smileys-card {
   width: 95%;
+  max-width: 600px;
   background: white;
   margin: 10px auto;
   padding: 0 4px;
@@ -1927,5 +1939,15 @@ h1, h2, h3 {
   .sticker--demo {
     width: 70px;
     height: 70px;
+  }
+}
+
+@media (min-width: 600px) {
+  .smileys-card {
+    margin: 15px auto;
+  }
+
+  .smiley-cell {
+    font-size: 16px;
   }
 }
