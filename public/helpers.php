@@ -96,6 +96,10 @@ function h($string) {
   return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5);
 }
 
+function n($number, $decimals) {
+  return number_format($number, $decimals, ',', ' ');
+}
+
 function adapt_html($message, $date, $id) {
   $message = '<div class="message__content-text">' . $message . '</div>';
 

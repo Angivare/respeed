@@ -9,6 +9,7 @@ $accueil = isset($_GET['accueil']);
 $apropos = isset($_GET['apropos']);
 $recherche_forum = isset($_GET['recherche_forum']);
 $smileys = isset($_GET['smileys']);
+$profil = isset($_GET['profil']);
 $salespage = isset($_GET['salespage']);
 
 require 'helpers.php';
@@ -39,6 +40,8 @@ elseif ($recherche_forum)
   $view = 'recherche_forum';
 elseif ($smileys)
   $view = 'smileys';
+elseif ($profil)
+  $view = 'profil';
 
 if (!$view) {
   require 'views/salespage.php';

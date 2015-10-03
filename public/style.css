@@ -1956,3 +1956,82 @@ h1, h2, h3 {
     font-size: 16px;
   }
 }
+
+/* PROFIL */
+
+.profile-avatar {
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+  margin: 0 auto 12px;
+  display: block;
+  background: #BDBDBD no-repeat center;
+  background-color: transparent;
+  background-size: contain;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+}
+
+@media (min-width: 640px) {
+  .profile-avatar {
+    margin-top: 10px;
+  }
+}
+
+.profile-card {
+  background: white;
+  margin: 10px 8px;
+  position: relative;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  padding: 10px;
+  font-size: 14px;
+}
+
+@media (min-width: 640px) {
+  .profile-card {
+    max-width: 600px;
+    margin: 15px auto;
+  }
+}
+
+.profile-card--text {
+  padding-bottom: 1px;
+}
+
+.profile-card__header {
+  color: #9E9E9E;
+  padding: 0 0 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-bottom: 1px solid #EEEEEE;
+  margin: 0 -10px;
+  text-indent: 10px;
+}
+
+.profile-card__number {
+  word-spacing: -.05em;
+}
+
+.profile-card__messages, .profile-card__days, .profile-card__ratio {
+  text-align: center;
+}
+
+.profile-card__messages {
+  font-size: 28px;
+  margin: 5px 0;
+}
+
+.profile-card__days {
+  font-size: 18px;
+  margin: 9px 0;
+}
+
+.profile-card__ratio {
+  font-size: 14px;
+  margin: 12px 0;
+}
+
+.back-button-container {
+  text-align: center;
+  margin: 20px 0 50px;
+}
