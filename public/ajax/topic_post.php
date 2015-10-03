@@ -7,6 +7,8 @@ require '../parser.php';
 arg('url', 'title', 'msg', 'form', 'ccode');
 
 if ($url && $msg && $form) {
+  $msg = convert_stickers($msg);
+
   $url_end = explode('/', $url);
   $url_end = array_pop($url_end);
   $url_end = explode('-', $url_end);
@@ -26,13 +28,15 @@ if ($url && $msg && $form) {
       'rep' => $link,
       'err' => $jvc->err()
     ]);
-  } else {
+  }
+  else {
     echo json_encode([
       'rep' => $rep,
       'err' => $jvc->err()
     ]);
   }
-} else if ($url) {
+}
+else if ($url) {
   echo json_encode([
     'rep' => $jvc->topic_post_req($url),
     'err' => $jvc->err()

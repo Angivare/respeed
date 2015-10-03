@@ -421,3 +421,13 @@ function display_footer_if_not_connected() {
     echo '<footer class="site-footer">JVForum n’est pas affilié avec <a href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</footer>';
   }
 }
+
+function convert_stickers($message) {
+  global $stickers;
+  foreach ($stickers as $stickers_category) {
+    foreach ($stickers_category as $id => $shortcut) {
+      $message = str_replace(':' . $shortcut . ':', '[[sticker:p/' . $id . ']]', $message);
+    }
+  }
+  return $message;
+}
