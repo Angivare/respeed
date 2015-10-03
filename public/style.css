@@ -1494,6 +1494,8 @@ h1, h2, h3 {
 .smiley {
   min-width: 16px;
   min-height: 16px;
+  position: relative;
+  top: 1px;
 }
 
 .smiley--17 { min-height: 12px; } /* :gba: */
@@ -1535,6 +1537,8 @@ h1, h2, h3 {
 .sticker {
   width: 35px;
   height: 35px;
+  position: relative;
+  top: 3px;
   cursor: -webkit-zoom-in;
   cursor:         zoom-in;
   -webkit-transform-origin: left;
@@ -1592,6 +1596,7 @@ h1, h2, h3 {
 .message__content-text > .sticker {
   width: 70px;
   height: 70px;
+  top: 0;
 }
 
 .sticker--enlarged, .message__content-text > .sticker--enlarged {
