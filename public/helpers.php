@@ -362,14 +362,13 @@ MESSAGE;
     <div class="message__quick-actions">
 MESSAGE;
 if ($mine) {
-  $markup .= '<div class="js-delete message__quick-action message__quick-action--delete" title="Supprimer"></div>';
-  $markup .= '<div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>';
-  $markup .= '<div class="js-edit message__quick-action message__quick-action--edit" title="Modifier"></div>';
-}
-else {
-  $markup .= '<div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>';
+  $markup .= <<<MESSAGE
+      <div class="js-delete message__quick-action message__quick-action--delete" title="Supprimer"></div>
+      <div class="js-edit message__quick-action message__quick-action--edit" title="Modifier"></div>
+MESSAGE;
 }
 $markup .= <<<MESSAGE
+      <div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>
     </div>
   </div>
 </div>
