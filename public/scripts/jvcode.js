@@ -2,6 +2,41 @@
 
 var JVCode = (function() {
 
+  var stickers = {
+    '1kki': 'pose',
+    '1kkn': 'prof',
+    '1kkh': 'ananas',
+    '1kkl': 'plage',
+    '1kkm': 'onche',
+    '1kkk': 'pls2',
+    '1kkg': 'flaque',
+    '1kkj': 'btg2',
+    '1kks': 'pls',
+    '1kkq': 'continue',
+    '1kkt': 'haha',
+    '1kkp': 'nudiste',
+    '1kku': 'panache',
+    '1kkr': 'bonnet',
+    '1kkv': 'btg',
+    '1kko': 'masque',
+    '1jnj': 'billets',
+    '1jnc': 'hahaha',
+    '1jnh': 'perplexe',
+    '1jng': 'furie',
+    '1jnf': 'cigare',
+    '1jni': 'dehors2',
+    '1jne': 'hein',
+    '1jnd': 'malin',
+    '1kgx': 'emo',
+    '1kh1': 'laser',
+    '1kgz': 'jesus',
+    '1kgv': 'racaille',
+    '1kgw': 'btg3',
+    '1kgy': 'couronne',
+    '1kgu': 'flamme',
+    '1kh0': 'pls3',
+  }
+
   function Markup(s, a, b, block, raw) {
     this.s = s
     this.a = a
@@ -95,7 +130,10 @@ var JVCode = (function() {
         var src = $(this).attr('src').split('/'),
             id  = src.pop(),
             grp = src.pop()
-        this.outerHTML = '[[sticker:' + grp + '/' + id + ']]'
+        if (id in stickers)
+          this.outerHTML = ':' + stickers[id] + ':'
+        else
+          this.outerHTML = '[[sticker:' + grp + '/' + id + ']]'
       })
       base.find('img').each(function() {
         this.outerHTML = $(this).attr('data-code')
