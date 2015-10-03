@@ -21,4 +21,8 @@ if (!isset($jvc)) {
 <?php endforeach ?>
 </table>
 <?php endforeach ?>
+
+  <div class="back-button-container">
+    <a class="button" href="javascript:history.back()">Retour</a>
+  </div>
 </div>
