@@ -1982,11 +1982,7 @@ h1, h2, h3 {
   color: #D32F2F;
   font-weight: bold;
   text-align: center;
-  margin: 0 auto;
-  background: url(http://jv.stkr.fr/p3w/1kkt) no-repeat 0 37px;
-  background-size: 50px;
-  padding: 40px;
-  width: 230px;
+  margin: 40px auto;
 }
 
 .profile-card {
