@@ -118,10 +118,14 @@ function adapt_html($message, $date, $id) {
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
   $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 
-  // Conversion balises
+  // Conversion miniatures NoelShack
   $message = preg_replace('#<a href="([^"]+)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="([^"]+)" alt="[^"]+"/></a>#Usi', '<a class="noelshack-link" href="$1" target="_blank"><img class="noelshack-link__thumb" src="$2"></a>', $message);
+
+  // Conversion spoils
   $message = str_replace('<span class="bloc-spoil-jv en-ligne"><span class="contenu-spoil">', '<span class="spoil spoil--inline"><span class="spoil__content">', $message);
   $message = str_replace('<span class="bloc-spoil-jv"><span class="contenu-spoil">', '<span class="spoil spoil--block"><span class="spoil__content">', $message);
+
+  // Conversion citations
   $message = str_replace('<blockquote class="blockquote-jv">', '<blockquote class="quote">', $message);
 
   // Réparation des liens en /profil/pseudo.html
@@ -160,11 +164,27 @@ function adapt_html($message, $date, $id) {
   // Transformation des miniatures vidéos jeuxvideo.com en lien
   $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="/contenu/medias/video.php\?q=config&amp;id=[0-9]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur jeuxvideo.com</a></p>', $message);
 
-  // Faire stickers agrandissable
-  $message = preg_replace('#<img class="img-stickers" src="http://jv.stkr.fr/p/([^"]+)"/>#Usi', '<img class="js-sticker sticker" src="http://jv.stkr.fr/p3w/$1" data-sticker-id="$1">', $message);
+  // Conversion smileys
+  $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" data-code="$2" title="$2">', $message);
 
-  // Ajout classe CSS aux smileys
-  $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" alt="$2" data-code="$2" title="$2">', $message);
+  // Conversion stickers
+  $message = preg_replace_callback('#<img class="img-stickers" src="http://jv.stkr.fr/p/(?P<id>[^"]+)"/>#Usi', function ($matches) {
+    global $stickers;
+
+    $ret = $matches[0];
+
+    $id = $matches['id'];
+    $shortcut = '';
+    foreach ($stickers as $stickers_category) {
+      foreach ($stickers_category as $id_loop => $shortcut_loop) {
+        if ($id == $id_loop) {
+          $shortcut = ':' . $shortcut_loop . ':';
+        }
+      }
+    }
+
+    return '<img class="js-sticker sticker" src="http://jv.stkr.fr/p3w/' . $id . '" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '">';
+  }, $message);
 
   // Rajout de target="_blank" aux liens externes
   $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
