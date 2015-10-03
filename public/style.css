@@ -1489,6 +1489,7 @@ h1, h2, h3 {
 .noelshack-link__thumb {
   width: 68px;
   height: 51px;
+  vertical-align: bottom;
 }
 
 .smiley {
