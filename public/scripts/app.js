@@ -431,7 +431,6 @@ function topicRefresh() {
         $('#' + message.id + ' .js-quote').click(quote)
         $('#' + message.id + ' .js-edit').click(edit)
         $('#' + message.id + ' .js-delete').click(deleteMessage)
-        $('#' + message.id + ' .js-profile').click(openProfile)
         $('#' + message.id + ' .js-menu').click(toggleMenu)
         $('#' + message.id).click(closeMenu)
         $('#' + message.id + ' .spoil').click(toggleSpoil)
@@ -679,11 +678,6 @@ function deleteMessage() {
   ajax('message_delete', {id_message: id})
 }
 
-function openProfile() {
-  window.open(this.href, "_blank", "toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,copyhistory=no,width=520,height=570,left=" + (screen.width / 2 - 520 / 2) + ",top=" + (screen.height / 2 - 570 / 2 - 20))
-  return false
-}
-
 function toggleMenu() {
   var id = $(this).closest('.message').attr('id')
   $('#' + id).toggleClass('message--menu-opened')
@@ -786,7 +780,6 @@ instantClick.on('change', function() {
   $('.js-quote').click(quote)
   $('.js-edit').click(edit)
   $('.js-delete').click(deleteMessage)
-  $('.js-profile').click(openProfile)
   $('.js-menu').click(toggleMenu)
   $('.message').click(closeMenu)
   $('.spoil').click(toggleSpoil)
