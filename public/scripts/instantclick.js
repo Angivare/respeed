@@ -22,7 +22,6 @@ var instantClick
     , $trackedAssets = []
 
   // Variables defined by public functions
-    , $useWhitelist
     , $preloadOnMousedown
     , $delayBeforePreload
     , $eventsCallbacks = {
@@ -68,22 +67,6 @@ var instantClick
     return false
   }
 
-  function isWhitelisted(elem) {
-    do {
-      if (!elem.hasAttribute) { // Parent of <html>
-        break
-      }
-      if (elem.hasAttribute('data-no-instant')) {
-        return false
-      }
-      if (elem.hasAttribute('data-instant')) {
-        return true
-      }
-    }
-    while (elem = elem.parentNode)
-    return false
-  }
-
   function isPreloadable(a) {
     var domain = location.protocol + '//' + location.host
 
@@ -92,9 +75,7 @@ var instantClick
         || a.href.indexOf(domain + '/') != 0 // Another domain, or no href attribute
         || (a.href.indexOf('#') > -1
             && removeHash(a.href) == $currentLocationWithoutHash) // Anchor
-        || ($useWhitelist
-            ? !isWhitelisted(a)
-            : isBlacklisted(a))
+        || isBlacklisted(a)
        ) {
       return false
     }
@@ -339,6 +320,24 @@ var instantClick
     }
   }
 
+  function popstateListener() {
+    var loc = removeHash(location.href)
+    if (loc == $currentLocationWithoutHash) {
+      return
+    }
+
+    if (!(loc in $history)) {
+      location.href = location.href
+      /* Reloads the page while using cache for scripts, styles and images,
+         unlike `location.reload()` */
+      return
+    }
+
+    $history[$currentLocationWithoutHash].scrollY = pageYOffset
+    $currentLocationWithoutHash = loc
+    changePage($history[loc].title, $history[loc].body, false, $history[loc].scrollY, true)
+  }
+
 
   ////////// MAIN FUNCTIONS //////////
 
@@ -360,7 +359,7 @@ var instantClick
         , parentNode
         , nextSibling
 
-      for (i = 0; i < scripts.length; i++) {
+      for (var i = 0, j = scripts.length; i < j; i++) {
         script = scripts[i]
         if (script.hasAttribute('data-no-instant')) {
           continue
@@ -499,26 +498,24 @@ var instantClick
                   && (!$userAgent.match('Android') || $userAgent.match('Chrome/'))
                   && location.protocol != "file:"
 
-  /* The state of Android's AOSP browsers:
+  /* The (sad) state of Android's AOSP browsers:
 
      2.3.7: pushState appears to work correctly, but
             `doc.documentElement.innerHTML = body` is buggy.
-            See details here: http://stackoverflow.com/q/21918564
-            Not an issue anymore, but it may fail where 3.0 do, this needs
-            testing again.
+            Update: InstantClick doesn't use that anymore, but it may
+            fail where 3.0 do, this needs testing again.
 
-     3.0:   pushState appears to work correctly (though the URL bar is only
-            updated on focus), but
+     3.0:   pushState appears to work correctly (though the address bar is
+            only updated on focus), but
             `document.documentElement.replaceChild(doc.body, document.body)`
-        throws DOMException: WRONG_DOCUMENT_ERR.
+            throws DOMException: WRONG_DOCUMENT_ERR.
 
      4.0.2: Doesn't support pushState.
 
      4.0.4,
      4.1.1,
      4.2,
-     4.3:   pushState is here, but it doesn't update the URL bar.
-            (Great logic there.)
+     4.3:   Claims support for pushState, but doesn't update the address bar.
 
      4.4:   Works correctly. Claims to be 'Chrome/30.0.0.0'.
 
@@ -528,7 +525,7 @@ var instantClick
      Because of this mess, the only whitelisted browser on Android is Chrome.
   */
 
-  function init() {
+  function init(preloadingMode) {
     if ($currentLocationWithoutHash) {
       /* Already initialized */
       return
@@ -537,18 +534,14 @@ var instantClick
       triggerPageEvent('change', true)
       return
     }
-    for (var i = 0; i < arguments.length; i++) {
-      var arg = arguments[i]
-      if (arg === true) {
-        $useWhitelist = true
-      }
-      else if (arg == 'mousedown') {
-        $preloadOnMousedown = true
-      }
-      else if (typeof arg == 'number') {
-        $delayBeforePreload = arg
-      }
+
+    if (preloadingMode == 'mousedown') {
+      $preloadOnMousedown = true
     }
+    else if (typeof preloadingMode == 'number') {
+      $delayBeforePreload = preloadingMode
+    }
+
     $currentLocationWithoutHash = removeHash(location.href)
     $history[$currentLocationWithoutHash] = {
       body: document.body,
@@ -577,23 +570,7 @@ var instantClick
 
     triggerPageEvent('change', true)
 
-    addEventListener('popstate', function() {
-      var loc = removeHash(location.href)
-      if (loc == $currentLocationWithoutHash) {
-        return
-      }
-
-      if (!(loc in $history)) {
-        location.href = location.href
-        /* Reloads the page while using cache for scripts, styles and images,
-           unlike `location.reload()` */
-        return
-      }
-
-      $history[$currentLocationWithoutHash].scrollY = pageYOffset
-      $currentLocationWithoutHash = loc
-      changePage($history[loc].title, $history[loc].body, false, $history[loc].scrollY, true)
-    })
+    addEventListener('popstate', popstateListener)
   }
 
   function on(eventType, callback) {
