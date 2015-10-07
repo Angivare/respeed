@@ -343,16 +343,14 @@ function generate_message_markup($message) {
 <div class="message {$mine_modifier} {$even_modifier}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
   <div class="message__actions">
 MESSAGE;
-
-  if ($mine) {
-    $markup .= '<span class="js-delete message__actions-action message__actions-action--delete">Suppr.</span>';
-    $markup .= '<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>';
-    $markup .= '<span class="js-edit message__actions-action message__actions-action--edit">Modifier</span>';
-  }
-  else {
-    $markup .= '<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>';
-  }
+if ($mine) {
   $markup .= <<<MESSAGE
+<span class="js-delete message__actions-action message__actions-action--delete">Suppr.</span><!--
+--><span class="js-edit message__actions-action message__actions-action--edit">Modifier</span>
+MESSAGE;
+}
+  $markup .= <<<MESSAGE
+<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>
 </div>
   <div class="message__visible">
     <div class="message__byline">
@@ -376,7 +374,7 @@ if ($mine) {
       <div class="js-edit message__quick-action message__quick-action--edit" title="Modifier"></div>
 MESSAGE;
 }
-$markup .= <<<MESSAGE
+  $markup .= <<<MESSAGE
       <div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>
     </div>
   </div>
