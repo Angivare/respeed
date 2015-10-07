@@ -138,11 +138,13 @@ function adapt_html($message, $date = '', $id = 0) {
   // Transformations liens vers topics en liens internes
   $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
     $new_str = $matches[0];
-    $path = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $matches['forum'];
-    if($matches['topic'])
+    $path = '/' . $matches['forum'];
+    if($matches['topic']) {
       $path .= '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
-    else
+    }
+    else {
       $path .= '-' . $matches['slug'];
+    }
     if ($matches['page'] != 1) {
       $path .= '/' . $matches['page'];
     }
@@ -150,6 +152,9 @@ function adapt_html($message, $date = '', $id = 0) {
     $new_str .= ' data-link-jvc="true"';
     return $new_str;
   }, $message);
+
+  // Transformations liens CDV
+  $message = preg_replace('#<a href="http://www.jeuxvideo.com/profil/([a-z0-9-_[\]]+)(?:\?mode=[a-z_]+)?"#Usi', '<a data-link-jvc="true" href="/profil/$1"', $message);
 
   // Transformation des liens NoelShack en liens directs
   $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
@@ -194,7 +199,7 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
     $ret = $matches[0];
     $has_blank = (strpos($ret, 'target="_blank"') !== false) ? true : false;
-    if(preg_match('#^https?://' . $_SERVER['HTTP_HOST'] .'#Usi', $matches['url'])) {
+    if(preg_match('#^/#Usi', $matches['url'])) {
       if($has_blank) return str_replace('target="_blank"', '', $ret);
     } else {
       if(!$has_blank) return str_replace('>', ' target="_blank">', $ret);
