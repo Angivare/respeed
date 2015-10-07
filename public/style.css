@@ -1034,7 +1034,7 @@ h1, h2, h3 {
     margin-right: -3px;
 
     /* Plus d’espace pour les pseudos */
-    margin-left: -20px;
+    margin-left: -30px;
   }
 }
 
@@ -1087,7 +1087,7 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .message__byline {
-    width: 18%;
+    width: 200px;
     display: block;
     margin-bottom: 0;
     float: left;
@@ -1383,7 +1383,7 @@ h1, h2, h3 {
 @media (min-width: 1025px) {
   .message__content {
     display: block;
-    margin-left: 18%;
+    margin-left: 200px;
     background: white;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
     border-radius: 2px;

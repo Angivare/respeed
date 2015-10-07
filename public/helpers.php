@@ -354,7 +354,7 @@ MESSAGE;
       <div class="message__byline-author">
         <{$authorLinkTag} class="message__byline-author-link {$authorLinkClass}" href="/profil/{$pseudoLowercase}">
           <span class="message__byline-author-avatar"><img class="message__byline-author-avatar-image {$default_avatar_modifier}" src="{$avatar}"></span>
-          <span class="message__byline-author-pseudo {$pseudo_modifier}">{$message['pseudo']}</span>
+          <span class="message__byline-author-pseudo {$pseudo_modifier}" title="{$message['pseudo']}">{$message['pseudo']}</span>
         </{$authorLinkTag}>
       </div>
       <div class="message__byline-date">
