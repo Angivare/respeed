@@ -95,8 +95,9 @@ var JVCode = (function() {
         this.outerHTML = $(this).attr('data-code')
       })
       base.find('a').each(function() {
-        if($(this).attr('data-link-jvc'))
-          this.outerHTML = $(this).text()
+        var link_jvc = $(this).data('link-jvc')
+        if (link_jvc)
+          this.outerHTML = link_jvc
         else
           this.outerHTML = $(this).attr('href')
       })
