@@ -16,7 +16,7 @@ $title = $pseudo;
 <body class="body--no-bottom"></body>
 <div class="sheet sheet--nothing-over">
 <?php if (isset($avatar)): ?>
-  <img class="profile-avatar" src="<?= $avatar ?>">
+  <img class="js-profile-avatar profile-avatar" data-src="<?= $avatar ?>">
 <?php endif ?>
 
 <?php if (isset($banned)): ?>

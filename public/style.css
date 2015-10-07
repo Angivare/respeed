@@ -1961,15 +1961,19 @@ h1, h2, h3 {
 /* PROFIL */
 
 .profile-avatar {
-  width: 100%;
-  height: auto;
-  max-width: 600px;
-  margin: 0 auto 12px;
   display: block;
-  background: #BDBDBD no-repeat center;
-  background-color: transparent;
-  background-size: contain;
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  margin: 0 auto 12px;
+  background: #bdbdbd;
+  background-image: -webkit-radial-gradient(#e0e0e0, #bdbdbd);
+  background-image:         radial-gradient(#e0e0e0, #bdbdbd);
   box-shadow: 0 2px 5px rgba(0,0,0,.25);
+}
+
+.profile-avatar--loaded {
+  height: auto;
 }
 
 @media (min-width: 640px) {

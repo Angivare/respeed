@@ -543,6 +543,35 @@ function showErrors(errors) {
   $('.form .form__textarea').focus()
 }
 
+function handleProfileAvatar() {
+  var avatarElement = $('.js-profile-avatar')
+  if (!avatarElement.length) {
+    return
+  }
+
+  var avatar = new Image()
+  avatar.src = avatarElement.data('src')
+  $(avatar).load(function() {
+    avatarElement.prop('src', avatar.src)
+    avatarElement.addClass('profile-avatar--loaded')
+
+    if (avatar.height > avatar.width) {
+      var naturalHeight = $(document).width() / avatar.width * avatar.height
+        , maxAcceptableHeight = $(window).height() * .85
+      if ($(document).width() < 600 && naturalHeight > maxAcceptableHeight) {
+        avatarElement.css('height', maxAcceptableHeight)
+        avatarElement.css('width', (maxAcceptableHeight * avatar.width / avatar.height) + 'px')
+      }
+      else if (naturalHeight > 600) {
+        avatarElement.css('width', (600 * avatar.width / avatar.height) + 'px')
+      }
+      else if (avatar.width > $(document).width()) {
+        avatarElement.css('width', $(document).width())
+      }
+    }
+  })
+}
+
 
 
 /*** Fonctions pour events ***/
@@ -763,6 +792,7 @@ instantClick.on('change', function(isInitialLoad) {
   handleRefreshOnPageChange(isInitialLoad)
   stopDraftWatcher()
   insertDraft()
+  handleProfileAvatar()
 })
 
 instantClick.on('restore', function() {
