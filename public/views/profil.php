@@ -37,17 +37,17 @@ $title = $pseudo;
   </div>
 <?php endif ?>
 
-<?php if (isset($description)): ?>
-  <div class="profile-card profile-card--text">
-    <div class="profile-card__header">Description personnelle</div>
-      <?= $description ?>
-  </div>
-<?php endif ?>
-
 <?php if (isset($signature)): ?>
   <div class="profile-card">
     <div class="profile-card__header">Signature</div>
       <?= $signature ?>
+  </div>
+<?php endif ?>
+
+<?php if (isset($description)): ?>
+  <div class="profile-card profile-card--text">
+    <div class="profile-card__header">Description personnelle</div>
+      <?= $description ?>
   </div>
 <?php endif ?>
 
