@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <title><?= $title ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="/style-<?= REVISION_NUMBER_STYLE ?>.css">
+<link rel="stylesheet" href="/style-<?= REVISION_NUMBER_STYLE ?>.css" data-instant-track>
 <meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
@@ -25,9 +25,9 @@ var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
 <?php endforeach ?>
 </script>
 
-<script src="/scripts/jquery-<?= REVISION_NUMBER_JS_JQUERY ?>.js" data-no-instant></script>
-<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" data-no-instant></script>
-<script src="/scripts/instantclick-<?= REVISION_NUMBER_JS_INSTANTCLICK ?>.js" data-no-instant></script>
-<script src="/scripts/loading-indicator-<?= REVISION_NUMBER_JS_LOADING_INDICATOR ?>.js" data-no-instant></script>
-<script src="/scripts/jvcode-<?= REVISION_NUMBER_JS_JVCODE ?>.js" data-no-instant></script>
-<script src="/scripts/app-<?= REVISION_NUMBER_JS_APP ?>.js" data-no-instant></script>
+<script src="/scripts/jquery-<?= REVISION_NUMBER_JS_JQUERY ?>.js" data-no-instant data-instant-track></script>
+<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" data-no-instant data-instant-track></script>
+<script src="/scripts/instantclick-<?= REVISION_NUMBER_JS_INSTANTCLICK ?>.js" data-no-instant data-instant-track></script>
+<script src="/scripts/loading-indicator-<?= REVISION_NUMBER_JS_LOADING_INDICATOR ?>.js" data-no-instant data-instant-track></script>
+<script src="/scripts/jvcode-<?= REVISION_NUMBER_JS_JVCODE ?>.js" data-no-instant data-instant-track></script>
+<script src="/scripts/app-<?= REVISION_NUMBER_JS_APP ?>.js" data-no-instant data-instant-track></script>
