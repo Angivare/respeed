@@ -1199,6 +1199,13 @@ h1, h2, h3 {
   line-height: 30px;
 }
 
+@media (min-width: 1025px) {
+  .message__byline-author-pseudo {
+    display: inline-block; /* needed for direction */
+    direction: ltr;
+  }
+}
+
 /* TOPIC - Message - actions */
 
 .message__byline-date {
