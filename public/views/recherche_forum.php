@@ -22,7 +22,6 @@ if ($q) {
   $db = new Db();
   $results = $db->search_forum($q);
   $count = count($results);
-  $db->log_forum_search($q, $count);
   $replace_patterns = explode(' ', $q);
   foreach ($replace_patterns as $k => $v) {
     $replace_patterns[$k] = '#' . str_replace('#', '\#', preg_quote($v)) . '#i';
@@ -41,7 +40,7 @@ if ($q) {
     $name = str_replace(['__STRONG__', '__/STRONG__'], ['<strong>', '</strong>'], h(preg_replace($replace_patterns, '__STRONG__$0__/STRONG__', $result['human'])));
     ?>
   <li><a href="/<?= $result['forum_id'] ?>-<?= $result['slug'] ?>"><?= $name ?></a></li>
-<? }
+<?php }
   if ($results): ?>
   </ul>
 <?php else: ?>

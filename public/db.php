@@ -38,18 +38,6 @@ class Db {
     )->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function log_forum_search($q, $nb_results) {
-    return $this->query(
-      'INSERT INTO logs_recherche_forum(q, nb_results, pseudo, ip) VALUES(:q, :nb_results, :pseudo, :ip)',
-      [
-        ':q' => $q,
-        ':nb_results' => $nb_results,
-        ':pseudo' => $_COOKIE['pseudo'],
-        ':ip' => $_SERVER['REMOTE_ADDR'],
-      ]
-    );
-  }
-
   public function add_forum($forum) {
     return $this->query(
       'INSERT INTO forums (forum_id, slug, human) VALUES (:id, :slug, :human) ' .
