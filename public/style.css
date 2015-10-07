@@ -1994,6 +1994,13 @@ h1, h2, h3 {
   font-weight: bold;
   text-align: center;
   margin: 40px auto;
+  font-size: 24px;
+}
+
+@media (min-width: 768px) {
+  .profile-ban-mention {
+    font-size: 32px;
+  }
 }
 
 .profile-card {
