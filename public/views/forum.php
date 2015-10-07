@@ -54,6 +54,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 <?php include 'forum_pagination.php' ?>
 
     <form class="js-form-topic form form--topic">
+      <div class="form__draft">Brouillon sauvegardé. <span class="form__draft-recover">Récupérer</span></div>
       <div class="form__errors"><p></p></div>
       <input class="form__topic" maxlength="100" placeholder="Mon sujet" tabindex="1">
       <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="2"></textarea>

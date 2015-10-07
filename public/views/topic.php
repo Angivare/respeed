@@ -55,6 +55,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
     </div>
 <?php else: ?>
     <form class="js-form-post form">
+      <div class="form__draft">Brouillon sauvegardé. <span class="form__draft-recover">Récupérer</span></div>
       <div class="form__errors"><p></p></div>
       <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="1"></textarea>
       <span class="form__captcha-container"></span>

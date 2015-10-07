@@ -21,6 +21,7 @@ var form_data
   , handleRefreshTimeout
   , topicRefreshTimeout
   , draftWatcherInterval
+  , lastDraftSaved
 
 
 
@@ -276,6 +277,7 @@ function getDraftName() {
 
 function saveDraft() {
   localStorage.setItem(getDraftName(), $('.form__textarea').val())
+  lastDraftSaved = getDraftName()
 }
 
 function clearDraft() {
@@ -284,13 +286,43 @@ function clearDraft() {
 
 function insertDraft() {
   var draftName = getDraftName()
+    , shouldDisplayImmediately = false
+
+  if (lastDraftSaved && lastDraftSaved == getDraftName()) {
+    shouldDisplayImmediately = true
+  }
+  else {
+    lastDraftSaved = false
+  }
+
   if (!draftName) {
     return
   }
+
   var draft = localStorage.getItem(draftName)
+  lastTopic = $topic
   if (draft) {
-    $('.form__textarea').val(draft)
+    if (!$('.form__draft').hasClass('form__draft--visible')) {
+      $('.form__textarea').keypress(hideDraftMention)
+    }
+
+    if (shouldDisplayImmediately) {
+      $('.form__textarea').val(draft)
+    }
+    else {
+      $('.form__draft').addClass('form__draft--visible')
+      $('.form__draft-recover').click(function() {
+        $('.form__draft').removeClass('form__draft--visible')
+        $('.form__textarea').focus()
+        $('.form__textarea').val(draft)
+      })
+    }
   }
+}
+
+function hideDraftMention() {
+  $('.form__textarea').off('keypress', hideDraftMention)
+  $('.form__draft').removeClass('form__draft--visible')
 }
 
 function addForum() {

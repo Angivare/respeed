@@ -1729,6 +1729,32 @@ h1, h2, h3 {
   }
 }
 
+.form__draft {
+  display: none;
+  font-size: 12px;
+  margin-bottom: 8px;
+  text-indent: 2px;
+}
+
+.form__draft--visible {
+  display: block;
+}
+
+.form__draft-recover {
+  color: #2196f3;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition: color .1s ease-out;
+          transition: color .1s ease-out;
+  display: inline-block;
+  margin: -8px;
+  padding: 8px;
+}
+
+.form__draft-recover:hover {
+  color: #64b5f6;
+}
+
 .form__errors {
   display: none;
   color: #E53935;
