@@ -77,9 +77,6 @@ function htmlentities(str) {
 }
 
 function updateFavorites() {
-  if (!$is_connected) {
-    return
-  }
   if (localStorage.favoritesForums) {
     favoritesForums = JSON.parse(localStorage.favoritesForums)
   }
@@ -118,9 +115,6 @@ function displayFavorites() {
 }
 
 function displayFavoritesForums() {
-  if (!$is_connected) {
-    return
-  }
   if (!isBigScreen) {
     return
   }
@@ -151,9 +145,6 @@ function displayFavoritesForums() {
 }
 
 function displayFavoritesTopics() {
-  if (!$is_connected) {
-    return
-  }
   if (!isBigScreen) {
     return
   }
@@ -189,9 +180,6 @@ function displayFavoritesTopics() {
 }
 
 function displayFavoritesOnIndex() {
-  if (!$is_connected) {
-    return
-  }
   if (!$('.favorites-index').length) {
     return
   }
@@ -806,10 +794,6 @@ function goToForm() {
 
 /*** App ***/
 
-if (!$is_connected) {
-  localStorage.clear()
-}
-
 setInterval(tokenRefresh, (30-2)*60*1000)
 
 if (googleAnalyticsID) {
@@ -820,7 +804,7 @@ if (googleAnalyticsID) {
   ga('create', googleAnalyticsID, 'auto');
   
   instantClick.on('change', function() {
-    ga('set', 'dimension1', $is_connected ? 'Member' : 'Guest')
+    ga('set', 'dimension1', 'Member')
     ga('send', 'pageview', location.pathname + location.search)
   })
 }

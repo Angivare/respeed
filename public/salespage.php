@@ -77,4 +77,7 @@ ga('set', 'dimension1', 'Guest')
 ga('send', 'pageview')
 </script>
 <?php endif ?>
+<script>
+localStorage.clear()
+</script>
 <script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)"></script>

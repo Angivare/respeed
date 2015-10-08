@@ -13,8 +13,7 @@
 <?= $body ?>
 
 <script>
-var $is_connected = <?= $jvc->is_connected() ? 'true' : 'false' ?>
-  , $forum = <?= $forum ? $forum : 'false' ?>
+var $forum = <?= $forum ? $forum : 'false' ?>
   , $topic = <?= $topic ? ("'" . ($_GET['topic'][0] == '0' ? '0' : '') . $topic . "'") : 'false' ?>
   , $topicNew = <?= isset($topicNew) ? $topicNew : 'false' ?>
   , $slug = <?= $slug ? "'{$slug}'" : 'false' ?>
