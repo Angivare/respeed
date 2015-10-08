@@ -1438,14 +1438,14 @@ h1, h2, h3 {
   background: rgba(230,230,235,.5);
 }
 
-.message .pre-jv {
+.pre-jv {
   padding: .5em 7px;
   word-wrap: normal;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.message .code-jv {
+.code-jv {
   padding: 2px 3px;
 }
 
