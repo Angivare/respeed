@@ -196,7 +196,7 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
     $ret = $matches[0];
     $has_blank = (strpos($ret, 'target="_blank"') !== false) ? true : false;
-    if(preg_match('#^/#Usi', $matches['url'])) {
+    if(preg_match('#^(?:https?://' . $_SERVER['HTTP_HOST'] .')?/#Usi', $matches['url'])) {
       if($has_blank) return str_replace('target="_blank"', '', $ret);
     } else {
       if(!$has_blank) return str_replace('>', ' target="_blank">', $ret);
