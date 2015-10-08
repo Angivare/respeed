@@ -154,7 +154,7 @@ function adapt_html($message, $date = '', $id = 0) {
   }, $message);
 
   // Transformations liens CDV
-  $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([a-z0-9-_[\]]+)(?:\?mode=[a-z_]+)?)"#Usi', '<a data-link-jvc="$1" href="/profil/$2"', $message);
+  $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([a-z0-9-_[\]]+)(?:\?mode=[a-z_]+)?)"#Usi', '<a data-link-jvc="$1" href="/@$2"', $message);
 
   // Transformation des liens NoelShack en liens directs
   $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
@@ -355,7 +355,7 @@ MESSAGE;
   <div class="message__visible">
     <div class="message__byline">
       <div class="message__byline-author">
-        <{$authorLinkTag} class="message__byline-author-link {$authorLinkClass}" href="/profil/{$pseudoLowercase}">
+        <{$authorLinkTag} class="message__byline-author-link {$authorLinkClass}" href="/@{$pseudoLowercase}">
           <span class="message__byline-author-avatar"><img class="message__byline-author-avatar-image {$default_avatar_modifier}" src="{$avatar}"></span>
           <span class="message__byline-author-pseudo {$pseudo_modifier}" title="{$message['pseudo']}">{$message['pseudo']}</span>
         </{$authorLinkTag}>
