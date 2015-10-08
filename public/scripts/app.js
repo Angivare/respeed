@@ -755,7 +755,7 @@ function closeMenu(e) {
 function toggleSpoil(event) {
   event.stopPropagation()
   var target = $(event.target)
-  if (target.is('.sticker') || target.is('a')) {
+  if (target.is('a, .sticker, .noelshack-link__thumb')) {
     return
   }
   $(this).toggleClass('spoil--revealed')
