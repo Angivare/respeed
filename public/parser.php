@@ -54,19 +54,14 @@ function fetch_forum($forum, $page, $slug) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $cache = delay(function() use (&$db, &$forum, &$page) {
-    return $db->get_forum_cache($forum, $page);
-  }, $t_db);
+  $cache = $db->get_forum_cache($forum, $page);
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
-    $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-    $rep = delay(function() use(&$jvc, &$url) {
-      return $jvc->get($url, NULL, FALSE, FALSE);
-    }, $t_req);
+    $rep = $jvc->get($url, NULL, FALSE, FALSE);
 
     $header = &$rep['header'];
     $got = &$rep['body'];
@@ -81,8 +76,6 @@ function fetch_forum($forum, $page, $slug) {
     $db->set_forum_cache($forum, $page, json_encode($ret));
   }
 
-  $ret['t_db'] = $t_db;
-  $ret['t_req'] = $t_req;
   return $ret;
 }
 
@@ -189,23 +182,16 @@ function fetch_topic($topic, $page, $slug, $forum) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $cache = delay(function() use (&$db, &$topic, &$page, &$topic_mode, &$forum) {
-    return $db->get_topic_cache($topic, $page, $topic_mode, $forum);
-  }, $t_db);
+  $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
 
   if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
-    $t_req = 0;
     $ret = json_decode($cache['vars'], TRUE);
   } else {
       if($jvc->is_connected() && time() - $jvc->tokens_last_update() >= 3600/2) {
-        $rep = delay( function() use (&$jvc, &$url) {
-          return $jvc->get($url);
-        }, $t_req);
+        $rep = $jvc->get($url);
         $jvc->tokens_refresh($rep['body']);
       } else {
-        $rep = delay( function() use (&$jvc, &$url) {
-          return $jvc->get($url, NULL, FALSE, FALSE);
-        }, $t_req);
+        $rep = $jvc->get($url, NULL, FALSE, FALSE);
       }
 
     $header = &$rep['header'];
@@ -223,8 +209,6 @@ function fetch_topic($topic, $page, $slug, $forum) {
 
   $ret['topic_mode'] = $topic_mode;
   $ret['topic'] = $topic;
-  $ret['t_db'] = $t_db;
-  $ret['t_req'] = $t_req;
   return $ret;
 }
 
