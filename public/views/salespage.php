@@ -32,16 +32,12 @@ if ($jvc->is_connected()) {
     <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Messages en temps réel</h2>
 
     <p>Plus besoin de rafraîchir.</p>
-    
-    <p>Sur PC, l’onglet vous notifie des nouvelles réponses.</p>
   </div>
 
   <div class="desktop-twist">
     <h2 class="article__subheadline"><span class="article__subheadline-number">1</span> Messages en temps réel</h2>
 
     <p>Plus besoin de rafraîchir.</p>
-    
-    <p>Sur PC, l’onglet vous notifie des nouvelles réponses.</p>
 
     <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Version mobile complète</h2>
     
