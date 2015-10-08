@@ -2047,16 +2047,23 @@ h1, h2, h3 {
   }
 }
 
+.profile-card--transparent {
+  background: rgba(255,255,255,.7);
+  color: black;
+}
+
 .profile-card--text {
   padding-bottom: 1px;
 }
 
 .profile-card__header {
   color: #9E9E9E;
+  color: rgba(0,0,0,.38);
   padding: 0 0 5px;
   text-transform: uppercase;
   font-weight: bold;
   border-bottom: 1px solid #EEEEEE;
+  border-bottom-color: rgba(0,0,0,.067);
   margin: 0 -10px;
   text-indent: 10px;
 }
