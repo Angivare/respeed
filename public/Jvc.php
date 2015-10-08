@@ -83,10 +83,11 @@ class Jvc {
    * Effectue la première étape de la connexion
    * @param string $nick 
    * @param string $pass 
+   * @param bool &$has_captcha il y a-t-il un captcha ?
    * @return mixed FALSE si la requête a échoué, formulaire à réutiliser
    * dans connect_finish() sinon
    */
-  public function connect_req($nick, $pass) {
+  public function connect_req($nick, $pass, &$has_captcha) {
     $url = $this->domain . '/login';
 
     $rep = $this->get($url);
@@ -98,6 +99,12 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
     $ret = self::parse_form($rep['body']);
+    $has_captcha = strpos($rep['body'], '<img src="/captcha/ccode.php') !== false;
+    if (!$has_captcha) {
+      if (preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match)) {
+        return $this->_err($match[1]);
+      }
+    }
 
     if(count($ret))
       return $ret;
@@ -113,9 +120,10 @@ class Jvc {
    * @param string $ccode 
    * @param array &$ret_form contient le formulaire à réutiliser dans
    * le cas d'une erreur
+   * @param bool &$has_captcha il y a-t-il un captcha ?
    * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
    */
-  public function connect_finish($nick, $pass, $form, $ccode, &$ret_form) {
+  public function connect_finish($nick, $pass, $form, $ccode, &$ret_form, &$has_captcha) {
     $url = $this->domain . '/login';
 
     $post_data = 'login_pseudo=' . urlencode($nick) .
@@ -131,9 +139,11 @@ class Jvc {
     }
 
     $ret_form = self::parse_form($rep['body']);
+    $has_captcha = strpos($rep['body'], '<img src="/captcha/ccode.php') !== false;
 
-    if(preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match))
+    if (preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match)) {
       return $this->_err($match[1]);
+    }
 
     return $this->_err('Indéfinie');
   }

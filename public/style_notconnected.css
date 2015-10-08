@@ -256,6 +256,10 @@ body {
   margin-top: -.5em;
 }
 
+.error {
+  color: #E53935;
+}
+
 .connect-form__input {
   display: block;
   margin: .5em 0;

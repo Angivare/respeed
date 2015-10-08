@@ -4,6 +4,30 @@ if ($jvc->is_connected()) {
   header('Location: /accueil');
   exit;
 }
+
+$nick = isset($_POST['nick']) ? trim($_POST['nick']) : null;
+$pass = isset($_POST['pass']) ? trim($_POST['pass']) : null;
+$ccode = isset($_POST['ccode']) ? trim($_POST['ccode']) : null;
+$form = isset($_POST['form']) ? unserialize($_POST['form']) : null;
+$has_captcha = false;
+if (isset($nick, $pass)) {
+  if (!isset($ccode, $form)) {
+    $form = $jvc->connect_req($nick, $pass, $has_captcha);
+    if (!$form) {
+      $error = $jvc->err();
+    }
+  }
+  else {
+    $finished = $jvc->connect_finish($nick, $pass, $form, $ccode, $form, $has_captcha);
+    if (!$finished) {
+      $error = $jvc->err();
+    }
+    else {
+      header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
+      exit;
+    }
+  }
+}
 ?>
 <!doctype html>
 <meta charset="utf-8">
@@ -19,14 +43,25 @@ if ($jvc->is_connected()) {
 <div class="connexion">
   <div class="connexion-bloc">
     <h1 class="connexion-bloc__title">Connexion</h1>
-    
+
+<?php if (!isset($form)): ?>
     <p class="login-instructions">Utilisez votre pseudo jeuxvideo.com pour profiter de JVForum.</p>
+<?php endif ?>
+
+<?php if (isset($error)): ?>
+    <p class="error"><?= $error ?></p>
+<?php endif ?>
 
     <form class="connect-form" action="/connexion" method="post">
-      <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus autocorrect="off">
-      <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe">
-      <img class="connect-form__captcha" src="http://www.jeuxvideo.com/captcha/ccode.php">
-      <input class="js-captcha connect-form__input connect-form__input--captcha" type="number" name="captcha" placeholder="Code">
+<?php if (!$has_captcha): ?>
+      <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autofocus autocorrect="off">
+      <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass ?>">
+<?php else: ?>
+      <input type="hidden" name="nick" value="<?= h($nick) ?>">
+      <input type="hidden" name="pass" value="<?= h($pass) ?>">
+      <input type="hidden" name="form" value="<?= h(serialize($form)) ?>">
+      <img class="connect-form__captcha" src="data:image/png;base64,<?= base64_encode($jvc->get('http://www.jeuxvideo.com/captcha/ccode.php', $form['fs_signature'])['body']) ?>">
+      <input class="js-captcha connect-form__input connect-form__input--captcha" type="number" name="ccode" placeholder="Code" autofocus>
       <script>
 var hasTouch = 'createTouch' in document
 function getCaptchaType() {
@@ -40,12 +75,16 @@ function getCaptchaType() {
 }
 document.getElementsByClassName('js-captcha')[0].setAttribute('type', getCaptchaType())
       </script>
+<?php endif ?>
       <input class="connect-form__submit" type="submit" value="Me connecter">
     </form>
 
-    <p class="login-disclaimer">Votre identifiant sera transmis au serveur de JVForum sans y être stocké.</p>
+<?php if (!isset($form)): ?>
+    <p class="login-disclaimer">Votre identifiant sera transmis au serveur de JVForum, sans y être stocké.</p>
+<?php endif ?>
   </div>
 
+<?php if (!isset($form)): ?>
   <div class="connexion-disclaimer">
     <h2 class="connexion-disclaimer__title">Pourquoi dois-je donner mon identifiant ?</h2>
     
@@ -53,6 +92,7 @@ document.getElementsByClassName('js-captcha')[0].setAttribute('type', getCaptcha
     
     <div class="legalese">JVForum n’est pas affilié à <a class="legalese__link" href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</div>
   </div>
+<?php endif ?>
 </div>
 
 <?php if (GOOGLE_ANALYTICS_ID): ?>
