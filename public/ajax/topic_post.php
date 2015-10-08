@@ -7,7 +7,7 @@ require '../parser.php';
 arg('url', 'title', 'msg', 'form', 'ccode');
 
 if ($url && $msg && $form) {
-  $msg = convert_stickers($msg);
+  $msg = adapt_message_to_post($msg);
 
   $url_end = explode('/', $url);
   $url_end = array_pop($url_end);

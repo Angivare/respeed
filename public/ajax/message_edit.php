@@ -6,7 +6,7 @@ require '../helpers.php';
 arg('id_message', 'msg', 'form', 'ccode');
 
 if($id_message && $msg && $form) {
-  $msg = convert_stickers($msg);
+  $msg = adapt_message_to_post($msg);
 
   echo json_encode([
     'rep' => $jvc->edit_finish($id_message, $msg, $form, $ccode),
