@@ -274,6 +274,18 @@ body {
   outline: none;
 }
 
+.connect-form__input--captcha {
+  width: 240px;
+  margin: .5em auto;
+}
+
+.connect-form__captcha {
+  display: block;
+  margin: 18px auto 0;
+  width: 240px;
+  height: 80px;
+}
+
 .connect-form__submit {
   display: block;
   background: #288FFF;

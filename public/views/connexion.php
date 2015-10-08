@@ -25,7 +25,8 @@ if ($jvc->is_connected()) {
     <form class="connect-form" action="/connexion" method="post">
       <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus autocorrect="off">
       <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe">
-      <input class="js-captcha connect-form__input connect-form__input--center" type="number" name="captcha" placeholder="Code">
+      <img class="connect-form__captcha" src="http://www.jeuxvideo.com/captcha/ccode.php">
+      <input class="js-captcha connect-form__input connect-form__input--captcha" type="number" name="captcha" placeholder="Code">
       <script>
 var hasTouch = 'createTouch' in document
 function getCaptchaType() {
