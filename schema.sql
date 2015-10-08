@@ -58,18 +58,22 @@ CREATE TABLE `logs_recherche_forum` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `icstats2` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ts` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ts` int DEFAULT NULL,
   `clicks_minus_touchstart` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `logs_requests` (
+CREATE TABLE `logs_requests2` (
   `id` int unsigned NOT NULL auto_increment,
-  `path` varchar(128) NOT NULL,
-  `t_req` double NOT NULL,
-  `t_db` double NOT NULL,
-  `t` double NOT NULL,
+  `logged_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `url` varchar(255) NOT NULL,
+  `is_post` tinyint NOT NULL,
+  `is_connected` tinyint NOT NULL,
+  `is_cached` tinyint NOT NULL,
+  `timing` smallint NOT NULL,
+  `errno` tinyint NOT NULL,
+  `ip` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

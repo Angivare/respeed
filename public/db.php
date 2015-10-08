@@ -159,11 +159,10 @@ class Db {
     }
   }
 
-  public function log_request($path, $t_req, $t_db) {
-    return;
+  public function log_request($url, $is_post, $is_connected, $is_cached, $timing, $errno) {
     $this->query(
-      'INSERT INTO logs_requests(path, t_req, t_db, t) VALUES(?, ?, ?, ?)',
-      [$path, $t_req, $t_db, microtime(TRUE)]
+      'INSERT INTO logs_requests2(url, is_post, is_connected, is_cached, timing, errno, ip) VALUES(?, ?, ?, ?, ?, ?, ?)',
+      [$url, $is_post, $is_connected, $is_cached, $timing, $errno, $_SERVER['REMOTE_ADDR']]
     );
   }
 }

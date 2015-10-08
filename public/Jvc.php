@@ -585,10 +585,7 @@ class Jvc {
    * @return array réponse du serveur, séparé en 'header' et 'body'
    */
   public function post($url, $data, $connected = TRUE, $cached = TRUE) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    return $this->finish_req($ch, $url, $connected, $cached);
+    return $this->finish_req(curl_init(), $url, $connected, $cached, $data);
   }
 
   /**
@@ -606,8 +603,15 @@ class Jvc {
     return $this->finish_req(curl_init(), $url . $query, $connected, $cached);
   }
 
-  private function finish_req($ch, $url, $connected = TRUE, $cached = TRUE) {
+  private function finish_req($ch, $url, $connected = TRUE, $cached = TRUE, $postdata = FALSE) {
+    $start = microtime(true);
+    $db = new Db();
+
     curl_setopt($ch, CURLOPT_URL, $url);
+    if ($postdata) {
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+    }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
     curl_setopt($ch, CURLOPT_TIMEOUT, 2);
@@ -630,8 +634,13 @@ class Jvc {
     }
 
     $rep = curl_exec($ch);
+    $errno = curl_errno($ch);
+
+    $timing = (int)((microtime(true) - $start) * 1000);
+    $db->log_request($url, !!$postdata, $connected, $cached, $timing, $errno);
+
     if (!$rep) {
-      if(curl_errno($ch) === CURLE_OPERATION_TIMEOUTED) {
+      if ($errno === CURLE_OPERATION_TIMEOUTED) {
         $this->fatal_err('Timeout.', 'La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a été arrêtée.', 504);
       }
       else {
@@ -643,7 +652,9 @@ class Jvc {
       'body' => substr($rep, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
     ];
     curl_close($ch);
+
     $this->refresh_cookie($ret['header']);
+
     return $ret;
   }
 

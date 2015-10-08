@@ -81,8 +81,6 @@ function fetch_forum($forum, $page, $slug) {
     $db->set_forum_cache($forum, $page, json_encode($ret));
   }
 
-  $db->log_request($path, $t_req, $t_db);
-
   $ret['t_db'] = $t_db;
   $ret['t_req'] = $t_req;
   return $ret;
@@ -222,8 +220,6 @@ function fetch_topic($topic, $page, $slug, $forum) {
     $ret = parse_topic($got);
     $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($ret));
   }
-
-  $db->log_request($path, $t_req, $t_db);
 
   $ret['topic_mode'] = $topic_mode;
   $ret['topic'] = $topic;
