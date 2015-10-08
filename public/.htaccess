@@ -1,6 +1,11 @@
 RewriteEngine On
 
-RewriteRule ^accueil$ /index.php?accueil [L]
+RewriteRule ^$ /salespage.php [L]
+
+RewriteRule ^connexion$ /connexion.php [L]
+RewriteRule ^deconnexion/([0-9a-f]+)-([0-9]+)-([0-9a-f]+)$ /deconnexion.php?hash=$1&ts=$2&rand=$3 [L]
+
+RewriteRule ^accueil$ /index.php [L]
 RewriteRule ^apropos$ /index.php?apropos [L]
 RewriteRule ^recherche_forum$ /index.php?recherche_forum [L]
 RewriteRule ^smileys$ /index.php?smileys [L]
@@ -11,9 +16,6 @@ RewriteRule ^([0-9]+)-([a-z0-9-]+)/([0-9]+)$ /index.php?forum=$1&slug=$2&page=$3
 
 RewriteRule ^([0-9]+)/([0-9]+)-([a-z0-9-]+)$ /index.php?forum=$1&topic=$2&slug=$3 [L]
 RewriteRule ^([0-9]+)/([0-9]+)-([a-z0-9-]+)/([0-9]+)$ /index.php?forum=$1&topic=$2&slug=$3&page=$4 [L]
-
-RewriteRule ^connexion$ /index.php?connexion [L]
-RewriteRule ^deconnexion/([0-9a-f]+)-([0-9]+)-([0-9a-f]+)$ /index.php?deconnexion&hash=$1&ts=$2&rand=$3 [L]
 
 RewriteRule ^mp$ /index.php?mp [L]
 RewriteRule ^mp/([0-9]+)$ /index.php?mp=$1 [L]

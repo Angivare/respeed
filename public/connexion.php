@@ -1,4 +1,9 @@
 <?php
+require '../config.php';
+require 'helpers.php';
+require 'db.php';
+require 'Jvc.php';
+
 $jvc = new Jvc();
 if ($jvc->is_connected()) {
   header('Location: /accueil');

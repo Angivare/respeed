@@ -1,4 +1,8 @@
 <?php
+require '../config.php';
+require 'Auth.php';
+require 'db.php';
+require 'Jvc.php';
 
 $hash = isset($_GET['hash']) ? $_GET['hash']  : '';
 $ts = isset($_GET['ts']) ? (int)$_GET['ts'] : 0;
