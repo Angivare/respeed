@@ -29,8 +29,6 @@ if ($jvc->is_connected()) {
     
     <figure class="article__image article__image--options-mobile"></figure>
 
-    <p>Modifiez. Supprimez. Citez. <!--Votez. Conversez en privé.--> <!--Tout y est.--> Et plus à venir.</p>
-
     <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Messages en temps réel</h2>
 
     <p>Plus besoin de rafraîchir.</p>
@@ -48,8 +46,6 @@ if ($jvc->is_connected()) {
     <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Version mobile complète</h2>
     
     <figure class="article__image article__image--options-mobile"></figure>
-
-    <p>Modifiez. Supprimez. Citez. <!--Votez. Conversez en privé.--> <!--Tout y est.--> Et plus à venir.</p>
   </div>
 
   <h2 class="article__subheadline"><span class="article__subheadline-number">3</span> Hyper fluide</h2>
