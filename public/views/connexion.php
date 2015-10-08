@@ -25,6 +25,20 @@ if ($jvc->is_connected()) {
     <form class="connect-form" action="/connexion" method="post">
       <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus autocorrect="off">
       <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe">
+      <input class="js-captcha connect-form__input connect-form__input--center" type="number" name="captcha" placeholder="Code">
+      <script>
+var hasTouch = 'createTouch' in document
+function getCaptchaType() {
+  if (hasTouch) {
+    if (navigator.userAgent.indexOf(' (iPhone; ') > -1 || navigator.userAgent.indexOf(' (iPod; ') > -1) {
+      return 'tel'
+    }
+    return 'number'
+  }
+  return 'text'
+}
+document.getElementsByClassName('js-captcha')[0].setAttribute('type', getCaptchaType())
+      </script>
       <input class="connect-form__submit" type="submit" value="Me connecter">
     </form>
 

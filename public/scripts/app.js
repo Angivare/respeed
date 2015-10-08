@@ -7,7 +7,6 @@ var form_data
   , isBigScreen = screen.width > 1024
   , liste_messages = liste_messages || []
   , googleAnalyticsID = $('meta[name="google-analytics-id"]').attr('content')
-  , hasNiceTelInputType = navigator.userAgent.indexOf(' (iPhone; ') > -1 || navigator.userAgent.indexOf(' (iPod; ') > -1
   , ICStatsClicksMinusTouchstart = []
   , ICStatsLastFetch
   , hasTouch = 'createTouch' in document
@@ -249,7 +248,7 @@ function request_edit_form_data(e) {
   ajax('message_edit', {id_message: id}, function(data) {
     edit_form_data = data.rep
     if (edit_form_data.fs_signature) {
-      $('#captcha-container-edit').html('<input class="input input-captcha" type="' + (hasNiceTelInputType ? 'tel' : 'number') + '" id="ccode_edit" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
+      $('#captcha-container-edit').html('<input class="input input-captcha" type="' + getCaptchaType() + '" id="ccode_edit" name="ccode" placeholder="Code" autocomplete="off"> <img src="/ajax/captcha_get.php?'
         + 'signature=' + encodeURIComponent(edit_form_data.fs_signature)
         + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
         + '" class="captcha">')
@@ -379,6 +378,16 @@ function delTopic() {
   displayFavoritesTopics()
 
   ajax('favorites_update', {id: $topicNew, type:'topic', action: 'delete'})
+}
+
+function getCaptchaType() {
+  if (hasTouch) {
+    if (navigator.userAgent.indexOf(' (iPhone; ') > -1 || navigator.userAgent.indexOf(' (iPod; ') > -1) {
+      return 'tel'
+    }
+    return 'number'
+  }
+  return 'text'
 }
 
 /** Refresh **/
@@ -561,7 +570,7 @@ function adjustSliderWidth() {
 
 function showCaptcha(signature) {
   $('.form__captcha-container')
-  .html('<input class="js-captcha input input-captcha" type="' + (hasNiceTelInputType ? 'tel' : 'number') + '" id="ccode" name="ccode" placeholder="Code" autocomplete="off" tabindex="3"> '
+  .html('<input class="js-captcha input input-captcha" type="' + getCaptchaType() + '" id="ccode" name="ccode" placeholder="Code" autocomplete="off" tabindex="3"> '
     + '<img src="/ajax/captcha_get.php?'
     + 'signature=' + encodeURIComponent(signature)
     + '&hash=' + $hash + '&ts=' + $ts + '&rand=' + $rand
