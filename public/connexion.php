@@ -33,6 +33,9 @@ if (isset($nick, $pass)) {
     }
   }
 }
+if ($has_captcha) {
+  $captcha_url = 'data:image/png;base64,' . base64_encode($jvc->get('http://www.jeuxvideo.com/captcha/ccode.php', $form['fs_signature'])['body']);
+}
 ?>
 <!doctype html>
 <meta charset="utf-8">
@@ -65,7 +68,7 @@ if (isset($nick, $pass)) {
       <input type="hidden" name="nick" value="<?= h($nick) ?>">
       <input type="hidden" name="pass" value="<?= h($pass) ?>">
       <input type="hidden" name="form" value="<?= h(serialize($form)) ?>">
-      <img class="connect-form__captcha" src="data:image/png;base64,<?= base64_encode($jvc->get('http://www.jeuxvideo.com/captcha/ccode.php', $form['fs_signature'])['body']) ?>">
+      <img class="connect-form__captcha" src="<?= $captcha_url ?>">
       <input class="js-captcha connect-form__input connect-form__input--captcha" type="number" name="ccode" placeholder="Code" autofocus>
       <script>
 var hasTouch = 'createTouch' in document
