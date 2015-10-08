@@ -132,9 +132,6 @@ function adapt_html($message, $date = '', $id = 0) {
   // Conversion citations
   $message = str_replace('<blockquote class="blockquote-jv">', '<blockquote class="quote">', $message);
 
-  // Réparation des liens en /profil/pseudo.html
-  $message = preg_replace('#(<a href="https?://www\.jeuxvideo\.com/profil/.+)\.html"#Usi', '$1?mode=page_perso"', $message);
-
   // Transformations liens vers topics en liens internes
   $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
     $new_str = $matches[0];
@@ -154,7 +151,7 @@ function adapt_html($message, $date = '', $id = 0) {
   }, $message);
 
   // Transformations liens CDV
-  $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([a-z0-9-_[\]]+)(?:\?mode=[a-z_]+)?)"#Usi', '<a data-link-jvc="$1" href="/@$2"', $message);
+  $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([a-z0-9-_[\]]+)(?:\.html)?(?:\?mode=[a-z_]+)?)"#Usi', '<a data-link-jvc="$1" href="/@$2"', $message);
 
   // Transformation des liens NoelShack en liens directs
   $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
