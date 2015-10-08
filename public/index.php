@@ -22,7 +22,7 @@ $db = new Db();
 $auth = new Auth($db);
 $token = $auth->generate();
 
-$view = false;
+$view = 'salespage';
 
 if ($connexion)
   $view = 'connexion';
@@ -43,8 +43,9 @@ elseif ($smileys)
 elseif ($profil)
   $view = 'profil';
 
-if (!$view) {
-  require 'views/salespage.php';
+if (in_array($view, ['salespage', 'connexion'])) {
+  require 'views/' . $view . '.php';
+  exit;
 }
 
 ob_start();

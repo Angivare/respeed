@@ -1,80 +1,54 @@
 <?php
-$title = 'Connexion';
-
 $jvc = new Jvc();
-
-$ccode = isset($_POST['ccode']) ? (int)$_POST['ccode'] : NULL;
-$form = isset($_POST['form']) ? $_POST['form'] : NULL;
-$nick = isset($_POST['nick']) ? trim($_POST['nick']) : NULL;
-$pass = isset($_POST['pass']) ? trim($_POST['pass']) : NULL;
-$err_nick = '';
-$err_pass = '';
-$err = NULL;
-
-if($nick && $pass && $form && $ccode):
-  $form = unserialize(urldecode($form));
-  if(is_array($form)):
-    if(!$jvc->connect_finish($nick, $pass, $form, $ccode, $form)) {
-      $err = $jvc->err();
-      if(!isset($form['fs_signature'])) {
-        $err_nick = $nick;
-        $err_pass = $pass;
-        $nick = NULL;
-        $pass = NULL;
-      }
-      $form = NULL;
-      $ccode = NULL;
-    }
-    else {
-      header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
-      exit;
-    }
-  endif;
-endif; ?>
-<?php include '_header.php' ?>
-
-<div class="sheet">
-  <h1 class="sheet-title"><a href="/connexion"><?= $title ?></a></h1>
-  <div class="content no-menu">
-    <div class="form-container">
-<?php if($err): ?>
-      <div class="connection-error"><?= $err ?></div>
-<?php else: ?>
-      <div class="sell">Utilisez votre pseudo jeuxvideo.com pour profiter de JVForum.</div>
-<?php endif ?>
-<?php if($nick && $pass):
-    $jvc->disconnect();
-    if(!$form)
-      $form = $jvc->connect_req($nick, $pass);
+if ($jvc->is_connected()) {
+  header('Location: /accueil');
+  exit;
+}
 ?>
-      <form action="/connexion" method="post">
-        <input type="hidden" name="form" value="<?= urlencode(serialize($form)) ?>">
-        <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autocorrect="off">
-        <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass?>">
-        <p><img src="data:image/png;base64,<?= base64_encode(
-          $jvc->get('http://www.jeuxvideo.com/captcha/ccode.php?' .
-          $form['fs_signature']
-          )['body']) ?>" class="captcha">
-        <br><input class="input input-captcha" type="text" name="ccode" placeholder="Code" autofocus autocomplete="off">
-        <p><input class="submit submit-center" type="submit" value="Se connecter">
-      </form>
-<?php else: ?>
-      <div class="connexion-bloc1">
-        <form action="/connexion" method="post">
-          <p><input class="input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= h($err_nick) ?>" <?= $err_nick ? '' : 'autofocus' ?> autocorrect="off">
-          <p><input class="input" type="password" name="pass" placeholder="Mot de passe" value="<?= h($err_pass) ?>">
-          <p><input class="submit submit-center" type="submit" value="Se connecter">
-        </form>
-        <p>Votre identifiant sera transmis au serveur de JVForum, sans y être stocké.
-      </div>
+<!doctype html>
+<meta charset="utf-8">
+<title>Connexion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link class="js-favicon" rel="icon" href="/images/favicon.png">
+<meta name="theme-color" content="hsl(240, 11%, 40%)">
 
-      <div class="connexion-bloc2">
-        <h2>Pourquoi dois-je donner mon identifiant ?</h2>
-        <p>À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été <a href="http://www.jeuxvideo.com/nplay/forums/message/714206419">retirée sur demande de JVC</a>.
-      </div>
-<?php endif ?>
-    </div>
+<style><?= file_get_contents('style_notconnected.css') ?></style>
+
+<body class="body--connexion">
+
+<div class="connexion">
+  <div class="connexion-bloc">
+    <h1 class="connexion-bloc__title">Connexion</h1>
+    
+    <p class="login-instructions">Utilisez votre pseudo jeuxvideo.com pour profiter de JVForum.</p>
+
+    <form class="connect-form" action="/connexion" method="post">
+      <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" autofocus autocorrect="off">
+      <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe">
+      <input class="connect-form__submit" type="submit" value="Me connecter">
+    </form>
+
+    <p class="login-disclaimer">Votre identifiant sera transmis au serveur de JVForum sans y être stocké.</p>
+  </div>
+
+  <div class="connexion-disclaimer">
+    <h2 class="connexion-disclaimer__title">Pourquoi dois-je donner mon identifiant ?</h2>
+    
+    <p class="connexion-disclaimer__copy">À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été <a class="mandatory-login-proof" href="http://www.jeuxvideo.com/nplay/forums/message/714206419" target="_blank">retirée sur demande de JVC</a>.</p>
+    
+    <div class="legalese legalese--close">JVForum n’est pas affilié à <a class="legalese__link" href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</div>
   </div>
 </div>
 
-<?php display_footer_if_not_connected() ?>
+<?php if (GOOGLE_ANALYTICS_ID): ?>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '<?= GOOGLE_ANALYTICS_ID ?>', 'auto');
+ga('set', 'dimension1', 'Guest')
+ga('send', 'pageview')
+</script>
+<?php endif ?>
+<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)"></script>
