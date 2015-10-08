@@ -56,7 +56,7 @@ if ($jvc->is_connected()) {
 
   <p>Les pages s’affichent instantanément grâce au préchargement.</p>
 
-  <h2 class="article__subheadline"><span class="article__subheadline-number">4</span> Et plus. Bien plus</h2>
+  <h2 class="article__subheadline"><span class="article__subheadline-number">4</span> Et plus</h2>
 
   <p>Liens directs NoelShack. Avatars en grand. Design qui s’étire pour les grands écrans… Tout est repensé.</p>
 
