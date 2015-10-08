@@ -829,7 +829,6 @@ instantClick.on('change', function(isInitialLoad) {
 
 instantClick.on('restore', function() {
   handleRefreshOnPageChange()
-  $('.form').submit(post)
 })
 
 instantClick.on('change', function() {
