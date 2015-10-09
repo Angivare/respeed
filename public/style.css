@@ -627,6 +627,35 @@ h1, h2, h3 {
   background: white;
 }
 
+@media (min-width: 768px) {
+  .topic__main-info {
+    padding-left: 8px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .topic__main-link {
+    min-height: 0;
+  }
+
+  .topic__main-info {
+    display: table;
+    width: 100%;
+  }
+
+  .topic__title {
+    display: table-cell;
+    width: 80%;
+    vertical-align: middle;
+    padding: 2px 0;
+  }
+
+  .topic__pseudo {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
 .topic:nth-child(even) .topic__main-info {
   background: hsl(207, 90%, 98%);
 }
@@ -657,6 +686,27 @@ h1, h2, h3 {
 
 .topic:nth-child(even) .topic__last-page-link {
   background: hsl(207, 90%, 98%);
+}
+
+@media (min-width: 1025px) {
+  .topic__last-page-link {
+    width: 20%;
+  }
+
+  .topic__last-page-info {
+    display: table;
+    width: 100%;
+  }
+
+  .topic__answers {
+    display: table-cell;
+    width: 50%;
+  }
+
+  .topic__date {
+    display: table-cell;
+    width: 50%;
+  }
 }
 
 .topic__date {
