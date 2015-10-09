@@ -28,25 +28,31 @@ if ($page > 1) {
 ?>
 
     <div class="liste-topics">
+      <div class="liste-topics__container">
 <?php for ($i = 0; $i < count($matches['topic']); $i++): ?>
 <?php
-$pseudo_status = '';
+$pseudo_modifier = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
-  $pseudo_status = trim(substr($matches['pseudo_span'][$i], $pos + 6, 5), '"');
+  $pseudo_modifier = 'topic__pseudo--' . trim(substr($matches['pseudo_span'][$i], $pos + 6, 5), '"');
 }
 ?>
-      <div class="topic label-<?= $matches['label'][$i] ?> <?= ($i % 2 == 0) ? 'odd' : 'even' ?> pseudo-status-<?= $pseudo_status ?>" data-pseudo="<?= $matches['pseudo'][$i] ?>">
-        <div class="label"></div>
-        <a class="topic-main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
-          <div class="title"><?= $matches['title'][$i] ?></div>
-          <div class="author pseudo-<?= $pseudo_status ?>"><?= $matches['pseudo'][$i] ?></div>
-        </a>
-        <a class="topic-last-page" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
-          <div class="nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?> <span class="rep">rép</span></div>
-          <div class="date" title="<?= trim($matches['date'][$i]) ?>"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
-        </a>
-      </div>
+        <div class="topic">
+          <a class="topic__main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
+            <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
+            <div class="topic__main-info">
+              <div class="topic__title"><?= $matches['title'][$i] ?></div>
+              <div class="topic__pseudo <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
+            </div>
+          </a>
+          <a class="topic__last-page-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
+            <div class="topic__last-page-info">
+              <div class="topic__answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
+              <div class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
+            </div>
+          </a>
+        </div>
 <?php endfor ?>
+      </div>
     </div>
 
 <?php include 'forum_pagination.php' ?>
