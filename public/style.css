@@ -597,7 +597,7 @@ h1, h2, h3 {
 }
 
 .topic__label--dossier2 {
-  background: #e65100;
+  background: #FF6F00;
 }
 
 .topic__label--lock {
@@ -605,19 +605,19 @@ h1, h2, h3 {
 }
 
 .topic__label--marque-on {
-  background: #8bc34a;
+  background: #2E7D32;
 }
 
 .topic__label--marque-off {
-  background: #E91E63;
+  background: #B71C1C;
 }
 
 .topic__label--resolu {
-  background: #388e3c;
+  background: #00E676;
 }
 
 .topic__label--ghost {
-  background: #80deea;
+  background: #757575;
 }
 
 .topic__main-info {
