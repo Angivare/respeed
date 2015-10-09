@@ -531,7 +531,7 @@ h1, h2, h3 {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .liste-topics {
     padding: 0;
   }
@@ -547,11 +547,12 @@ h1, h2, h3 {
 .topic {
   display: table-row;
   width: 100%;
+  font-size: 14px;
 }
 
-/*.topic:first-child {
-  border-radius: 2px 0 0 0;
-}*/
+.topic--small {
+  font-size: 12px;
+}
 
 .topic:first-child .topic__label {
   border-radius: 2px 0 0 0;
@@ -574,10 +575,15 @@ h1, h2, h3 {
   width: 100%;
   color: #0D47A1;
   min-height: 50px;
+  color: #212121;
+}
+
+.topic--small .topic__main-link {
+  min-height: 0;
 }
 
 .topic__main-link:visited {
-  _color: #1565C0;
+  color: #757575;
 }
 
 .topic__label {
@@ -627,11 +633,10 @@ h1, h2, h3 {
 
 .topic__title {
   font-weight: bold;
-  font-size: 14px;
 }
 
 .topic__pseudo {
-  font-size: 13px;
+  font-size: 90%;
 }
 
 .topic__last-page-link {
@@ -640,20 +645,22 @@ h1, h2, h3 {
   text-align: center;
   padding: 0 3px;
   vertical-align: middle;
-  color: #0D47A1;
+  color: #212121;
   background: white;
+  min-width: 50px;
+  padding: 0 5px;
+}
+
+.topic__last-page-link:visited {
+  color: #757575;
 }
 
 .topic:nth-child(even) .topic__last-page-link {
   background: hsl(207, 90%, 98%);
 }
 
-.topic__answers {
-  font-size: 14px;
-}
-
 .topic__date {
-  font-size: 13px;
+  font-size: 90%;
 }
 
 /* FORUM - Pagination */
