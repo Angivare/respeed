@@ -160,10 +160,15 @@ body {
   font-size: .95em;
   font-weight: bold;
   margin: 2em 0;
+  _text-decoration: underline;
 }
 
 .number {
   word-spacing: -1px;
+}
+
+.number--important {
+  font-size: larger;
 }
 
 .gnap_gnap-youtube {

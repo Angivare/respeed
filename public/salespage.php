@@ -59,7 +59,7 @@ if ($jvc->is_connected()) {
 
   <iframe class="gnap_gnap-youtube" width="420" height="315" src="https://www.youtube.com/embed/U0QA6OMEP1c?rel=0&amp;showinfo=0&amp;cc_load_policy=1" frameborder="0" allowfullscreen></iframe>
   
-  <p class="article__nb-messages">Plus de <span class="number">200 000</span> messages postés.</p>
+  <p class="article__nb-messages">Plus de <span class="number number--important">500 000</span> messages déjà postés</p>
 
   <a class="article__cta" id="cta" href="/connexion">Démarrez l’expérience JVForum</a>
   
