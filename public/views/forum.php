@@ -35,7 +35,14 @@ $pseudo_modifier = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $pseudo_modifier = 'topic__pseudo--' . trim(substr($matches['pseudo_span'][$i], $pos + 6, 5), '"');
 }
-$topic_modifier = in_array($matches['label'][$i], ['marque-on', 'marque-off', 'ghost', 'lock']) ? 'topic--small' : '';
+
+$topic_modifier = '';
+if (in_array($matches['label'][$i], ['marque-on', 'marque-off', 'ghost', 'lock'])) {
+  $topic_modifier = 'topic--small';
+}
+if (looks_spammy($matches['title'][$i])) {
+  $topic_modifier .= 'topic--small topic--extra-small';
+}
 ?>
         <div class="topic <?= $topic_modifier ?>">
           <a class="topic__main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
