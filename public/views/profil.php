@@ -16,7 +16,7 @@ $title = $pseudo;
 $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 ?>
 <?php if (isset($couverture)): ?>
-<body class="body--no-bottom body--sheet" style="background-image: url(<?= $couverture ?>); background-position: top center;">
+<body class="body--no-bottom body--sheet" style="background: white url(<?= $couverture ?>) top center;">
 <?php else: ?>
 <body class="body--no-bottom body--sheet">
 <?php endif ?>
