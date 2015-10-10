@@ -21,10 +21,6 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <body class="body--no-bottom body--sheet">
 <?php endif ?>
 
-<?php if (isset($avatar)): ?>
-  <img class="js-profile-avatar profile-avatar" data-src="<?= $avatar ?>">
-<?php endif ?>
-
 <?php if (isset($banned)): ?>
   <div class="profile-ban-mention">Pseudo banni.</div>
 <?php endif ?>
@@ -41,6 +37,10 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
     <div class="profile-card__ratio"><strong class="profile-card__number"><?= n($ratio, $ratio < 10 ? 2 : 1) ?></strong> messages par jour</div>
 <?php endif ?>
   </div>
+<?php endif ?>
+
+<?php if (isset($avatar)): ?>
+  <img class="js-profile-avatar profile-avatar" data-src="<?= $avatar ?>">
 <?php endif ?>
 
 <?php if (isset($signature)): ?>
