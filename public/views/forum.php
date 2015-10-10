@@ -33,7 +33,9 @@ if ($page > 1) {
 <?php
 $pseudo_modifier = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
-  $pseudo_modifier = 'topic__pseudo--' . trim(substr($matches['pseudo_span'][$i], $pos + 6, 5), '"');
+  $start = substr($matches['pseudo_span'][$i], $pos + 6);
+  $status = substr($start, 0, strpos($start, '"'));
+  $pseudo_modifier = 'topic__pseudo--' . $status;
 }
 
 $topic_modifier = '';

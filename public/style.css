@@ -1637,13 +1637,24 @@ h1, h2, h3 {
 
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
 
-.topic__pseudo--modo, .message__byline-author-pseudo--modo {
-  color: #43A047;
+.topic__pseudo--modo {
+  color: hsl(145, 100%, 34%); /* 39% normalement */
 }
 
-.topic__pseudo--admin, .message__byline-author-pseudo--admin,
+.message__byline-author-pseudo--modo {
+  color: #00c853;
+}
+
+.topic__pseudo--expert, .message__byline-author-pseudo--expert {
+  color: #0D47A1;
+}
+
+.topic__pseudo--admin, .message__byline-author-pseudo--admin {
+  color: #D50000;
+}
+
 .topic__pseudo--staff, .message__byline-author-pseudo--staff {
-  color: #C62828;
+  color: #F50057;
 }
 
 /* FORUM/TOPIC - Formulaire de post */
