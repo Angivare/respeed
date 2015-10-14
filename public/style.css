@@ -571,7 +571,7 @@ h1, h2, h3 {
 }
 
 .topic:last-child .topic__last-page-link {
-  border-radius: 0 0 0 2px;
+  border-radius: 0 0 2px 0;
 }
 
 .topic__main-link {
