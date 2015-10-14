@@ -32,31 +32,38 @@ class Auth {
 
   public function validate($hash, $ts, $rand) {
     $ip = $_SERVER['REMOTE_ADDR'];
-    if($this->db->query('SELECT ip FROM ip_blacklist WHERE ip=?', [$ip])->fetch())
+    if ($this->db->query('SELECT ip FROM ip_blacklist WHERE ip = ?', [$ip])->fetch()) {
       return $this->_err('Ip blacklistée');
+    }
 
-    if(strlen($rand)%2) return $this->_err('Jeton invalide');
+    if (strlen($rand) % 2) {
+      return $this->_err('Jeton invalide');
+    }
     $ip = $_SERVER['REMOTE_ADDR'];
     $recreated = md5($ip . SALT . $ts . hex2bin($rand));
-    if($hash != $recreated)
+    if ($hash != $recreated) {
       return $this->_err('Jeton invalide');
+    }
 
     $stored = $this->db->get_token($hash);
-    if(!$stored)
+    if (!$stored) {
       return $this->_err('Jeton expiré');
-    else if(strtotime($stored['generated']) < time() - 3600)
+    }
+    elseif (strtotime($stored['generated']) < time() - 3600) {
       return $this->_err('Jeton expiré');
-    else
-      return TRUE;
+    }
+    else {
+      return true;
+    }
   }
 
   public function discard($hash) {
     //needs validation beforehand
-    $this->db->query('DELETE FROM tokens WHERE token=?', [$hash]);
+    $this->db->query('DELETE FROM tokens WHERE token = ?', [$hash]);
   }
 
   private function _err($err) {
     $this->err = $err;
-    return FALSE;
+    return false;
   }
 }

@@ -133,10 +133,10 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = str_replace('<blockquote class="blockquote-jv">', '<blockquote class="quote">', $message);
 
   // Transformations liens vers topics en liens internes
-  $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function ($matches) {
+  $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function($matches) {
     $new_str = $matches[0];
     $path = '/' . $matches['forum'];
-    if($matches['topic']) {
+    if ($matches['topic']) {
       $path .= '/' . ($matches['mode'] == '1' ? '0' : '') . $matches['topic'] . '-' . $matches['slug'];
     }
     else {
@@ -154,7 +154,7 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([a-z0-9-_[\]]+)(?:\.html)?(?:\?mode=[a-z_]+)?)"#Usi', '<a data-link-jvc="$1" href="/@$2"', $message);
 
   // Transformation des liens NoelShack en liens directs
-  $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function ($matches) {
+  $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function($matches) {
     $new_str = $matches[0];
     $path = 'http://image.noelshack.com/fichiers/' . $matches['year'] . '/' . $matches['container'] . '/' . $matches['path'];
     $new_str = str_replace($matches['url'], $path, $new_str);
@@ -174,7 +174,7 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" data-code="$2" title="$2" alt="$2">', $message);
 
   // Conversion stickers
-  $message = preg_replace_callback('#<img class="img-stickers" src="http://jv.stkr.fr/p/(?P<id>[^"]+)"/>#Usi', function ($matches) {
+  $message = preg_replace_callback('#<img class="img-stickers" src="http://jv.stkr.fr/p/(?P<id>[^"]+)"/>#Usi', function($matches) {
     global $stickers;
 
     $ret = $matches[0];
@@ -196,10 +196,15 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
     $ret = $matches[0];
     $has_blank = (strpos($ret, 'target="_blank"') !== false) ? true : false;
-    if(preg_match('#^(?:https?://' . $_SERVER['HTTP_HOST'] .')?/#Usi', $matches['url'])) {
-      if($has_blank) return str_replace('target="_blank"', '', $ret);
-    } else {
-      if(!$has_blank) return str_replace('>', ' target="_blank">', $ret);
+    if (preg_match('#^(?:https?://' . $_SERVER['HTTP_HOST'] .')?/#Usi', $matches['url'])) {
+      if ($has_blank) {
+        return str_replace('target="_blank"', '', $ret);
+      }
+    }
+    else {
+      if (!$has_blank) {
+        return str_replace('>', ' target="_blank">', $ret);
+      }
     }
     return $ret;
   }, $message);
@@ -211,7 +216,7 @@ function adapt_html($message, $date = '', $id = 0) {
 }
 
 function jvcare($str) {
-  return preg_replace_callback('#<span class="JvCare ([0-9A-F]+)"[^>]*>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function ($matches) {
+  return preg_replace_callback('#<span class="JvCare ([0-9A-F]+)"[^>]*>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function($matches) {
     $new_str = $matches[0];
     $new_str = str_replace('<span class="JvCare ' . $matches[1], '<a href="' . strip_tags($matches[2]) . '" class="xXx', $new_str);
     $new_str = substr($new_str, 0, -strlen('</span>'));
@@ -306,22 +311,25 @@ function superlatif() {
 function array_max($array, $comp_func) {
   reset($array);
   $max = each($array)[1];
-  while( FALSE !== ($v = each($array)) )
+  while (false !== ($v = each($array))) {
     $max = $comp_func($v[1], $max) ? $v[1] : $max;
+  }
   return $max;
 }
 
 function strip_matches($matches) {
-  foreach($matches as $k => $v)
-    if(is_int($k))
+  foreach ($matches as $k => $v) {
+    if (is_int($k)) {
       unset($matches[$k]);
+    }
+  }
   return $matches;
 }
 
 function delay($f, &$t) {
-  $t =  microtime(TRUE)*1000;
+  $t =  microtime(true) * 1000;
   $ret = $f();
-  $t = microtime(TRUE)*1000 - $t;
+  $t = microtime(true) * 1000 - $t;
   return $ret;
 }
 

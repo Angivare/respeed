@@ -1,7 +1,6 @@
 <?php
 require 'common.php';
 
-require '../helpers.php';
 require '../parser.php';
 
 arg('url', 'msg', 'form', 'ccode');

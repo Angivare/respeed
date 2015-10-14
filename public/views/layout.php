@@ -19,7 +19,7 @@ var $forum = <?= $forum ? $forum : 'false' ?>
   , $slug = <?= $slug ? "'{$slug}'" : 'false' ?>
   , $title = <?= $title ? "'{$title}'" : 'false' ?>
   , $page = <?= $page ? $page : 'false' ?>
-<?php foreach($token as $k => $v): ?>
+<?php foreach ($token as $k => $v): ?>
   , $<?= $k ?> = '<?= $v ?>'
 <?php endforeach ?>
 </script>

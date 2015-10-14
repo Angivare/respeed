@@ -1,28 +1,33 @@
 <?php
 class Db {
-  const DEBUG = FALSE;
+  const DEBUG = false;
 
   private $db;
   private $connected;
 
   public function __construct() {
-    $this->connected = FALSE;
+    $this->connected = false;
     try {
       $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-      $this->connected = TRUE;
-    } catch(Exception $e) {  }
+      $this->connected = true;
+    }
+    catch (Exception $e) {}
     $this->db->query('SET NAMES UTF8');
   }
 
   public function query($query, $arguments=[]) {
-    if(!$this->connected) return FALSE;
+    if (!$this->connected) {
+      return false;
+    }
     $req = $this->db->prepare($query);
-    if(self::DEBUG) {
+    if (self::DEBUG) {
       $ret = $req->execute($arguments);
       var_dump($req->errorInfo());
-      return $ret ? $req : FALSE;
-    } else
-      return $req->execute($arguments) ? $req : FALSE;
+      return $ret ? $req : false;
+    }
+    else {
+      return $req->execute($arguments) ? $req : false;
+    }
   }
 
   public function search_forum($str) {
@@ -45,7 +50,7 @@ class Db {
       [
         ':id' => $forum['id'],
         ':slug' => $forum['slug'],
-        ':human' => $forum['human']
+        ':human' => $forum['human'],
       ]
     );
   }
@@ -53,7 +58,7 @@ class Db {
   public function delete_forum($id) {
     return $this->query(
       'DELETE FROM forums WHERE forum_id=?',
-      [ $id ]
+      [$id]
     );
   }
 
@@ -73,7 +78,7 @@ class Db {
         ':forum_id' => $forum_id,
         ':page' => $page,
         ':vars' => $vars,
-        ':time' => microtime(TRUE)
+        ':time' => microtime(true),
       ]
     );
   }
@@ -81,7 +86,7 @@ class Db {
   public function clean_forum_cache() {
     return $this->query(
       'DELETE FROM forums_cache WHERE fetched_at < (? - 60*5)',
-      [ microtime(TRUE) ]
+      [microtime(true)]
     );
   }
 
@@ -103,7 +108,7 @@ class Db {
         ':topic_mode' => $topic_mode,
         ':forum_id' => $forum_id,
         ':vars' => $vars,
-        ':time' => microtime(TRUE)
+        ':time' => microtime(true)
       ]
     );
   }
@@ -111,7 +116,7 @@ class Db {
   public function clean_topic_cache() {
     return $this->query(
       'DELETE FROM topics_cache WHERE fetched_at < (? - 60*5)',
-      [ microtime(TRUE) ]
+      [microtime(true)]
     );
   }
 

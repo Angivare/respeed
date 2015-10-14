@@ -3,15 +3,16 @@
 function sub_forums($body) {
   $beg = strpos($body, '<ul class="liste-sous-forums">');
   $end = strpos($body, '<div class="panel panel-jv-forum">');
-  $body = substr($body, $beg, $end-$beg);
+  $body = substr($body, $beg, $end - $beg);
   $re = '#<li class="line-ellipsis">.+' .
         '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
         '(?:\s+<span .+>)??' .
         '\s*?(?P<human>.+)\s*?' .
         '(?:</span>.+)??</a>.+</li>#Usi';
   preg_match_all($re, $body, $matches, PREG_SET_ORDER);
-  foreach($matches as $k => $v)
+  foreach ($matches as $k => $v) {
     $matches[$k] = strip_matches($matches[$k]);
+  }
   return $matches;
 }
 
@@ -56,18 +57,19 @@ function fetch_forum($forum, $page, $slug) {
 
   $cache = $db->get_forum_cache($forum, $page);
 
-  if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
-    $ret = json_decode($cache['vars'], TRUE);
-  } else {
+  if ($cache && $cache['fetched_at'] > microtime(true) - 2) {
+    $ret = json_decode($cache['vars'], true);
+  }
+  else {
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-    $rep = $jvc->get($url, NULL, FALSE, FALSE);
+    $rep = $jvc->get($url, null, false, false);
 
     $header = &$rep['header'];
     $got = &$rep['body'];
 
     $location = Jvc::toJvf(Jvc::redirects($header));
-    if($location) {
+    if ($location) {
       header("Location: {$location}");
       exit;
     }
@@ -99,7 +101,7 @@ function parse_topic($got) {
 
   // Sondages
   $ret['poll'] = false;
-  if(preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches)) {
+  if (preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches)) {
     $ret['poll'] = ['question' => $matches[1]];
     $regex = '#<tr>.+' .
              '<td class="result-pourcent">.+' .
@@ -107,12 +109,18 @@ function parse_topic($got) {
              '</td>.+<td class="reponse">(?P<human>.+)</td>.+' .
              '</tr>#Usi';
     $ret['poll']['answers'] = [];
-    if(preg_match_all($regex, $got, $matches))
-      for($i = 0; $i < count($matches[0]); $i++)
-        $ret['poll']['answers'][] = [ 'value' => $matches['pourcent'][$i], 'human' => $matches['human'][$i] ];
+    if (preg_match_all($regex, $got, $matches)) {
+      for ($i = 0; $i < count($matches[0]); $i++) {
+        $ret['poll']['answers'][] = [
+          'value' => $matches['pourcent'][$i],
+          'human' => $matches['human'][$i],
+        ];
+      }
+    }
     $ret['poll']['ans_count'] = false;
-    if(preg_match('#<div class="pied-result">.+([0-9]+).+?vote.+?</div>#Usi', $got, $matches))
+    if (preg_match('#<div class="pied-result">.+([0-9]+).+?vote.+?</div>#Usi', $got, $matches)) {
       $ret['poll']['ans_count'] = $matches[1];
+    }
   }
 
   // Messages
@@ -166,8 +174,10 @@ function parse_topic($got) {
     $ret['topicNew'] = $matches_id['id_topic'];
   }
 
-  $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches) ? TRUE : FALSE;
-  if($ret['locked']) $ret['lock_raison'] = $matches['raison'];
+  $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches) ? true : false;
+  if ($ret['locked']) {
+    $ret['lock_raison'] = $matches['raison'];
+  }
 
   return $ret;
 }
@@ -184,21 +194,23 @@ function fetch_topic($topic, $page, $slug, $forum) {
 
   $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
 
-  if($cache && $cache['fetched_at'] > microtime(TRUE) - 2) {
-    $ret = json_decode($cache['vars'], TRUE);
-  } else {
-      if($jvc->is_connected() && time() - $jvc->tokens_last_update() >= 3600/2) {
-        $rep = $jvc->get($url);
-        $jvc->tokens_refresh($rep['body']);
-      } else {
-        $rep = $jvc->get($url, NULL, FALSE, FALSE);
-      }
+  if ($cache && $cache['fetched_at'] > microtime(true) - 2) {
+    $ret = json_decode($cache['vars'], true);
+  }
+  else {
+    if ($jvc->is_connected() && time() - $jvc->tokens_last_update() >= 3600 / 2) {
+      $rep = $jvc->get($url);
+      $jvc->tokens_refresh($rep['body']);
+    }
+    else {
+      $rep = $jvc->get($url, null, false, false);
+    }
 
     $header = &$rep['header'];
     $got = &$rep['body'];
 
     $location = Jvc::toJvf(Jvc::redirects($header));
-    if($location) {
+    if ($location) {
       header("Location: {$location}");
       exit;
     }

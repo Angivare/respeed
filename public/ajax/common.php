@@ -5,11 +5,11 @@ require '../Db.php';
 require '../Jvc.php';
 require '../Auth.php';
 
-function arg($varname) {
-  for($i = 0; $i < func_num_args(); $i++) {
+function arg() {
+  for ($i = 0; $i < func_num_args(); $i++) {
     $varname = func_get_arg($i);
-    global $$varname;
-    $$varname = isset($_POST[$varname]) ? $_POST[$varname] : 0;
+    global ${$varname};
+    ${$varname} = isset($_POST[$varname]) ? $_POST[$varname] : 0;
   }
 }
 
@@ -22,10 +22,17 @@ $db = new Db();
 $auth = new Auth($db);
 $jvc = new Jvc($site);
 
-if(!$hash || !$ts || !$rand) {
-  echo json_encode([ 'rep' => FALSE, 'err' => 'Paramètres invalides' ]);
+if (!$hash || !$ts || !$rand) {
+  echo json_encode([
+    'rep' => false,
+    'err' => 'Paramètres invalides',
+  ]);
   exit;
-} else if(!$auth->validate($hash, $ts, $rand)) {
-  echo json_encode([ 'rep' => FALSE, 'err' => $auth->err() ]);
+}
+elseif (!$auth->validate($hash, $ts, $rand)) {
+  echo json_encode([
+    'rep' => false,
+    'err' => $auth->err(),
+  ]);
   exit;
 }

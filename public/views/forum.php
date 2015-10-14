@@ -7,8 +7,8 @@ if (!$jvc->is_connected()) {
   exit;
 }
 
-foreach(fetch_forum($forum, $page, $slug) as $k => $v) {
-  $$k = $v;
+foreach (fetch_forum($forum, $page, $slug) as $k => $v) {
+  ${$k} = $v;
 }
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;

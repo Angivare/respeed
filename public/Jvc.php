@@ -15,32 +15,38 @@ class Jvc {
    */
   public function __construct($site = 'JVC') {
     $this->err = 'Indéfinie';
-    if($site === 'JVC') {
+    if ($site === 'JVC') {
       $this->domain = 'http://www.jeuxvideo.com';
       $this->cookie_pre = '_JVCCOK_';
       $this->tokens_pre = '_JVCTOK_';
-    } else if($site === 'FJV') {
+    }
+    elseif ($site === 'FJV') {
       $this->domain = 'http://www.forumjv.com';
       $this->cookie_pre = '_FJVCOK_';
       $this->tokens_pre = '_FJVTOK_';
-    } else {
+    }
+    else {
       die('Mauvais paramètre fourni à Jvc::__construct, contacter l\'admin');
     }
 
     $this->cookie = [];
-    foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen($this->cookie_pre)) === $this->cookie_pre)
+    foreach ($_COOKIE as $k => $v) {
+      if (substr($k, 0, strlen($this->cookie_pre)) === $this->cookie_pre) {
         $this->cookie[substr($k, strlen($this->cookie_pre))] = $v;
+      }
+    }
 
     $this->tk = [];
-    foreach($_COOKIE as $k => $v)
-      if(substr($k, 0, strlen($this->tokens_pre)) === $this->tokens_pre)
+    foreach ($_COOKIE as $k => $v) {
+      if (substr($k, 0, strlen($this->tokens_pre)) === $this->tokens_pre) {
         $this->tk[substr($k, strlen($this->tokens_pre))] = $v;
+      }
+    }
 
     $this->tk_update = isset($_COOKIE['tk_update']) ? $_COOKIE['tk_update'] : 0;
 
-    if(!isset($this->cookie['dlrowolleh']) || !$this->cookie['dlrowolleh']) {
-      $this->cookie['dlrowolleh'] = NULL;
+    if (!isset($this->cookie['dlrowolleh']) || !$this->cookie['dlrowolleh']) {
+      $this->cookie['dlrowolleh'] = null;
     }
 
   }
@@ -78,7 +84,7 @@ class Jvc {
     $this->tk = [];
     $this->last_update = 0;
 
-    $this->cookie['dlrowolleh'] = NULL;
+    $this->cookie['dlrowolleh'] = null;
     $this->get($this->domain . '/profil/angivare?mode=page_perso');
   }
 
@@ -109,7 +115,7 @@ class Jvc {
       }
     }
 
-    if(count($ret))
+    if (count($ret))
       return $ret;
 
     return $this->_err('Impossible de préparer le formulaire');
@@ -138,7 +144,7 @@ class Jvc {
 
     if ($this->is_connected()) {
       _setcookie('pseudo', $nick);
-      return TRUE;
+      return true;
     }
 
     $ret_form = self::parse_form($rep['body']);
@@ -159,7 +165,9 @@ class Jvc {
   public function message_get($id) {
     $rep = $this->get($this->domain . "/respeed/forums/message/{$id}");
     $location = self::redirects($rep['header']);
-    if(!$location) return $this->_err('Impossible de trouver le lien permanent');
+    if (!$location) {
+      return $this->_err('Impossible de trouver le lien permanent');
+    }
     return $this->get($this->domain . $location);
   }
 
@@ -173,7 +181,9 @@ class Jvc {
    */
   public function message_post_req($url) {
     $form = self::parse_form($this->get($url)['body']);
-    if(count($form)) return $form;
+    if (count($form)) {
+      return $form;
+    }
     return $this->_err('Impossible de préparer le formulaire');
   }
 
@@ -185,7 +195,7 @@ class Jvc {
    * @param string $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
-  public function message_post_finish($url, $msg, $form, $ccode='', &$ret_location=NULL) {
+  public function message_post_finish($url, $msg, $form, $ccode = '', &$ret_location = null) {
     $post_data = http_build_query($form) .
       '&message_topic=' . urlencode($msg) .
       '&form_alias_rang=1' .
@@ -193,15 +203,18 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    if($location = self::redirects($rep['header'])) {
-      if($ret_location !== NULL)
+    if ($location = self::redirects($rep['header'])) {
+      if ($ret_location !== null) {
         $ret_location = $location;
-      return TRUE;
+      }
+      return true;
     }
-    else if(preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match))
+    elseif (preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match)) {
       return $this->_err($match[1]);
-    else
+    }
+    else {
       return $this->_err('Erreur lors de l\'envoi du message');
+    }
   }
 
   /**
@@ -214,12 +227,16 @@ class Jvc {
   public function topic_post_req($url) {
     $rep = $this->get($url)['body'];
     $form = self::parse_form($rep);
-    if(count($form)) return $form;
-    else if(NULL !== strpos($rep,
-      '<div class="alert-row"> Vous ne pouvez pas créer un nouveau sujet sur ce forum car il est fermé. </div>'))
+
+    if (count($form)) {
+      return $form;
+    }
+    elseif (null !== strpos($rep, '<div class="alert-row"> Vous ne pouvez pas créer un nouveau sujet sur ce forum car il est fermé. </div>')) {
       return $this->_err('Forum fermé');
-    else
+    }
+    else {
       return $this->_err('Impossible de préparer le formulaire');
+    }
   }
 
   /**
@@ -231,7 +248,7 @@ class Jvc {
    * @param string $ccode 
    * @return boolean TRUE si le topic est créé, FALSE sinon
    */
-  public function topic_post_finish($url, $title, $msg, $form, $poll_question='', $poll_answers=[], $ccode='', &$ret_location=NULL) {
+  public function topic_post_finish($url, $title, $msg, $form, $poll_question = '', $poll_answers = [], $ccode = '', &$ret_location = null) {
     $post_data = http_build_query($form) .
       '&titre_topic=' . urlencode($title) .
       '&message_topic=' . urlencode($msg) .
@@ -239,20 +256,24 @@ class Jvc {
       '&submit_sondage=' . ($poll_question ? '1' : '0') .
       '&question_sondage=' . urlencode($poll_question) .
       '&form_alias_rang=1';
-    foreach($poll_answers as $v)
+    foreach ($poll_answers as $v) {
       $post_data .= '&reponse_sondage%5B%5D=' . urlencode($v);
+    }
 
     $rep = $this->post($url, $post_data);
 
-    if($location = self::redirects($rep['header'])) {
-      if($ret_location !== NULL)
+    if ($location = self::redirects($rep['header'])) {
+      if ($ret_location !== null) {
         $ret_location = $location;
-      return TRUE;
+      }
+      return true;
     }
-    else if(preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match))
+    elseif (preg_match('#<div class="alert-row">(.+?)</div>#si', $rep['body'], $match)) {
       return $this->_err($match[1]);
-    else
+    }
+    else {
       return $this->_err('Erreur lors de la création du topic');
+    }
   }
 
   /**
@@ -265,10 +286,12 @@ class Jvc {
     $regex = '#<tr>.+<td class="reponse">.+' .
              '<a .+ data-id-sondage="(?P<question>.+)" data-id-reponse="(?P<answer>.+)".*>' .
              '(?P<human>.+)</a>.+</td>.+</tr>#Usi';
-    if(preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
+    if (preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER)) {
       return $matches;
-    else
+    }
+    else {
       return $this->_err('Pas de formulaire');
+    }
   }
 
   /**
@@ -288,10 +311,12 @@ class Jvc {
     $rep = $this->post($this->domain . '/forums/ajax_topic_sondage_vote.php', $post_data);
     $rep = json_decode($rep['body']);
 
-    if($rep->erreur)
+    if ($rep->erreur) {
       return $this->_err($rep->erreur);
-    else
-      return TRUE;
+    }
+    else {
+      return true;
+    }
   }
 
   /**
@@ -300,7 +325,7 @@ class Jvc {
    * @return boolean TRUE s'il n'y a pas eu d'erreur, FALSE sinon
    */
   public function tokens_refresh($body) {
-    $this->tk = self::parse_ajax_tk($body, '.+?', TRUE);
+    $this->tk = self::parse_ajax_tk($body, '.+?', true);
     if (!$this->tk) {
       return $this->_err('Indéfinie');
     }
@@ -312,8 +337,13 @@ class Jvc {
     return true;
   }
 
-  public function tokens() { return $this->tk; }
-  public function tokens_last_update() { return $this->tk_update; }
+  public function tokens() {
+    return $this->tk;
+  }
+
+  public function tokens_last_update() {
+    return $this->tk_update;
+  }
 
   /**
    * Prépare un formulaire pour l'édition d'un message
@@ -332,13 +362,11 @@ class Jvc {
     $rep = $this->get($this->domain . '/forums/ajax_edit_message.php', $get_data);
     $rep = json_decode($rep['body']);
 
-    if($rep->erreur)
+    if ($rep->erreur) {
       return $this->_err($rep->erreur);
+    }
 
-    return array_merge(
-      self::parse_form($rep->html),
-      $tk
-    );
+    return array_merge(self::parse_form($rep->html), $tk);
   }
 
   /**
@@ -349,21 +377,24 @@ class Jvc {
    * @param string $ccode code de confirmation
    * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
    */
-  public function edit_finish($id, $msg, $form, $ccode='') {
+  public function edit_finish($id, $msg, $form, $ccode = '') {
     $post_data = http_build_query($form) .
       '&id_message=' . urlencode($id) .
       '&message_topic=' . urlencode($msg) .
       '&action=post';
-    if($ccode)
+
+    if ($ccode) {
       $post_data .= '&fs_ccode=' . urlencode($ccode);
+    }
 
     $rep = $this->post($this->domain . '/forums/ajax_edit_message.php', $post_data);
     $rep = json_decode($rep['body']);
 
-    if($rep->erreur)
+    if ($rep->erreur) {
       return $this->_err($rep->erreur);
+    }
 
-    return TRUE;
+    return true;
   }
 
   /**
@@ -381,10 +412,12 @@ class Jvc {
     $rep = $this->post($this->domain . '/forums/ajax_edit_title.php', $post_data);
     $rep = json_decode($rep['body']);
 
-    if($rep->erreur)
+    if ($rep->erreur) {
       return $this->_err($rep->erreur);
-    else
-      return TRUE;
+    }
+    else {
+      return true;
+    }
   }
 
   /**
@@ -411,7 +444,7 @@ class Jvc {
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
     $ret = json_decode($this->get($this->domain . '/forums/ajax_forum_blacklist.php', $get_data)['body']);
-    return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
+    return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
   /**
@@ -422,7 +455,7 @@ class Jvc {
   public function blacklist_remove($id) {
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
     $ret = json_decode($this->get($this->domain . '/sso/ajax_delete_blacklist.php', $get_data)['body']);
-    return $ret->erreur ? $this->_err($ret->erreur) : TRUE;
+    return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
   /**
@@ -438,12 +471,16 @@ class Jvc {
               '<span>(?P<human>.+)</span>.+'  .
               '</li>#Usi';
 
-    if(FALSE === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER))
+    if (false === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER)) {
       return $this->_err('Indéfinie');
+    }
     else {
       $ret = [];
-      for($i = 0; $i < count($matches); $i++) {
-        $ret[] = ['id' => $matches[$i]['id'], 'human' => $matches[$i]['human'] ];
+      for ($i = 0; $i < count($matches); $i++) {
+        $ret[] = [
+          'id' => $matches[$i]['id'],
+          'human' => $matches[$i]['human'],
+        ];
       }
       return $ret;
     }
@@ -466,7 +503,7 @@ class Jvc {
       '&action=' . urlencode($action) .
       '&type=' . urlencode($type);
     $rep = $this->get($this->domain . '/forums/ajax_forum_prefere.php', $get_data);
-    return TRUE;
+    return true;
   }
 
   /**
@@ -505,7 +542,10 @@ class Jvc {
       ];
     }
 
-    return [ 'forums' => $forums, 'topics' => $topics ];
+    return [
+      'forums' => $forums,
+      'topics' => $topics,
+    ];
   }
 
   /**
@@ -522,7 +562,7 @@ class Jvc {
     $rep = $this->post($this->domain . '/forums/modal_del_message.php', $post_data);
 
     //TODO: error handling? la page ne semble renvoyer aucune réponse cependant..
-    return TRUE;
+    return true;
   }
 
   /**
@@ -537,7 +577,7 @@ class Jvc {
       '&tab_message%5B%5D=' . urlencode($id);
 
     $rep = json_decode($this->post($this->domain . '/forums/modal_del_message.php', $post_data)['body']);
-    return $rep->erreur ? $this->_err($rep->erreur) : TRUE;
+    return $rep->erreur ? $this->_err($rep->erreur) : true;
   }
 
   /**
@@ -568,8 +608,12 @@ class Jvc {
    */
   public static function redirects($hdr) {
     $beg = stripos($hdr, "\nLocation:");
-    if($beg === FALSE) return FALSE;
-    else $beg += strlen("\nLocation:");
+    if ($beg === false) {
+      return false;
+    }
+    else {
+      $beg += strlen("\nLocation:");
+    }
     $end = strpos($hdr, "\n", $beg);
     return trim(substr($hdr, $beg, $end-$beg));
   }
@@ -580,13 +624,20 @@ class Jvc {
    * @return mixed Le lien jvf correspondant ou FALSE
    */
   public static function toJvf($link) {
-    if(!preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $link, $matches))
-      return FALSE;
-    if($matches['topic_mode'] == '1') $matches['topic'] = '0' . $matches['topic'];
+    if (!preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $link, $matches)) {
+      return false;
+    }
+    if ($matches['topic_mode'] == '1') {
+      $matches['topic'] = '0' . $matches['topic'];
+    }
     $link = "/{$matches['forum']}";
-    if($matches['topic'] != 0) $link .= "/{$matches['topic']}";
+    if ($matches['topic'] != 0) {
+      $link .= "/{$matches['topic']}";
+    }
     $link .= "-{$matches['slug']}";
-    if($matches['page'] > 1) $link .= "/{$matches['page']}";
+    if ($matches['page'] > 1) {
+      $link .= "/{$matches['page']}";
+    }
     return $link;
   }
 
@@ -600,7 +651,7 @@ class Jvc {
    * renvoyée, TRUE sinon
    * @return array réponse du serveur, séparé en 'header' et 'body'
    */
-  public function post($url, $data, $connected = TRUE, $cached = TRUE) {
+  public function post($url, $data, $connected = true, $cached = true) {
     return $this->finish_req(curl_init(), $url, $connected, $cached, $data);
   }
 
@@ -614,12 +665,12 @@ class Jvc {
    * renvoyée, TRUE sinon
    * @return array réponse du serveur, séparé en 'header' et 'body'
    */
-  public function get($url, $query = NULL, $connected = TRUE, $cached = TRUE) {
+  public function get($url, $query = null, $connected = true, $cached = true) {
     $query = $query ? "?$query" : '';
     return $this->finish_req(curl_init(), $url . $query, $connected, $cached);
   }
 
-  private function finish_req($ch, $url, $connected = TRUE, $cached = TRUE, $postdata = FALSE) {
+  private function finish_req($ch, $url, $connected = true, $cached = true, $postdata = false) {
     $start = microtime(true);
     $db = new Db();
 
@@ -628,25 +679,23 @@ class Jvc {
       curl_setopt($ch, CURLOPT_POST, 1);
       curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
     }
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 2);
 
-    if($this->is_connected() && $connected) {
+    if ($this->is_connected() && $connected) {
       $coniunctio = $this->cookie['coniunctio'];
       $dlrowolleh = $this->cookie['dlrowolleh'];
     }
     else {
-      $coniunctio = $cached ? NULL : '0';
-      $dlrowolleh = $cached ? $this->cookie['dlrowolleh'] : NULL;
+      $coniunctio = $cached ? null : '0';
+      $dlrowolleh = $cached ? $this->cookie['dlrowolleh'] : null;
     }
 
-    if(count($this->cookie) && ($connected !== FALSE || $cached === FALSE)) {
+    if (count($this->cookie) && ($connected !== false || $cached === false)) {
       curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
       $ip = $_SERVER['REMOTE_ADDR'];
-      curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "HTTP_X_FORWARDED_FOR: $ip"
-      ]);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, ["HTTP_X_FORWARDED_FOR: {$ip}"]);
     }
 
     $rep = curl_exec($ch);
@@ -676,7 +725,7 @@ class Jvc {
 
   private function _err($err) {
     $this->err = $err;
-    return FALSE;
+    return false;
   }
 
   private function fatal_err($title, $message, $http_status_code = 200) {
@@ -699,7 +748,7 @@ class Jvc {
       </div>
 HTML;
     $jvc = new Jvc();
-    $forum = $topic = $topicNew = $slug = $page = NULL;
+    $forum = $topic = $topicNew = $slug = $page = null;
     $token = [];
     $title = 'Erreur';
     include 'views/layout.php';
@@ -722,39 +771,40 @@ HTML;
       $this->cookie[$pair[0]] = $pair[1];
     }
 
-    foreach($this->cookie as $k => $v) {
+    foreach ($this->cookie as $k => $v) {
       _setcookie($this->cookie_pre.$k, $v);
     }
   }
 
   private function cookie_string($add) {
     $ret = '';
-    foreach($this->cookie as $k => $v) {
-      if(array_key_exists($k, $add)) {
-        if($add[$k] === NULL) continue;
+    foreach ($this->cookie as $k => $v) {
+      if (array_key_exists($k, $add)) {
+        if ($add[$k] === null) {
+          continue;
+        }
         $ret .= $k . '=' . $add[$k] . '; ';
         unset($add[$k]);
         continue;
       }
       $ret .= $k . '=' . $v . '; ';
     }
-    foreach($add as $k => $v)
-      if($v !== NULL)
+    foreach ($add as $k => $v)
+      if ($v !== null) {
         $ret .= $k . '=' . $v . '; ';
+      }
     return substr($ret, 0, -2);
   }
 
   private function ajax_array($type) {
-    if(
-        (!isset($this->tk["ajax_timestamp_$type"]) || !isset($this->tk["ajax_hash_$type"]))
-      || (time() - $this->tokens_last_update() >= 3600/2)
-    ) {
+    if ((!isset($this->tk["ajax_timestamp_{$type}"]) || !isset($this->tk["ajax_hash_{$type}"]))
+    || (time() - $this->tokens_last_update() >= 3600 / 2)) {
       $rep = $this->get($this->domain . '/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
       self::tokens_refresh($rep['body']);
     }
     return [
-      'ajax_timestamp' => $this->tk["ajax_timestamp_$type"],
-      'ajax_hash' => $this->tk["ajax_hash_$type"]
+      'ajax_timestamp' => $this->tk["ajax_timestamp_{$type}"],
+      'ajax_hash' => $this->tk["ajax_hash_{$type}"],
     ];
   }
 
@@ -762,20 +812,24 @@ HTML;
     $regex = '<input type="hidden" name="fs_(.+?)" value="(.+?)"/>';
     preg_match_all($regex, $bdy, $matches);
     $ret = [];
-    for($i = 0; $i < count($matches[0]); $i++)
-      $ret['fs_'.$matches[1][$i]] = $matches[2][$i];
+    for ($i = 0; $i < count($matches[0]); $i++) {
+      $ret['fs_' . $matches[1][$i]] = $matches[2][$i];
+    }
     return $ret;
   }
 
-  private static function parse_ajax_tk($bdy, $type, $leave_tk_type = FALSE) {
+  private static function parse_ajax_tk($bdy, $type, $leave_tk_type = false) {
     $regex = '<input type="hidden" name="(.+?)_('.$type.')" .+? value="(.+?)" />';
     preg_match_all($regex, $bdy, $matches);
     $ret = [];
-    for($i = 0; $i < count($matches[0]); $i++)
-      if($leave_tk_type)
-        $ret[$matches[1][$i].'_'.$matches[2][$i]] = $matches[3][$i];
-      else
+    for ($i = 0; $i < count($matches[0]); $i++) {
+      if ($leave_tk_type) {
+        $ret[$matches[1][$i] . '_' . $matches[2][$i]] = $matches[3][$i];
+      }
+      else {
         $ret[$matches[1][$i]] = $matches[3][$i];
+      }
+    }
     return $ret;
   }
 }

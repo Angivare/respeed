@@ -44,7 +44,7 @@ function ajax(action, data, success) {
     timeout: 9000,
   })
   .fail(function(xhr) {
-    if(xhr.status == 504) {
+    if (xhr.status == 504) {
       success({
         rep: false,
         err: 'Timeout de JVC',
@@ -125,7 +125,7 @@ function displayFavoritesForums() {
   $('#forums_pref .menu-content').html('') // Suppression
 
   var hasThisForum = false
-  $.each(favoritesForums, function (_, forum) {
+  $.each(favoritesForums, function(_, forum) {
     $('#forums_pref .menu-content').append('<li><a href="' + forum.lien + '">' + forum.titre + '</a></li>')
     if ($forum == forum.id) {
       hasThisForum = true
@@ -155,7 +155,7 @@ function displayFavoritesTopics() {
   $('#topics_pref .menu-content').html('') // Suppression
 
   var hasThisTopic = false
-  $.each(favoritesTopics, function (_, topic) {
+  $.each(favoritesTopics, function(_, topic) {
     $('#topics_pref .menu-content').append('<li><a href="' + topic.lien + '">' + topic.titre + '</a></li>')
     if ($topic == topic.id) {
       hasThisTopic = true
