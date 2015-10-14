@@ -161,6 +161,7 @@ h1, h2, h3 {
 .sheet-title {
   padding: 0 10px;
   margin: 5px 0 10px;
+  word-wrap: break-word;
 }
 
 @media (min-width: 1025px) {
