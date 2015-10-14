@@ -11,7 +11,7 @@ $profil = isset($_GET['profil']);
 
 require 'helpers.php';
 require 'Jvc.php';
-require 'db.php';
+require 'Db.php';
 require 'Auth.php';
 require '../config.php';
 

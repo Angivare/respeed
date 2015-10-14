@@ -1,7 +1,7 @@
 <?php
 require '../config.php';
 require 'Auth.php';
-require 'db.php';
+require 'Db.php';
 require 'Jvc.php';
 
 $hash = isset($_GET['hash']) ? $_GET['hash']  : '';
