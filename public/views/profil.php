@@ -28,13 +28,13 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <?php if (isset($messages) || isset($days)): ?>
   <div class="profile-card <?= $profile_card_modifier ?>">
 <?php if (isset($messages)): ?>
-    <div class="profile-card__messages"><strong class="profile-card__number"><?= n($messages) ?></strong> messages</div>
+    <div class="profile-card__messages"><strong class="profile-card__number"><?= n($messages) ?></strong> <?= $messages >= 2 ? 'messages' : 'message' ?></div>
 <?php endif ?>
 <?php if (isset($days)): ?>
-    <div class="profile-card__days"><strong class="profile-card__number"><?= n($days) ?></strong> jours (<?= $month . ' ' . $year ?>)</div>
+    <div class="profile-card__days"><strong class="profile-card__number"><?= n($days) ?></strong> <?= $days >= 2 ? 'jours' : 'jour' ?> (<?= $month . ' ' . $year ?>)</div>
 <?php endif ?>
 <?php if (isset($ratio)): ?>
-    <div class="profile-card__ratio"><strong class="profile-card__number"><?= n($ratio, $ratio < 10 ? 2 : 1) ?></strong> messages par jour</div>
+    <div class="profile-card__ratio"><strong class="profile-card__number"><?= n($ratio, $ratio < 10 ? 2 : 1) ?></strong> <?= $ratio >= 2 ? 'messages' : 'message' ?> par jour</div>
 <?php endif ?>
   </div>
 <?php endif ?>

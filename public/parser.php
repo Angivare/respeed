@@ -226,11 +226,11 @@ function parse_profile($body) {
     $ret['couverture'] = $matches['couverture'];
   }
 
-  if (preg_match('#<div class="info-lib">Messages Forums :</div><div class="info-value">(?P<messages>[0-9.]+) messages</div>#Usi', $body, $matches)) {
+  if (preg_match('#<div class="info-lib">Messages Forums :</div><div class="info-value">(?P<messages>[0-9.]+) messages?</div>#Usi', $body, $matches)) {
     $ret['messages'] = str_replace('.', '', $matches['messages']);
   }
 
-  if (preg_match('#<div class="info-lib">Membre depuis :</div><div class="info-value">\S+ (?P<month>\S+) (?P<year>[0-9]+) \((?P<days>[0-9.]+) jours\)</div>#Usi', $body, $matches)) {
+  if (preg_match('#<div class="info-lib">Membre depuis :</div><div class="info-value">\S+ (?P<month>\S+) (?P<year>[0-9]+) \((?P<days>[0-9.]+) jours?\)</div>#Usi', $body, $matches)) {
     $ret['month'] = $matches['month'];
     $ret['year'] = $matches['year'];
     $ret['days'] = str_replace('.', '', $matches['days']);
