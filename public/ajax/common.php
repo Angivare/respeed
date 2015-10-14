@@ -1,7 +1,7 @@
 <?php
 
 require '../../config.php';
-require '../db.php';
+require '../Db.php';
 require '../Jvc.php';
 require '../Auth.php';
 
