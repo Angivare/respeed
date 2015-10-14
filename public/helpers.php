@@ -123,7 +123,7 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 
   // Conversion miniatures NoelShack
-  $message = preg_replace('#<a href="([^"]+)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="([^"]+)" alt="[^"]+"/></a>#Usi', '<a class="noelshack-link" href="$1" target="_blank"><img class="noelshack-link__thumb" src="$2"></a>', $message);
+  $message = preg_replace('#<a href="([^"]+)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="([^"]+)" alt="[^"]+"/></a>#Usi', '<a class="noelshack-link" href="$1" target="_blank"><img class="noelshack-link__thumb" src="$2" alt="$1"></a>', $message);
 
   // Conversion spoils
   $message = str_replace('<span class="bloc-spoil-jv en-ligne"><span class="contenu-spoil">', '<span class="spoil spoil--inline"><span class="spoil__content">', $message);
