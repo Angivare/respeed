@@ -29,7 +29,7 @@ if (!$hash || !$ts || !$rand) {
   ]);
   exit;
 }
-elseif (!$auth->validate($hash, $ts, $rand)) {
+if (!$auth->validate($hash, $ts, $rand)) {
   echo json_encode([
     'rep' => false,
     'err' => $auth->err(),

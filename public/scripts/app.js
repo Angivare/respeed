@@ -601,6 +601,21 @@ function handleProfileAvatar() {
   })
 }
 
+function handleBlacklist() {
+  if ($blacklistNeedsUpdate) {
+    updateBlacklist()
+  }
+  setInterval(updateBlacklist, 1000 * 60 * 5)
+}
+
+function updateBlacklist() {
+  $blacklistNeedsUpdate = false
+  ajax('blacklist_update', {}, function(data) {
+    $blacklist = data['rep']['array']
+    $('#blacklist-style').html(data['rep']['style'])
+  })
+}
+
 
 
 /*** Fonctions pour events ***/
@@ -818,13 +833,8 @@ instantClick.on('change', function(isInitialLoad) {
   stopDraftWatcher()
   insertDraft()
   handleProfileAvatar()
-})
+  handleBlacklist()
 
-instantClick.on('restore', function() {
-  handleRefreshOnPageChange()
-})
-
-instantClick.on('change', function() {
   $('.form').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
@@ -839,6 +849,10 @@ instantClick.on('change', function() {
   $('.spoil').click(toggleSpoil)
   $('.js-sticker').click(toggleStickerSize)
   $('.js-button-go-to-form').click(goToForm)
+})
+
+instantClick.on('restore', function() {
+  handleRefreshOnPageChange()
 })
 
 instantClick.init()

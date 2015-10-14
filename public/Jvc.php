@@ -468,22 +468,18 @@ class Jvc {
     $rep = $this->get($this->domain . '/sso/blacklist.php');
 
     $regex =  '#<li data-id-alias="(?P<id>[0-9]+)">.+' .
-              '<span>(?P<human>.+)</span>.+'  .
+              '<span>(?P<pseudo>.+)</span>.+'  .
               '</li>#Usi';
 
-    if (false === preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER)) {
+    if (!preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER)) {
       return $this->_err('Indéfinie');
     }
-    else {
-      $ret = [];
-      for ($i = 0; $i < count($matches); $i++) {
-        $ret[] = [
-          'id' => $matches[$i]['id'],
-          'human' => $matches[$i]['human'],
-        ];
-      }
-      return $ret;
+
+    $ret = [];
+    for ($i = 0; $i < count($matches); $i++) {
+      $ret[] = strtolower($matches[$i]['pseudo']);
     }
+    return $ret;
   }
 
   /**

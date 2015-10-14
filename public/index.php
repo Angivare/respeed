@@ -18,6 +18,15 @@ require '../config.php';
 $db = new Db();
 $auth = new Auth($db);
 $token = $auth->generate();
+$blacklist_query = get_blacklist_from_db();
+if ($blacklist_query) {
+  $blacklist = explode(',', $blacklist_query['blacklist']);
+  $blacklist_is_fresh = (bool)$blacklist_query['is_fresh'];
+}
+else {
+  $blacklist = [];
+  $blacklist_is_fresh = false;
+}
 
 $view = 'accueil';
 if ($forum && $topic)

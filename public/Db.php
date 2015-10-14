@@ -129,7 +129,7 @@ class Db {
 
   public function get_token($hash) {
     return $this->query(
-      'SELECT * FROM tokens WHERE token=?',
+      'SELECT * FROM tokens WHERE token = ?',
       [$hash]
     )->fetch();
   }
@@ -168,6 +168,29 @@ class Db {
     $this->query(
       'INSERT INTO logs_requests2(url, is_post, is_connected, is_cached, timing, errno, ip) VALUES(?, ?, ?, ?, ?, ?, ?)',
       [$url, $is_post, $is_connected, $is_cached, $timing, $errno, $_SERVER['REMOTE_ADDR']]
+    );
+  }
+
+  public function get_blacklist($person) {
+    return $this->query(
+      'SELECT blacklist, updated_at > NOW() - INTERVAL 10 MINUTE AS is_fresh FROM blacklists WHERE person = ?',
+      [$person]
+    )->fetch();
+  }
+
+  public function set_blacklist($person, $blacklist) {
+    $blacklist = implode(',', $blacklist);
+    return $this->query(
+      'INSERT INTO blacklists(person, blacklist) VALUES(?, ?)',
+      [$person, $blacklist]
+    );
+  }
+
+  public function update_blacklist($person, $blacklist) {
+    $blacklist = implode(',', $blacklist);
+    return $this->query(
+      'UPDATE blacklists SET blacklist = ?, updated_at = CURRENT_TIMESTAMP WHERE person = ?',
+      [$blacklist, $person]
     );
   }
 }

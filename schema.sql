@@ -77,3 +77,11 @@ CREATE TABLE `logs_requests2` (
   `ip` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `blacklists` (
+  `id` int unsigned NOT NULL auto_increment,
+  `person` varchar(32) NOT NULL,
+  `blacklist` varchar(5000) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

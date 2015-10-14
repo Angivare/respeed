@@ -491,3 +491,54 @@ function _setcookie($name, $value) {
 function removecookie($name) {
   setcookie($name, null, time() - 1, '/', null, false, true);
 }
+
+function generate_password($length = 32) {
+  $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  $password = '';
+  for ($i = 0; $i < $length; $i++) {
+    $password .= $chars[mt_rand(0, strlen($chars) - 1)];
+  }
+  return $password;
+}
+
+function get_blacklist_person() {
+  $person = isset($_COOKIE['blacklist']) ? $_COOKIE['blacklist'] : null;
+  if ($person && !(ctype_alnum($person) && strlen($person) == 32)) {
+    $person = null;
+  }
+  if (!$person) {
+    $person = generate_password();
+    _setcookie('blacklist', $person);
+  }
+  return $person;
+}
+
+function get_blacklist_from_db($person = false) {
+  global $db;
+  if (!$person) {
+    $person = get_blacklist_person();
+  }
+  $person = get_blacklist_person();
+  $results = $db->get_blacklist($person);
+  if (!$results) {
+    return false;
+  }
+  return [
+    'blacklist' => $results['blacklist'],
+    'is_fresh' => $results['is_fresh'],
+  ];
+}
+
+function generate_blacklist_style($blacklist = []) {
+  if (!$blacklist) {
+    $results = get_blacklist_from_db();
+    if ($results) {
+      $blacklist = explode(',', $results['blacklist']);
+    }
+  }
+  if (!$blacklist) {
+    return '';
+  }
+  $hide = '.js-blacklist--' . implode(', .js-blacklist--', $blacklist);
+  return "{$hide} { display: none; }";
+}

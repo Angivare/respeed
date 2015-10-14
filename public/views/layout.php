@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#2196F3">
+<style id="blacklist-style"><?= generate_blacklist_style($blacklist) ?></style>
 
 <?= $body ?>
 
@@ -22,6 +23,8 @@ var $forum = <?= $forum ? $forum : 'false' ?>
 <?php foreach ($token as $k => $v): ?>
   , $<?= $k ?> = '<?= $v ?>'
 <?php endforeach ?>
+  , $blacklist = <?= json_encode($blacklist) ?>
+  , $blacklistNeedsUpdate = <?= !$blacklist_is_fresh ? 'true' : 'false' ?>
 </script>
 
 <script src="/scripts/jquery-<?= REVISION_NUMBER_JS_JQUERY ?>.js" data-no-instant data-instant-track></script>
