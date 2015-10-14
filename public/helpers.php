@@ -475,3 +475,11 @@ function looks_spammy($title) {
   }
   return false;
 }
+
+function _setcookie($name, $value) {
+  setcookie($name, $value, time() + 60 * 60 * 24 * 365 * 10, '/', null, false, true);
+}
+
+function removecookie($name) {
+  setcookie($name, null, time() - 1, '/', null, false, true);
+}

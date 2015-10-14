@@ -1,4 +1,5 @@
 <?php
+require_once 'helpers.php';
 
 /**
  * Représente la session sur JVC du client.
@@ -64,14 +65,16 @@ class Jvc {
    * Déconnecte le client de JVC
    */
   public function disconnect() {
-    foreach($this->cookie as $k => $v)
-      setcookie($this->cookie_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
-    setcookie('pseudo', '', time()-1, '/', null, FALSE, TRUE);
+    foreach ($this->cookie as $k => $v) {
+      removecookie($this->cookie_pre.$k);
+    }
+    removecookie('pseudo');
     $this->cookie = [];
 
-    foreach($this->tk as $k => $v)
-      setcookie($this->tokens_pre.$k, '', time()-1, '/', null, FALSE, TRUE);
-    setcookie('tk_update', '', time()-1, '/', null, FALSE, true);
+    foreach ($this->tk as $k => $v) {
+      removecookie($this->tokens_pre.$k);
+    }
+    removecookie('tk_update');
     $this->tk = [];
     $this->last_update = 0;
 
@@ -133,8 +136,8 @@ class Jvc {
 
     $rep = $this->post($url, $post_data);
 
-    if($this->is_connected()) {
-      setcookie('pseudo', $nick, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+    if ($this->is_connected()) {
+      _setcookie('pseudo', $nick);
       return TRUE;
     }
 
@@ -298,12 +301,15 @@ class Jvc {
    */
   public function tokens_refresh($body) {
     $this->tk = self::parse_ajax_tk($body, '.+?', TRUE);
-    if(!$this->tk) return $this->_err('Indéfinie');
+    if (!$this->tk) {
+      return $this->_err('Indéfinie');
+    }
     $this->tk_update = time();
-    foreach($this->tk as $k => $v)
-      setcookie($this->tokens_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
-    setcookie('tk_update', $this->tk_update, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
-    return TRUE;
+    foreach ($this->tk as $k => $v) {
+      _setcookie($this->tokens_pre.$k, $v);
+    }
+    _setcookie('tk_update', $this->tk_update);
+    return true;
   }
 
   public function tokens() { return $this->tk; }
@@ -703,18 +709,22 @@ HTML;
   private function refresh_cookie($hdr) {
     preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $hdr, $match);
     $str = '';
-    foreach($match[1] as $v)
+    foreach ($match[1] as $v) {
       $str .= $v . '; ';
+    }
     $str = substr($str, 0, -2);
     $cookies = explode('; ', $str);
-    foreach($cookies as $c) {
+    foreach ($cookies as $c) {
       $pair = explode('=', $c);
-      if(!isset($pair[1])) continue;
+      if (!isset($pair[1])) {
+        continue;
+      }
       $this->cookie[$pair[0]] = $pair[1];
     }
 
-    foreach($this->cookie as $k => $v)
-      setcookie($this->cookie_pre.$k, $v, time() + 60 * 60 * 24 * 365, '/', null, FALSE, TRUE);
+    foreach($this->cookie as $k => $v) {
+      _setcookie($this->cookie_pre.$k, $v);
+    }
   }
 
   private function cookie_string($add) {
