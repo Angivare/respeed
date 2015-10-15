@@ -805,6 +805,18 @@ function goToForm() {
   scrollTo(0, $('.js-form-post').offset().top + 1)
 }
 
+function showBlacklistedMessage() {
+  var message = $(this).closest('.message')
+    , pseudo = message.data('pseudo')
+
+  if (!confirm('Vraiment voir le message de ' + pseudo + ' ?')) {
+    return
+  }
+
+  var message = $(this).closest('.message')
+  message.removeClass('message-by--' + pseudo.toLowerCase())
+}
+
 
 
 /*** App ***/
@@ -849,6 +861,7 @@ instantClick.on('change', function(isInitialLoad) {
   $('.spoil').click(toggleSpoil)
   $('.js-sticker').click(toggleStickerSize)
   $('.js-button-go-to-form').click(goToForm)
+  $('.message__ignored-notice_show-message-button').click(showBlacklistedMessage)
 })
 
 instantClick.on('restore', function() {

@@ -1624,6 +1624,7 @@ h1, h2, h3 {
   position: absolute;
   right: 10px;
   color: #888;
+  cursor: pointer;
 }
 
 .message__ignored-notice_regular {
