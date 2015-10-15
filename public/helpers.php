@@ -345,8 +345,8 @@ function generate_message_markup($message) {
   $pseudo_modifier = $message['status'] != 'user' ? ('message__byline-author-pseudo--' . $message['status']) : '';
   $default_avatar_modifier = $message['avatar'] ? '' : 'message__byline-author-avatar-image--default';
   $markup = <<<MESSAGE
-<div class="message {$mine_modifier} {$even_modifier}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
-  <div class="message__actions">
+<div class="message {$mine_modifier} {$even_modifier} message-by--{$pseudoLowercase}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
+  <div class="message__actions message__ignorable">
 MESSAGE;
 if ($mine) {
   $markup .= <<<MESSAGE
@@ -357,7 +357,7 @@ MESSAGE;
   $markup .= <<<MESSAGE
 <span class="js-quote message__actions-action message__actions-action--quote">Citer</span>
 </div>
-  <div class="message__visible">
+  <div class="message__visible message__ignorable">
     <div class="message__byline">
       <div class="message__byline-author">
         <{$authorLinkTag} class="message__byline-author-link {$authorLinkClass}" href="/@{$pseudoLowercase}">
@@ -383,6 +383,7 @@ MESSAGE;
       <div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>
     </div>
   </div>
+  <div class="message__ignored-notice">{$message['pseudo']} <span class="message__ignored-notice_compact">ignoré</span><span class="message__ignored-notice_regular">parle mais se fait ignorer</span>. <strong class="message__ignored-notice_show-message-button">Voir le message</strong></div>
 </div>
 <script>liste_messages.push({$message['id']})</script>
 MESSAGE;
@@ -539,6 +540,8 @@ function generate_blacklist_style($blacklist = []) {
   if (!$blacklist) {
     return '';
   }
-  $hide = '.js-blacklist--' . implode(', .js-blacklist--', $blacklist);
-  return "{$hide} { display: none; }";
+  $hide = '.message-by--' . implode(' .message__ignorable, .message-by--', $blacklist) . ' .message__ignorable';
+  $show = '.message-by--' . implode(' .message__ignored-notice, .message-by--', $blacklist) . ' .message__ignored-notice';
+
+  return "{$hide} { display: none; }\n{$show} { display: block; }";
 }

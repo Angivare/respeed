@@ -1567,6 +1567,8 @@ h1, h2, h3 {
           animation: sticker-zoom-big .1s linear;
 }
 
+/* TOPIC - Message - Actions desktop */
+
 .message__quick-actions {
   display: none;
 }
@@ -1603,6 +1605,39 @@ h1, h2, h3 {
 
 .message__quick-action--delete {
   background: url(/images/delete_18px.svg) center no-repeat;
+}
+
+/* TOPIC - Message - Ignoré */
+.message__ignored-notice {
+  display: none;
+  color: #666;
+  padding-left: 10px;
+}
+
+@media (min-width: 1025px) {
+  .message__ignored-notice {
+    margin-left: 200px;
+  }
+}
+
+.message__ignored-notice_show-message-button {
+  position: absolute;
+  right: 10px;
+  color: #888;
+}
+
+.message__ignored-notice_regular {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .message__ignored-notice_regular {
+    display: inline;
+  }
+
+  .message__ignored-notice_compact {
+    display: none;
+  }
 }
 
 /* TOPIC - Motif de lock */
