@@ -21,6 +21,7 @@ var form_data
   , topicRefreshTimeout
   , draftWatcherInterval
   , lastDraftSaved
+  , FABVisibility
 
 
 
@@ -826,6 +827,26 @@ function toggleBlacklist() {
   })
 }
 
+function handleFABVisibility() {
+  if (FABVisibility == undefined) {
+    return
+  }
+
+  var formOffset = $('.form').offset().top
+    , scroll = $(window).scrollTop()
+    , windowHeight = $(window).height()
+    , isTooLow = windowHeight + scroll > formOffset + 20
+  if (FABVisibility && isTooLow) {
+    $('.fab-post').addClass('fab-post--hidden')
+    FABVisibility = false
+    return
+  }
+  if (!FABVisibility && !isTooLow) {
+    $('.fab-post').removeClass('fab-post--hidden')
+    FABVisibility = true
+  }
+}
+
 
 
 /*** App ***/
@@ -872,6 +893,7 @@ instantClick.on('change', function(isInitialLoad) {
   $('.js-button-go-to-form').click(goToForm)
   $('.message__ignored-notice_show-message-button').click(showBlacklistedMessage)
   $('.blacklist-toggle').click(toggleBlacklist)
+  FABVisibility = $('.fab-post').length ? true : undefined
 })
 
 instantClick.on('restore', function() {
@@ -907,3 +929,5 @@ document.addEventListener('visibilitychange', handleVisibilityChange)
 
 localStorage.removeItem('blacklist')
 localStorage.removeItem('remoteBlacklistLastUpdate')
+
+$(window).scroll(handleFABVisibility)

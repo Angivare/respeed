@@ -1725,6 +1725,10 @@ h1, h2, h3 {
   cursor: pointer;
 }
 
+.fab-post--hidden {
+  display: none;
+}
+
 .fab-post__inner {
   background: rgba(0, 230, 118, .65);
   text-shadow: 0 0 2px rgba(0, 200, 83, .65);
