@@ -53,13 +53,7 @@ h1, h2, h3 {
 }
 
 #instantclick-bar {
-  background: #cfd8dc;
-}
-
-@media (MAX-width: 1024px) {
-  #instantclick-bar {
-    background: #b0beb5;
-  }
+  background: #FF3D00;
 }
 
 /* COMPONENTS */
