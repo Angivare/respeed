@@ -540,6 +540,9 @@ function generate_blacklist_style($blacklist = []) {
   if (!$blacklist) {
     return '';
   }
+  for ($i = 0; $i < count($blacklist); $i++) {
+    $blacklist[$i] = str_replace(['[', ']'], ['\\[', '\\]'], $blacklist[$i]);
+  }
   $hide = '.message-by--' . implode(' .message__ignorable, .message-by--', $blacklist) . ' .message__ignorable';
   $show = '.message-by--' . implode(' .message__ignored-notice, .message-by--', $blacklist) . ' .message__ignored-notice';
 
