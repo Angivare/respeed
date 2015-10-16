@@ -156,14 +156,30 @@ h1, h2, h3 {
 
 .page-title {
   font-size: 1.3em;
-  margin: 10px 8px;
+  margin: 10px 8px 0;
+}
+
+@media (min-width: 768px) {
+  .page-title {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1.5em;
+  }
+}
+
+@media (min-width: 1025px) {
+  .page-title {
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 1.8em;
+  }
 }
 
 .page-title__link {
   display: inline-block;
   padding: 10px;
   margin: -10px;
-  color: #00C853;
+  color: #64DD17;
 }
 
 .page-title--topic {
@@ -192,8 +208,14 @@ h1, h2, h3 {
   color: #455A64;
 }
 
+.header__home-link:hover {
+  color: #455A64; /* Fix FastClick+InstantClick focus */
+}
+
 .header__forum-link {
-  color: #69F0AE;
+  text-transform: none;
+  color: #64DD17;
+  background: hsl(88, 100%, 94%); /* A100 = 78% */
 }
 
 /* SHEET */
@@ -883,6 +905,10 @@ h1, h2, h3 {
     margin: 1em 0;
     width: 100%;
   }
+}
+
+.pagination-topic--top {
+  margin-top: 10px;
 }
 
 .pagination-topic__action-button {

@@ -21,7 +21,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
   <h1 class="page-title page-title--topic"><?= $title ?></h1>
 
   <div class="content">
-    <div class="pagination-topic">
+    <div class="pagination-topic pagination-topic--top">
 <?php if (!$locked): ?>
       <div class="pagination-topic__action-button pagination-topic__action-button--post"><span class="js-button-go-to-form button button--raised button--cta button--scale">Poster</span></div>
 <?php endif ?>
