@@ -1758,16 +1758,9 @@ h1, h2, h3 {
   color: #00c853;
 }
 
-.topic__pseudo--expert, .message__byline-author-pseudo--expert {
-  color: #0D47A1;
-}
-
-.topic__pseudo--admin, .message__byline-author-pseudo--admin {
-  color: #D50000;
-}
-
+.topic__pseudo--admin, .message__byline-author-pseudo--admin,
 .topic__pseudo--staff, .message__byline-author-pseudo--staff {
-  color: #F50057;
+  color: #D50000;
 }
 
 /* FORUM/TOPIC - Formulaire de post */
