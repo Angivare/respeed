@@ -253,7 +253,10 @@ function parse_profile($body) {
   }
 
   if (preg_match('#<div class="bloc-description-desc txt-enrichi-desc-profil">(?P<description>.+)</div>\s{32}#Usi', $body, $matches)) {
-    $ret['description'] = adapt_html($matches['description']);
+    $description = trim($matches['description']);
+    if ($description) {
+      $ret['description'] = adapt_html($description);
+    }
   }
 
   if (preg_match('#<p>Signature dans les forums :</p>\s+<div>(?P<signature>.+)</div>\s+</div>\s{20}#Usi', $body, $matches)) {
