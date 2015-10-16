@@ -928,6 +928,10 @@ h1, h2, h3 {
   .pagination-topic__action-button-additional-text {
     display: none;
   }
+
+  .pagination-topic__action-button--post {
+    display: none;
+  }
 }
 
 .pagination-topic__pages {
@@ -1739,16 +1743,7 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .fab-post {
-    right: 23%;
-    right: -webkit-calc(20% + 40px);
-    right:         calc(20% + 40px);
-  }
-}
-
-@media (min-width: 1438px) {
-  .fab-post {
-    right: calc((100% - 1500px));
-    right: calc((100% - 1400px) / 2 + ((1400px - 30px) * .2) + 40px);
+    display: none;
   }
 }
 
