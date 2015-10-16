@@ -475,7 +475,7 @@ class Jvc {
               '</li>#Usi';
 
     if (!preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER)) {
-      return $this->_err('Indéfinie');
+      return [];
     }
 
     $ret = [];
