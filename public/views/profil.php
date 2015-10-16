@@ -72,3 +72,4 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
   <div class="back-button-container">
     <a class="button" href="javascript:history.back()">Retour</a>
   </div>
+  <div style="height: 1px"><!-- Hack for Safari iOS, otherwise no margin at the bottom --></div>
