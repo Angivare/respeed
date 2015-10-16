@@ -1712,7 +1712,7 @@ h1, h2, h3 {
   bottom: 10px;
   right: 10px;
   padding: 10px;
-  font-size: .9em;
+  font-size: 1em;
   font-weight: bold;
   text-transform: uppercase;
   -webkit-tap-highlight-color: transparent;
@@ -1735,6 +1735,21 @@ h1, h2, h3 {
   background: rgba(105, 240, 174, .65);
   text-shadow: 0 0 2px rgba(0, 230, 118, .65);
   box-shadow: 0 3px 8px 0 rgba(0,0,0,.15)
+}
+
+@media (min-width: 1025px) {
+  .fab-post {
+    right: 23%;
+    right: -webkit-calc(20% + 40px);
+    right:         calc(20% + 40px);
+  }
+}
+
+@media (min-width: 1438px) {
+  .fab-post {
+    right: calc((100% - 1500px));
+    right: calc((100% - 1400px) / 2 + ((1400px - 30px) * .2) + 40px);
+  }
 }
 
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
