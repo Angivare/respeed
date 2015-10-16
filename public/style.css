@@ -592,9 +592,14 @@ h1, h2, h3 {
 .topic__main-link {
   display: table;
   width: 100%;
-  color: #0D47A1;
+  color: #1565C0;
   min-height: 50px;
-  color: #212121;
+}
+
+@media (min-width: 1025px) {
+  .topic__main-link {
+    color: #1976D2;
+  }
 }
 
 .topic--small .topic__main-link {
@@ -693,14 +698,20 @@ h1, h2, h3 {
   text-align: center;
   padding: 0 3px;
   vertical-align: middle;
-  color: #212121;
+  color: #1565C0;
   background: white;
   min-width: 50px;
   padding: 0 5px;
 }
 
+@media (min-width: 1025px) {
+  .topic__last-page-link {
+    color: #1976D2;
+  }
+}
+
 .topic__last-page-link:visited {
-  color: #9E9E9E;
+  color: #757575;
 }
 
 .topic:nth-child(even) .topic__last-page-link {
