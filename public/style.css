@@ -80,10 +80,9 @@ h1, h2, h3 {
 
 .header {
   background: #B0BEC5;
-  _border-bottom: 1px solid red;
   box-shadow: inset 0 -2px 3px rgba(0,0,0,0.1);
   margin-top: -5px;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 @media (min-width: 1025px) {
@@ -487,15 +486,23 @@ h1, h2, h3 {
 
 /* FORUM */
 
-@media (MAX-width: 1024px) {
-  h1.forum-title {
-    font-size: 1.5em;
-  }
+.forum-heading {
+  background: #00C853;
+  padding: 5px 10px;
+  font-size: 1.5em;
+  margin: 8px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.forum-heading__link {
+  color: hsl(137, 77%, 92.5%); /* A100 = 85% */
 }
 
 .liste-topics {
   width: 100%;
   padding: 0 8px;
+  margin: 10px 0;
 }
 
 @media (min-width: 768px) {
@@ -853,6 +860,19 @@ h1, h2, h3 {
 }
 
 /* TOPIC */
+
+.topic-heading {
+  background: #536DFE;
+  padding: 5px 10px;
+  font-size: 1.3em;
+  margin: 8px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.topic-heading__link {
+  color: hsl(231, 100%, 92.5%); /* A100 = 77% */
+}
 
 .forum-title a {
   color: #9c0;

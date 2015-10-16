@@ -18,11 +18,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <div class="sheet">
   <?php include '_header.php' ?>
 
+  <h1 class="topic-heading"><a class="topic-heading__link" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
+
   <div class="content">
-    <h2 class="forum-title"><a href="/<?= $forum ?>-<?= $forum_slug ?>"><?= $forum_name ?></a></h2>
-
-    <h1 class="js-topicTitle sheet-title topic-title"><?= $title ?></h1>
-
     <div class="pagination-topic">
 <?php if (!$locked): ?>
       <div class="pagination-topic__action-button pagination-topic__action-button--post"><span class="js-button-go-to-form button button--raised button--cta button--scale">Poster</span></div>
