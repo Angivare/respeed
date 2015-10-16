@@ -434,12 +434,19 @@ class Jvc {
     return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
   }
 
-  /**
-   * Ajoute un pseudo à la blacklist
-   * @param int $id id à blacklist
-   * @return boolean TRUE si le pseudo est ajouté, FALSE sinon
-   */
-  public function blacklist_add($id) {
+  public function get_pseudo_id($pseudo) {
+    $body = $this->get($this->domain . '/profil/' . strtolower($pseudo) . '?mode=infos')['body'];
+    if (preg_match('#<span class="picto-guyplus" data-id="(?P<id>[0-9]+)"></span>#', $body, $matches)) {
+      return $matches['id'];
+    }
+    if (preg_match('#<div class="dropdown reglages-profil"><a href="/sso/infos_pseudo\.php?id=(?P<id>[0-9]+)"#', $body, $matches)) {
+      return $matches['id'];
+    }
+    return 0;
+  }
+
+  public function blacklist_add($pseudo) {
+    $id = $this->get_pseudo_id($pseudo);
     $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
@@ -447,12 +454,8 @@ class Jvc {
     return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
-  /**
-   * Enlève un pseudo de la blacklist
-   * @param int $id id correspondant à la personne, reçu par Jvc::blacklist()
-   * @return boolean TRUE si le pseudo est enlevé, FALSE sinon
-   */
-  public function blacklist_remove($id) {
+  public function blacklist_remove($pseudo) {
+    $id = $this->get_pseudo_id($pseudo);
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
     $ret = json_decode($this->get($this->domain . '/sso/ajax_delete_blacklist.php', $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : true;

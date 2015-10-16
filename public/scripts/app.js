@@ -616,6 +616,10 @@ function updateBlacklist() {
   })
 }
 
+function isInBlacklist(pseudo) {
+  return $.inArray(pseudo.toLowerCase(), $blacklist) > -1
+}
+
 
 
 /*** Fonctions pour events ***/
@@ -807,7 +811,7 @@ function goToForm() {
 
 function showBlacklistedMessage() {
   var message = $(this).closest('.message')
-    , pseudo = message.data('pseudo')
+    , pseudo = message.attr('data-pseudo')
 
   if (!confirm('Vraiment voir le message de ' + pseudo + ' ?')) {
     return
@@ -817,11 +821,20 @@ function showBlacklistedMessage() {
   message.removeClass('message-by--' + pseudo.toLowerCase())
 }
 
+function toggleBlacklist() {
+  var pseudo = $(this).attr('data-pseudo')
+    , action = isInBlacklist(pseudo) ? 'remove' : 'add'
+
+  ajax('blacklist_toggle', {pseudo: pseudo, action: action}, function() {
+    location.href = location.href
+  })
+}
+
 
 
 /*** App ***/
 
-setInterval(tokenRefresh, (30-2)*60*1000)
+setInterval(tokenRefresh, (30 - 2) * 60 * 1000)
 
 if (googleAnalyticsID) {
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -862,6 +875,7 @@ instantClick.on('change', function(isInitialLoad) {
   $('.js-sticker').click(toggleStickerSize)
   $('.js-button-go-to-form').click(goToForm)
   $('.message__ignored-notice_show-message-button').click(showBlacklistedMessage)
+  $('.blacklist-toggle').click(toggleBlacklist)
 })
 
 instantClick.on('restore', function() {

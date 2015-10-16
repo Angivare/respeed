@@ -545,3 +545,9 @@ function generate_blacklist_style($blacklist = []) {
 
   return "{$hide} { display: none; }\n{$show} { display: block; }";
 }
+
+function is_in_blacklist($pseudo) {
+  global $blacklist;
+  $pseudo = strtolower($pseudo);
+  return in_array($pseudo, $blacklist);
+}

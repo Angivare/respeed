@@ -67,6 +67,20 @@ h1, h2, h3 {
   }
 }
 
+/* COMPONENTS */
+
+.button-link {
+  color: #1976d2;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+  margin: -5px;
+}
+
+.button-link--destructive {
+  color: #F44336;
+}
+
 /* HEADER */
 
 .header {
