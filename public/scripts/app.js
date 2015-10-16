@@ -461,6 +461,7 @@ function topicRefresh() {
         $('#' + message.id + ' .js-edit').click(edit)
         $('#' + message.id + ' .js-delete').click(deleteMessage)
         $('#' + message.id + ' .js-menu').click(toggleMenu)
+        $('#' + message.id + ' .message__ignored-notice_show-message-button').click(showBlacklistedMessage)
         $('#' + message.id).click(closeMenu)
         $('#' + message.id + ' .spoil').click(toggleSpoil)
         $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
