@@ -16,6 +16,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <body class="forum-<?= $forum ?>">
 
 <div class="sheet">
+  <?php include '_header.php' ?>
   <div class="content">
     <h1 class="sheet-title forum-title"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
 
