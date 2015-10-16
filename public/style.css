@@ -17,8 +17,8 @@ body {
   overflow-y: scroll;
   color: #333;
   -webkit-text-size-adjust: 100%;
-  padding-bottom: 15px;
   background: #ECEFF1;
+  height: 100%;
 }
 
 .body--no-bottom {
@@ -28,11 +28,6 @@ body {
 @media (min-width: 1025px) {
   body {
     background: #444349 url(/images/background_stardust.png);
-    padding-bottom: 10px;
-  }
-
-  .body--no-bottom {
-    padding-bottom: 10px;
   }
 }
 
@@ -87,8 +82,6 @@ h1, h2, h3 {
 
 .sheet {
   background: #ECEFF1;
-  border: solid black;
-  border-width: 1px 0 0;
   padding: 5px 0 10px;
   position: relative;
   overflow: hidden;
@@ -105,13 +98,11 @@ h1, h2, h3 {
 
 @media (min-width: 1025px) {
   .sheet {
-    width: calc(100% - 20px);
-    margin: 0 auto 10px;
+    margin: auto;
     max-width: 1400px;
-    border-width: 1px;
-    border-radius: 6px;
-    box-shadow: 0 0 20px rgba(0,0,0,.5);
+    box-shadow: 0 0 100px rgba(0,0,0,.5);
     padding: 10px 30px;
+    min-height: 100%;
   }
 
   .body--no-bottom .sheet {
