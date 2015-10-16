@@ -813,10 +813,6 @@ function showBlacklistedMessage() {
   var message = $(this).closest('.message')
     , pseudo = message.attr('data-pseudo')
 
-  if (!confirm('Vraiment voir le message de ' + pseudo + ' ?')) {
-    return
-  }
-
   var message = $(this).closest('.message')
   message.removeClass('message-by--' + pseudo.toLowerCase())
 }
