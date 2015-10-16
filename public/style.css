@@ -1777,6 +1777,8 @@ h1, h2, h3 {
   padding: 8px;
   border: 0 solid #bdbdbd;
   border-top-width: 1px;
+  position: relative;
+  z-index: 1; /* For FAB */
 }
 
 .form--topic {
