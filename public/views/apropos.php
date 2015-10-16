@@ -1,8 +1,6 @@
 <?php
 $title = 'À propos de JVForum';
 ?>
-<?php include '_header.php' ?>
-
 <div class="sheet">
   <div class="content no-menu apropos">
     <h1>À propos</h1>

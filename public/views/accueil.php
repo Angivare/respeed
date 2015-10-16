@@ -7,8 +7,6 @@ if (!$jvc->is_connected()) {
   exit;
 }
 ?>
-<?php include '_header.php' ?>
-
 <div class="sheet">
   <div class="content no-menu">
     <div class="favorites-index">

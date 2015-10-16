@@ -83,53 +83,6 @@ h1, h2, h3 {
 
 /* HEADER */
 
-.header {
-  display: table;
-  width: 100%;
-}
-
-@media (MAX-width: 1024px) {
-  .header {
-    background: #444349;
-  }
-}
-
-@media (min-width: 1025px) {
-  .header {
-    max-width: 1420px;
-    margin: auto;
-    padding: 0 10px;
-  }
-}
-
-.header-title {
-  display: table-cell;
-}
-
-.header-title__link {
-  color: white;
-  padding: 5px 10px;
-  display: inline-block;
-}
-
-.header-title__link .spacer {
-  padding-right: 1px;
-}
-
-.header-login {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: right;
-}
-
-.header-login__link {
-  padding: 5px 10px;
-  color: white;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 14px;
-}
-
 /* SHEET */
 
 .sheet {

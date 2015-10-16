@@ -9,8 +9,6 @@ if (!$jvc->is_connected()) {
 
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 ?>
-<?php include '_header.php' ?>
-
 <div class="sheet rechercheforum">
   <form action="/recherche_forum" method="get">
     <input class="rechercheforum-q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q" value="<?= h($q) ?>" autofocus>
