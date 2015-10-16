@@ -63,6 +63,8 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
         <div class="form__action"></div>
       </div>
     </form>
+
+    <div class="js-button-go-to-form fab-post"><div class="fab-post__inner">Poster</div></div>
 <?php endif ?>
 
   </div>

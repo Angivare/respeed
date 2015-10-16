@@ -1705,6 +1705,36 @@ h1, h2, h3 {
   color: #3e2723;
 }
 
+/* TOPIC - FAB */
+
+.fab-post {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  font-size: .9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  color: white;
+  cursor: pointer;
+}
+
+.fab-post__inner {
+  background: rgba(0, 230, 118, .65);
+  text-shadow: 0 0 2px rgba(0, 200, 83, .65);
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+  padding: 5px 8px;
+}
+
+.fab-post:hover .fab-post__inner {
+  background: rgba(105, 240, 174, .65);
+  text-shadow: 0 0 2px rgba(0, 230, 118, .65);
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,.15)
+}
+
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
 
 .topic__pseudo--modo {
