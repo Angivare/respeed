@@ -183,39 +183,43 @@ h1, h2, h3 {
 }
 
 .page-title--topic {
-  color: #536DFE;
+  color: #455A64;
 }
 
 /* HEADER */
 
 .header {
+  display: table;
+  width: 100%;
+  margin-top: -5px;
+  font-weight: bold;
   background: #B0BEC5;
   box-shadow: inset 0 -2px 3px rgba(0,0,0,0.1);
-  margin-top: -5px;
-  padding: 10px 0;
 }
 
 @media (min-width: 1025px) {
   .header {
     margin-top: -10px;
     margin-left: -30px;
-    width: 120%;
-    padding-left: 25px;
+    width: 110%;
   }
 }
 
 .header__home-link {
+  display: table-cell;
   color: #455A64;
-}
-
-.header__home-link:hover {
-  color: #455A64; /* Fix FastClick+InstantClick focus */
+  width: 1px;
+  padding: 10px 20px;
+  background: #B0BEC5;
 }
 
 .header__forum-link {
+  display: table-cell;
   text-transform: none;
   color: #64DD17;
-  background: hsl(88, 100%, 94%); /* A100 = 78% */
+  padding: 10px 20px;
+  background: hsla(88, 100%, 97%, .6); /* A100 = 78% */
+  white-space: nowrap;
 }
 
 /* SHEET */
