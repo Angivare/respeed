@@ -43,23 +43,32 @@ if (in_array($matches['label'][$i], ['marque-on', 'marque-off', 'ghost', 'lock']
   $topic_modifier = 'topic--small';
 }
 if (looks_spammy($matches['title'][$i])) {
-  $topic_modifier .= 'topic--small topic--extra-small';
+  $topic_modifier = 'topic--small topic--extra-small';
+}
+$is_in_blacklist = is_in_blacklist($matches['pseudo'][$i]);
+if ($is_in_blacklist) {
+  $topic_modifier = 'topic--ignored';
 }
 ?>
-        <div class="topic topic-by--<?= strtolower($matches['pseudo'][$i]) ?> <?= $topic_modifier ?>">
+        <div class="topic <?= $topic_modifier ?>">
           <a class="topic__main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
             <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
             <div class="topic__main-info">
+<?php if (!$is_in_blacklist): ?>
               <div class="topic__title"><?= $matches['title'][$i] ?></div>
               <div class="topic__pseudo <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
-              <div class="topic__ignored-notice">Topic ignoré de <?= $matches['pseudo'][$i] ?></div>
+<?php else: ?>
+              <div class="topic__ignored-notice"><span title="<?= $matches['title'][$i] ?>">Topic ignoré de <?= $matches['pseudo'][$i] ?></span></div>
+<?php endif ?>
             </div>
           </a>
           <a class="topic__last-page-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
+<?php if (!$is_in_blacklist): ?>
             <div class="topic__last-page-info">
               <div class="topic__answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
               <div class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
             </div>
+<?php endif ?>
           </a>
         </div>
 <?php endfor ?>
