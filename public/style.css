@@ -687,6 +687,11 @@ h1, h2, h3 {
   font-size: 90%;
 }
 
+.topic__ignored-notice {
+  display: none;
+  font-size: 10px;
+}
+
 .topic__last-page-link {
   display: table-cell;
   white-space: nowrap;
@@ -1622,6 +1627,7 @@ h1, h2, h3 {
 }
 
 /* TOPIC - Message - Ignoré */
+
 .message__ignored-notice {
   display: none;
   color: #666;

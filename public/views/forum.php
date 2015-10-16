@@ -46,12 +46,13 @@ if (looks_spammy($matches['title'][$i])) {
   $topic_modifier .= 'topic--small topic--extra-small';
 }
 ?>
-        <div class="topic <?= $topic_modifier ?>">
+        <div class="topic topic-by--<?= strtolower($matches['pseudo'][$i]) ?> <?= $topic_modifier ?>">
           <a class="topic__main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
             <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
             <div class="topic__main-info">
               <div class="topic__title"><?= $matches['title'][$i] ?></div>
               <div class="topic__pseudo <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
+              <div class="topic__ignored-notice">Topic ignoré de <?= $matches['pseudo'][$i] ?></div>
             </div>
           </a>
           <a class="topic__last-page-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">

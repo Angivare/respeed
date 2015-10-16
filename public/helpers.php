@@ -540,13 +540,24 @@ function generate_blacklist_style($blacklist = []) {
   if (!$blacklist) {
     return '';
   }
-  for ($i = 0; $i < count($blacklist); $i++) {
-    $blacklist[$i] = str_replace(['[', ']'], ['\\[', '\\]'], $blacklist[$i]);
-  }
-  $hide = '.message-by--' . implode(' .message__ignorable, .message-by--', $blacklist) . ' .message__ignorable';
-  $show = '.message-by--' . implode(' .message__ignored-notice, .message-by--', $blacklist) . ' .message__ignored-notice';
 
-  return "{$hide} { display: none; }\n{$show} { display: block; }";
+  $hide = $show = $topic_main_link = $topic_last_page_info = '';
+  for ($i = 0; $i < count($blacklist); $i++) {
+    $pseudo = str_replace(['[', ']'], ['\\[', '\\]'], $blacklist[$i]);
+    $hide .= ", .message-by--{$pseudo} .message__ignorable, .topic-by--{$pseudo} .topic__title, .topic-by--{$pseudo} .topic__pseudo";
+    $show .= ", .message-by--{$pseudo} .message__ignored-notice, .topic-by--{$pseudo} .topic__ignored-notice";
+    $topic_main_link .= ", .topic-by--{$pseudo} .topic__main-link";
+    $topic_last_page_info .= ", .topic-by--{$pseudo} .topic__last-page-info";
+  }
+  $hide = substr($hide, 2);
+  $show = substr($show, 2);
+  $topic_main_link = substr($topic_main_link, 2);
+  $topic_last_page_info = substr($topic_last_page_info, 2);
+
+  return "{$hide} { display: none; }
+  {$show} { display: block; }
+  @media (MAX-width: 1024px) { {$topic_main_link} { min-height: 30px; } }
+  {$topic_last_page_info} { display: none; }";
 }
 
 function is_in_blacklist($pseudo) {
