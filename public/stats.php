@@ -37,10 +37,12 @@ function n($number) {
 
 $time = time();
 
+if (!isset($_GET['day'])):
+
 $days = [];
 $start_date = '';
 
-$stmt = $dbh->prepare("SELECT DATE(posted_at) AS jour, COUNT(*) AS messages FROM logs_messages2 GROUP BY DATE(posted_at)");
+$stmt = $dbh->prepare("SELECT DATE(posted_at) AS jour, COUNT(*) AS messages FROM logs_messages2 WHERE message_id GROUP BY DATE(posted_at)");
 $stmt->execute();
 while ($row = $stmt->fetch()) {
   $days[$row['jour']] = (int)$row['messages'];
@@ -51,18 +53,44 @@ while ($row = $stmt->fetch()) {
 
 $jours = ['lundi', 'mardi', 'mercr', 'jeudi', 'vendr', 'samedi', 'dim'];
 $mois = ['janv', 'fév', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'];
-
 ?>
-
 <table>
   <tr>
     <th>Jour</th>
     <th>Messages</th>
   </tr>
-<?php for ($i = $start_date; $i < time(); $i += 60 * 60 * 24): ?>
+<?php for ($i = $start_date; $i < $time; $i += 60 * 60 * 24): ?>
   <tr>
     <td style="color: #333"><?= $jours[date('w', $i)] . ' ' . date('d', $i) . ' ' . $mois[date('n', $i) - 1] ?></td>
     <td style="text-align: right;"><a href="?day=<?= date('Y-m-d', $i) ?>" style="font-weight: bold; text-decoration: none;"><?= isset($days[date('Y-m-d', $i)]) ? n($days[date('Y-m-d', $i)]) : 0 ?></a></td>
   </tr>
 <?php endfor ?>
 </table>
+<?php
+
+else: # !isset $_GET['day']
+
+$posters = [];
+
+$stmt = $dbh->prepare("SELECT pseudo, COUNT(*) AS messages FROM logs_messages2 WHERE message_id AND DATE(posted_at) = :day GROUP BY pseudo ORDER BY COUNT(*) DESC");
+$stmt->bindValue(':day', $_GET['day']);
+$stmt->execute();
+while ($row = $stmt->fetch()) {
+  $posters[$row['pseudo']] = $row['messages'];
+}
+?>
+<table>
+  <tr>
+    <th>Pseudo</th>
+    <th>Messages</th>
+  </tr>
+<?php foreach ($posters as $pseudo => $messages): ?>
+  <tr>
+    <td style="color: #333"><?= $pseudo ?></td>
+    <td style="text-align: right; font-weight: bold; text-decoration: none;"><?= n($messages) ?></td>
+  </tr>
+<?php endforeach ?>
+</table>
+<?php
+
+endif; # !isset $_GET['day']
