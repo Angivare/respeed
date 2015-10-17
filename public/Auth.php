@@ -10,8 +10,10 @@ class Auth {
   public function __construct($db) {
     $this->db = $db;
     $this->err = 'Indéfinie';
-
     $this->uid = isset($_COOKIE['auth-uid']) ? $_COOKIE['auth-uid'] : 0;
+
+    if(!$this->uid)
+      $this->uid = Auth::refresh_uid();
   }
 
   public function err() {
@@ -26,7 +28,9 @@ class Auth {
   }
 
   public static function refresh_uid() {
-    _setcookie('auth-uid', Auth::crypto_rand_hex(Auth::UID_BYTES));
+    $uid = Auth::crypto_rand_hex(Auth::UID_BYTES);
+    _setcookie('auth-uid', $uid);
+    return $uid;
   }
 
   public function generate() {
