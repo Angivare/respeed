@@ -829,6 +829,12 @@ h1, h2, h3 {
   padding: 3px 0;
 }
 
+@media (min-width: 1025px) {
+  .topic__ignored-notice {
+    padding: 0;
+  }
+}
+
 @media (MAX-width: 1024px) {
   .topic--ignored .topic__main-link {
     min-height: 0;
