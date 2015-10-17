@@ -22,7 +22,7 @@ var JVCode = (function() {
     new Markup('ol', '<ol>', '</ol>', true, true),
     new Markup('ul', '<ul>', '</ul>', true, true),
     new Markup('li', '<li>', '</li>', false, true),
-    new Markup('.spoil', '', '', true),
+    new Markup('.spoil--block', '', '', true),
     new Markup('.spoil__content', '<spoil>', '</spoil>'),
     new Markup('.quote', '<q>', '</q>', true, true),
   ]
