@@ -444,8 +444,6 @@ function topicRefresh() {
           $('#' + message.id + ' .js-content').html(message.content)
           $('#' + message.id + ' .spoil').click(toggleSpoil)
           $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
-
-          triggerTabAlertForNewPosts()
         }
       }
       else {
