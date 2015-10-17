@@ -3,6 +3,7 @@ require '../config.php';
 require 'helpers.php';
 require 'Db.php';
 require 'Jvc.php';
+require 'Auth.php';
 
 $jvc = new Jvc();
 if ($jvc->is_connected()) {
@@ -29,6 +30,7 @@ if (isset($nick, $pass)) {
     }
     else {
       header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
+      Auth::refresh_uid();
       exit;
     }
   }

@@ -1,7 +1,8 @@
 <?php
 
 class Auth {
-  const RAND_BYTES = 2;
+  const RAND_BYTES  = 2;
+  const UID_BYTES   = 4;
 
   private $db;
   private $err;
@@ -9,24 +10,40 @@ class Auth {
   public function __construct($db) {
     $this->db = $db;
     $this->err = 'Indéfinie';
+    $this->uid = isset($_COOKIE['auth-uid']) ? $_COOKIE['auth-uid'] : 0;
+
+    if(!$this->uid)
+      $this->uid = Auth::refresh_uid();
   }
 
   public function err() {
     return $this->err;
   }
 
+  public static function crypto_rand_hex($bytes) {
+    $ret = 0;
+    while(!$ret)
+      $ret = bin2hex(openssl_random_pseudo_bytes($bytes));
+    return $ret;
+  }
+
+  public static function refresh_uid() {
+    $uid = Auth::crypto_rand_hex(Auth::UID_BYTES);
+    _setcookie('auth-uid', $uid);
+    return $uid;
+  }
+
   public function generate() {
-    $ip = $_SERVER['REMOTE_ADDR'];
     $ts = time();
-    $rand = openssl_random_pseudo_bytes(self::RAND_BYTES);
+    $rand = Auth::crypto_rand_hex(self::RAND_BYTES);
     do {
-      $hash = md5($ip . SALT . $ts . $rand);
+      $hash = md5($this->uid . SALT . $ts . $rand);
     } while($this->db->get_token($hash));
     $this->db->set_token($hash);
     return [
       'hash' => $hash,
       'ts' => $ts,
-      'rand' => bin2hex($rand)
+      'rand' => $rand
     ];
   }
 
@@ -39,8 +56,12 @@ class Auth {
     if (strlen($rand) % 2) {
       return $this->_err('Jeton invalide');
     }
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $recreated = md5($ip . SALT . $ts . hex2bin($rand));
+
+    if(!$this->uid) {
+      return $this->_err('Jeton invalide');
+    }
+
+    $recreated = md5($this->uid . SALT . $ts . $rand);
     if ($hash != $recreated) {
       return $this->_err('Jeton invalide');
     }
