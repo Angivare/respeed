@@ -3,20 +3,26 @@ $forum = isset($_GET['forum']) ? $_GET['forum'] : false;
 $topic = isset($_GET['topic']) ? $_GET['topic'] : false;
 $slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$deconnexion = isset($_GET['deconnexion']);
 $apropos = isset($_GET['apropos']);
 $recherche_forum = isset($_GET['recherche_forum']);
 $smileys = isset($_GET['smileys']);
 $profil = isset($_GET['profil']);
 
+require '../config.php';
 require 'helpers.php';
 require 'Jvc.php';
 require 'Db.php';
 require 'Auth.php';
-require '../config.php';
+
+$jvc = new Jvc();
+if (!$jvc->is_connected()) {
+  header('Location: /');
+  exit;
+}
 
 $db = new Db();
 $auth = new Auth($db);
+
 $token = $auth->generate();
 $blacklist_query = get_blacklist_from_db();
 if ($blacklist_query) {

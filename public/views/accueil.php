@@ -1,11 +1,5 @@
 <?php
 $title = 'JVForum';
-$jvc = new Jvc();
-
-if (!$jvc->is_connected()) {
-  header('Location: /');
-  exit;
-}
 ?>
 <div class="sheet">
   <?php include '_header.php' ?>

@@ -1,11 +1,5 @@
 <?php
 $title = 'Recherche d’un forum';
-$jvc = new Jvc();
-
-if (!$jvc->is_connected()) {
-  header('Location: /');
-  exit();
-}
 
 $q = isset($_GET['q']) ? trim($_GET['q']) : '';
 ?>

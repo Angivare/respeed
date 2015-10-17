@@ -1,8 +1,5 @@
 <?php
 $title = 'Smileys';
-if (!isset($jvc)) {
-  $jvc = new Jvc();
-}
 ?>
 <body class="body--no-bottom"></body>
 <div class="sheet sheet--nothing-over">

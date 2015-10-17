@@ -1,11 +1,5 @@
 <?php
 require 'parser.php';
-$jvc = new Jvc();
-
-if (!$jvc->is_connected()) {
-  header('Location: /');
-  exit;
-}
 
 foreach (fetch_forum($forum, $page, $slug) as $k => $v) {
   ${$k} = $v;

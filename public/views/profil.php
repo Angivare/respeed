@@ -1,14 +1,10 @@
 <?php
 require 'parser.php';
-if (!isset($jvc)) {
-  $jvc = new Jvc();
-}
 
 $pseudo = h($_GET['profil']);
 
-
 foreach (fetch_profile($pseudo) as $k => $v) {
-  $$k = $v;
+  ${$k} = $v;
 }
 
 $title = $pseudo;
