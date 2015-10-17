@@ -86,7 +86,7 @@ while ($row = $stmt->fetch()) {
   </tr>
 <?php foreach ($posters as $pseudo => $messages): ?>
   <tr>
-    <td style="color: #333"><?= $pseudo ?></td>
+    <td><a href="/@<?= $pseudo ?>" style="text-decoration: none;"><?= $pseudo ?></a></td>
     <td style="text-align: right; font-weight: bold; text-decoration: none;"><?= n($messages) ?></td>
   </tr>
 <?php endforeach ?>
