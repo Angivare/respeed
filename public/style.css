@@ -1346,7 +1346,6 @@ h1, h2, h3 {
 .message__content {
   padding: 0 9px;
   word-wrap: break-word;
-  word-break: break-all;
   border: 1px solid transparent; /* pour prendre en compte margin de .message__content-text > p */
 }
 
