@@ -42,9 +42,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
           </div>
           <div class="poll__info">
 <?php if ($poll['closed']): ?>
-            <?= n($poll['ans_count']) ?> <?= $poll['ans_count'] > 2 ? 'votes' : 'vote' ?>, clôt.
+            <span class="number"><?= n($poll['ans_count']) ?></span> <?= $poll['ans_count'] > 2 ? 'votes' : 'vote' ?>, clôt.
 <?php else: ?>
-            <?= n($poll['ans_count']) ?> <?= $poll['ans_count'] > 2 ? 'votes' : 'vote' ?>. <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>
+            <span class="number"><?= n($poll['ans_count']) ?></span> <?= $poll['ans_count'] > 2 ? 'votes' : 'vote' ?>. <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>
 <?php endif ?>
           </div>
         </div>
