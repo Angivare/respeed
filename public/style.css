@@ -255,7 +255,7 @@ h1, h2, h3 {
 .poll__answer-bar {
   position: absolute;
   height: 100%;
-  background: rgba(255, 204, 188, .5);
+  background: #E3F2FD;
   margin: -2px -5px;
   border-radius: 2px;
 }
