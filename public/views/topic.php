@@ -27,15 +27,20 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <script>var liste_messages = []</script>
     <div class="js-listeMessages liste-messages">
 <?php if ($poll): ?>
-      <div class="card card--poll">
+      <div class="js-poll card card--poll">
         <div class="card__header">Sondage</div>
         <div class="poll">
           <h3 class="poll__title"><?= $poll['question'] ?></h3>
           <div class="poll__answers">
 <?php foreach ($poll['answers'] as $answer): ?>
-            <div class="poll__answer"><?= $answer['human'] ?> (<?= $answer['value'] ?> %)</div>
+            <div class="poll__answer">
+              <div class="poll__answer-bar" style="width: <?= $answer['value'] ?>%;"></div>
+              <div class="poll__answer-name"><?= $answer['human'] ?></div>
+              <div class="poll__answer-votes"><?= $answer['value'] ?> %</div>
+              </div>
 <?php endforeach ?>
           </div>
+          <div class="poll__info"><?= n($poll['ans_count']) ?> <?= $poll['ans_count'] > 2 ? 'votes' : 'vote' ?><?= $poll['closed'] ? ', clôt' : '' ?>.</div>
         </div>
       </div>
 <?php endif ?>
