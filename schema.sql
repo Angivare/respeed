@@ -47,16 +47,6 @@ CREATE TABLE `ip_blacklist` (
   PRIMARY KEY (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `logs_recherche_forum` (
-  `id` int unsigned NOT NULL auto_increment,
-  `q` varchar(128) NOT NULL,
-  `nb_results` smallint(6) unsigned NOT NULL,
-  `pseudo` varchar(15),
-  `posted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ip` varchar(15) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE `icstats2` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ts` int DEFAULT NULL,
