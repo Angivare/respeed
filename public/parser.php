@@ -117,7 +117,7 @@ function parse_topic($got) {
         ];
       }
     }
-    $ret['poll']['ans_count'] = false;
+    $ret['poll']['ans_count'] = 0;
     if (preg_match('#<div class="pied-result">.+([0-9]+)\s+vote.+?</div>#Usi', $got, $matches)) {
       $ret['poll']['ans_count'] = $matches[1];
     }
