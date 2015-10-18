@@ -790,9 +790,7 @@ function toggleStickerSize() {
     , code = $(this).data('sticker-id')
 
   if (!isAlreadyEnlarged) {
-    if (devicePixelRatio > 1.5) {
-      $(this).prop('src', 'http://jv.stkr.fr/p7s/' + code)
-    }
+    $(this).prop('src', 'http://jv.stkr.fr/p7s/' + code)
     $(this).addClass('sticker--enlarged')
   }
   else {
