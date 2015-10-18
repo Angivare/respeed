@@ -51,7 +51,7 @@ while ($row = $stmt->fetch()) {
   }
 }
 
-$jours = ['lundi', 'mardi', 'mercr', 'jeudi', 'vendr', 'samedi', 'dim'];
+$jours = ['dim', 'lundi', 'mardi', 'mercr', 'jeudi', 'vendr', 'samedi'];
 $mois = ['janv', 'fév', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'];
 ?>
 <table>
