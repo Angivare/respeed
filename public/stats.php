@@ -6,8 +6,7 @@ if (!defined('STATS_PASS') || !STATS_PASS) {
 ?>
 <!doctype html>
 <meta charset="utf-8">
-<title>Stats Respeed</title>
-<meta name="robots" content="noindex, nofollow">
+<title>Stats JVForum</title>
 <style>body { font: 17px/1.4 sans-serif; }</style>
 <?php
 $pass = isset($_POST['pass']) ? $_POST['pass'] : '';
