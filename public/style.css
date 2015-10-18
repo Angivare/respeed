@@ -1095,7 +1095,7 @@ h1, h2, h3 {
 }
 
 .pagination-topic__page-link:hover {
-  background: #eee;
+  background: rgba(255,87,34,.1); /* 500 */
 }
 
 .pagination-topic__page-link--active {
