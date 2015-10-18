@@ -3,7 +3,7 @@ require 'common.php';
 
 require '../parser.php';
 
-arg('forum', 'topic', 'slug', 'page', 'last_page', 'liste_messages');
+arg('forum', 'topic', 'slug', 'page', 'last_page', 'liste_messages', 'poll_answers');
 $topic_mode = $topic[0] == '0' ? 1 : 42;
 if (!$page) {
   $page = 1;
@@ -21,6 +21,14 @@ if ($forum && $topic && $slug) {
   $t['page'] = (int)$page; // Pour vérifier simplement qu’on a la bonne page dans app.js
   if ($last_page != $t['last_page']) {
     $t['paginationMarkup'] = generate_topic_pagination_markup($page, $t['last_page'], $forum, $topic, $topic_mode, $slug);
+  }
+
+  if ($poll_answers > -1 && $t['poll'] && $t['poll']['ans_count'] != $poll_answers) {
+    $t['poll'] = generate_poll_markup($t['poll'], $topic_mode, $forum, $topic, $slug);
+    $t['poll_answers'] = $t['poll']['ans_count'];
+  }
+  else {
+    unset($t['poll']);
   }
 
   echo json_encode([

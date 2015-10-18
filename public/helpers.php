@@ -557,3 +557,36 @@ function is_in_blacklist($pseudo) {
   $pseudo = strtolower($pseudo);
   return in_array($pseudo, $blacklist);
 }
+
+function generate_poll_markup($poll, $topic_mode, $forum, $topic, $slug) {
+  $string = <<<STRING
+<div class="card__header">Sondage</div>
+<div class="poll">
+  <h3 class="poll__title">{$poll['question']}</h3>
+  <div class="poll__answers">
+STRING;
+  foreach ($poll['answers'] as $answer) {
+    $string .= <<<STRING
+    <div class="poll__answer">
+      <div class="poll__answer-bar" style="width: {$answer['value']}%;"></div>
+      <div class="poll__answer-name">{$answer['human']}</div>
+      <div class="poll__answer-votes">{$answer['value']} %</div>
+      </div>
+STRING;
+  }
+  $string .= <<<STRING
+  </div>
+  <div class="poll__info">
+STRING;
+  if ($poll['closed']) {
+    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] > 2 ? 'votes' : 'vote') . ', clôt.';
+  }
+  else {
+    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] > 2 ? 'votes' : 'vote') . '. <a href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
+  }
+  $string .= <<<STRING
+  </div>
+</div>
+STRING;
+  return $string;
+}

@@ -27,28 +27,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <script>var liste_messages = []</script>
     <div class="js-listeMessages liste-messages">
 <?php if ($poll): ?>
-      <div class="js-poll card card--poll">
-        <div class="card__header">Sondage</div>
-        <div class="poll">
-          <h3 class="poll__title"><?= $poll['question'] ?></h3>
-          <div class="poll__answers">
-<?php foreach ($poll['answers'] as $answer): ?>
-            <div class="poll__answer">
-              <div class="poll__answer-bar" style="width: <?= $answer['value'] ?>%;"></div>
-              <div class="poll__answer-name"><?= $answer['human'] ?></div>
-              <div class="poll__answer-votes"><?= $answer['value'] ?> %</div>
-              </div>
-<?php endforeach ?>
-          </div>
-          <div class="poll__info">
-<?php if ($poll['closed']): ?>
-            <span class="number"><?= n($poll['ans_count']) ?></span> <?= $poll['ans_count'] > 2 ? 'votes' : 'vote' ?>, clôt.
-<?php else: ?>
-            <span class="number"><?= n($poll['ans_count']) ?></span> <?= $poll['ans_count'] > 2 ? 'votes' : 'vote' ?>. <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>
-<?php endif ?>
-          </div>
-        </div>
-      </div>
+      <div class="js-poll card card--poll"><?= generate_poll_markup($poll, $topic_mode, $forum, $topic, $slug) ?></div>
 <?php endif ?>
 <?php foreach ($messages as $message): ?>
 <?= generate_message_markup($message) ?>
@@ -110,4 +89,5 @@ var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= 
   , tokens_last_update = <?= $jvc->tokens_last_update() ?> 
   , lastPage = <?= $last_page ?> 
   , myPseudo = '<?= $pseudo ?>' 
+  , pollAnswers = <?= $poll ? $poll['ans_count'] : -1 ?>
 </script>
