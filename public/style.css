@@ -287,6 +287,17 @@ h1, h2, h3 {
   font-size: 12px;
 }
 
+.poll__go-vote {
+  margin-top: 10px;
+}
+
+
+
+.jvc {
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
 /* HEADER */
 
 .header {
