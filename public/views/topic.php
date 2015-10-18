@@ -26,6 +26,19 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
 <script>var liste_messages = []</script>
     <div class="js-listeMessages liste-messages">
+<?php if ($poll): ?>
+      <div class="card card--poll">
+        <div class="card__header">Sondage</div>
+        <div class="poll">
+          <h3 class="poll__title"><?= $poll['question'] ?></h3>
+          <div class="poll__answers">
+<?php foreach ($poll['answers'] as $answer): ?>
+            <div class="poll__answer"><?= $answer['human'] ?> (<?= $answer['value'] ?> %)</div>
+<?php endforeach ?>
+          </div>
+        </div>
+      </div>
+<?php endif ?>
 <?php foreach ($messages as $message): ?>
 <?= generate_message_markup($message) ?>
 <?php endforeach ?>

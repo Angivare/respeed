@@ -22,7 +22,7 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <?php endif ?>
 
 <?php if (isset($messages) || isset($days)): ?>
-  <div class="profile-card <?= $profile_card_modifier ?>">
+  <div class="card profile-card <?= $profile_card_modifier ?>">
 <?php if (isset($messages)): ?>
     <div class="profile-card__messages"><strong class="profile-card__number"><?= n($messages) ?></strong> <?= $messages >= 2 ? 'messages' : 'message' ?></div>
 <?php endif ?>
@@ -40,21 +40,21 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <?php endif ?>
 
 <?php if (isset($signature)): ?>
-  <div class="profile-card <?= $profile_card_modifier ?>">
-    <div class="profile-card__header">Signature</div>
+  <div class="card profile-card <?= $profile_card_modifier ?>">
+    <div class="card__header">Signature</div>
       <?= $signature ?>
   </div>
 <?php endif ?>
 
 <?php if (isset($description)): ?>
-  <div class="profile-card profile-card--text <?= $profile_card_modifier ?>">
-    <div class="profile-card__header">Description personnelle</div>
+  <div class="card profile-card profile-card--text <?= $profile_card_modifier ?>">
+    <div class="card__header">Description personnelle</div>
       <?= $description ?>
   </div>
 <?php endif ?>
 
 <?php if (strcasecmp($pseudo, $_COOKIE['pseudo']) != 0): ?>
-  <div class="profile-card <?= $profile_card_modifier ?>">
+  <div class="card profile-card <?= $profile_card_modifier ?>">
     <div>
 <?php if (is_in_blacklist($pseudo)): ?>
       <span class="blacklist-toggle button-link" data-pseudo="<?= $pseudo ?>">Ne plus ignorer <?= $pseudo ?></span>

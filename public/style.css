@@ -176,6 +176,37 @@ h1, h2, h3 {
   color: #455A64;
 }
 
+
+
+.card {
+  background: white;
+  margin: 10px 8px;
+  position: relative;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  padding: 10px;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .card {
+    margin: 10px 10px;
+  }
+}
+
+.card__header {
+  color: #9E9E9E;
+  color: rgba(0,0,0,.38);
+  padding: 0 0 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-bottom: 1px solid #EEEEEE;
+  border-bottom-color: rgba(0,0,0,.067);
+  margin: 0 -10px;
+  text-indent: 10px;
+}
+
 /* HEADER */
 
 .header {
@@ -2086,17 +2117,6 @@ h1, h2, h3 {
   }
 }
 
-.profile-card {
-  background: white;
-  margin: 10px 8px;
-  position: relative;
-  border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.2);
-  padding: 10px;
-  font-size: 14px;
-  word-wrap: break-word;
-}
-
 @media (min-width: 640px) {
   .profile-card {
     max-width: 600px;
@@ -2111,18 +2131,6 @@ h1, h2, h3 {
 
 .profile-card--text {
   padding-bottom: 1px;
-}
-
-.profile-card__header {
-  color: #9E9E9E;
-  color: rgba(0,0,0,.38);
-  padding: 0 0 5px;
-  text-transform: uppercase;
-  font-weight: bold;
-  border-bottom: 1px solid #EEEEEE;
-  border-bottom-color: rgba(0,0,0,.067);
-  margin: 0 -10px;
-  text-indent: 10px;
 }
 
 .profile-card__number {
