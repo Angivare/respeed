@@ -202,7 +202,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
     $ret = json_decode($cache['vars'], true);
   }
   else {
-    if ($jvc->is_connected() && time() - $jvc->tokens_last_update() >= 3600 / 2) {
+    if (time() - $jvc->tokens_last_update() >= 3600 / 2) {
       $rep = $jvc->get($url);
       $jvc->tokens_refresh($rep['body']);
     }

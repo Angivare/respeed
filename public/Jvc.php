@@ -578,7 +578,7 @@ class Jvc {
     curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 2);
 
-    if ($this->is_connected() && $connected) {
+    if ($connected) {
       $coniunctio = $this->cookie['coniunctio'];
       $dlrowolleh = $this->cookie['dlrowolleh'];
     }
