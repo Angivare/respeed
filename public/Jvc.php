@@ -420,20 +420,6 @@ class Jvc {
     }
   }
 
-  /**
-   * Retourne la citation d'un texte
-   * @param int $id id du post à citer
-   * @return mixed FALSE si la citation a échoué, la citation sinon
-   */
-  public function quote($id) {
-    $tk = $this->ajax_array('liste_messages');
-    $post_data = 'id_message=' . urlencode($id) .
-      '&' . http_build_query($tk);
-    $ret = json_decode(self::post($this->domain . '/forums/ajax_citation.php',
-      $post_data)['body']);
-    return $ret->erreur ? $this->_err($ret->erreur) : $ret->txt;
-  }
-
   public function get_pseudo_id($pseudo) {
     $body = $this->get($this->domain . '/profil/' . strtolower($pseudo) . '?mode=infos')['body'];
     if (preg_match('#<span class="picto-guyplus" data-id="(?P<id>[0-9]+)"></span>#', $body, $matches)) {
