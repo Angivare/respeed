@@ -529,7 +529,7 @@ class Jvc {
    * @param string $link Lien jvc à transformer
    * @return mixed Le lien jvf correspondant ou FALSE
    */
-  public static function toJvf($link) {
+  public static function jvf_link($link) {
     if (!preg_match('#/forums/(?P<topic_mode>.+)-(?P<forum>.+)-(?P<topic>.+)-(?P<page>.+)-0-1-0-(?P<slug>.+).htm#U', $link, $matches)) {
       return false;
     }
