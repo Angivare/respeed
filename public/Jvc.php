@@ -316,7 +316,7 @@ class Jvc {
       '&id_message=' . urlencode($id) .
       '&action=get';
 
-    $rep = $this->get($this->domain . '/forums/ajax_edit_message.php', $get_data);
+    $rep = $this->get($this->domain . '/forums/ajax_edit_message.php?' . $get_data);
     $rep = json_decode($rep['body']);
 
     if ($rep->erreur) {
@@ -393,14 +393,14 @@ class Jvc {
     $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode($this->get($this->domain . '/forums/ajax_forum_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get($this->domain . '/forums/ajax_forum_blacklist.php?' . $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
   public function blacklist_remove($pseudo) {
     $id = $this->get_pseudo_id($pseudo);
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
-    $ret = json_decode($this->get($this->domain . '/sso/ajax_delete_blacklist.php', $get_data)['body']);
+    $ret = json_decode($this->get($this->domain . '/sso/ajax_delete_blacklist.php?' . $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
@@ -444,7 +444,7 @@ class Jvc {
       '&id_topic=' . urlencode($id_topic) .
       '&action=' . urlencode($action) .
       '&type=' . urlencode($type);
-    $rep = $this->get($this->domain . '/forums/ajax_forum_prefere.php', $get_data);
+    $rep = $this->get($this->domain . '/forums/ajax_forum_prefere.php?' . $get_data);
     return true;
   }
 
@@ -561,19 +561,8 @@ class Jvc {
     return $this->finish_req(curl_init(), $url, $connected, $cached, $data);
   }
 
-  /**
-   * Effectue une requête GET
-   * @param string $url 
-   * @param string $query paramètres à envoyer, urlencodé 
-   * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
-   * en tant qu'utilisateur connecté, FALSE sinon
-   * @param boolean $cached FALSE (par défaut) si la dernière version du fichier doit être
-   * renvoyée, TRUE sinon
-   * @return array réponse du serveur, séparé en 'header' et 'body'
-   */
-  public function get($url, $query = null, $connected = true, $cached = true) {
-    $query = $query ? "?$query" : '';
-    return $this->finish_req(curl_init(), $url . $query, $connected, $cached);
+  public function get($url, $connected = true, $cached = true) {
+    return $this->finish_req(curl_init(), $url, $connected, $cached);
   }
 
   private function finish_req($ch, $url, $connected = true, $cached = true, $postdata = false) {

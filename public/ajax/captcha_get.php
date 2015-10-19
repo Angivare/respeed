@@ -9,5 +9,5 @@ if (!$signature) {
 
 header('Content-Type: image/jpeg');
 
-$x = $jvc->get("http://www.jeuxvideo.com/captcha/ccode.php", $signature, true);
+$x = $jvc->get('http://www.jeuxvideo.com/captcha/ccode.php?' . $signature, true);
 echo $x['body'];
