@@ -17,6 +17,14 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <body class="body--no-bottom body--sheet">
 <?php endif ?>
 
+<?php if (strcasecmp($pseudo, $_COOKIE['pseudo']) != 0 && is_in_blacklist($pseudo)): ?>
+  <div class="card profile-card <?= $profile_card_modifier ?>">
+    <div>
+      <span class="blacklist-toggle button-link" data-pseudo="<?= $pseudo ?>">Ne plus ignorer <?= $pseudo ?></span>
+    </div>
+  </div>
+<?php endif ?>
+
 <?php if (isset($banned)): ?>
   <div class="profile-ban-mention">Pseudo banni.</div>
 <?php endif ?>
@@ -53,14 +61,10 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
   </div>
 <?php endif ?>
 
-<?php if (strcasecmp($pseudo, $_COOKIE['pseudo']) != 0): ?>
+<?php if (strcasecmp($pseudo, $_COOKIE['pseudo']) != 0 && !is_in_blacklist($pseudo)): ?>
   <div class="card profile-card <?= $profile_card_modifier ?>">
     <div>
-<?php if (is_in_blacklist($pseudo)): ?>
-      <span class="blacklist-toggle button-link" data-pseudo="<?= $pseudo ?>">Ne plus ignorer <?= $pseudo ?></span>
-<?php else: ?>
       <span class="blacklist-toggle button-link button-link--destructive" data-pseudo="<?= $pseudo ?>">Ignorer <?= $pseudo ?></span>
-<?php endif ?>
     </div>
   </div>
 <?php endif ?>
