@@ -427,13 +427,6 @@ function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $to
   return $markup;
 }
 
-function display_footer_if_not_connected() {
-  global $jvc;
-  if (!$jvc->is_connected()) {
-    echo '<footer class="site-footer">JVForum n’est pas affilié avec <a href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</footer>';
-  }
-}
-
 function convert_stickers($message) {
   global $stickers;
   foreach ($stickers as $stickers_category) {
