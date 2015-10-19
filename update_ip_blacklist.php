@@ -1,7 +1,7 @@
 <?php
 
 require 'config.php';
-require 'public/db.php';
+require 'public/Db.php';
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

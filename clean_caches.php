@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-require 'public/db.php';
+require 'public/Db.php';
 
 $db = new Db();
 $db->clean_topic_cache();
