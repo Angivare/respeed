@@ -1,8 +1,6 @@
 <?php
 require 'common.php';
 
-require '../parser.php';
-
 arg('url', 'title', 'msg', 'form', 'ccode');
 
 if ($url && $msg && $form) {
