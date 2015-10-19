@@ -55,13 +55,12 @@ CREATE TABLE `icstats2` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `logs_requests2` (
+CREATE TABLE `logs_requests3` (
   `id` int unsigned NOT NULL auto_increment,
   `logged_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `url` varchar(255) NOT NULL,
   `is_post` tinyint NOT NULL,
   `is_connected` tinyint NOT NULL,
-  `is_cached` tinyint NOT NULL,
   `timing` smallint NOT NULL,
   `errno` tinyint NOT NULL,
   `ip` varchar(15) NOT NULL,

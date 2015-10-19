@@ -164,10 +164,15 @@ class Db {
     }
   }
 
-  public function log_request($url, $is_post, $is_connected, $is_cached, $timing, $errno) {
+  public function log_request($url, $is_post, $is_connected, $timing, $errno) {
+    $url = substr($url, strlen('http://www.jeuxvideo.com'));
+    $query_pos = strpos($url, '?');
+    if ($query_pos) {
+      $url = substr($url, 0, $query_pos + 1);
+    }
     $this->query(
-      'INSERT INTO logs_requests2(url, is_post, is_connected, is_cached, timing, errno, ip) VALUES(?, ?, ?, ?, ?, ?, ?)',
-      [$url, $is_post, $is_connected, $is_cached, $timing, $errno, $_SERVER['REMOTE_ADDR']]
+      'INSERT INTO logs_requests3(url, is_post, is_connected, timing, errno, ip) VALUES(?, ?, ?, ?, ?, ?)',
+      [$url, $is_post, $is_connected, $timing, $errno, $_SERVER['REMOTE_ADDR']]
     );
   }
 

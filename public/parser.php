@@ -63,7 +63,7 @@ function fetch_forum($forum, $page, $slug) {
   else {
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-    $rep = $jvc->get($url, false, false);
+    $rep = $jvc->get($url, false);
 
     $header = &$rep['header'];
     $got = &$rep['body'];
@@ -207,7 +207,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
       $jvc->tokens_refresh($rep['body']);
     }
     else {
-      $rep = $jvc->get($url, false, false);
+      $rep = $jvc->get($url, false);
     }
 
     $header = &$rep['header'];
@@ -251,7 +251,7 @@ function parse_profile($body) {
     $ret['year'] = $matches['year'];
     $ret['days'] = str_replace('.', '', $matches['days']);
   }
-  
+
   if (isset($ret['messages'], $ret['days'])) {
     $ret['ratio'] = $ret['messages'] / ($ret['days'] + 1);
   }
@@ -277,6 +277,6 @@ function parse_profile($body) {
 function fetch_profile($pseudo) {
   $pseudo = strtolower($pseudo);
   $jvc = new Jvc();
-  $rep = $jvc->get('http://www.jeuxvideo.com/profil/' . $pseudo . '?mode=infos', false, false);
+  $rep = $jvc->get('http://www.jeuxvideo.com/profil/' . $pseudo . '?mode=infos', false);
   return parse_profile($rep['body']);
 }

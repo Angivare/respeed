@@ -547,57 +547,58 @@ class Jvc {
     return $link;
   }
 
-  /**
-   * Effectue une requête POST
-   * @param string $url 
-   * @param mixed $data champ à envoyer, urlencodé ou un tableau associatif 
-   * @param boolean $connected TRUE (par défaut) si la requête doit être envoyée
-   * en tant qu'utilisateur connecté, FALSE sinon
-   * @param boolean $cached FALSE (par défaut) si la dernière version du fichier doit être
-   * renvoyée, TRUE sinon
-   * @return array réponse du serveur, séparé en 'header' et 'body'
-   */
-  public function post($url, $data, $connected = true, $cached = true) {
-    return $this->finish_req(curl_init(), $url, $connected, $cached, $data);
+  public function post($url, $data) {
+    return $this->finish_req(curl_init(), $url, $data);
   }
 
-  public function get($url, $connected = true, $cached = true) {
-    return $this->finish_req(curl_init(), $url, $connected, $cached);
+  public function get($url, $connected = true) {
+    return $this->finish_req(curl_init(), $url, $connected);
   }
 
-  private function finish_req($ch, $url, $connected = true, $cached = true, $postdata = false) {
+  private function finish_req($ch, $url, $connected_or_post_data = true) {
+    $connected = !!$connected_or_post_data;
+    $post_data = is_string($connected_or_post_data) ? $connected_or_post_data : false;
+
+    $coniunctio = $dlrowolleh = null;
+    if ($connected) {
+      if (!$this->is_connected()) {
+        /*
+         * When logging in, we’re doing a POST and $connected is true,
+         * though we aren’t really connected. We fix that here.
+         * 
+         * `dlrowolleh` is needed when logging in.
+         */
+        $connected = false;
+      }
+      else {
+        $coniunctio = $this->cookie['coniunctio'];
+      }
+      $dlrowolleh = $this->cookie['dlrowolleh'];
+    }
+    elseif ($this->is_connected()) {
+      $coniunctio = 'fake'; // A `coniunctio` cookie is needed to bypass the cache.
+    }
+
     $start = microtime(true);
     $db = new Db();
 
     curl_setopt($ch, CURLOPT_URL, $url);
-    if ($postdata) {
+    if ($post_data) {
       curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $postdata);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
     }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 2);
 
-    if ($connected) {
-      $coniunctio = $this->cookie['coniunctio'];
-      $dlrowolleh = $this->cookie['dlrowolleh'];
-    }
-    else {
-      $coniunctio = $cached ? null : '0';
-      $dlrowolleh = $cached ? $this->cookie['dlrowolleh'] : null;
-    }
-
-    if (count($this->cookie) && ($connected !== false || $cached === false)) {
-      curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
-      $ip = $_SERVER['REMOTE_ADDR'];
-      curl_setopt($ch, CURLOPT_HTTPHEADER, ["HTTP_X_FORWARDED_FOR: {$ip}"]);
-    }
+    curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['HTTP_X_FORWARDED_FOR: '. $_SERVER['REMOTE_ADDR']]);
 
     $rep = curl_exec($ch);
     $errno = curl_errno($ch);
 
     $timing = (int)((microtime(true) - $start) * 1000);
-    $db->log_request($url, !!$postdata, $connected, $cached, $timing, $errno);
+    $db->log_request($url, $post_data !== false, $connected, $timing, $errno);
 
     if (!$rep) {
       if ($errno === CURLE_OPERATION_TIMEOUTED) {
@@ -684,10 +685,11 @@ HTML;
       }
       $ret .= $k . '=' . $v . '; ';
     }
-    foreach ($add as $k => $v)
+    foreach ($add as $k => $v) {
       if ($v !== null) {
         $ret .= $k . '=' . $v . '; ';
       }
+    }
     return substr($ret, 0, -2);
   }
 
