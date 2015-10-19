@@ -566,27 +566,6 @@ class Jvc {
   }
 
   /**
-   * Fait une recherche sur la liste des forums 
-   * @param string $name 
-   * @return array Tableau de tableaux associatifs contenant 'id', 'slug' et 'human'
-   */
-  public function forum_search($name) {
-    $rep = $this->get(
-      'http://m.jeuxvideo.com/forums/search_forum.php',
-      'input_search_forum='.urlencode($name)
-    );
-
-    $regex =  '#<li>.+' .
-              '<a href="//m.jeuxvideo.com/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm".+>.+' .
-              '<h2 class="lib">(?P<human>.+)</h2>' .
-              '#Usi';
-
-    preg_match_all($regex, $rep['body'], $matches, PREG_SET_ORDER);
-
-    return $matches;
-  }
-
-  /**
    * Retourne le header "location"
    * @param string $hdr 
    * @return mixed Le header "location" ou FALSE
