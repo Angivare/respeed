@@ -551,21 +551,6 @@ class Jvc {
   }
 
   /**
-   * Restaure un message
-   * @param int $id 
-   * @return boolean TRUE/FALSE
-   */
-  public function message_restore($id) {
-    $tk = self::ajax_array('moderation_forum');
-    $post_data = http_build_query($tk) .
-      '&type=delete' .
-      '&tab_message%5B%5D=' . urlencode($id);
-
-    $rep = json_decode($this->post($this->domain . '/forums/modal_del_message.php', $post_data)['body']);
-    return $rep->erreur ? $this->_err($rep->erreur) : true;
-  }
-
-  /**
    * Retourne le header "location"
    * @param string $hdr 
    * @return mixed Le header "location" ou FALSE
