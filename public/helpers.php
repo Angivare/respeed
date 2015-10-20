@@ -427,7 +427,7 @@ function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $to
   return $markup;
 }
 
-function convert_stickers($message) {
+function replace_stickers_shortcuts_to_code($message) {
   global $stickers;
   foreach ($stickers as $stickers_category) {
     foreach ($stickers_category as $id => $shortcut) {
@@ -447,7 +447,7 @@ function adapt_message_to_post($message) {
     . (isset($m['page']) ? $m['page'] : '1') . '-0-1-0-' . $m['slug'] . '.htm' . (isset($m['message']) ? ('#post_'.$m['message']) : '');
   }, $message);
 
-  $message = convert_stickers($message);
+  $message = replace_stickers_shortcuts_to_code($message);
 
   return $message;
 }
