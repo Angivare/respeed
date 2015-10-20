@@ -63,7 +63,7 @@ function fetch_forum($forum, $page, $slug) {
   else {
     $page_url = ($page - 1) * 25 + 1;
     $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-    $rep = $jvc->get($url, false);
+    $rep = $jvc->request($url, false);
 
     $header = &$rep['header'];
     $got = &$rep['body'];
@@ -203,11 +203,11 @@ function fetch_topic($topic, $page, $slug, $forum) {
   }
   else {
     if (time() - $jvc->tokens_last_update() >= 3600 / 2) {
-      $rep = $jvc->get($url);
+      $rep = $jvc->request($url);
       $jvc->tokens_refresh($rep['body']);
     }
     else {
-      $rep = $jvc->get($url, false);
+      $rep = $jvc->request($url, false);
     }
 
     $header = &$rep['header'];
@@ -277,6 +277,6 @@ function parse_profile($body) {
 function fetch_profile($pseudo) {
   $pseudo = strtolower($pseudo);
   $jvc = new Jvc();
-  $rep = $jvc->get('http://www.jeuxvideo.com/profil/' . $pseudo . '?mode=infos', false);
+  $rep = $jvc->request('http://www.jeuxvideo.com/profil/' . $pseudo . '?mode=infos', false);
   return parse_profile($rep['body']);
 }

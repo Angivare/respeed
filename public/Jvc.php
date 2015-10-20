@@ -85,7 +85,7 @@ class Jvc {
     $this->last_update = 0;
 
     $this->cookie['dlrowolleh'] = null;
-    $this->get($this->domain . '/profil/angivare?mode=page_perso');
+    $this->request($this->domain . '/profil/angivare?mode=page_perso');
   }
 
   /**
@@ -99,14 +99,14 @@ class Jvc {
   public function connect_req($nick, $pass, &$has_captcha) {
     $url = $this->domain . '/login';
 
-    $rep = $this->get($url);
+    $rep = $this->request($url);
 
     $form = self::parse_form($rep['body']);
     $post_data = 'login_pseudo=' . urlencode($nick) .
                  '&login_password=' . urlencode($pass) .
                  '&' . http_build_query($form);
 
-    $rep = $this->post($url, $post_data);
+    $rep = $this->request($url, $post_data);
     $ret = self::parse_form($rep['body']);
     $has_captcha = strpos($rep['body'], '<img src="/captcha/ccode.php') !== false;
     if (!$has_captcha) {
@@ -140,7 +140,7 @@ class Jvc {
                  '&' . http_build_query($form) .
                  '&fs_ccode=' . urlencode($ccode);
 
-    $rep = $this->post($url, $post_data);
+    $rep = $this->request($url, $post_data);
 
     if ($this->is_connected()) {
       _setcookie('pseudo', $nick);
@@ -163,12 +163,12 @@ class Jvc {
    * @return mixed la page, séparée en 'header' et 'body' ou FALSE
    */
   public function message_get($id) {
-    $rep = $this->get($this->domain . "/respeed/forums/message/{$id}");
+    $rep = $this->request($this->domain . "/respeed/forums/message/{$id}");
     $location = self::redirects($rep['header']);
     if (!$location) {
       return $this->_err('Impossible de trouver le lien permanent');
     }
-    return $this->get($this->domain . $location);
+    return $this->request($this->domain . $location);
   }
 
   /**
@@ -180,7 +180,7 @@ class Jvc {
    * sinon
    */
   public function message_post_req($url) {
-    $form = self::parse_form($this->get($url)['body']);
+    $form = self::parse_form($this->request($url)['body']);
     if (count($form)) {
       return $form;
     }
@@ -201,7 +201,7 @@ class Jvc {
       '&form_alias_rang=1' .
       '&fs_ccode=' . urlencode($ccode);
 
-    $rep = $this->post($url, $post_data);
+    $rep = $this->request($url, $post_data);
 
     if ($location = self::redirects($rep['header'])) {
       if ($ret_location !== null) {
@@ -225,7 +225,7 @@ class Jvc {
    * @return mixed FALSE si une erreur a eu lieu, le formulaire sinon
    */
   public function topic_post_req($url) {
-    $rep = $this->get($url)['body'];
+    $rep = $this->request($url)['body'];
     $form = self::parse_form($rep);
 
     if (count($form)) {
@@ -260,7 +260,7 @@ class Jvc {
       $post_data .= '&reponse_sondage%5B%5D=' . urlencode($v);
     }
 
-    $rep = $this->post($url, $post_data);
+    $rep = $this->request($url, $post_data);
 
     if ($location = self::redirects($rep['header'])) {
       if ($ret_location !== null) {
@@ -316,7 +316,7 @@ class Jvc {
       '&id_message=' . urlencode($id) .
       '&action=get';
 
-    $rep = $this->get($this->domain . '/forums/ajax_edit_message.php?' . $get_data);
+    $rep = $this->request($this->domain . '/forums/ajax_edit_message.php?' . $get_data);
     $rep = json_decode($rep['body']);
 
     if ($rep->erreur) {
@@ -344,7 +344,7 @@ class Jvc {
       $post_data .= '&fs_ccode=' . urlencode($ccode);
     }
 
-    $rep = $this->post($this->domain . '/forums/ajax_edit_message.php', $post_data);
+    $rep = $this->request($this->domain . '/forums/ajax_edit_message.php', $post_data);
     $rep = json_decode($rep['body']);
 
     if ($rep->erreur) {
@@ -366,7 +366,7 @@ class Jvc {
       '&id_topic=' . urlencode($id) .
       '&titre_topic=' . urlencode($title);
 
-    $rep = $this->post($this->domain . '/forums/ajax_edit_title.php', $post_data);
+    $rep = $this->request($this->domain . '/forums/ajax_edit_title.php', $post_data);
     $rep = json_decode($rep['body']);
 
     if ($rep->erreur) {
@@ -378,7 +378,7 @@ class Jvc {
   }
 
   public function get_pseudo_id($pseudo) {
-    $body = $this->get($this->domain . '/profil/' . strtolower($pseudo) . '?mode=infos')['body'];
+    $body = $this->request($this->domain . '/profil/' . strtolower($pseudo) . '?mode=infos')['body'];
     if (preg_match('#<span class="picto-guyplus" data-id="(?P<id>[0-9]+)"></span>#', $body, $matches)) {
       return $matches['id'];
     }
@@ -393,14 +393,14 @@ class Jvc {
     $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode($this->get($this->domain . '/forums/ajax_forum_blacklist.php?' . $get_data)['body']);
+    $ret = json_decode($this->request($this->domain . '/forums/ajax_forum_blacklist.php?' . $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
   public function blacklist_remove($pseudo) {
     $id = $this->get_pseudo_id($pseudo);
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
-    $ret = json_decode($this->get($this->domain . '/sso/ajax_delete_blacklist.php?' . $get_data)['body']);
+    $ret = json_decode($this->request($this->domain . '/sso/ajax_delete_blacklist.php?' . $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
@@ -411,7 +411,7 @@ class Jvc {
    * une valeur 'id' et 'human'. FALSE si une erreur est survenue
    */
   public function blacklist_get() {
-    $rep = $this->get($this->domain . '/sso/blacklist.php');
+    $rep = $this->request($this->domain . '/sso/blacklist.php');
 
     $regex =  '#<li data-id-alias="(?P<id>[0-9]+)">.+' .
               '<span>(?P<pseudo>.+)</span>.+'  .
@@ -444,7 +444,7 @@ class Jvc {
       '&id_topic=' . urlencode($id_topic) .
       '&action=' . urlencode($action) .
       '&type=' . urlencode($type);
-    $rep = $this->get($this->domain . '/forums/ajax_forum_prefere.php?' . $get_data);
+    $rep = $this->request($this->domain . '/forums/ajax_forum_prefere.php?' . $get_data);
     return true;
   }
 
@@ -453,7 +453,7 @@ class Jvc {
    * @return array Tableau associatif contenant les sujets et topics favoris
    */
   public function favorites_get() {
-    $rep = $this->get($this->domain . '/forums.htm');
+    $rep = $this->request($this->domain . '/forums.htm');
 
     $lim = strpos($rep['body'], '<ul id="liste-sujet-prefere"');
 
@@ -501,7 +501,7 @@ class Jvc {
       '&type=delete' .
       '&tab_message%5B%5D=' . urlencode($id);
 
-    $rep = $this->post($this->domain . '/forums/modal_del_message.php', $post_data);
+    $rep = $this->request($this->domain . '/forums/modal_del_message.php', $post_data);
 
     //TODO: error handling? la page ne semble renvoyer aucune réponse cependant..
     return true;
@@ -547,15 +547,7 @@ class Jvc {
     return $link;
   }
 
-  public function post($url, $data) {
-    return $this->finish_req(curl_init(), $url, $data);
-  }
-
-  public function get($url, $connected = true) {
-    return $this->finish_req(curl_init(), $url, $connected);
-  }
-
-  private function finish_req($ch, $url, $connected_or_post_data = true) {
+  public function request($url, $connected_or_post_data = true) {
     $connected = !!$connected_or_post_data;
     $post_data = is_string($connected_or_post_data) ? $connected_or_post_data : false;
 
@@ -582,6 +574,7 @@ class Jvc {
     $start = microtime(true);
     $db = new Db();
 
+    $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     if ($post_data) {
       curl_setopt($ch, CURLOPT_POST, 1);
@@ -696,7 +689,7 @@ HTML;
   private function ajax_array($type) {
     if ((!isset($this->tk["ajax_timestamp_{$type}"]) || !isset($this->tk["ajax_hash_{$type}"]))
     || (time() - $this->tokens_last_update() >= 3600 / 2)) {
-      $rep = $this->get($this->domain . '/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
+      $rep = $this->request($this->domain . '/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
       self::tokens_refresh($rep['body']);
     }
     return [
