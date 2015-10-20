@@ -74,7 +74,7 @@ if ($has_captcha) {
       <input class="js-captcha connect-form__input connect-form__input--captcha" type="number" name="ccode" placeholder="Code" autofocus>
       <script>
 var hasTouch = 'createTouch' in document
-function getCaptchaType() {
+function getCaptchaInputType() {
   if (hasTouch) {
     if (navigator.userAgent.indexOf(' (iPhone; ') > -1 || navigator.userAgent.indexOf(' (iPod; ') > -1) {
       return 'tel'
@@ -83,7 +83,7 @@ function getCaptchaType() {
   }
   return 'text'
 }
-document.getElementsByClassName('js-captcha')[0].setAttribute('type', getCaptchaType())
+document.getElementsByClassName('js-captcha')[0].setAttribute('type', getCaptchaInputType())
       </script>
 <?php endif ?>
       <input class="connect-form__submit" type="submit" value="Me connecter">
