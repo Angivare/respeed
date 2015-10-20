@@ -9,25 +9,11 @@ require_once 'helpers.php';
  * @package default
  */
 class Jvc {
-  /**
-   * Retourne la session sur JVC du client depuis les cookies
-   * @param string $site 'JVC' ou 'FJV'
-   */
-  public function __construct($site = 'JVC') {
+  public function __construct() {
     $this->err = 'Indéfinie';
-    if ($site === 'JVC') {
-      $this->domain = 'http://www.jeuxvideo.com';
-      $this->cookie_pre = '_JVCCOK_';
-      $this->tokens_pre = '_JVCTOK_';
-    }
-    elseif ($site === 'FJV') {
-      $this->domain = 'http://www.forumjv.com';
-      $this->cookie_pre = '_FJVCOK_';
-      $this->tokens_pre = '_FJVTOK_';
-    }
-    else {
-      die('Mauvais paramètre fourni à Jvc::__construct, contacter l\'admin');
-    }
+    $this->domain = 'http://www.jeuxvideo.com';
+    $this->cookie_pre = '_JVCCOK_';
+    $this->tokens_pre = '_JVCTOK_';
 
     $this->cookie = [];
     foreach ($_COOKIE as $k => $v) {
