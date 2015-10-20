@@ -60,6 +60,8 @@ class Jvc {
       removecookie($this->cookie_pre.$k);
     }
     removecookie('pseudo');
+    removecookie('blacklist');
+    removecookie('auth-uid');
     $this->cookie = [];
 
     foreach ($this->tk as $k => $v) {
