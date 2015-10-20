@@ -36,7 +36,7 @@ if (isset($nick, $pass)) {
   }
 }
 if ($has_captcha) {
-  $captcha_url = 'data:image/png;base64,' . base64_encode($jvc->request('http://www.jeuxvideo.com/captcha/ccode.php?' . $form['fs_signature'])['body']);
+  $captcha_url = 'data:image/png;base64,' . base64_encode($jvc->request('/captcha/ccode.php?' . $form['fs_signature'])['body']);
 }
 ?>
 <!doctype html>

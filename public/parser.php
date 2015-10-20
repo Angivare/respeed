@@ -62,7 +62,7 @@ function fetch_forum($forum, $page, $slug) {
   }
   else {
     $page_url = ($page - 1) * 25 + 1;
-    $url = "http://www.jeuxvideo.com/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
+    $url = "/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
     $rep = $jvc->request($url, false);
 
     $header = &$rep['header'];
@@ -191,7 +191,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
 
   $topic_mode = $topic[0] === '0' ? 1 : 42;
   $topic = (int) $topic;
-  $url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
+  $url = "/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
 
   $jvc = new Jvc();
   $db = new Db();
@@ -277,6 +277,6 @@ function parse_profile($body) {
 function fetch_profile($pseudo) {
   $pseudo = strtolower($pseudo);
   $jvc = new Jvc();
-  $rep = $jvc->request('http://www.jeuxvideo.com/profil/' . $pseudo . '?mode=infos', false);
+  $rep = $jvc->request('/profil/' . $pseudo . '?mode=infos', false);
   return parse_profile($rep['body']);
 }

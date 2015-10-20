@@ -11,7 +11,6 @@ require_once 'helpers.php';
 class Jvc {
   public function __construct() {
     $this->err = 'Indéfinie';
-    $this->domain = 'http://www.jeuxvideo.com';
     $this->cookie_pre = '_JVCCOK_';
     $this->tokens_pre = '_JVCTOK_';
 
@@ -71,7 +70,7 @@ class Jvc {
     $this->last_update = 0;
 
     $this->cookie['dlrowolleh'] = null;
-    $this->request($this->domain . '/profil/angivare?mode=page_perso');
+    $this->request('/profil/angivare?mode=page_perso');
   }
 
   /**
@@ -83,16 +82,14 @@ class Jvc {
    * dans connect_finish() sinon
    */
   public function connect_req($nick, $pass, &$has_captcha) {
-    $url = $this->domain . '/login';
-
-    $rep = $this->request($url);
+    $rep = $this->request('/login');
 
     $form = self::parse_form($rep['body']);
     $post_data = 'login_pseudo=' . urlencode($nick) .
                  '&login_password=' . urlencode($pass) .
                  '&' . http_build_query($form);
 
-    $rep = $this->request($url, $post_data);
+    $rep = $this->request('/login', $post_data);
     $ret = self::parse_form($rep['body']);
     $has_captcha = strpos($rep['body'], '<img src="/captcha/ccode.php') !== false;
     if (!$has_captcha) {
@@ -119,14 +116,12 @@ class Jvc {
    * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
    */
   public function connect_finish($nick, $pass, $form, $ccode, &$ret_form, &$has_captcha) {
-    $url = $this->domain . '/login';
-
     $post_data = 'login_pseudo=' . urlencode($nick) .
                  '&login_password=' . urlencode($pass) .
                  '&' . http_build_query($form) .
                  '&fs_ccode=' . urlencode($ccode);
 
-    $rep = $this->request($url, $post_data);
+    $rep = $this->request('/login', $post_data);
 
     if ($this->is_connected()) {
       _setcookie('pseudo', $nick);
@@ -149,12 +144,12 @@ class Jvc {
    * @return mixed la page, séparée en 'header' et 'body' ou FALSE
    */
   public function message_get($id) {
-    $rep = $this->request($this->domain . "/respeed/forums/message/{$id}");
+    $rep = $this->request("/respeed/forums/message/{$id}");
     $location = self::redirects($rep['header']);
     if (!$location) {
       return $this->_err('Impossible de trouver le lien permanent');
     }
-    return $this->request($this->domain . $location);
+    return $this->request($location);
   }
 
   /**
@@ -302,7 +297,7 @@ class Jvc {
       '&id_message=' . urlencode($id) .
       '&action=get';
 
-    $rep = $this->request($this->domain . '/forums/ajax_edit_message.php?' . $get_data);
+    $rep = $this->request('/forums/ajax_edit_message.php?' . $get_data);
     $rep = json_decode($rep['body']);
 
     if ($rep->erreur) {
@@ -330,7 +325,7 @@ class Jvc {
       $post_data .= '&fs_ccode=' . urlencode($ccode);
     }
 
-    $rep = $this->request($this->domain . '/forums/ajax_edit_message.php', $post_data);
+    $rep = $this->request('/forums/ajax_edit_message.php', $post_data);
     $rep = json_decode($rep['body']);
 
     if ($rep->erreur) {
@@ -352,7 +347,7 @@ class Jvc {
       '&id_topic=' . urlencode($id) .
       '&titre_topic=' . urlencode($title);
 
-    $rep = $this->request($this->domain . '/forums/ajax_edit_title.php', $post_data);
+    $rep = $this->request('/forums/ajax_edit_title.php', $post_data);
     $rep = json_decode($rep['body']);
 
     if ($rep->erreur) {
@@ -364,7 +359,7 @@ class Jvc {
   }
 
   public function get_pseudo_id($pseudo) {
-    $body = $this->request($this->domain . '/profil/' . strtolower($pseudo) . '?mode=infos')['body'];
+    $body = $this->request('/profil/' . strtolower($pseudo) . '?mode=infos')['body'];
     if (preg_match('#<span class="picto-guyplus" data-id="(?P<id>[0-9]+)"></span>#', $body, $matches)) {
       return $matches['id'];
     }
@@ -379,14 +374,14 @@ class Jvc {
     $tk = $this->ajax_array('preference_user');
     $get_data = 'id_alias_msg=' . urlencode($id) .
       '&action=add' . '&' . http_build_query($tk);
-    $ret = json_decode($this->request($this->domain . '/forums/ajax_forum_blacklist.php?' . $get_data)['body']);
+    $ret = json_decode($this->request('/forums/ajax_forum_blacklist.php?' . $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
   public function blacklist_remove($pseudo) {
     $id = $this->get_pseudo_id($pseudo);
     $get_data = 'id_alias_unblacklist=' . urlencode($id);
-    $ret = json_decode($this->request($this->domain . '/sso/ajax_delete_blacklist.php?' . $get_data)['body']);
+    $ret = json_decode($this->request('/sso/ajax_delete_blacklist.php?' . $get_data)['body']);
     return $ret->erreur ? $this->_err($ret->erreur) : true;
   }
 
@@ -397,7 +392,7 @@ class Jvc {
    * une valeur 'id' et 'human'. FALSE si une erreur est survenue
    */
   public function blacklist_get() {
-    $rep = $this->request($this->domain . '/sso/blacklist.php');
+    $rep = $this->request('/sso/blacklist.php');
 
     $regex =  '#<li data-id-alias="(?P<id>[0-9]+)">.+' .
               '<span>(?P<pseudo>.+)</span>.+'  .
@@ -430,7 +425,7 @@ class Jvc {
       '&id_topic=' . urlencode($id_topic) .
       '&action=' . urlencode($action) .
       '&type=' . urlencode($type);
-    $rep = $this->request($this->domain . '/forums/ajax_forum_prefere.php?' . $get_data);
+    $rep = $this->request('/forums/ajax_forum_prefere.php?' . $get_data);
     return true;
   }
 
@@ -439,7 +434,7 @@ class Jvc {
    * @return array Tableau associatif contenant les sujets et topics favoris
    */
   public function favorites_get() {
-    $rep = $this->request($this->domain . '/forums.htm');
+    $rep = $this->request('/forums.htm');
 
     $lim = strpos($rep['body'], '<ul id="liste-sujet-prefere"');
 
@@ -487,7 +482,7 @@ class Jvc {
       '&type=delete' .
       '&tab_message%5B%5D=' . urlencode($id);
 
-    $rep = $this->request($this->domain . '/forums/modal_del_message.php', $post_data);
+    $rep = $this->request('/forums/modal_del_message.php', $post_data);
 
     //TODO: error handling? la page ne semble renvoyer aucune réponse cependant..
     return true;
@@ -555,6 +550,10 @@ class Jvc {
     }
     elseif ($this->is_connected()) {
       $coniunctio = 'fake'; // A `coniunctio` cookie is needed to bypass the cache.
+    }
+
+    if ($url[0] == '/') {
+      $url = 'http://www.jeuxvideo.com' . $url;
     }
 
     $start = microtime(true);
@@ -675,7 +674,7 @@ HTML;
   private function ajax_array($type) {
     if ((!isset($this->tk["ajax_timestamp_{$type}"]) || !isset($this->tk["ajax_hash_{$type}"]))
     || (time() - $this->tokens_last_update() >= 3600 / 2)) {
-      $rep = $this->request($this->domain . '/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
+      $rep = $this->request('/forums/42-1000021-38675199-1-0-1-0-a-lire-avant-de-creer-un-topic.htm');
       self::tokens_refresh($rep['body']);
     }
     return [
