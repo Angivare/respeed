@@ -572,10 +572,10 @@ STRING;
   <div class="poll__info">
 STRING;
   if ($poll['closed']) {
-    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] > 2 ? 'votes' : 'vote') . ', clôt.';
+    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] >= 2 ? 'votes' : 'vote') . ', clôt.';
   }
   else {
-    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] > 2 ? 'votes' : 'vote') . '. <a href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
+    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] >= 2 ? 'votes' : 'vote') . '. <a href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
   }
   $string .= <<<STRING
   </div>
