@@ -1744,6 +1744,10 @@ h1, h2, h3 {
   padding: 10px;
 }
 
+.message__ignored-notice_show-message-button:hover {
+  color: #444;
+}
+
 .message__ignored-notice_regular {
   display: none;
 }
