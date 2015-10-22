@@ -63,6 +63,11 @@ $mois = ['janv', 'fév', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 
     <td style="color: #333"><?= $jours[date('w', $i)] . ' ' . date('d', $i) . ' ' . $mois[date('n', $i) - 1] ?></td>
     <td style="text-align: right;"><a href="?day=<?= date('Y-m-d', $i) ?>" style="font-weight: bold; text-decoration: none;"><?= isset($days[date('Y-m-d', $i)]) ? n($days[date('Y-m-d', $i)]) : 0 ?></a></td>
   </tr>
+<?php if (date('w', $i) == 0): ?>
+  <tr>
+    <td colspan="2"><hr></td>
+  </tr>
+<?php endif ?>
 <?php endfor ?>
 </table>
 <?php
