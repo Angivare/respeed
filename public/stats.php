@@ -40,6 +40,7 @@ if (!isset($_GET['day'])):
 
 $days = [];
 $start_date = '';
+$max = '';
 
 $stmt = $dbh->prepare("SELECT DATE(posted_at) AS jour, COUNT(*) AS messages FROM logs_messages2 WHERE message_id GROUP BY DATE(posted_at)");
 $stmt->execute();
@@ -47,6 +48,9 @@ while ($row = $stmt->fetch()) {
   $days[$row['jour']] = (int)$row['messages'];
   if (!$start_date) {
     $start_date = strtotime($row['jour']);
+  }
+  if ($row['messages'] > $max) {
+    $max = $row['messages'];
   }
 }
 
@@ -62,6 +66,7 @@ $mois = ['janv', 'fév', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 
   <tr>
     <td style="color: #333"><?= $jours[date('w', $i)] . ' ' . date('d', $i) . ' ' . $mois[date('n', $i) - 1] ?></td>
     <td style="text-align: right;"><a href="?day=<?= date('Y-m-d', $i) ?>" style="font-weight: bold; text-decoration: none;"><?= isset($days[date('Y-m-d', $i)]) ? n($days[date('Y-m-d', $i)]) : 0 ?></a></td>
+    <td><?= str_repeat('|', (isset($days[date('Y-m-d', $i)]) ? n($days[date('Y-m-d', $i)]) : 0) * (250 / $max)) ?></td>
   </tr>
 <?php if (date('w', $i) == 0): ?>
   <tr>
