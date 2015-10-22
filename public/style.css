@@ -1814,8 +1814,8 @@ h1, h2, h3 {
 }
 
 .fab-post__inner {
-  background: #00e676;
-  text-shadow: 0 0 2px #00c853;
+  background: hsl(198, 100%, 80%); /* Light Blue A100 is 75%, too eye-catching */
+  text-shadow: 0 0 2px #80D8FF;
   border-radius: 3px;
   box-shadow: 0 2px 5px rgba(0,0,0,.1);
   padding: 5px 10px;
@@ -1824,8 +1824,8 @@ h1, h2, h3 {
 }
 
 .fab-post:hover .fab-post__inner {
-  background: #69f0ae;
-  text-shadow: 0 0 2px #00e676;
+  background: hsl(198, 100%, 87.5%); /* 75% by default */
+  text-shadow: 0 0 2px hsl(198, 100%, 80%);
   box-shadow: 0 3px 8px 0 rgba(0,0,0,.15)
 }
 
