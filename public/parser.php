@@ -101,7 +101,8 @@ function parse_topic($got) {
 
   // Sondages
   $ret['poll'] = false;
-  if (preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches)) {
+  if (strpos($got, '<span class="page-active">1</span>') !== false // Only get them on first page
+  && preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches)) {
     $ret['poll'] = ['question' => $matches[1]];
     $regex = '#<tr>.+' .
              '<td class="result-pourcent">.+' .
