@@ -362,7 +362,7 @@ class Jvc {
 
   public function get_pseudo_id($pseudo) {
     $body = $this->request('/profil/' . strtolower($pseudo) . '?mode=infos')['body'];
-    if (preg_match('#<span class="picto-guyplus" data-id="(?P<id>[0-9]+)"></span>#', $body, $matches)) {
+    if (preg_match('#<span class="picto-attention" title="Signaler le profil de [^"]+" data-modal="afficher" data-cache="false" data-selector="/profil/gta\.php\?id=(?P<id>[0-9]+)&#', $body, $matches)) {
       return $matches['id'];
     }
     if (preg_match('#<div class="dropdown reglages-profil"><a href="/sso/infos_pseudo\.php?id=(?P<id>[0-9]+)"#', $body, $matches)) {
