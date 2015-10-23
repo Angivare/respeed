@@ -64,7 +64,7 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <?php if (strcasecmp($pseudo, $_COOKIE['pseudo']) != 0 && !is_in_blacklist($pseudo)): ?>
   <div class="card profile-card <?= $profile_card_modifier ?>">
     <div>
-      <span class="blacklist-toggle button-link button-link--destructive" data-pseudo="<?= $pseudo ?>">Ignorer <?= $pseudo ?></span>
+      <span class="blacklist-toggle button-link" data-pseudo="<?= $pseudo ?>">Ignorer <?= $pseudo ?></span>
     </div>
   </div>
 <?php endif ?>
