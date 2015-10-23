@@ -553,7 +553,6 @@ function is_in_blacklist($pseudo) {
 
 function generate_poll_markup($poll, $topic_mode, $forum, $topic, $slug) {
   $string = <<<STRING
-<div class="card__header">Sondage</div>
 <div class="poll">
   <h3 class="poll__title">{$poll['question']}</h3>
   <div class="poll__answers">
@@ -575,7 +574,7 @@ STRING;
     $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] >= 2 ? 'votes' : 'vote') . ', clôt.';
   }
   else {
-    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] >= 2 ? 'votes' : 'vote') . '. <a href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
+    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] >= 2 ? 'votes' : 'vote') . '. <a class="poll__go-vote" href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
   }
   $string .= <<<STRING
   </div>

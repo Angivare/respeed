@@ -220,6 +220,7 @@ h1, h2, h3 {
 .card--poll {
   margin-top: 0;
   margin-bottom: 16px;
+  background: #EDE7F6;
 }
 
 @media (min-width: 768px) {
@@ -236,16 +237,17 @@ h1, h2, h3 {
 }
 
 .poll__title {
-  margin: 10px 0;
-  color: #455A64;
+  margin: 0 0 10px;
+  color: #512DA8;
 }
 
 .poll__answer {
   position: relative;
   padding: 2px 5px;
   margin-bottom: 10px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
   border-radius: 2px;
+  background: white;
 }
 
 .poll__answer:first-child {
@@ -255,7 +257,7 @@ h1, h2, h3 {
 .poll__answer-bar {
   position: absolute;
   height: 100%;
-  background: #E3F2FD;
+  background: #D1C4E9;
   margin: -2px -5px;
   border-radius: 2px;
 }
@@ -263,7 +265,7 @@ h1, h2, h3 {
 .poll__answer-name {
   position: relative;
   z-index: 1;
-  color: #222;
+  color: #311B92;
   margin-right: 45px;
 }
 
@@ -271,7 +273,7 @@ h1, h2, h3 {
   text-align: right;
   z-index: 1;
   font-weight: bold;
-  color: #424242;
+  color: #673AB7;
   position: absolute;
   top: 2px;
   right: 5px;
@@ -280,6 +282,7 @@ h1, h2, h3 {
 
 .poll__info {
   margin-top: 10px;
+  color: #9575CD;
 }
 
 .poll__closed-notice {
@@ -288,7 +291,7 @@ h1, h2, h3 {
 }
 
 .poll__go-vote {
-  margin-top: 10px;
+  color: #4527A0;
 }
 
 
