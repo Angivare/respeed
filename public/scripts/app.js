@@ -451,7 +451,7 @@ function topicRefresh() {
           $('#' + message.id).data('contentMd5', message.contentMd5)
           $('#' + message.id + ' .js-content').html(message.content)
           $('#' + message.id + ' .spoil').click(toggleSpoil)
-          $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
+          $('#' + message.id + ' .sticker').click(toggleStickerSize)
         }
       }
       else {
@@ -470,7 +470,7 @@ function topicRefresh() {
         $('#' + message.id + ' .message__ignored-notice_show-message-button').click(showBlacklistedMessage)
         $('#' + message.id).click(closeMenu)
         $('#' + message.id + ' .spoil').click(toggleSpoil)
-        $('#' + message.id + ' .js-sticker').click(toggleStickerSize)
+        $('#' + message.id + ' .sticker').click(toggleStickerSize)
       }
     }
 
@@ -873,7 +873,7 @@ instantClick.on('change', function(isInitialLoad) {
   $('.js-menu').click(toggleMenu)
   $('.message').click(closeMenu)
   $('.spoil').click(toggleSpoil)
-  $('.js-sticker').click(toggleStickerSize)
+  $('.sticker').click(toggleStickerSize)
   $('.js-button-go-to-form').click(goToForm)
   $('.message__ignored-notice_show-message-button').click(showBlacklistedMessage)
   $('.blacklist-toggle').click(toggleBlacklist)

@@ -189,7 +189,7 @@ function adapt_html($message, $date = '', $id = 0) {
       }
     }
 
-    return '<img class="js-sticker sticker" src="http://jv.stkr.fr/p3w/' . $id . '" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '" alt="' . $shortcut . '">';
+    return '<img class="sticker ' . (!$shortcut ? 'sticker--unknown' : '') . '" src="http://jv.stkr.fr/p3w/' . $id . '" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '" alt="' . $shortcut . '">';
   }, $message);
 
   // Rajout de target="_blank" aux liens externes

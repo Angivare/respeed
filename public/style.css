@@ -1474,6 +1474,7 @@ h1, h2, h3 {
   padding: 0 9px;
   word-wrap: break-word;
   border: 1px solid transparent; /* pour prendre en compte margin de .message__content-text > p */
+  min-height: 48px; /* A message can be empty when there’s only an unknown sticker in it */
 }
 
 @media (min-width: 768px) {
@@ -1678,6 +1679,10 @@ h1, h2, h3 {
     width: 140px;
     height: 140px;
   }
+}
+
+.sticker--unknown {
+  display: none;
 }
 
 /* TOPIC - Message - Actions desktop */
