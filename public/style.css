@@ -1643,6 +1643,10 @@ h1, h2, h3 {
   }
 }
 
+.youtube-link:hover:after {
+  opacity: 1;
+}
+
 .smiley {
   min-width: 16px;
   min-height: 16px;
