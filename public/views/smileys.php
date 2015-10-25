@@ -19,6 +19,10 @@ $title = 'Smileys';
 </table>
 <?php endforeach ?>
 
+  <div class="card card--smiley">
+    <div class="enlarged-sticker-mention">Les stickers postés seuls sur une ligne sont agrandis.</div>
+  </div>
+
   <div class="back-button-container">
     <a class="button" href="javascript:history.back()">Retour</a>
   </div>

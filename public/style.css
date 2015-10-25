@@ -2135,6 +2135,23 @@ h1, h2, h3 {
   }
 }
 
+.card--smiley {
+  width: 95%;
+  max-width: 600px;
+  margin: 10px auto;
+}
+
+@media (min-width: 600px) {
+  .card--smiley {
+    margin: 15px auto;
+  }
+}
+
+.enlarged-sticker-mention {
+  color: #424242;
+  text-align: center;
+}
+
 /* PROFIL */
 
 .profile-avatar {
