@@ -1602,6 +1602,47 @@ h1, h2, h3 {
   vertical-align: bottom;
 }
 
+.youtube-link {
+  position: relative;
+  display: inline-block;
+}
+
+.youtube-link:after {
+  background: url('/images/ic_play_circle_outline_white_36px.svg');
+  background-size: 30px;
+  opacity: .85;
+  width: 30px;
+  height: 30px;
+  display: block;
+  content: '';
+  position: absolute;
+  left: 25px;
+  top: 10.5px;
+}
+
+.youtube-link__thumb {
+  width: 80px;
+  height: 45px;
+  position: relative;
+  top: 3px;
+}
+
+@media (min-width: 1025px) {
+  .youtube-link:after {
+    background: url('/images/ic_play_circle_outline_white_36px.svg');
+    background-size: 36px;
+    width: 36px;
+    height: 36px;
+    left: 30px;
+    top: 12.5px;
+  }
+
+  .youtube-link__thumb {
+    width: 96px;
+    height: 54px;
+  }
+}
+
 .smiley {
   min-width: 16px;
   min-height: 16px;
