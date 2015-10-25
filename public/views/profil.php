@@ -48,7 +48,7 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <?php endif ?>
 
 <?php if (isset($signature)): ?>
-  <div class="card profile-card <?= $profile_card_modifier ?>">
+  <div class="card profile-card profile-card--text <?= $profile_card_modifier ?>">
     <div class="card__header">Signature</div>
       <?= $signature ?>
   </div>
