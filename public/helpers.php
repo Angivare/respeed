@@ -464,14 +464,17 @@ function mb_ord($char, $encoding = 'UTF-8') {
 }
 
 function looks_spammy($title) {
-  $hangul_syllables = 0;
+  $hangul_syllables = $cjk_ideographs = 0;
   foreach (preg_split('//u', $title, -1, PREG_SPLIT_NO_EMPTY) as $c) {
     $ord = mb_ord($c);
     if ($ord >= 0xAC00 && $ord <= 0xD7AF) {
       $hangul_syllables++;
     }
+    if ($ord >= 0x4E00 && $ord <= 0x9FFF) {
+      $cjk_ideographs++;
+    }
   }
-  if ($hangul_syllables >= 6) { // Korean spam
+  if ($hangul_syllables >= 6 || $cjk_ideographs >= 6) {
     return true;
   }
   return false;
