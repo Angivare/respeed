@@ -322,24 +322,32 @@ h1, h2, h3 {
   }
 }
 
-.header__home-link {
+.header__home-cell {
   display: table-cell;
-  color: #455A64;
   width: 1px;
-  padding: 10px 20px;
 }
 
-.header__forum-link {
+.header__home-link {
+  color: #455A64;
+  padding: 10px 20px;
+  display: inline-block;
+}
+
+.header__forum-cell {
   display: table-cell;
   text-transform: none;
-  color: #64DD17;
-  padding: 10px 20px;
   background: hsla(88, 100%, 97%, .6); /* A100 = 78% */
   box-shadow: inset 0 -2px 3px rgba(0,0,0,0.05);
   white-space: nowrap;
 }
 
-@media (MAX-width: 767px) {
+.header__forum-link {
+  color: #64DD17;
+  padding: 10px 20px;
+  display: inline-block;
+}
+
+@media (MAX-width: 399px) {
   .header__home-link--accompanied,
   .header__forum-link {
     padding: 10px 10px;
