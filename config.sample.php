@@ -7,7 +7,8 @@ define('REVISION_NUMBER_JS_LOADING_INDICATOR', 0);
 define('REVISION_NUMBER_JS_JQUERY', 0);
 define('REVISION_NUMBER_JS_FASTCLICK', 0);
 
-// https://api.wordpress.org/secret-key/1.1/salt/
+define('REQUEST_TIMEOUT', 2000);
+
 define('SALT', '');
 
 define('DB_HOST', 'localhost');
