@@ -141,20 +141,6 @@ class Jvc {
   }
 
   /**
-   * Renvoie la page du lien permanent du post
-   * @param int $id 
-   * @return mixed la page, séparée en 'header' et 'body' ou FALSE
-   */
-  public function message_get($id) {
-    $rep = $this->request("/respeed/forums/message/{$id}");
-    $location = self::redirects($rep['header']);
-    if (!$location) {
-      return $this->_err('Impossible de trouver le lien permanent');
-    }
-    return $this->request($location);
-  }
-
-  /**
    * Prépare un formulaire pour l'envoi d'un message
    * 
    * Le formulaire contient 'fs_signature' si un captcha est présent
