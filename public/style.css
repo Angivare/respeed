@@ -1580,6 +1580,12 @@ h1, h2, h3 {
   background: rgba(33,150,243,.03);
 }
 
+@media (min-width: 400px) {
+  .quote {
+    padding: 1px 9px;
+  }
+}
+
 @media (min-width: 600px) {
   .quote {
     padding: 1px 10px;
