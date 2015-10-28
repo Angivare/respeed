@@ -322,6 +322,10 @@ h1, h2, h3 {
   }
 }
 
+.header--localhost {
+  background: #B39DDB;
+}
+
 .header__home-cell {
   display: table-cell;
   width: 1px;
