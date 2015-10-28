@@ -145,7 +145,7 @@ h1, h2, h3 {
   margin: 10px 8px 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
   .page-title {
     margin-left: 10px;
     margin-right: 10px;
@@ -185,7 +185,7 @@ h1, h2, h3 {
   word-wrap: break-word;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
   .card {
     margin: 10px 10px;
     padding: 10px 12px;
@@ -204,7 +204,7 @@ h1, h2, h3 {
   text-indent: 10px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
   .card__header {
     margin: 0 -12px;
     text-indent: 12px;
@@ -219,7 +219,7 @@ h1, h2, h3 {
   background: #EDE7F6;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   .card--poll {
     margin-bottom: 20px;
   }
@@ -748,7 +748,7 @@ h1, h2, h3 {
   margin: 10px 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
   .liste-topics {
     padding: 0 10px;
   }
@@ -824,6 +824,12 @@ h1, h2, h3 {
   display: table-cell;
 }
 
+@media (min-width: 400px) {
+  .topic__label {
+    width: 5px;
+  }
+}
+
 .topic__label--dossier1 {
   background: #eeff41;
 }
@@ -859,7 +865,13 @@ h1, h2, h3 {
   background: white;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
+  .topic__main-info {
+    padding-left: 6px;
+  }
+}
+
+@media (min-width: 600px) {
   .topic__main-info {
     padding-left: 8px;
   }
@@ -904,12 +916,23 @@ h1, h2, h3 {
   display: table-cell;
   white-space: nowrap;
   text-align: center;
-  padding: 0 3px;
   vertical-align: middle;
   color: #1565C0;
   background: white;
   min-width: 50px;
   padding: 0 5px;
+}
+
+@media (min-width: 400px) {
+  .topic__last-page-link {
+    padding: 0 6px;
+  }
+}
+
+@media (min-width: 600px) {
+  .topic__last-page-link {
+    padding: 0 8px;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -1152,7 +1175,13 @@ h1, h2, h3 {
   -webkit-tap-highlight-color: transparent;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
+  .message {
+    margin: 0 10px 11px;
+  }
+}
+
+@media (min-width: 600px) {
   .message {
     margin: 0 10px 13px;
   }
@@ -1213,7 +1242,13 @@ h1, h2, h3 {
   white-space: nowrap;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
+  .message__byline-author {
+    padding-left: 2px;
+  }
+}
+
+@media (min-width: 600px) {
   .message__byline-author {
     padding-left: 5px;
   }
@@ -1259,7 +1294,13 @@ h1, h2, h3 {
   vertical-align: middle;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
+  .message__byline-author-avatar {
+    margin-right: 6px;
+  }
+}
+
+@media (min-width: 600px) {
   .message__byline-author-avatar {
     margin-right: 8px;
   }
@@ -1325,7 +1366,13 @@ h1, h2, h3 {
   white-space: nowrap;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
+  .message__byline-date {
+    padding-right: 2px;
+  }
+}
+
+@media (min-width: 600px) {
   .message__byline-date {
     padding-right: 5px;
   }
@@ -1350,6 +1397,12 @@ h1, h2, h3 {
   color: #0A77B8;
   font-size: 13px;
   vertical-align: top;
+}
+
+@media (min-width: 400px) {
+  .message__byline-date-inline {
+    padding-right: 22px;
+  }
 }
 
 @media (min-width: 1025px) {
@@ -1403,7 +1456,7 @@ h1, h2, h3 {
   }
 }
 
-@media (MAX-width: 767px) {
+@media (MAX-width: 399px) {
   .message--menu-opened {
     -webkit-transform: translateX(-60px);
             transform: translateX(-60px);
@@ -1425,7 +1478,7 @@ h1, h2, h3 {
   right: -192px;
 }
 
-@media (MAX-width: 767px) {
+@media (MAX-width: 399px) {
   .message__actions {
     right: -70px;
   }
@@ -1485,7 +1538,13 @@ h1, h2, h3 {
   min-height: 48px; /* A message can be empty when there’s only an unknown sticker in it */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
+  .message__content {
+    padding: 0 11px;
+  }
+}
+
+@media (min-width: 600px) {
   .message__content {
     padding: 0 14px;
   }
@@ -1521,7 +1580,7 @@ h1, h2, h3 {
   background: rgba(33,150,243,.03);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   .quote {
     padding: 1px 10px;
   }
@@ -1618,7 +1677,7 @@ h1, h2, h3 {
 .youtube-link:after {
   background: url('/images/ic_play_circle_outline_white_36px.svg');
   background-size: 30px;
-  opacity: .85;
+  opacity: .75;
   width: 30px;
   height: 30px;
   display: block;
@@ -2243,7 +2302,7 @@ h1, h2, h3 {
   font-size: 24px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 400px) {
   .profile-ban-mention {
     font-size: 32px;
   }
