@@ -263,7 +263,13 @@ function getDraftName() {
 }
 
 function saveDraft() {
-  localStorage.setItem(getDraftName(), $('.form__textarea').val())
+  var val = $('.form__textarea').val()
+  if (val.trim()) {
+    localStorage.setItem(getDraftName(), val)
+  }
+  else {
+    localStorage.removeItem(getDraftName())
+  }
   lastDraftSaved = getDraftName()
 }
 
