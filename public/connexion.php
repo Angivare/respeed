@@ -44,7 +44,7 @@ if ($has_captcha) {
 <title>Connexion</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
-<meta name="theme-color" content="hsl(240, 11%, 40%)">
+<meta name="theme-color" content="#4FC3F7">
 
 <style><?= file_get_contents('style_notconnected.css') ?></style>
 

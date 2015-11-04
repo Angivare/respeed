@@ -8,7 +8,7 @@
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
-<meta name="theme-color" content="#78909C">
+<meta name="theme-color" content="#039BE5">
 <style id="blacklist-style"><?= generate_blacklist_style($blacklist) ?></style>
 
 <?= $body ?>
