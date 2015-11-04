@@ -143,6 +143,11 @@ h1, h2, h3 {
 .page-title {
   font-size: 1.3em;
   margin: 10px 8px 0;
+  text-shadow: 0 1px 0 white;
+}
+
+.page-title--larger {
+  font-size: 1.5em;
 }
 
 @media (min-width: 400px) {
@@ -150,6 +155,10 @@ h1, h2, h3 {
     margin-left: 10px;
     margin-right: 10px;
     font-size: 1.5em;
+  }
+
+  .page-title--larger {
+    font-size: 1.7em;
   }
 }
 
@@ -159,13 +168,17 @@ h1, h2, h3 {
     margin-right: 0;
     font-size: 1.8em;
   }
+
+  .page-title--larger {
+    font-size: 2em;
+  }
 }
 
 .page-title__link {
   display: inline-block;
   padding: 10px;
   margin: -10px;
-  color: #64DD17;
+  color: #455A64;
 }
 
 .page-title--topic {
@@ -310,7 +323,7 @@ h1, h2, h3 {
   width: 100%;
   margin-top: -5px;
   font-weight: bold;
-  background: #B0BEC5;
+  background: #B3E5FC;
   box-shadow: inset 0 -2px 3px rgba(0,0,0,0.1);
 }
 
@@ -323,7 +336,7 @@ h1, h2, h3 {
 }
 
 .header--localhost {
-  background: #B39DDB;
+  text-shadow: 0 0 10px white, 0 0 20px #6200EA, 0 0 30px #6200EA;
 }
 
 .header__home-cell {
@@ -332,7 +345,7 @@ h1, h2, h3 {
 }
 
 .header__home-link {
-  color: #455A64;
+  color: #0288D1;
   padding: 10px 20px;
   display: inline-block;
 }
@@ -340,13 +353,13 @@ h1, h2, h3 {
 .header__forum-cell {
   display: table-cell;
   text-transform: none;
-  background: hsla(88, 100%, 97%, .6); /* A100 = 78% */
-  box-shadow: inset 0 -2px 3px rgba(0,0,0,0.05);
+  background: #81D4FA;
+  box-shadow: inset 0 -2px 3px rgba(0,0,0,0.08);
   white-space: nowrap;
 }
 
 .header__forum-link {
-  color: #64DD17;
+  color: #0288D1;
   padding: 10px 20px;
   display: inline-block;
 }

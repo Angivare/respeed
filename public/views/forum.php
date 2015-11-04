@@ -12,7 +12,7 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <div class="sheet">
   <?php include '_header.php' ?>
 
-  <h1 class="page-title"><a class="page-title__link" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
+  <h1 class="page-title page-title--larger"><a class="page-title__link" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
 
   <div class="content">
 <?php
