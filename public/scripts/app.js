@@ -290,7 +290,7 @@ function insertDraft() {
   lastTopic = $topic
   if (draft) {
     if (!$('.form__draft').hasClass('form__draft--visible')) {
-      $('.form__textarea').keypress(hideDraftMention)
+      $('.form__textarea').on('input', hideDraftMention)
     }
 
     if (shouldDisplayImmediately) {
