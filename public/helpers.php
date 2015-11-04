@@ -435,7 +435,7 @@ function replace_stickers_shortcuts_to_code($message) {
   global $stickers;
   foreach ($stickers as $stickers_category) {
     foreach ($stickers_category as $id => $shortcut) {
-      $message = str_replace(':' . $shortcut . ':', '[[sticker:p/' . $id . ']]', $message);
+      $message = str_ireplace(':' . $shortcut . ':', '[[sticker:p/' . $id . ']]', $message);
     }
   }
   return $message;
