@@ -41,7 +41,7 @@ function parse_forum($got) {
   preg_match_all($regex, $got, $ret['matches']);
   $ret['matches'] = strip_matches($ret['matches']);
 
-  $ret['has_next_page'] = strpos($got, '<div class="pagi-after"></div>') === false;
+  $ret['has_next_page'] = strpos($got, '<div class="pagi-after">') !== false;
 
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
   $ret['sous_forums'] = sub_forums($got);
