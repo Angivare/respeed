@@ -49,9 +49,13 @@ function getForumInfos($location, $retry = 0) {
     $retry++;
     if ($retry >= 3) {
       echo " Fail infos $rep \n";
-      return;
+      return false;
     }
     return getForumInfos($location, $retry);
+  }
+
+  if (strpos($rep, '<div class="alert-row"> Ce forum est inaccessible. </div>') !== false) {
+    return false;
   }
 
   preg_match('#<h1 class="highlight">Forum (.+)</h1>#Usi', $rep, $matches);
