@@ -7,6 +7,8 @@ define('REVISION_NUMBER_JS_LOADING_INDICATOR', 0);
 define('REVISION_NUMBER_JS_JQUERY', 0);
 define('REVISION_NUMBER_JS_FASTCLICK', 0);
 
+define('MAX_CONCURRENT_REQUESTS', 10);
+
 // https://api.wordpress.org/secret-key/1.1/salt/
 define('SALT', '');
 

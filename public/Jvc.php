@@ -517,6 +517,14 @@ class Jvc {
   }
 
   public function request($url, $connected_or_post_data = true) {
+    $db = new Db();
+
+    $result = $db->get_max_concurrent_request();
+    if ($result && $result['started_at'] > microtime(true) - 10) { // Some requests might never be ended, so we ignore "concurrent" requests started over 10 seconds ago.
+      usleep(100 * 1000);
+      return $this->request($url, $connected_or_post_data);
+    }
+
     $connected = !!$connected_or_post_data;
     $post_data = is_string($connected_or_post_data) ? $connected_or_post_data : false;
 
@@ -544,8 +552,8 @@ class Jvc {
       $url = 'http://www.jeuxvideo.com' . $url;
     }
 
+    $log_id = $db->log_request_start($url, !!$post_data, $connected);
     $start = microtime(true);
-    $db = new Db();
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -564,7 +572,7 @@ class Jvc {
     $errno = curl_errno($ch);
 
     $timing = (int)((microtime(true) - $start) * 1000);
-    $db->log_request($url, $post_data !== false, $connected, $timing, $errno);
+    $db->log_request_update($log_id, $timing, $errno);
 
     if (!$rep) {
       if ($errno === CURLE_OPERATION_TIMEOUTED) {

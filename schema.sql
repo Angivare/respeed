@@ -50,16 +50,16 @@ CREATE TABLE `icstats2` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `logs_requests3` (
+CREATE TABLE `logs_requests4` (
   `id` int unsigned NOT NULL auto_increment,
-  `logged_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `started_at` double NOT NULL,
   `url` varchar(255) NOT NULL,
   `is_post` tinyint NOT NULL,
   `is_connected` tinyint NOT NULL,
   `timing` smallint NOT NULL,
   `errno` tinyint NOT NULL,
   `ip` varchar(15) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`, `errno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `blacklists` (

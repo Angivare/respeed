@@ -164,16 +164,37 @@ class Db {
     }
   }
 
-  public function log_request($url, $is_post, $is_connected, $timing, $errno) {
-    $url = substr($url, strlen('http://www.jeuxvideo.com'));
+  private function short_url_for_log_request($url) {
+    if (strpos($url, 'http://www.jeuxvideo.com') === 0) {
+      $url = substr($url, strlen('http://www.jeuxvideo.com'));
+    }
     $query_pos = strpos($url, '?');
     if ($query_pos) {
       $url = substr($url, 0, $query_pos + 1);
     }
+    return $url;
+  }
+
+  public function log_request_start($url, $is_post, $is_connected) {
+    $url = $this->short_url_for_log_request($url);
     $this->query(
-      'INSERT INTO logs_requests3(url, is_post, is_connected, timing, errno, ip) VALUES(?, ?, ?, ?, ?, ?)',
-      [$url, $is_post, $is_connected, $timing, $errno, $_SERVER['REMOTE_ADDR']]
+      'INSERT INTO logs_requests4(started_at, url, is_post, is_connected, errno, ip) VALUES(?, ?, ?, ?, ?, ?)',
+      [microtime(true), $url, $is_post, $is_connected, -1, $_SERVER['REMOTE_ADDR']]
     );
+    return $this->db->lastInsertId();
+  }
+
+  public function log_request_update($id, $timing, $errno) {
+    $this->query(
+      'UPDATE logs_requests4 SET timing = ?, errno = ? WHERE id = ?',
+      [$timing, $errno, $id]
+    );
+  }
+
+  public function get_max_concurrent_request() {
+    return $this->query(
+      'SELECT started_at FROM logs_requests4 WHERE errno = -1 ORDER BY id DESC LIMIT ' . (MAX_CONCURRENT_REQUESTS - 1) . ', 1'
+    )->fetch();
   }
 
   public function get_blacklist($person) {
