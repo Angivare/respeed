@@ -100,6 +100,6 @@ function loop($start, $max_err) {
   }
 }
 
-loop(1, 100);
-loop(1000000, 100);
-loop(3000000, 100);
+loop(1, 45); # biggest gap = 9876..9920 = 43
+loop(1000000, 5); # biggest gaps = 2
+loop(3000000, 100); # biggest gap = 3001115..3001210 = 94
