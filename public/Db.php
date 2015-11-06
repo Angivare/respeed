@@ -38,26 +38,27 @@ class Db {
     }
     $sql = str_repeat('human LIKE ? AND ', count($keywords) - 1);
     return $this->query(
-      'SELECT * FROM forums WHERE ' . $sql . 'human LIKE ? ',
+      'SELECT * FROM forums WHERE ' . $sql . 'human LIKE ? ORDER BY connected DESC, forum_id DESC',
       $keywords
     )->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function add_forum($forum) {
     return $this->query(
-      'INSERT INTO forums (forum_id, slug, human) VALUES (:id, :slug, :human) ' .
-      'ON DUPLICATE KEY UPDATE slug=:slug, human=:human',
+      'INSERT INTO forums (forum_id, slug, human, connected) VALUES (:id, :slug, :human, :connected) ' .
+      'ON DUPLICATE KEY UPDATE slug=:slug, human=:human, connected=:connected',
       [
         ':id' => $forum['id'],
         ':slug' => $forum['slug'],
         ':human' => $forum['human'],
+        ':connected' => $forum['connected'],
       ]
     );
   }
 
   public function delete_forum($id) {
     return $this->query(
-      'DELETE FROM forums WHERE forum_id=?',
+      'DELETE FROM forums WHERE forum_id = ?',
       [$id]
     );
   }

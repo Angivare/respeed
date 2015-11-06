@@ -517,7 +517,6 @@ class Jvc {
   }
 
   public function request($url, $connected_or_post_data = true, $retry_id = null, $retry_count = 0) {
-    $this->fatal_err('Timeout.', 'La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a été arrêtée.', 504);
     $db = new Db();
 
     $result = $db->get_max_concurrent_request();
