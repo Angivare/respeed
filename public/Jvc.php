@@ -75,66 +75,29 @@ class Jvc {
     $this->request('/profil/angivare?mode=page_perso');
   }
 
-  /**
-   * Effectue la première étape de la connexion
-   * @param string $nick 
-   * @param string $pass 
-   * @param bool &$has_captcha il y a-t-il un captcha ?
-   * @return mixed FALSE si la requête a échoué, formulaire à réutiliser
-   * dans connect_finish() sinon
-   */
-  public function connect_req($nick, $pass, &$has_captcha) {
+  public function connect($pseudo, $password, $captcha) {
+    if (!$captcha) {
+      return $this->_err('Le captcha n’a pas été rempli.');
+    }
+
     $rep = $this->request('/login');
 
     $form = self::parse_form($rep['body']);
-    $post_data = 'login_pseudo=' . urlencode($nick) .
-                 '&login_password=' . urlencode($pass) .
+    $post_data = 'login_pseudo=' . urlencode($pseudo) .
+                 '&login_password=' . urlencode($password) .
+                 '&g-recaptcha-response=' . urlencode($captcha) .
                  '&' . http_build_query($form);
-
-    $rep = $this->request('/login', $post_data);
-    $ret = self::parse_form($rep['body']);
-    $has_captcha = strpos($rep['body'], '<img src="/captcha/ccode.php') !== false;
-    if (!$has_captcha) {
-      if (preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match)) {
-        return $this->_err($match[1]);
-      }
-    }
-
-    if (count($ret))
-      return $ret;
-
-    return $this->_err('Impossible de préparer le formulaire');
-  }
-
-  /**
-   * Finalise la connexion
-   * @param string $nick 
-   * @param string $pass 
-   * @param array $form 
-   * @param string $ccode 
-   * @param array &$ret_form contient le formulaire à réutiliser dans
-   * le cas d'une erreur
-   * @param bool &$has_captcha il y a-t-il un captcha ?
-   * @return boolean TRUE si la connexion a fonctionné, FALSE sinon
-   */
-  public function connect_finish($nick, $pass, $form, $ccode, &$ret_form, &$has_captcha) {
-    $post_data = 'login_pseudo=' . urlencode($nick) .
-                 '&login_password=' . urlencode($pass) .
-                 '&' . http_build_query($form) .
-                 '&fs_ccode=' . urlencode($ccode);
-
     $rep = $this->request('/login', $post_data);
 
     if ($this->is_connected()) {
       _setcookie('pseudo', $nick);
-      return true;
+      Auth::refresh_uid();
+      header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
+      exit;
     }
 
-    $ret_form = self::parse_form($rep['body']);
-    $has_captcha = strpos($rep['body'], '<img src="/captcha/ccode.php') !== false;
-
-    if (preg_match('#<div class="bloc-erreur">\s*?(.+)\s*</div>#Us', $rep['body'], $match)) {
-      return $this->_err($match[1]);
+    if (preg_match('#<div class="bloc-erreur">\s*(?P<error>.+)\s*</div>#Us', $rep['body'], $matches)) {
+      return $this->_err('x'.$matches['error']);
     }
 
     return $this->_err('Indéfinie');

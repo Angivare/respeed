@@ -13,27 +13,10 @@ if ($jvc->is_connected()) {
 
 $nick = isset($_POST['nick']) ? trim($_POST['nick']) : null;
 $pass = isset($_POST['pass']) ? trim($_POST['pass']) : null;
-$ccode = isset($_POST['ccode']) ? trim($_POST['ccode']) : null;
-$form = isset($_POST['form']) ? unserialize($_POST['form']) : null;
-$has_captcha = false;
-if (isset($nick, $pass)) {
-  if (!isset($ccode, $form)) {
-    $form = $jvc->connect_req($nick, $pass, $has_captcha);
-    if (!$form) {
-      $error = $jvc->err();
-    }
-  }
-  else {
-    $finished = $jvc->connect_finish($nick, $pass, $form, $ccode, $form, $has_captcha);
-    if (!$finished) {
-      $error = $jvc->err();
-    }
-    else {
-      header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
-      Auth::refresh_uid();
-      exit;
-    }
-  }
+$ccode = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
+if (isset($nick, $pass, $ccode)) {
+  $jvc->connect($nick, $pass, $ccode);
+  $error = $jvc->err();
 }
 if ($has_captcha) {
   $captcha_url = 'data:image/png;base64,' . base64_encode($jvc->request('/captcha/ccode.php?' . $form['fs_signature'])['body']);
@@ -54,38 +37,16 @@ if ($has_captcha) {
   <div class="connexion-bloc">
     <h1 class="connexion-bloc__title">Connexion</h1>
 
-<?php if (!isset($form)): ?>
+<?php if (!isset($error)): ?>
     <p class="login-instructions">Utilisez votre pseudo jeuxvideo.com pour profiter de JVForum.</p>
-<?php endif ?>
-
-<?php if (isset($error)): ?>
+<?php else: ?>
     <p class="error"><?= $error ?></p>
 <?php endif ?>
 
     <form class="connect-form" action="/connexion" method="post">
-<?php if (!$has_captcha): ?>
       <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autofocus autocorrect="off">
       <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass ?>">
-<?php else: ?>
-      <input type="hidden" name="nick" value="<?= h($nick) ?>">
-      <input type="hidden" name="pass" value="<?= h($pass) ?>">
-      <input type="hidden" name="form" value="<?= h(serialize($form)) ?>">
-      <img class="connect-form__captcha" src="<?= $captcha_url ?>">
-      <input class="js-captcha connect-form__input connect-form__input--captcha" type="number" name="ccode" placeholder="Code" autofocus>
-      <script>
-var hasTouch = 'createTouch' in document
-function getCaptchaInputType() {
-  if (hasTouch) {
-    if (navigator.userAgent.indexOf(' (iPhone; ') > -1 || navigator.userAgent.indexOf(' (iPod; ') > -1) {
-      return 'tel'
-    }
-    return 'number'
-  }
-  return 'text'
-}
-document.getElementsByClassName('js-captcha')[0].setAttribute('type', getCaptchaInputType())
-      </script>
-<?php endif ?>
+      <div class="connect-form__captcha"><div class="g-recaptcha" data-sitekey="6Lelbg8TAAAAAMwha8p0BZK5LdpgzISjsD_bSuyx"></div></div>
       <input class="connect-form__submit" type="submit" value="Me connecter">
     </form>
 
@@ -119,4 +80,5 @@ ga('send', 'pageview')
 <script>
 localStorage.clear()
 </script>
-<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)"></script>
+<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)" async></script>
+<script src="https://www.google.com/recaptcha/api.js"></script>
