@@ -516,13 +516,17 @@ class Jvc {
     return $link;
   }
 
-  public function request($url, $connected_or_post_data = true) {
+  public function request($url, $connected_or_post_data = true, $retry_id = null, $retry_count = 0) {
     $db = new Db();
 
     $result = $db->get_max_concurrent_request();
-    if ($result && $result['started_at'] > microtime(true) - 10) { // Some requests might never be ended, so we ignore "concurrent" requests started over 10 seconds ago.
+    if ($result && $result['started_at'] > microtime(true) - 10) { // Some requests might never be updated as done, so we ignore "concurrent" requests started over 10 seconds ago.
+      if (!$retry_id) {
+        $retry_id = microtime(true);
+      }
+      $db->log_request_retry($retry_id, $retry_count);
       usleep(100 * 1000);
-      return $this->request($url, $connected_or_post_data);
+      return $this->request($url, $connected_or_post_data, $retry_id, $retry_count + 1);
     }
 
     $connected = !!$connected_or_post_data;

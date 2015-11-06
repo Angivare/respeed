@@ -62,6 +62,11 @@ CREATE TABLE `logs_requests4` (
   PRIMARY KEY (`id`, `errno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `logs_requests_retries` (
+  `id` double NOT NULL,
+  `count` tinyint unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE `blacklists` (
   `id` int unsigned NOT NULL auto_increment,
   `person` varchar(32) NOT NULL,

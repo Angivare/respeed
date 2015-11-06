@@ -175,6 +175,19 @@ class Db {
     return $url;
   }
 
+  public function get_max_concurrent_request() {
+    return $this->query(
+      'SELECT started_at FROM logs_requests4 WHERE errno = -1 ORDER BY id DESC LIMIT ' . (MAX_CONCURRENT_REQUESTS - 1) . ', 1'
+    )->fetch();
+  }
+
+  public function log_request_retry($id, $count) {
+    $this->query(
+      'INSERT INTO logs_requests_retries VALUES(?, ?)',
+      [$id, $count]
+    );
+  }
+
   public function log_request_start($url, $is_post, $is_connected) {
     $url = $this->short_url_for_log_request($url);
     $this->query(
@@ -189,12 +202,6 @@ class Db {
       'UPDATE logs_requests4 SET timing = ?, errno = ? WHERE id = ?',
       [$timing, $errno, $id]
     );
-  }
-
-  public function get_max_concurrent_request() {
-    return $this->query(
-      'SELECT started_at FROM logs_requests4 WHERE errno = -1 ORDER BY id DESC LIMIT ' . (MAX_CONCURRENT_REQUESTS - 1) . ', 1'
-    )->fetch();
   }
 
   public function get_blacklist($person) {
