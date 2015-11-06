@@ -517,6 +517,7 @@ class Jvc {
   }
 
   public function request($url, $connected_or_post_data = true, $retry_id = null, $retry_count = 0) {
+    $this->fatal_err('Timeout.', 'La page sur jeuxvideo.com mettait plus de deux secondes à charger, elle a été arrêtée.', 504);
     $db = new Db();
 
     $result = $db->get_max_concurrent_request();
@@ -605,19 +606,13 @@ class Jvc {
   private function fatal_err($title, $message, $http_status_code = 200) {
     http_response_code($http_status_code);
     $body = <<<HTML
-      <header class="site-header">
-        <h2 class="site-title">
-          <a href="/accueil" class="site-title-link"><span class="site-title-spacer">JV</span>Forum</a>
-        </h2>
-      </header>
-
       <div class="sheet">
         <div class="timeout">
           <h3>{$title}</h3>
 
           <p>{$message}</p>
 
-          <p><a href="{$_SERVER['REQUEST_URI']}">Réessayer</a></p>
+          <p><a href="{$_SERVER['REQUEST_URI']}" data-no-instant>Réessayer</a></p>
         </div>
       </div>
 HTML;
