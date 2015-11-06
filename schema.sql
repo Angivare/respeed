@@ -1,7 +1,7 @@
 CREATE TABLE `forums` (
   `forum_id` int(11) unsigned NOT NULL,
-  `slug` varchar(64) NOT NULL,
-  `human` varchar(64) NOT NULL,
+  `slug` varchar(128) NOT NULL,
+  `human` varchar(128) NOT NULL,
   PRIMARY KEY (`forum_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
