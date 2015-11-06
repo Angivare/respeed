@@ -3,6 +3,7 @@ CREATE TABLE `forums` (
   `slug` varchar(128) NOT NULL,
   `human` varchar(128) NOT NULL,
   `connected` smallint NOT NULL,
+  `parent_human` varchar(128) NOT NULL,
   PRIMARY KEY (`forum_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

@@ -33,7 +33,12 @@ if ($q) {
   foreach ($results as $result) {
     $name = str_replace(['__STRONG__', '__/STRONG__'], ['<strong>', '</strong>'], h(preg_replace($replace_patterns, '__STRONG__$0__/STRONG__', $result['human'])));
     ?>
-  <li><a href="/<?= $result['forum_id'] ?>-<?= $result['slug'] ?>"><?= $name ?></a></li>
+  <li>
+    <a href="/<?= $result['forum_id'] ?>-<?= $result['slug'] ?>"><?= $name ?></a>
+<?php if ($result['parent_human']): ?>
+    <small style="color: #424242">(<?= $result['parent_human'] ?>)</small>
+<?php endif ?>
+  </li>
 <?php }
   if ($results): ?>
   </ul>

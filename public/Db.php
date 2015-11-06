@@ -45,13 +45,14 @@ class Db {
 
   public function add_forum($forum) {
     return $this->query(
-      'INSERT INTO forums (forum_id, slug, human, connected) VALUES (:id, :slug, :human, :connected) ' .
-      'ON DUPLICATE KEY UPDATE slug=:slug, human=:human, connected=:connected',
+      'INSERT INTO forums (forum_id, slug, human, connected, parent_human) VALUES (:id, :slug, :human, :connected, :parent_human) ' .
+      'ON DUPLICATE KEY UPDATE slug=:slug, human=:human, connected=:connected, parent_human=:parent_human',
       [
         ':id' => $forum['id'],
         ':slug' => $forum['slug'],
         ':human' => $forum['human'],
         ':connected' => $forum['connected'],
+        ':parent_human' => $forum['parent_human'],
       ]
     );
   }

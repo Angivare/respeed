@@ -60,6 +60,11 @@ function getForumInfos($location, $retry = 0) {
     return mb_convert_encoding($m[1], "UTF-8", "HTML-ENTITIES");
   }, $title);
 
+  $parent = '';
+  if (preg_match('#<span><a href="[^"]+">Forum principal (?P<parent>[^<]+)</a></span>#Usi', $rep, $matches)) {
+    $parent = $matches['parent'];
+  }
+
   preg_match('#<span class="nb-connect-fofo">(?P<connected>[0-9]+)#', $rep, $matches);
   $connected = $matches['connected'];
 
@@ -68,6 +73,7 @@ function getForumInfos($location, $retry = 0) {
     'slug' => $slug,
     'human' => $title,
     'connected' => $connected,
+    'parent_human' => $parent,
   ];
 }
 
@@ -76,12 +82,13 @@ function loop($start, $max_err) {
   $err = 0;
   $i = $start;
 
-  while($err < $max_err) {
+  while ($err < $max_err) {
     $forum = getForum($i);
-    if($forum === FALSE) {
+    if (!$forum) {
       $err++;
       $db->delete_forum($i);
-    } else {
+    }
+    else {
       $err = 0;
       $db->add_forum($forum);
     }
