@@ -18,9 +18,6 @@ if (isset($nick, $pass, $ccode)) {
   $jvc->connect($nick, $pass, $ccode);
   $error = $jvc->err();
 }
-if ($has_captcha) {
-  $captcha_url = 'data:image/png;base64,' . base64_encode($jvc->request('/captcha/ccode.php?' . $form['fs_signature'])['body']);
-}
 ?>
 <!doctype html>
 <meta charset="utf-8">
