@@ -171,8 +171,8 @@ function adapt_html($message, $date = '', $id = 0) {
   // Transformation des miniatures YouTube JVC
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a class="youtube-link" href="http://youtu.be/$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$1/mqdefault.jpg" alt="http://youtu.be/$1"></a>', $message);
   
-  // Transformation des miniatures vidéos jeuxvideo.com en lien
-  $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="/contenu/medias/video.php\?q=config&amp;id=[0-9]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur jeuxvideo.com</a></p>', $message);
+  // Suppression des miniatures JVC
+  $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="[^"]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur JVC</a></p>', $message);
 
   // Conversion smileys
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" data-code="$2" title="$2" alt="$2">', $message);
