@@ -20,7 +20,7 @@
 var $forum = <?= $forum ? $forum : 'false' ?>
   , $topic = <?= $topic ? ("'" . ($_GET['topic'][0] == '0' ? '0' : '') . $topic . "'") : 'false' ?>
   , $topicNew = <?= isset($topicNew) ? $topicNew : 'false' ?>
-  , $slug = <?= $slug ? "'{$slug}'" : 'false' ?>
+  , $slug = '<?= $slug ?>'
   , $title = <?= $title ? "'{$title}'" : 'false' ?>
   , $page = <?= $page ? $page : 'false' ?>
 <?php foreach ($token as $k => $v): ?>
