@@ -1116,9 +1116,9 @@ h1, h2, h3 {
 
 .pagination-topic__page {
   display: inline-block;
-  min-width: 30px;
-  height: 30px;
-  line-height: 30px;
+  min-width: 34px;
+  height: 34px;
+  line-height: 34px;
   font-size: .95em;
   border-radius: 9em;
 }
@@ -1131,10 +1131,18 @@ h1, h2, h3 {
   }
 }
 
+.pagination-topic__page + .pagination-topic__page {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  padding-left: 2px;
+}
+
 .pagination-topic__page-link {
   display: block;
   border-radius: 9em;
-  padding: 0 2px;
+  margin: -5px;
+  padding: 5px 7px;
+  position: relative;
 }
 
 .pagination-topic__page-link:visited {
@@ -1149,6 +1157,8 @@ h1, h2, h3 {
   background: #ff5722;
   color: white;
   font-weight: bold;
+  margin: 0;
+  padding: 0 2px;
 }
 
 .pagination-topic__page-link--active:hover {
