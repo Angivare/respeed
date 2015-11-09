@@ -915,3 +915,11 @@ if (hasTouch) {
 }
 
 document.addEventListener('visibilitychange', handleVisibilityChange)
+
+if (!('id_transition' in localStorage)) {
+  ajax('generate_id', {}, function(data) {
+    if (data == '1') {
+      localStorage.id_transition = '1'
+    }
+  })
+}
