@@ -11,7 +11,7 @@ $title = 'Smileys';
   <tr>
 <?php endif ?>
     <td class="smiley-cell">
-      <div class="sticker-cell__sticker"><img class="sticker sticker--demo" src="http://jv.stkr.fr/p3w/<?= $id ?>"></div>
+      <div class="sticker-cell__sticker"><img class="sticker sticker--demo" src="/images/stickers/small/<?= $code ?>.png"></div>
       <div class="sticker-cell__code">:<?= $code ?>:</div>
     </td>
 <?php $i++ ?>
