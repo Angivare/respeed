@@ -1,7 +1,7 @@
 <?php
-require 'config.php';
-require 'public/Jvc.php';
-require 'public/Db.php';
+require '../config.php';
+require '../public/Jvc.php';
+require '../public/Db.php';
 
 $db = new Db();
 
