@@ -5,6 +5,8 @@ require 'Db.php';
 require 'Jvc.php';
 require 'Auth.php';
 
+$db = new Db();
+$auth = new Auth($db);
 $jvc = new Jvc();
 if ($jvc->is_connected()) {
   header('Location: /accueil');
@@ -14,9 +16,17 @@ if ($jvc->is_connected()) {
 $nick = isset($_POST['nick']) ? trim($_POST['nick']) : null;
 $pass = isset($_POST['pass']) ? trim($_POST['pass']) : null;
 $ccode = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
-if (isset($nick, $pass, $ccode)) {
-  $jvc->connect($nick, $pass, $ccode);
-  $error = $jvc->err();
+$hash = isset($_POST['hash']) ? $_POST['hash'] : null;
+$ts = isset($_POST['ts']) ? $_POST['ts'] : null;
+$rand = isset($_POST['rand']) ? $_POST['rand'] : null;
+if (isset($nick, $pass, $ccode, $hash, $ts, $rand)) {
+  if (!$auth->validate($hash, $ts, $rand)) {
+    $error = 'La session de JVForum a expirée. Veuillez recommencer.';
+  }
+  else {
+    $jvc->connect($nick, $pass, $ccode);
+    $error = $jvc->err();
+  }
 }
 ?>
 <!doctype html>
@@ -44,6 +54,9 @@ if (isset($nick, $pass, $ccode)) {
       <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autofocus autocorrect="off">
       <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass ?>">
       <div class="connect-form__captcha"><div class="g-recaptcha" data-sitekey="6Lelbg8TAAAAAMwha8p0BZK5LdpgzISjsD_bSuyx"></div></div>
+<?php foreach ($auth->generate() as $k => $v): ?>
+      <input type="hidden" name="<?= $k ?>" value="<?= $v ?>">
+<?php endforeach ?>
       <input class="connect-form__submit" type="submit" value="Me connecter">
     </form>
 

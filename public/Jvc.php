@@ -97,7 +97,7 @@ class Jvc {
     }
 
     if (preg_match('#<div class="bloc-erreur">\s*(?P<error>.+)\s*</div>#Us', $rep['body'], $matches)) {
-      return $this->_err('x'.$matches['error']);
+      return $this->_err($matches['error']);
     }
 
     return $this->_err('Indéfinie');

@@ -10,10 +10,11 @@ class Auth {
   public function __construct($db) {
     $this->db = $db;
     $this->err = 'Indéfinie';
-    $this->uid = isset($_COOKIE['auth-uid']) ? $_COOKIE['auth-uid'] : 0;
+    $this->uid = isset($_COOKIE['auth-uid']) ? $_COOKIE['auth-uid'] : '';
 
-    if(!$this->uid)
+    if (!$this->uid && !Jvc::is_connected()) {
       $this->uid = Auth::refresh_uid();
+    }
   }
 
   public function err() {
@@ -22,8 +23,9 @@ class Auth {
 
   public static function crypto_rand_hex($bytes) {
     $ret = 0;
-    while(!$ret)
+    while (!$ret) {
       $ret = bin2hex(openssl_random_pseudo_bytes($bytes));
+    }
     return $ret;
   }
 
@@ -49,10 +51,6 @@ class Auth {
 
   public function validate($hash, $ts, $rand) {
     if (strlen($rand) % 2) {
-      return $this->_err('Jeton invalide');
-    }
-
-    if(!$this->uid) {
       return $this->_err('Jeton invalide');
     }
 
