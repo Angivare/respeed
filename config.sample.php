@@ -11,7 +11,7 @@ define('MAX_CONCURRENT_REQUESTS', 10);
 define('REQUEST_TIMEOUT', 2000);
 
 define('SALT', '');
-define('ID_KEY', base64_decode('aybwESXtbfPsZ4ZyX71dow=='));
+define('ID_KEY', '');
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');

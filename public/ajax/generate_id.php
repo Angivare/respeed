@@ -21,7 +21,7 @@ exit(base64_encode($key));*/
 $message = "1";
 #exit(ID_KEY);
 try {
-    $ciphertext = Crypto::encrypt($message, ID_KEY);
+    $ciphertext = Crypto::encrypt($message, base64_decode(ID_KEY));
 } catch (Ex\CryptoTestFailedException $ex) {
     die('Cannot safely perform encryption');
 } catch (Ex\CannotPerformOperationException $ex) {
@@ -29,7 +29,7 @@ try {
 }
 
 try {
-    $decrypted = Crypto::decrypt($ciphertext, ID_KEY);
+    $decrypted = Crypto::decrypt($ciphertext, base64_decode(ID_KEY));
 } catch (Ex\InvalidCiphertextException $ex) { // VERY IMPORTANT
     // Either:
     //   1. The ciphertext was modified by the attacker,
