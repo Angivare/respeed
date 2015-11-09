@@ -150,7 +150,7 @@ class Db {
     );
     return $this->db->lastInsertId();
   }
-  
+
   public function log_message_update($id, $message_id, $topic_mode = null, $topic_id = null) {
     if (is_null($message_id)) { // Topic
       $this->query(
@@ -227,5 +227,14 @@ class Db {
       'UPDATE blacklists SET blacklist = ?, updated_at = CURRENT_TIMESTAMP WHERE person = ?',
       [$blacklist, $person]
     );
+  }
+
+  public function user_has_id($pseudo) {
+    return !!$this->query('SELECT id FROM users WHERE pseudo = ?', [$pseudo])->fetch();
+  }
+
+  public function create_user_id($pseudo) {
+    $this->query('INSERT INTO users(pseudo) VALUES(?)', [$pseudo]);
+    return $this->db->lastInsertId();
   }
 }

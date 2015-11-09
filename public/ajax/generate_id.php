@@ -1,46 +1,24 @@
 <?php
-#require 'common.php';
-require '../../config.php';
+require 'common.php';
+
+if (isset($_COOKIE['id'])) {
+  exit('1');
+}
 
 use \Defuse\Crypto\Crypto;
-use \Defuse\Crypto\Exception as Ex;
-
 require_once '../../php-encryption/autoload.php';
 
-/*try {
-    $key = Crypto::createNewRandomKey();
-    // WARNING: Do NOT encode $key with bin2hex() or base64_encode(),
-    // they may leak the key to the attacker through side channels.
-} catch (Ex\CryptoTestFailedException $ex) {
-    die('Cannot safely create a key');
-} catch (Ex\CannotPerformOperationException $ex) {
-    die('Cannot safely create a key');
-}
-exit(base64_encode($key));*/
+$pseudo = $jvc->get_pseudo();
 
-$message = "1";
-#exit(ID_KEY);
-try {
-    $ciphertext = Crypto::encrypt($message, base64_decode(ID_KEY));
-} catch (Ex\CryptoTestFailedException $ex) {
-    die('Cannot safely perform encryption');
-} catch (Ex\CannotPerformOperationException $ex) {
-    die('Cannot safely perform encryption');
+if ($db->user_has_id($pseudo)) {
+  exit('2');
 }
 
-try {
-    $decrypted = Crypto::decrypt($ciphertext, base64_decode(ID_KEY));
-} catch (Ex\InvalidCiphertextException $ex) { // VERY IMPORTANT
-    // Either:
-    //   1. The ciphertext was modified by the attacker,
-    //   2. The key is wrong, or
-    //   3. $ciphertext is not a valid ciphertext or was corrupted.
-    // Assume the worst.
-    die('DANGER! DANGER! The ciphertext has been tampered with!');
-} catch (Ex\CryptoTestFailedException $ex) {
-    die('Cannot safely perform decryption');
-} catch (Ex\CannotPerformOperationException $ex) {
-    die('Cannot safely perform decryption');
-}
+$id = $db->create_user_id($pseudo);
 
-echo $ciphertext;
+$coniunctio_id = explode('$', $jvc->cookie['coniunctio'])[0];
+
+$ciphertext = Crypto::encrypt($id . ' ' . $pseudo . ' ' . $coniunctio_id, base64_decode(ID_KEY));
+
+_setcookie('id', base64_encode($ciphertext));
+echo '9';

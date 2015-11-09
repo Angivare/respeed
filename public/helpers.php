@@ -596,3 +596,10 @@ STRING;
 STRING;
   return $string;
 }
+
+function user_id() {
+  if (!isset($_COOKIE['id'])) {
+    exit('no cookie id');
+  }
+  $pseudo = explode(' ', $_COOKIE['']);
+}

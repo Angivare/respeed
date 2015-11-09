@@ -479,6 +479,15 @@ class Jvc {
     return $link;
   }
 
+  public function get_pseudo() {
+    $body = $this->request('/contact.php')['body'];
+    preg_match('#<div class="nom-head-avatar">([^<]+)</div>#', $body, $matches);
+    if (!$matches) {
+      return false;
+    }
+    return $matches[1];
+  }
+
   public function request($url, $connected_or_post_data = true, $retry_id = null, $retry_count = 0) {
     $db = new Db();
 

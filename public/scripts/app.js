@@ -918,8 +918,8 @@ document.addEventListener('visibilitychange', handleVisibilityChange)
 
 if (!('id_transition' in localStorage)) {
   ajax('generate_id', {}, function(data) {
-    if (data == '1') {
-      localStorage.id_transition = '1'
+    if (data.length == 1 && data != '0') {
+      localStorage.id_transition = 'ok'
     }
   })
 }
