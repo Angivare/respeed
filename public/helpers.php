@@ -112,13 +112,13 @@ function adapt_html($message, $date = '', $id = 0) {
 
   // JVCare
   $message = jvcare($message);
-  
+
   // Vire la signature qui apparaît parfois
   $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
   if ($pos_signature !== false) {
     $message = substr($message, 0, $pos_signature) . '</div>'; // </div> pour .message__content-text
   }
-  
+
   // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
   $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
 
@@ -160,25 +160,25 @@ function adapt_html($message, $date = '', $id = 0) {
     $new_str = str_replace($matches['url'], $path, $new_str);
     return $new_str;
   }, $message);
-  
+
   // Fix liens mails, il manque le "mailto:" car on prend le contenu de l’élement a (pour outrepasser JvCare) et pas son attribut href
   $message = preg_replace('`<a href="((&#[x0-9a-f]+;)+)"`Usi', '<a href="mailto:$1"', $message);
-  
+
   // Affichage des miniatures YouTube
   $message = preg_replace('#<a href="(https?://(?:[a-z]+\.)?youtube\.com/watch[^"]*(?:\?|&amp;)v=([a-zA-Z0-9-_]{11})([^"])*)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$2/mqdefault.jpg" alt="$1"></a>', $message);
   $message = preg_replace('#<a href="(https?://youtu\.be/([a-zA-Z0-9-_]{11})([^"])*)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$2/mqdefault.jpg" alt="$1"></a>', $message);
-  
+
   // Affichage des miniatures Dailymotion
   $message = preg_replace('#<a href="(https?://www\.dailymotion\.com/video/([a-z0-9]{7})[^"]+)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://www.dailymotion.com/thumbnail/video/$2" alt="$1"></a>', $message);
   $message = preg_replace('#<a href="(https?://dai\.ly/([^"+]))"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb)" src="http://www.dailymotion.com/thumbnail/video/$2" alt="$1"></a>', $message);
-  
+
   // Transformation des miniatures vidéos
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a class="youtube-link" href="http://youtu.be/$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$1/mqdefault.jpg" alt="http://youtu.be/$1"></a>', $message);
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.dailymotion.com/embed/video/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a class="youtube-link" href="http://dai.ly/$1" target="_blank"><img class="youtube-link__thumb" src="http://www.dailymotion.com/thumbnail/video/$1" alt="http://dai.ly/$1"></a>', $message);
 
   // Suppression des miniatures Vimeo
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//player.vimeo.com/video/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a href="https://vimeo.com/$1" class="xXx" rel="nofollow" target="_blank">https://vimeo.com/$1</a>', $message);
-  
+
   // Suppression des miniatures JVC
   $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="[^"]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur JVC</a></p>', $message);
 
@@ -192,16 +192,18 @@ function adapt_html($message, $date = '', $id = 0) {
     $ret = $matches[0];
 
     $id = $matches['id'];
+    $code = '';
     $shortcut = '';
     foreach ($stickers as $stickers_category) {
       foreach ($stickers_category as $id_loop => $shortcut_loop) {
         if ($id == $id_loop) {
+          $code = $shortcut_loop;
           $shortcut = ':' . $shortcut_loop . ':';
         }
       }
     }
 
-    return '<img class="sticker ' . (!$shortcut ? 'sticker--unknown' : '') . '" src="http://jv.stkr.fr/p3w/' . $id . '" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '" alt="' . $shortcut . '">';
+    return '<img class="sticker ' . (!$shortcut ? 'sticker--unknown' : '') . '" src="/images/stickers/small/' . $code . '.png" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '" alt="' . $shortcut . '">';
   }, $message);
 
   // Rajout de target="_blank" aux liens externes
@@ -220,7 +222,7 @@ function adapt_html($message, $date = '', $id = 0) {
     }
     return $ret;
   }, $message);
-  
+
   // Suppression de potentielles failles
   $message = str_ireplace(['<style>', '<script>'], '', $message);
 
@@ -241,7 +243,7 @@ function relative_date_timestamp($timestamp, $topicList = false) {
   global $jours, $mois;
   $now = time();
   $diff = $now - $timestamp;
-  
+
   // Moins d’une minute
   if ($diff < 60) {
     return $diff . ' s';

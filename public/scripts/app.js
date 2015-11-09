@@ -793,14 +793,14 @@ function toggleSpoil(event) {
 function toggleStickerSize() {
   var isAlreadyEnlarged = $(this).hasClass('sticker--enlarged')
     , isBig = $(this).hasClass('sticker--big')
-    , code = $(this).data('sticker-id')
+    , urlCode = $(this).prop('src').split('/').pop()
 
   if (!isAlreadyEnlarged) {
-    $(this).prop('src', 'http://jv.stkr.fr/p7s/' + code)
+    $(this).prop('src', '/images/stickers/big/' + urlCode)
     $(this).addClass('sticker--enlarged')
   }
   else {
-    $(this).prop('src', 'http://jv.stkr.fr/p3w/' + code)
+    $(this).prop('src', '/images/stickers/small/' + urlCode)
     $(this).removeClass('sticker--enlarged')
   }
 }
