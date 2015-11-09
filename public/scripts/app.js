@@ -918,7 +918,7 @@ document.addEventListener('visibilitychange', handleVisibilityChange)
 
 if (!('id_transition' in localStorage)) {
   ajax('generate_id', {}, function(data) {
-    if (data.length == 1 && data != '0') {
+    if (data > 0 && data < 10) {
       localStorage.id_transition = 'ok'
     }
   })
