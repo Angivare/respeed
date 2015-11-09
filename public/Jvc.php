@@ -542,7 +542,7 @@ class Jvc {
     curl_setopt($ch, CURLOPT_TIMEOUT_MS, REQUEST_TIMEOUT);
 
     curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['HTTP_X_FORWARDED_FOR: '. $_SERVER['REMOTE_ADDR']]);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-Forwarded-For: ' . $_SERVER['REMOTE_ADDR']]);
 
     $rep = curl_exec($ch);
     $errno = curl_errno($ch);
