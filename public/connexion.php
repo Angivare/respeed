@@ -53,6 +53,11 @@ if (isset($nick, $pass, $ccode, $hash, $ts, $rand)) {
     <form class="connect-form" action="/connexion<?= isset($_GET['fallback']) ? '?fallback' : '' ?>" method="post">
       <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autofocus autocorrect="off">
       <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass ?>">
+<?php if (isset($_GET['fallback'])): ?>
+      <div class="connect-form__captcha-alternative-instructions">
+        Cochez les cases en bas à droite des images. Vous devrez choisir les images et valider deux fois.
+      </div>
+<?php endif ?>
       <div class="connect-form__captcha"><div class="g-recaptcha" data-sitekey="6Lelbg8TAAAAAMwha8p0BZK5LdpgzISjsD_bSuyx"></div></div>
 <?php foreach ($auth->generate() as $k => $v): ?>
       <input type="hidden" name="<?= $k ?>" value="<?= $v ?>">

@@ -291,6 +291,11 @@ body {
   margin: auto;
 }
 
+.connect-form__captcha-alternative-instructions {
+  color: #333;
+  font-size: 12px;
+}
+
 .connect-form__captcha-alternative {
   color: #666;
   font-size: 11px;
