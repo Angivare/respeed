@@ -490,9 +490,7 @@ class Jvc {
 
   public function request($url, $connected_or_post_data = true, $retry_id = null, $retry_count = 0) {
     $db = new Db();
-
-    $result = $db->get_max_concurrent_request();
-    if ($result && $result['started_at'] > microtime(true) - 10) { // Some requests might never be updated as done, so we ignore "concurrent" requests started over 10 seconds ago.
+    if (!$db->is_another_concurrent_request_allowed()) {
       if (!$retry_id) {
         $retry_id = microtime(true);
       }
@@ -528,6 +526,7 @@ class Jvc {
       $url = 'http://www.jeuxvideo.com' . $url;
     }
 
+    $concurrent_id = $db->log_concurrent_request();
     $log_id = $db->log_request_start($url, !!$post_data, $connected);
     $start = microtime(true);
 
@@ -548,6 +547,7 @@ class Jvc {
     $errno = curl_errno($ch);
 
     $timing = (int)((microtime(true) - $start) * 1000);
+    $db->remove_concurrent_request($concurrent_id);
     $db->log_request_update($log_id, $timing, $errno);
 
     if (!$rep) {

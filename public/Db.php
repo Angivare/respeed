@@ -166,6 +166,41 @@ class Db {
     }
   }
 
+  public function log_concurrent_request() {
+    $this->query(
+      'INSERT INTO current_requests(started_at) VALUES(?)',
+      [microtime(true)]
+    );
+    return $this->db->lastInsertId();
+  }
+
+  public function remove_concurrent_request($id) {
+    $this->query(
+      'DELETE FROM current_requests WHERE id = ?',
+      [$id]
+    );
+    return $this->db->lastInsertId();
+  }
+
+  public function is_another_concurrent_request_allowed() {
+    $alleged_concurrent_requests = $this->query('SELECT COUNT(*) as count FROM current_requests')->fetch()['count'];
+    if ($alleged_concurrent_requests >= MAX_CONCURRENT_REQUESTS) {
+      // Some requests might never be deleted, so we ignore alleged concurrent requests started over 10 seconds ago.
+      $first_concurrent_request = $this->query('SELECT started_at FROM current_requests ORDER BY id DESC LIMIT ' . (MAX_CONCURRENT_REQUESTS - 1) . ', 1')->fetch();
+      if ($first_concurrent_request['started_at'] > microtime(true) - 10) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public function log_request_retry($id, $count) {
+    $this->query(
+      'INSERT INTO logs_requests_retries VALUES(?, ?)',
+      [$id, $count]
+    );
+  }
+
   private function short_url_for_log_request($url) {
     if (strpos($url, 'http://www.jeuxvideo.com') === 0) {
       $url = substr($url, strlen('http://www.jeuxvideo.com'));
@@ -175,19 +210,6 @@ class Db {
       $url = substr($url, 0, $query_pos + 1);
     }
     return $url;
-  }
-
-  public function get_max_concurrent_request() {
-    return $this->query(
-      'SELECT started_at FROM logs_requests4 WHERE errno = -1 ORDER BY id DESC LIMIT ' . (MAX_CONCURRENT_REQUESTS - 1) . ', 1'
-    )->fetch();
-  }
-
-  public function log_request_retry($id, $count) {
-    $this->query(
-      'INSERT INTO logs_requests_retries VALUES(?, ?)',
-      [$id, $count]
-    );
   }
 
   public function log_request_start($url, $is_post, $is_connected) {
