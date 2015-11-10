@@ -292,13 +292,14 @@ body {
 }
 
 .connect-form__captcha-alternative-instructions {
-  color: #333;
+  color: #212121;
   font-size: 12px;
   margin: 8px 0;
+  text-align: center;
 }
 
 .connect-form__captcha-alternative {
-  color: #333;
+  color: #212121;
   font-size: 11px;
   text-align: center;
   margin: 8px 0;
