@@ -3,7 +3,7 @@ require_once 'helpers.php';
 
 /**
  * Représente la session sur JVC du client.
- * 
+ *
  * Tous les appels à JVC doivent être effectués avant la moindre
  * sortie (pour pouvoir mettre à jour le header Set-Cookie)
  * @package default
@@ -89,7 +89,7 @@ class Jvc {
                  '&' . http_build_query($form);
     $rep = $this->request('/login', $post_data);
 
-    if ($this->cookie['coniunctio']) {
+    if (isset($this->cookie['coniunctio'])) {
       _setcookie('pseudo', $pseudo);
       Auth::refresh_uid();
       header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
@@ -105,9 +105,9 @@ class Jvc {
 
   /**
    * Prépare un formulaire pour l'envoi d'un message
-   * 
+   *
    * Le formulaire contient 'fs_signature' si un captcha est présent
-   * @param string $url url du topic 
+   * @param string $url url du topic
    * @return mixed FALSE si une erreur a eu lieu, le formulaire
    * sinon
    */
@@ -121,9 +121,9 @@ class Jvc {
 
   /**
    * Finalise l'envoi d'un message
-   * @param string $url url du topic 
+   * @param string $url url du topic
    * @param string $msg message à envoyer
-   * @param array $form  
+   * @param array $form
    * @param string $ccode code de confirmation
    * @return boolean TRUE si le message est envoyé, FALSE sinon
    */
@@ -151,7 +151,7 @@ class Jvc {
 
   /**
    * Prépare un formulaire pour la création d'un topic
-   * 
+   *
    * Le formulaire contient 'fs_signature' si un captcha est présent
    * @param string $url url du forum
    * @return mixed FALSE si une erreur a eu lieu, le formulaire sinon
@@ -173,11 +173,11 @@ class Jvc {
 
   /**
    * Finalise la création d'un topic
-   * @param string $url 
-   * @param string $title 
-   * @param string $msg 
-   * @param array $form 
-   * @param string $ccode 
+   * @param string $url
+   * @param string $title
+   * @param string $msg
+   * @param array $form
+   * @param string $ccode
    * @return boolean TRUE si le topic est créé, FALSE sinon
    */
   public function topic_post_finish($url, $title, $msg, $form, $poll_question = '', $poll_answers = [], $ccode = '', &$ret_location = null) {
@@ -236,10 +236,10 @@ class Jvc {
 
   /**
    * Prépare un formulaire pour l'édition d'un message
-   * 
+   *
    * Le formulaire contient 'fs_signature' si un captcha est présent
-   * @param string $url 
-   * @param int $id 
+   * @param string $url
+   * @param int $id
    * @return mixed FALSE s'il y a eu une erreur, le formulaire à renvoyer sinon
    */
   public function edit_req($id) {
@@ -260,9 +260,9 @@ class Jvc {
 
   /**
    * Finalise l'édition d'un message
-   * @param int $id 
-   * @param string $msg 
-   * @param array $form 
+   * @param int $id
+   * @param string $msg
+   * @param array $form
    * @param string $ccode code de confirmation
    * @return boolean TRUE s'il y n'y a pas eu d'erreur, FALSE sinon
    */
@@ -362,7 +362,7 @@ class Jvc {
 
   /**
    * Ajoute/enlève un forum/topic aux favoris
-   * @param int $id 
+   * @param int $id
    * @param string $type 'forum' ou 'topic'
    * @param string $action 'add' ou 'delete'
    * @return boolean TRUE/FALSE
@@ -424,7 +424,7 @@ class Jvc {
 
   /**
    * Supprime un message
-   * @param int $id 
+   * @param int $id
    * @return boolean TRUE/FALSE
    */
   public function message_delete($id) {
@@ -441,7 +441,7 @@ class Jvc {
 
   /**
    * Retourne le header "location"
-   * @param string $hdr 
+   * @param string $hdr
    * @return mixed Le header "location" ou FALSE
    */
   public static function redirects($hdr) {
@@ -510,7 +510,7 @@ class Jvc {
         /*
          * When logging in, we’re doing a POST and $connected is true,
          * though we aren’t really connected. We fix that here.
-         * 
+         *
          * `dlrowolleh` is needed when logging in.
          */
         $connected = false;
