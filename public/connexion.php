@@ -100,4 +100,4 @@ ga('send', 'pageview')
 localStorage.clear()
 </script>
 <script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)" async></script>
-<script src="https://www.google.com/recaptcha/api.js<?= isset($_GET['fallback']) ? '?fallback=true' : '' ?>"></script>
+<script src="https://www.google.com/recaptcha/api.js?hl=fr<?= isset($_GET['fallback']) ? '&amp;fallback=true' : '' ?>"></script>
