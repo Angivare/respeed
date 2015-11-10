@@ -49,7 +49,7 @@ class Jvc {
    * @return boolean TRUE si le client est connecté, FALSE sinon
    */
   public function is_connected() {
-    return isset($this->cookie['coniunctio']);
+    return isset($this->cookie['coniunctio']) && isset($_COOKIE['pseudo']);
   }
 
   /**
