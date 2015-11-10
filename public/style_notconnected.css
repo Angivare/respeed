@@ -294,17 +294,20 @@ body {
 .connect-form__captcha-alternative-instructions {
   color: #333;
   font-size: 12px;
+  margin: 8px 0;
 }
 
 .connect-form__captcha-alternative {
-  color: #666;
+  color: #333;
   font-size: 11px;
   text-align: center;
-  margin: 12px 0;
+  margin: 8px 0;
+  font-weight: bold;
 }
 
 .connect-form__captcha-alternative-link {
-  color: grey;
+  color: inherit;
+  font-weight: normal;
 }
 
 .connect-form__submit {
