@@ -444,7 +444,7 @@ h1, h2, h3 {
     margin-right: initial;
     float: initial;
   }
-  
+
   .sheet > .content.login-fake-table {
     display: table;
     width: 100%;
@@ -692,12 +692,12 @@ h1, h2, h3 {
   .form-container {
     padding: 0;
   }
-  
+
   .connexion-bloc1 {
     float: left;
     width: 50%;
   }
-  
+
   .connexion-bloc2 {
     float: left;
     width: 50%;
@@ -2332,12 +2332,12 @@ h1, h2, h3 {
   font-weight: bold;
   text-align: center;
   margin: 40px auto;
-  font-size: 24px;
+  font-size: 32px;
 }
 
 @media (min-width: 400px) {
   .profile-ban-mention {
-    font-size: 32px;
+    font-size: 48px;
   }
 }
 

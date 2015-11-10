@@ -26,7 +26,7 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <?php endif ?>
 
 <?php if (isset($banned)): ?>
-  <div class="profile-ban-mention">Pseudo banni.</div>
+  <div class="profile-ban-mention">Banni</div>
 <?php endif ?>
 
 <?php if (isset($messages) || isset($days)): ?>
