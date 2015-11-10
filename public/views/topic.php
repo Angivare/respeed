@@ -84,10 +84,10 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 </div>
 
 <script>
-var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm' 
-  , tokens = <?= json_encode($jvc->tokens()) ?> 
-  , tokens_last_update = <?= $jvc->tokens_last_update() ?> 
-  , lastPage = <?= $last_page ?> 
-  , myPseudo = '<?= $pseudo ?>' 
+var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm'
+  , tokens = <?= json_encode($jvc->tokens()) ?>
+  , tokens_last_update = <?= $jvc->tokens_last_update() ?>
+  , lastPage = <?= $last_page ?>
+  , myPseudo = '<?= $pseudo ?>'
   , pollAnswers = <?= $poll ? $poll['ans_count'] : -1 ?>
 </script>

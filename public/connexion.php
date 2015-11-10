@@ -50,13 +50,17 @@ if (isset($nick, $pass, $ccode, $hash, $ts, $rand)) {
     <p class="error"><?= $error ?></p>
 <?php endif ?>
 
-    <form class="connect-form" action="/connexion" method="post">
+    <form class="connect-form" action="/connexion<?= isset($_GET['fallback']) ? '?fallback' : '' ?>" method="post">
       <input class="connect-form__input" type="text" name="nick" placeholder="Pseudo" maxlength="15" value="<?= $nick ?>" autofocus autocorrect="off">
       <input class="connect-form__input" type="password" name="pass" placeholder="Mot de passe" value="<?= $pass ?>">
       <div class="connect-form__captcha"><div class="g-recaptcha" data-sitekey="6Lelbg8TAAAAAMwha8p0BZK5LdpgzISjsD_bSuyx"></div></div>
 <?php foreach ($auth->generate() as $k => $v): ?>
       <input type="hidden" name="<?= $k ?>" value="<?= $v ?>">
 <?php endforeach ?>
+      <div class="connect-form__captcha-alternative">
+        Captcha impossible ?
+        <a class="connect-form__captcha-alternative-link" href="/connexion<?= !isset($_GET['fallback']) ? '?fallback' : '' ?>" data-no-instant>Essayer une alternative</a>
+      </div>
       <input class="connect-form__submit" type="submit" value="Me connecter">
     </form>
 
@@ -68,9 +72,9 @@ if (isset($nick, $pass, $ccode, $hash, $ts, $rand)) {
 <?php if (!isset($form)): ?>
   <div class="connexion-disclaimer">
     <h2 class="connexion-disclaimer__title">Pourquoi dois-je donner mon identifiant ?</h2>
-    
+
     <p class="connexion-disclaimer__copy">À la base, JVForum pouvait être utilisé sans être connecté. Cette fonctionnalité a été <a class="mandatory-login-proof" href="http://www.jeuxvideo.com/nplay/forums/message/714206419" target="_blank">retirée sur demande de JVC</a>.</p>
-    
+
     <div class="legalese">JVForum n’est pas affilié à <a class="legalese__link" href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</div>
   </div>
 <?php endif ?>
@@ -91,4 +95,4 @@ ga('send', 'pageview')
 localStorage.clear()
 </script>
 <script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)" async></script>
-<script src="https://www.google.com/recaptcha/api.js"></script>
+<script src="https://www.google.com/recaptcha/api.js<?= isset($_GET['fallback']) ? '?fallback=true' : '' ?>"></script>

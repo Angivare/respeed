@@ -291,6 +291,17 @@ body {
   margin: auto;
 }
 
+.connect-form__captcha-alternative {
+  color: #666;
+  font-size: 11px;
+  text-align: center;
+  margin: 12px 0;
+}
+
+.connect-form__captcha-alternative-link {
+  color: grey;
+}
+
 .connect-form__submit {
   display: block;
   background: #288FFF;
