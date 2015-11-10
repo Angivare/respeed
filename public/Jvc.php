@@ -89,7 +89,7 @@ class Jvc {
                  '&' . http_build_query($form);
     $rep = $this->request('/login', $post_data);
 
-    if ($this->is_connected()) {
+    if ($this->cookie['coniunctio']) {
       _setcookie('pseudo', $pseudo);
       Auth::refresh_uid();
       header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
