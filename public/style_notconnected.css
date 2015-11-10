@@ -288,7 +288,7 @@ body {
 }
 
 .g-recaptcha > div > div {
-  margin: auto;
+  margin: auto !important;
 }
 
 .connect-form__captcha-alternative-instructions {
