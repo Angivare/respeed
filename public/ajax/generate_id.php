@@ -10,6 +10,10 @@ require_once '../../php-encryption/autoload.php';
 
 $pseudo = $jvc->get_pseudo();
 
+if (!$pseudo) {
+  exit;
+}
+
 if ($db->user_has_id($pseudo)) {
   exit('2');
 }
