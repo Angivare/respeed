@@ -3,7 +3,8 @@ $title = 'Smileys';
 ?>
 <body class="body--no-bottom"></body>
 <div class="sheet sheet--nothing-over">
-<?php foreach ($stickers as $stickers_category): ?>
+<?php foreach ($stickers as $id => $stickers_category): ?>
+<?php if ($id == 'Bud') continue; ?>
 <?php $i = 0 ?>
 <table class="smileys-card">
 <?php foreach ($stickers_category as $id => $code): ?>
