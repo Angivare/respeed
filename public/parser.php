@@ -55,15 +55,18 @@ function fetch_forum($forum, $page, $slug) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $cache = $db->get_forum_cache($forum, $page);
-
-  if ($cache && $cache['fetched_at'] > microtime(true) - 2) {
+  if ($forum != 103 && ($cache = $db->get_forum_cache($forum, $page)) && $cache['fetched_at'] > microtime(true) - 2) {
     $ret = json_decode($cache['vars'], true);
   }
   else {
     $page_url = ($page - 1) * 25 + 1;
     $url = "/forums/0-{$forum}-0-1-0-{$page_url}-0-{$slug}.htm";
-    $rep = $jvc->request($url, false);
+    if ($forum != 103) {
+      $rep = $jvc->request($url, false);
+    }
+    else {
+      $rep = $jvc->request($url);
+    }
 
     $header = &$rep['header'];
     $got = &$rep['body'];
@@ -75,7 +78,9 @@ function fetch_forum($forum, $page, $slug) {
     }
 
     $ret = parse_forum($got);
-    $db->set_forum_cache($forum, $page, json_encode($ret));
+    if ($forum != 103) {
+      $db->set_forum_cache($forum, $page, json_encode($ret));
+    }
   }
 
   return $ret;
@@ -197,9 +202,7 @@ function fetch_topic($topic, $page, $slug, $forum) {
   $jvc = new Jvc();
   $db = new Db();
 
-  $cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum);
-
-  if ($cache && $cache['fetched_at'] > microtime(true) - 2) {
+  if ($forum != 103 && ($cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum)) && $cache['fetched_at'] > microtime(true) - 2) {
     $ret = json_decode($cache['vars'], true);
   }
   else {
@@ -208,7 +211,12 @@ function fetch_topic($topic, $page, $slug, $forum) {
       $jvc->tokens_refresh($rep['body']);
     }
     else {
-      $rep = $jvc->request($url, false);
+      if ($forum != 103) {
+        $rep = $jvc->request($url, false);
+      }
+      else {
+        $rep = $jvc->request($url);
+      }
     }
 
     $header = &$rep['header'];
@@ -221,7 +229,9 @@ function fetch_topic($topic, $page, $slug, $forum) {
     }
 
     $ret = parse_topic($got);
-    $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($ret));
+    if ($forum != 103) {
+      $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($ret));
+    }
   }
 
   $ret['topic_mode'] = $topic_mode;
