@@ -80,6 +80,16 @@ $stickers = [
     '1jne' => 'hein',
     '1jnd' => 'malin',
   ],
+  'Grukk' => [
+    '1lgg' => 'perplexe2',
+    '1lgb' => 'grogne',
+    '1lga' => 'trance',
+    '1lgc' => 'question2',
+    '1lgd' => 'fort',
+    '1lge' => 'pouce',
+    '1lgf' => 'combat',
+    '1lgh' => 'grukk',
+  ],
   'Bud' => [
     'zu6' => 'oklm',
     '1f8e' => 'oklm2',
