@@ -12,7 +12,8 @@ class Auth {
     $this->err = 'Indéfinie';
     $this->uid = isset($_COOKIE['auth-uid']) ? $_COOKIE['auth-uid'] : '';
 
-    if (!$this->uid && !Jvc::is_connected()) {
+    $jvc = new Jvc();
+    if (!$this->uid && !$jvc->is_connected()) {
       $this->uid = Auth::refresh_uid();
     }
   }
