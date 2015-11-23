@@ -81,8 +81,8 @@ $stickers = [
     '1jnd' => 'malin',
   ],
   'Bud' => [
-    '1f8e' => 'oklm',
-    'zu6' => 'oklm2',
+    'zu6' => 'oklm',
+    '1f8e' => 'oklm2',
     '1f89' => 'poker',
     'zuc' => '+1',
     'zu2' => 'hahah',
@@ -95,7 +95,7 @@ $stickers = [
     '1f8b' => '5min',
     '1f8f' => 'bbq',
     '1f88' => 'sup',
-    'zu7' => 'rot',
+    'zu7' => 'burp',
     '1f8c' => 'colis',
   ],
   'Lamasticot' => [
