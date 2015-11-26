@@ -1,6 +1,6 @@
 # [JVForum](http://jvforum.fr/)
 
-Bienvenue. Plus de 150 000 messages par mois sont posté avec JVForum, soit plus d’un message sur trente, malgré que beaucoup de choses prévues soient absentes. Contribuer à JVForum est idéal si vous souhaitez améliorer à grande échelle l’utilisation des forums de jeuxvideo.com.
+Bienvenue. Plus de 150 000 messages par mois sont postés avec JVForum, soit plus d’un message sur trente, malgré que beaucoup de choses prévues soient absentes. Contribuer à JVForum est idéal si vous souhaitez améliorer à grande échelle l’utilisation des forums de jeuxvideo.com.
 
 Pour démarrer :
 
