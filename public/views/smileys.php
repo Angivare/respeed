@@ -20,7 +20,7 @@ $title = 'Smileys';
 <?php endforeach ?>
 
   <div class="card card--smiley">
-    <div class="enlarged-sticker-mention">Les stickers postés seuls sur une ligne sont agrandis.</div>
+    <div class="enlarged-sticker-mention">Les stickers postés seuls sur un paragraphe sont agrandis !</div>
   </div>
 
   <div class="back-button-container">
