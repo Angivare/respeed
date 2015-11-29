@@ -235,6 +235,7 @@ h1, h2, h3 {
   background: white;
   box-shadow: 0 2px 10px rgba(0,0,0,.5);
   border-radius: 2px;
+  z-index: 1;
 }
 
 .mobile-menu--opened .mobile-menu__items {
