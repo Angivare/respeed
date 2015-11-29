@@ -121,7 +121,7 @@ function displayFavoritesForums() {
   if (!$('#forums_pref').length) {
     return
   }
-  
+
   $('#forums_pref .menu-content').html('') // Suppression
 
   var hasThisForum = false
@@ -151,7 +151,7 @@ function displayFavoritesTopics() {
   if (!$('#topics_pref').length) {
     return
   }
-  
+
   $('#topics_pref .menu-content').html('') // Suppression
 
   var hasThisTopic = false
@@ -230,7 +230,7 @@ function request_edit_form_data(e) {
   if (edit_form_data) {
     return
   }
-  
+
   var id = $(this).closest('.message').attr('id')
 
   ajax('message_edit', {id_message: id}, function(data) {
@@ -437,7 +437,7 @@ function topicRefresh() {
 
         // Date
         $('#' + message.id + ' .js-date').html(message.date)
-        
+
         // Message
         if ($('#' + message.id).data('contentMd5') != message.contentMd5) {
           // Mise à jour
@@ -490,7 +490,7 @@ function cancelEdit() {
 
 function processICStats() {
   localStorage.ICStatsClicksMinusTouchstart2 = ICStatsClicksMinusTouchstart.join(' ')
-  
+
   if (ICStatsClicksMinusTouchstart.length >= 15) {
     $.post('/collect_icstats.php', {clicks_minus_touchstart: localStorage.ICStatsClicksMinusTouchstart2})
     ICStatsClicksMinusTouchstart = []
@@ -696,7 +696,7 @@ function postEdit(e) {
 function quote() {
   var id = $(this).closest('.message').attr('id')
     , pseudo = $('#' + id).data('pseudo')
-  
+
   var html = $('#' + id + ' .message__content-text').html().trim()
 
   var text = JVCode.toJVCode(html)
@@ -714,7 +714,7 @@ function quote() {
   citation += "> \n"
   citation += "> " + text.split("\n").join("\n> ")
   citation += "\n\n"
-  
+
   $('.js-form-post .form__textarea').focus() // Doit être avant .val pour avoir le curseur placé en bas
   $('.js-form-post .form__textarea').val($('.js-form-post .form__textarea').val() + citation)
 }
@@ -725,7 +725,7 @@ function edit() {
   }
 
   var id = $(this).closest('.message').attr('id')
-  
+
   var html = $('#' + id + ' .message__content-text').html().trim()
 
   var text = htmlentities(JVCode.toJVCode(html))
@@ -820,6 +820,9 @@ function toggleBlacklist() {
   })
 }
 
+function toggleMobileMenu() {
+  $('.mobile-menu').toggleClass('mobile-menu--opened')
+}
 
 
 
@@ -831,7 +834,7 @@ if (googleAnalyticsID) {
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', googleAnalyticsID, 'auto');
-  
+
   instantClick.on('change', function() {
     ga('set', 'dimension1', 'Member')
     ga('send', 'pageview', location.pathname + location.search)
@@ -855,6 +858,8 @@ instantClick.on('change', function(isInitialLoad) {
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
   $('.form__textarea').focus(startDraftWatcher)
+  $('.mobile-menu__opener').click(toggleMobileMenu)
+  $('.mobile-menu__item').click(toggleMobileMenu)
 
   // Messages
   $('.js-quote').click(quote)

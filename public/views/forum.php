@@ -12,7 +12,15 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 <div class="sheet">
   <?php include '_header.php' ?>
 
-  <h1 class="page-title page-title--larger"><a class="page-title__link" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></h1>
+  <h1 class="page-title page-title--larger">
+    <a class="page-title__link" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a>
+    <div class="mobile-menu">
+      <div class="mobile-menu__opener"><div class="mobile-menu__opener-icon"></div></div>
+        <div class="mobile-menu__items">
+          <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
+        </div>
+    </div>
+  </h1>
 
   <div class="content">
 <?php
