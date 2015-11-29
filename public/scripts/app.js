@@ -822,9 +822,8 @@ function toggleBlacklist() {
 
 
 
-/*** App ***/
 
-setInterval(tokenRefresh, (30 - 2) * 60 * 1000)
+/*** App ***/
 
 if (googleAnalyticsID) {
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -849,6 +848,8 @@ instantClick.on('change', function(isInitialLoad) {
   insertDraft()
   handleProfileAvatar()
   handleBlacklist()
+
+  instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 
   $('.form').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
