@@ -31,6 +31,7 @@ var instantClick
         change: [],
         restore: []
       }
+    , $currentPageTimers = []
 
 
   ////////// HELPERS //////////
@@ -112,6 +113,8 @@ var instantClick
        5.1, 6.0 and Mobile 7.0) to execute script tags directly.
     */
 
+    killTimers()
+
     if (newUrl) {
       if (newUrl != location.href) {
         history.pushState(null, null, newUrl)
@@ -170,6 +173,13 @@ var instantClick
      * things happen with implicitly closed elements (see the Noscript test).
      */
     return html.replace(/<noscript[\s\S]+?<\/noscript>/gi, '')
+  }
+
+  function killTimers() {
+    for (var i = 0; i < $currentPageTimers.length; i++) {
+      clearTimeout($currentPageTimers[i])
+    }
+    $currentPageTimers = []
   }
 
 
@@ -579,6 +589,14 @@ var instantClick
     $eventsCallbacks[eventType].push(callback)
   }
 
+  function timer() {
+    $currentPageTimers.push(setTimeout.apply(window, arguments))
+  }
+
+  function interval() {
+    $currentPageTimers.push(setInterval.apply(window, arguments))
+  }
+
 
   ////////////////////
 
@@ -586,7 +604,9 @@ var instantClick
   return {
     supported: supported,
     init: init,
-    on: on
+    on: on,
+    timer: timer,
+    interval: interval
   }
 
 }(document, location, navigator.userAgent);
