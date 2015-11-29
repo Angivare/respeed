@@ -251,8 +251,12 @@ class Db {
     );
   }
 
-  public function user_has_id($pseudo) {
-    return !!$this->query('SELECT id FROM users WHERE pseudo = ?', [$pseudo])->fetch();
+  public function get_user_id($pseudo) {
+    $fetched = $this->query('SELECT id FROM users WHERE pseudo = ?', [$pseudo])->fetch();
+    if (!$fetched) {
+      return false;
+    }
+    return (int)$fetched['id'];
   }
 
   public function create_user_id($pseudo) {

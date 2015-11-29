@@ -1,4 +1,6 @@
 <?php
+use \Defuse\Crypto\Crypto;
+require_once '../php-encryption/autoload.php';
 require_once 'helpers.php';
 
 /**
@@ -9,6 +11,9 @@ require_once 'helpers.php';
  * @package default
  */
 class Jvc {
+  public $uid = null;
+  public $pseudo = null;
+
   public function __construct() {
     $this->err = 'Indéfinie';
     $this->cookie_pre = '_JVCCOK_';
@@ -36,30 +41,32 @@ class Jvc {
 
   }
 
-  /**
-   * Récupère les détails sur la dernière erreur qui a eu lieu
-   * @return string erreur
-   */
   public function err() {
     return $this->err;
   }
 
-  /**
-   * Vérifie si le client est connecté sur JVC
-   * @return boolean TRUE si le client est connecté, FALSE sinon
-   */
   public function is_connected() {
-    return isset($this->cookie['coniunctio']) && isset($_COOKIE['pseudo']);
+    if (!isset($_COOKIE['id'], $this->cookie['coniunctio'])) {
+      return false;
+    }
+
+    $stated_coniunctio_id = explode('$', $this->cookie['coniunctio'])[0];
+    $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
+    list($uid, $pseudo, $coniunctio_id) = explode(' ', $cookie);
+    if ($coniunctio_id == $stated_coniunctio_id) {
+      $this->uid = $uid;
+      $this->pseudo = $pseudo;
+      return true;
+    }
+    return false;
   }
 
-  /**
-   * Déconnecte le client de JVC
-   */
   public function disconnect() {
     foreach ($this->cookie as $k => $v) {
       removecookie($this->cookie_pre.$k);
     }
     removecookie('pseudo');
+    removecookie('id');
     removecookie('blacklist');
     $this->cookie = [];
 
@@ -90,6 +97,7 @@ class Jvc {
 
     if (isset($this->cookie['coniunctio'])) {
       _setcookie('pseudo', $pseudo);
+      $this->generate_user_id_cookie($pseudo, $this->cookie['coniunctio']);
       Auth::refresh_uid();
       header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
       exit;
@@ -100,6 +108,18 @@ class Jvc {
     }
 
     return $this->_err('Indéfinie');
+  }
+
+  private function generate_user_id_cookie($pseudo, $coniunctio) {
+    $db = new Db();
+    $id = $db->get_user_id($pseudo);
+    if (!$id) {
+      $id = $db->create_user_id($pseudo);
+    }
+
+    $coniunctio_id = explode('$', $coniunctio)[0];
+    $ciphertext = Crypto::encrypt($id . ' ' . $pseudo . ' ' . $coniunctio_id, base64_decode(ID_KEY));
+    _setcookie('id', base64_encode($ciphertext));
   }
 
   /**

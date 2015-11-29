@@ -1,5 +1,4 @@
 <?php
-
 $jours = ['lundi', 'mardi', 'mercr', 'jeudi', 'vendr', 'samedi', 'dim'];
 $mois = ['janv', 'fév', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'];
 $mois_jvc = [
@@ -625,11 +624,4 @@ STRING;
 </div>
 STRING;
   return $string;
-}
-
-function user_id() {
-  if (!isset($_COOKIE['id'])) {
-    exit('no cookie id');
-  }
-  $pseudo = explode(' ', $_COOKIE['']);
 }
