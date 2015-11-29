@@ -1420,8 +1420,8 @@ h1, h2, h3 {
   cursor: pointer;
   padding: 10px;
   padding-right: 20px;
-  background: url(/images/more_vert_18px_blue.svg) no-repeat right 3px center;
-  color: #0A77B8;
+  background: url(/images/more_vert.svg) no-repeat right 3px center;
+  color: #1976d2;
   font-size: 13px;
   vertical-align: top;
 }
