@@ -28,6 +28,7 @@ var $forum = <?= $forum ? $forum : 'false' ?>
 <?php endforeach ?>
   , $blacklist = <?= json_encode($blacklist) ?>
   , $blacklistNeedsUpdate = <?= !$blacklist_is_fresh ? 'true' : 'false' ?>
+  , $freshness = <?= $db->get_favorites_freshness($jvc->user_id) ?>
 </script>
 <?php endif ?>
 

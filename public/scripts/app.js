@@ -78,7 +78,6 @@ function htmlentities(str) {
 
 function updateFavorites() {
   ajax('favorites_get', {}, function(data) {
-
   })
 }
 
@@ -723,14 +722,13 @@ if (googleAnalyticsID) {
 
 instantClick.on('change', function(isInitialLoad) {
   FastClick.attach(document.body)
-  updateFavorites()
   handleRefreshOnPageChange(isInitialLoad)
   stopDraftWatcher()
   insertDraft()
   handleProfileAvatar()
   handleBlacklist()
   makeFavoritesSlideable()
-
+  instantClick.timer(updateFavorites, (60 * 10 - $freshness) * 1000)
   instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 
   $('.form').submit(post)

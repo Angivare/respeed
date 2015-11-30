@@ -265,28 +265,36 @@ class Db {
   }
 
   public function get_favorites($user_id) {
-    $fetched = $this->query('SELECT forums, topics, updated_at > NOW() - INTERVAL 10 MINUTE as is_fresh FROM favorites WHERE user_id = ?', [$user_id])->fetch();
+    $fetched = $this->query('SELECT forums, topics, updated_at FROM favorites WHERE user_id = ?', [$user_id])->fetch();
     if (!$fetched) {
       return false;
     }
     return [
       'forums' => json_decode($fetched['forums']),
       'topics' => json_decode($fetched['topics']),
-      'is_fresh' => (bool)$fetched['is_fresh'],
+      'is_fresh' => (time() - 60 * 10) < $fetched['updated_at'],
     ];
+  }
+
+  public function get_favorites_freshness($user_id) {
+    $fetched = $this->query('SELECT updated_at FROM favorites WHERE user_id = ?', [$user_id])->fetch();
+    if (!$fetched) {
+      return 999999;
+    }
+    return time() - $fetched['updated_at'];
   }
 
   public function add_favorites($user_id, $forums, $topics) {
     return $this->query(
-      'INSERT INTO favorites(user_id, forums, topics) VALUES(?, ?, ?)',
-      [$user_id, json_encode($forums), json_encode($topics)]
+      'INSERT INTO favorites(user_id, forums, topics, updated_at) VALUES(?, ?, ?, ?)',
+      [$user_id, json_encode($forums), json_encode($topics), time()]
     );
   }
 
   public function update_favorites($user_id, $forums, $topics) {
     return $this->query(
-      'UPDATE favorites SET forums = ?, topics = ?, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?',
-      [json_encode($forums), json_encode($topics), $user_id]
+      'UPDATE favorites SET forums = ?, topics = ?, updated_at = ? WHERE user_id = ?',
+      [json_encode($forums), json_encode($topics), time(), $user_id]
     );
   }
 }

@@ -92,7 +92,7 @@ CREATE TABLE `favorites` (
   `user_id` int unsigned NOT NULL,
   `forums` varchar(5000) NOT NULL,
   `topics` varchar(5000) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` int NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
