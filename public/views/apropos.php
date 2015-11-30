@@ -7,7 +7,7 @@ $title = 'À propos de JVForum';
   <div class="content no-menu apropos">
     <h1>À propos</h1>
 
-    <p>JVForum est actuellement utilisé pour poster 150 000 messages par mois, sois plus d’un message sur trente. C’est le projet pour améliorer les forums ayant eu le plus d’impact.
+    <p>JVForum est actuellement utilisé pour poster 150 000 messages par mois, soit plus d’un message sur trente. C’est le projet pour améliorer les forums ayant eu le plus d’impact.
 
     <p>JVForum est le successeur de Respeed, un script pour précharger les pages. Respeed ayant des bugs impossibles à corriger et ne marchant pas sur mobile, JVForum est né.</p>
 
