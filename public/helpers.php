@@ -625,3 +625,88 @@ STRING;
 STRING;
   return $string;
 }
+
+function generate_favorites_markup($favorites = null, $slider = false) {
+  global $db, $jvc;
+  if ($favorites === null) {
+    $favorites = $db->get_favorites($jvc->user_id);
+  }
+  if (!$favorites) {
+    return false;
+  }
+
+  $string = '';
+
+  $string .= <<<STRING
+  <div class="menu" id="forums_pref">
+    <h3 class="title"><span class="mine">Mes</span> forums préférés</h3>
+    <ul class="menu-content">
+STRING;
+
+  foreach ($favorites['forums'] as $forum) {
+    $string .= '<li><a href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a></li>';
+  }
+
+  $class = $slider ? 'js-slider menu slider' : 'menu';
+  $string .= <<<STRING
+    </ul>
+  </div>
+
+  <div class="{$class}" id="topics_pref">
+    <h3 class="title"><span class="mine">Mes</span> topics préférés</h3>
+    <ul class="menu-content">
+STRING;
+
+  foreach ($favorites['topics'] as $topic) {
+    $string .= '<li><a href="/' . $topic[0] . '/' . $topic[1] . '-' . $topic[2] . '">' . $topic[3] . '</a></li>';
+  }
+
+  $string .= <<<STRING
+    </ul>
+  </div>
+STRING;
+
+  return $string;
+}
+
+function generate_favorites_markup_index($favorites = null) {
+  global $db, $jvc;
+  if ($favorites === null) {
+    $favorites = $db->get_favorites($jvc->user_id);
+  }
+  if (!$favorites) {
+    return false;
+  }
+
+  $string = '';
+
+
+
+  $string .= <<<STRING
+  <div class="favorites-index">
+    <div class="favorites-forums">
+      <h3>Forums préférés</h3>
+STRING;
+
+  foreach ($favorites['forums'] as $forum) {
+    $string .= '<a class="favorite" href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a>';
+  }
+
+  $string .= <<<STRING
+    </div>
+
+    <div class="favorites-topics">
+      <h3>Topics préférés</h3>
+STRING;
+
+  foreach ($favorites['topics'] as $topic) {
+    $string .= '<a class="favorite" href="/' . $topic[0] . '/' . $topic[1] . '-' . $topic[2] . '">' . $topic[3] . '</a>';
+  }
+
+  $string .= <<<STRING
+    </div>
+  </div>
+STRING;
+
+  return $string;
+}

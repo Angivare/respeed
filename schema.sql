@@ -7,6 +7,7 @@ CREATE TABLE `forums` (
   PRIMARY KEY (`forum_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 CREATE TABLE `forums_cache` (
   `forum_id` int(11) unsigned NOT NULL,
   `page` smallint(6) unsigned NOT NULL,
@@ -25,11 +26,13 @@ CREATE TABLE `topics_cache` (
   PRIMARY KEY (`topic_id`,`topic_mode`,`forum_id`,`page`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 CREATE TABLE `tokens` (
   `token` varchar(32) NOT NULL,
   `generated` timestamp NOT NULL,
   PRIMARY KEY (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE `logs_messages2` (
   `id` int unsigned NOT NULL auto_increment,
@@ -44,6 +47,7 @@ CREATE TABLE `logs_messages2` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 CREATE TABLE `icstats2` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ts` int DEFAULT NULL,
@@ -51,6 +55,7 @@ CREATE TABLE `icstats2` (
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 CREATE TABLE `logs_requests4` (
   `id` int unsigned NOT NULL auto_increment,
@@ -75,17 +80,26 @@ CREATE TABLE `current_requests` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `blacklists` (
-  `id` int unsigned NOT NULL auto_increment,
-  `person` varchar(32) NOT NULL,
-  `blacklist` varchar(5000) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `users` (
   `id` int unsigned NOT NULL auto_increment,
   `pseudo` varchar(32) NOT NULL,
   `added_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `favorites` (
+  `user_id` int unsigned NOT NULL,
+  `forums` varchar(5000) NOT NULL,
+  `topics` varchar(5000) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `blacklists` (
+  `id` int unsigned NOT NULL auto_increment,
+  `person` varchar(32) NOT NULL,
+  `blacklist` varchar(5000) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

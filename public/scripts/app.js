@@ -77,134 +77,9 @@ function htmlentities(str) {
 }
 
 function updateFavorites() {
-  if (localStorage.favoritesForums) {
-    favoritesForums = JSON.parse(localStorage.favoritesForums)
-  }
-  if (localStorage.favoritesTopics) {
-    favoritesTopics = JSON.parse(localStorage.favoritesTopics)
-  }
-  var favoritesLastUpdate = parseInt(localStorage.favoritesLastUpdate, 10) || 0
-  var now = +new Date
-  if (favoritesLastUpdate + (1000 * 60 * 10) > now) {
-    return
-  }
   ajax('favorites_get', {}, function(data) {
-    if (!data.rep) {
-      return
-    }
-    favoritesForums = []
-    favoritesTopics = []
-    $.each(data.rep.forums, function(index, value) {
-      favoritesForums.push(value)
-    })
-    $.each(data.rep.topics, function(index, value) {
-      favoritesTopics.push(value)
-    })
-    localStorage.favoritesForums = JSON.stringify(favoritesForums)
-    localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
-    localStorage.favoritesLastUpdate = now
 
-    displayFavorites()
-    displayFavoritesOnIndex()
   })
-}
-
-function displayFavorites() {
-  displayFavoritesForums()
-  displayFavoritesTopics()
-}
-
-function displayFavoritesForums() {
-  if (!isBigScreen) {
-    return
-  }
-  if (!$('#forums_pref').length) {
-    return
-  }
-
-  $('#forums_pref .menu-content').html('') // Suppression
-
-  var hasThisForum = false
-  $.each(favoritesForums, function(_, forum) {
-    $('#forums_pref .menu-content').append('<li><a href="' + forum.lien + '">' + forum.titre + '</a></li>')
-    if ($forum == forum.id) {
-      hasThisForum = true
-    }
-  })
-  if ($forum) {
-    if (hasThisForum) {
-      $('#forums_pref .menu-content').append('<li id="add_or_del_forum"><span><small>− Retirer ce forum</small></span></li>')
-      $('#add_or_del_forum').click(delForum)
-    }
-    else {
-      $('#forums_pref .menu-content').append('<li id="add_or_del_forum"><span><small>+ Ajouter ce forum</small></span></li>')
-      $('#add_or_del_forum').click(addForum)
-    }
-  }
-  $('#forums_pref').addClass('loaded')
-}
-
-function displayFavoritesTopics() {
-  if (!isBigScreen) {
-    return
-  }
-  if (!$('#topics_pref').length) {
-    return
-  }
-
-  $('#topics_pref .menu-content').html('') // Suppression
-
-  var hasThisTopic = false
-  $.each(favoritesTopics, function(_, topic) {
-    $('#topics_pref .menu-content').append('<li><a href="' + topic.lien + '">' + topic.titre + '</a></li>')
-    if ($topic == topic.id) {
-      hasThisTopic = true
-    }
-  })
-  if ($topic) {
-    if (hasThisTopic) {
-      $('#topics_pref .menu-content').append('<li id="add_or_del_topic"><span><small>− Retirer ce topic</small></span></li>')
-      $('#add_or_del_topic').click(delTopic)
-    }
-    else {
-      $('#topics_pref .menu-content').append('<li id="add_or_del_topic"><span><small>+ Ajouter ce topic</small></span></li>')
-      $('#add_or_del_topic').click(addTopic)
-    }
-  }
-  $('#topics_pref').addClass('loaded')
-
-  if ($('.js-slider').length) {
-    sliderTopOffset = $('.js-slider').offset().top - 15
-    makeFavoritesSlideable()
-  }
-}
-
-function displayFavoritesOnIndex() {
-  if (!$('.favorites-index').length) {
-    return
-  }
-
-  $('.favorites-index .favorite').remove() // Suppression
-
-  var odd = false
-    , str = ''
-  $.each(favoritesForums, function(_, forum) {
-    str += '<a class="favorite ' + (odd ? 'odd' : '') + '" href="' + forum.lien + '">' + forum.titre + '</a>'
-    odd = !odd
-  })
-  if (str) {
-    $('.favorites-index .favorites-forums').append(str)
-  }
-
-  odd = false
-  str = ''
-  $.each(favoritesTopics, function(_, topic) {
-    str += '<a class="favorite ' + (odd ? 'odd' : '') + '" href="' + topic.lien + '">' + topic.titre + '</a>'
-    odd = !odd
-  })
-  if (str) {
-    $('.favorites-index .favorites-topics').append(str)
-  }
 }
 
 function request_form_data() {
@@ -527,6 +402,11 @@ function makeFavoritesSlideable() {
   if (!isBigScreen) {
     return
   }
+  if (!$('.js-slider').length) {
+    return
+  }
+
+  sliderTopOffset = $('.js-slider').offset().top - 15
 
   adjustSliderWidth()
   $(window).resize(adjustSliderWidth)
@@ -844,13 +724,12 @@ if (googleAnalyticsID) {
 instantClick.on('change', function(isInitialLoad) {
   FastClick.attach(document.body)
   updateFavorites()
-  setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
-  displayFavoritesOnIndex()
   handleRefreshOnPageChange(isInitialLoad)
   stopDraftWatcher()
   insertDraft()
   handleProfileAvatar()
   handleBlacklist()
+  makeFavoritesSlideable()
 
   instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 

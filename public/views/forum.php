@@ -98,17 +98,7 @@ if ($is_in_blacklist) {
       <a href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans <span class="jvc">jvc</span></a>
     </div>
 
-    <div class="menu" id="forums_pref">
-      <h3 class="title"><span class="mine">Mes</span> forums préférés</h3>
-      <ul class="menu-content">
-      </ul>
-    </div>
-
-    <div class="menu" id="topics_pref">
-      <h3 class="title"><span class="mine">Mes</span> topics préférés</h3>
-      <ul class="menu-content">
-      </ul>
-    </div>
+<?= generate_favorites_markup() ?>
 
 <?php if ($sous_forums): ?>
     <div class="menu">

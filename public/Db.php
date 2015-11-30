@@ -263,4 +263,30 @@ class Db {
     $this->query('INSERT INTO users(pseudo) VALUES(?)', [$pseudo]);
     return $this->db->lastInsertId();
   }
+
+  public function get_favorites($user_id) {
+    $fetched = $this->query('SELECT forums, topics, updated_at > NOW() - INTERVAL 10 MINUTE as is_fresh FROM favorites WHERE user_id = ?', [$user_id])->fetch();
+    if (!$fetched) {
+      return false;
+    }
+    return [
+      'forums' => json_decode($fetched['forums']),
+      'topics' => json_decode($fetched['topics']),
+      'is_fresh' => (bool)$fetched['is_fresh'],
+    ];
+  }
+
+  public function add_favorites($user_id, $forums, $topics) {
+    return $this->query(
+      'INSERT INTO favorites(user_id, forums, topics) VALUES(?, ?, ?)',
+      [$user_id, json_encode($forums), json_encode($topics)]
+    );
+  }
+
+  public function update_favorites($user_id, $forums, $topics) {
+    return $this->query(
+      'UPDATE favorites SET forums = ?, topics = ?, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?',
+      [json_encode($forums), json_encode($topics), $user_id]
+    );
+  }
 }

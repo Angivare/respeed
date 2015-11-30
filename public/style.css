@@ -528,13 +528,13 @@ h1, h2, h3 {
 
 /* MENU */
 
-.sheet > .aside {
-  margin: 10px 10px 0;
+.aside {
+  display: none;
 }
 
 @media (min-width: 1025px) {
-  .sheet > .aside {
-    margin: 0;
+  .aside {
+    display: block;
     width: 20%;
     float: left;
     margin: 10px 0;
@@ -624,16 +624,6 @@ h1, h2, h3 {
 .aside .menu .menu-content a:hover, .aside .menu .menu-content span:hover {
   color: white;
   background: #59AAC6;
-}
-
-#forums_pref, #topics_pref {
-  display: none;
-}
-
-@media (min-width: 1025px) {
-  #forums_pref.loaded, #topics_pref.loaded {
-    display: block;
-  }
 }
 
 .slider.sliding {
@@ -729,7 +719,7 @@ h1, h2, h3 {
   }
 }
 
-.favorites-index .favorite.odd {
+.favorites-index .favorite:nth-child(odd) {
   background: #EFF4FC;
 }
 

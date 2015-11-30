@@ -1,6 +1,5 @@
 <?php
 use \Defuse\Crypto\Crypto;
-require_once '../php-encryption/autoload.php';
 require_once 'helpers.php';
 
 /**
@@ -11,7 +10,7 @@ require_once 'helpers.php';
  * @package default
  */
 class Jvc {
-  public $uid = null;
+  public $user_id = null;
   public $pseudo = null;
 
   public function __construct() {
@@ -39,6 +38,15 @@ class Jvc {
       $this->cookie['dlrowolleh'] = null;
     }
 
+    if (isset($_COOKIE['id'], $this->cookie['coniunctio'])) {
+      $stated_coniunctio_id = explode('$', $this->cookie['coniunctio'])[0];
+      $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
+      list($user_id, $pseudo, $coniunctio_id) = explode(' ', $cookie);
+      if ($coniunctio_id == $stated_coniunctio_id) {
+        $this->user_id = $user_id;
+        $this->pseudo = $pseudo;
+      }
+    }
   }
 
   public function err() {
@@ -46,19 +54,7 @@ class Jvc {
   }
 
   public function is_connected() {
-    if (!isset($_COOKIE['id'], $this->cookie['coniunctio'])) {
-      return false;
-    }
-
-    $stated_coniunctio_id = explode('$', $this->cookie['coniunctio'])[0];
-    $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
-    list($uid, $pseudo, $coniunctio_id) = explode(' ', $cookie);
-    if ($coniunctio_id == $stated_coniunctio_id) {
-      $this->uid = $uid;
-      $this->pseudo = $pseudo;
-      return true;
-    }
-    return false;
+    return !!$this->user_id;
   }
 
   public function disconnect() {
@@ -399,11 +395,7 @@ class Jvc {
     return true;
   }
 
-  /**
-   * Retourne la liste des sujets & topics préférés
-   * @return array Tableau associatif contenant les sujets et topics favoris
-   */
-  public function favorites_get() {
+  public function get_favorites() {
     $rep = $this->request('/forums.htm');
 
     $lim = strpos($rep['body'], '<ul id="liste-sujet-prefere"');
@@ -419,19 +411,20 @@ class Jvc {
 
     preg_match_all($regex, $before, $matches, PREG_SET_ORDER);
     for ($i = 0; $i < count($matches); $i++) {
-      $forums[$matches[$i]['id']] = [
-        'lien' => '/' . $matches[$i]['forum'] . '-' . $matches[$i]['slug'],
-        'id' => $matches[$i]['forum'],
-        'titre' => $matches[$i]['titre'],
+      $forums[] = [
+        (int)$matches[$i]['id'],
+        $matches[$i]['slug'],
+        $matches[$i]['titre'],
       ];
     }
 
     preg_match_all($regex, $after, $matches, PREG_SET_ORDER);
     for ($i = 0; $i < count($matches); $i++) {
-      $topics[$matches[$i]['id']] = [
-        'lien' => '/' . $matches[$i]['forum'] . '/' . ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'] . '-' . $matches[$i]['slug'],
-        'id' => ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'],
-        'titre' => $matches[$i]['titre'],
+      $topics[] = [
+        (int)$matches[$i]['forum'],
+        ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'],
+        $matches[$i]['slug'],
+        $matches[$i]['titre'],
       ];
     }
 
