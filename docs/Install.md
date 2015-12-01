@@ -65,10 +65,8 @@ Dans la liste des bases de données, cliquez sur `jvforum`, rendez-vous dans l�
 
 ### Configuration JVForum
 
-Faites une copie du fichier `config.sample.php` appelez-la `config.php`, et ouvrez-la.
-
-Rendez-vous [ici](https://api.wordpress.org/secret-key/1.1/salt/), et copier-collez deux valeurs pour `SALT` et `ID_KEY`.
+Faites une copie du fichier `config.sample.php` et appelez-la `config.php`.
 
 ***
 
-Votre version de développement de JVForum est prête à être utiliser, vous pouvez désormais [vous connecter](http://dev.jvforum.fr/connexion).
+Votre version de développement de JVForum est maintenant prête à être utiliser, vous pouvez désormais [vous connecter](http://dev.jvforum.fr/connexion).

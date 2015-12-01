@@ -1,4 +1,6 @@
 <?php
+use \Defuse\Crypto\Crypto;
+require_once dirname(__FILE__) . '/../php-encryption/autoload.php';
 require_once 'helpers.php';
 
 /**
@@ -9,6 +11,9 @@ require_once 'helpers.php';
  * @package default
  */
 class Jvc {
+  public $user_id = null;
+  public $pseudo = null;
+
   public function __construct() {
     $this->err = 'Indéfinie';
     $this->cookie_pre = '_JVCCOK_';
@@ -34,34 +39,32 @@ class Jvc {
       $this->cookie['dlrowolleh'] = null;
     }
 
+    if (isset($_COOKIE['id'], $this->cookie['coniunctio'])) {
+      $stated_coniunctio_id = explode('$', $this->cookie['coniunctio'])[0];
+      $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
+      list($user_id, $pseudo, $coniunctio_id) = explode(' ', $cookie);
+      if ($coniunctio_id == $stated_coniunctio_id) {
+        $this->user_id = $user_id;
+        $this->pseudo = $pseudo;
+      }
+    }
   }
 
-  /**
-   * Récupère les détails sur la dernière erreur qui a eu lieu
-   * @return string erreur
-   */
   public function err() {
     return $this->err;
   }
 
-  /**
-   * Vérifie si le client est connecté sur JVC
-   * @return boolean TRUE si le client est connecté, FALSE sinon
-   */
   public function is_connected() {
-    return isset($this->cookie['coniunctio']) && isset($_COOKIE['pseudo']);
+    return !!$this->user_id;
   }
 
-  /**
-   * Déconnecte le client de JVC
-   */
   public function disconnect() {
     foreach ($this->cookie as $k => $v) {
       removecookie($this->cookie_pre.$k);
     }
     removecookie('pseudo');
+    removecookie('id');
     removecookie('blacklist');
-    removecookie('auth-uid');
     $this->cookie = [];
 
     foreach ($this->tk as $k => $v) {
@@ -91,6 +94,7 @@ class Jvc {
 
     if (isset($this->cookie['coniunctio'])) {
       _setcookie('pseudo', $pseudo);
+      $this->generate_user_id_cookie($pseudo, $this->cookie['coniunctio']);
       Auth::refresh_uid();
       header('Location: /1000021/39674315-appli-jvforum-topic-officiel');
       exit;
@@ -101,6 +105,18 @@ class Jvc {
     }
 
     return $this->_err('Indéfinie');
+  }
+
+  private function generate_user_id_cookie($pseudo, $coniunctio) {
+    $db = new Db();
+    $id = $db->get_user_id($pseudo);
+    if (!$id) {
+      $id = $db->create_user_id($pseudo);
+    }
+
+    $coniunctio_id = explode('$', $coniunctio)[0];
+    $ciphertext = Crypto::encrypt($id . ' ' . $pseudo . ' ' . $coniunctio_id, base64_decode(ID_KEY));
+    _setcookie('id', base64_encode($ciphertext));
   }
 
   /**
@@ -380,11 +396,7 @@ class Jvc {
     return true;
   }
 
-  /**
-   * Retourne la liste des sujets & topics préférés
-   * @return array Tableau associatif contenant les sujets et topics favoris
-   */
-  public function favorites_get() {
+  public function get_favorites() {
     $rep = $this->request('/forums.htm');
 
     $lim = strpos($rep['body'], '<ul id="liste-sujet-prefere"');
@@ -392,27 +404,30 @@ class Jvc {
     $before = substr($rep['body'], 0, $lim);
     $after = substr($rep['body'], $lim);
 
-    $regex =  '#<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">.+' .
-              '<a href="//www.jeuxvideo.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-1-0-1-0-(?P<slug>.+)\.htm" class="lien-jv">[\r\n\s]*?(?P<titre>.+)[\r\n\s]*</a>.+' .
+    $regex =  '#<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">\s+' .
+              '<a href="//www.jeuxvideo.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-1-0-1-0-(?P<slug>.+)\.htm" class="lien-jv">[\r\n\s]*?(?P<titre>.+)[\r\n\s]*</a>\s+' .
+              '<span class="picto-suppression"></span>\s+' .
               '</li>#Usi';
 
     $forums = $topics = [];
 
     preg_match_all($regex, $before, $matches, PREG_SET_ORDER);
     for ($i = 0; $i < count($matches); $i++) {
-      $forums[$matches[$i]['id']] = [
-        'lien' => '/' . $matches[$i]['forum'] . '-' . $matches[$i]['slug'],
-        'id' => $matches[$i]['forum'],
-        'titre' => $matches[$i]['titre'],
+      $forums[] = [
+        (int)$matches[$i]['id'],
+        $matches[$i]['slug'],
+        $matches[$i]['titre'],
       ];
     }
 
     preg_match_all($regex, $after, $matches, PREG_SET_ORDER);
     for ($i = 0; $i < count($matches); $i++) {
-      $topics[$matches[$i]['id']] = [
-        'lien' => '/' . $matches[$i]['forum'] . '/' . ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'] . '-' . $matches[$i]['slug'],
-        'id' => ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'],
-        'titre' => $matches[$i]['titre'],
+      $topics[] = [
+        (int)$matches[$i]['id'],
+        (int)$matches[$i]['forum'],
+        ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'],
+        $matches[$i]['slug'],
+        $matches[$i]['titre'],
       ];
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 $jours = ['lundi', 'mardi', 'mercr', 'jeudi', 'vendr', 'samedi', 'dim'];
 $mois = ['janv', 'fév', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'];
 $mois_jvc = [
@@ -627,9 +626,101 @@ STRING;
   return $string;
 }
 
-function user_id() {
-  if (!isset($_COOKIE['id'])) {
-    exit('no cookie id');
+function generate_favorites_forums_markup($favorites) {
+  $string = '<h3 class="title"><span class="mine">Mes</span> forums préférés</h3>';
+
+  if (!$favorites) {
+    return '';
   }
-  $pseudo = explode(' ', $_COOKIE['']);
+
+  $string .= '<ul class="menu-content">';
+
+  foreach ($favorites['forums'] as $forum) {
+    $string .= '<li><a href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a></li>';
+  }
+
+  $string .= '</ul>';
+
+  return $string;
+}
+
+function generate_favorites_topics_markup($favorites) {
+  $string = '<h3 class="title"><span class="mine">Mes</span> topics préférés</h3>';
+
+  if (!$favorites) {
+    return '';
+  }
+
+  $string .= '<ul class="menu-content">';
+
+  foreach ($favorites['topics'] as $topic) {
+    $string .= '<li><a href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a></li>';
+  }
+
+  $string .= '</ul>';
+
+  return $string;
+}
+
+function generate_favorites_forums_markup_index($favorites) {
+  if (!$favorites) {
+    return '';
+  }
+
+  $string = '<h3>Forums préférés</h3>';
+
+  foreach ($favorites['forums'] as $forum) {
+    $string .= '<a class="favorite" href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a>';
+  }
+
+  return $string;
+}
+
+function generate_favorites_topics_markup_index($favorites) {
+  if (!$favorites) {
+    return '';
+  }
+
+  $string = '<h3>Topics préférés</h3>';
+
+  foreach ($favorites['topics'] as $topic) {
+    $string .= '<a class="favorite" href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a>';
+  }
+
+  return $string;
+}
+
+function is_forum_in_favorites($favorites, $wanted) {
+  if (!$favorites) {
+    return false;
+  }
+
+  foreach ($favorites['forums'] as $forum) {
+    if ($forum[0] == $wanted) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function is_topic_in_favorites($favorites, $wanted) {
+  if (!$favorites) {
+    return false;
+  }
+
+  foreach ($favorites['topics'] as $topic) {
+    if ($topic[0] == $wanted) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function halt($message = 0) {
+  http_response_code(500);
+  exit($message);
+}
+
+function get_favorites_sum($favorites) {
+  return sha1(json_encode($favorites));
 }

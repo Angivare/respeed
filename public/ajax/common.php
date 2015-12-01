@@ -1,5 +1,4 @@
 <?php
-
 require '../../config.php';
 require '../Db.php';
 require '../Auth.php';
@@ -8,6 +7,10 @@ require '../Jvc.php';
 $db = new Db();
 $auth = new Auth($db);
 $jvc = new Jvc();
+
+if (!$jvc->is_connected()) {
+  exit;
+}
 
 function arg() {
   for ($i = 0; $i < func_num_args(); $i++) {

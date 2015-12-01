@@ -8,6 +8,7 @@ $recherche_forum = isset($_GET['recherche_forum']);
 $smileys = isset($_GET['smileys']);
 $profil = isset($_GET['profil']);
 
+require_once '../php-encryption/autoload.php';
 require '../config.php';
 require 'helpers.php';
 require 'Jvc.php';

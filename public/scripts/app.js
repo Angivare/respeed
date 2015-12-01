@@ -76,136 +76,72 @@ function htmlentities(str) {
   })
 }
 
+/** Favorites **/
+
 function updateFavorites() {
-  if (localStorage.favoritesForums) {
-    favoritesForums = JSON.parse(localStorage.favoritesForums)
-  }
-  if (localStorage.favoritesTopics) {
-    favoritesTopics = JSON.parse(localStorage.favoritesTopics)
-  }
-  var favoritesLastUpdate = parseInt(localStorage.favoritesLastUpdate, 10) || 0
-  var now = +new Date
-  if (favoritesLastUpdate + (1000 * 60 * 10) > now) {
-    return
-  }
-  ajax('favorites_get', {}, function(data) {
-    if (!data.rep) {
-      return
-    }
-    favoritesForums = []
-    favoritesTopics = []
-    $.each(data.rep.forums, function(index, value) {
-      favoritesForums.push(value)
-    })
-    $.each(data.rep.topics, function(index, value) {
-      favoritesTopics.push(value)
-    })
-    localStorage.favoritesForums = JSON.stringify(favoritesForums)
-    localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
-    localStorage.favoritesLastUpdate = now
+  var page = 'random'
+    , forumSum = $('.js-favorites-forums').data('sum')
+    , topicSum = $('.js-favorites-topics').data('sum')
 
-    displayFavorites()
-    displayFavoritesOnIndex()
+  if ($('.js-favorites-index').length) {
+    page = 'index'
+  }
+  else if ($('.js-favorites').length) {
+    page = 'forum_or_topic'
+  }
+  ajax('favorites_update', {
+    page: page,
+    forum_sum: forumSum,
+    topic_sum: topicSum,
+  }, function(data) {
+    if (data.html.forums) {
+      $('.js-favorites-forums').html(data.html.forums)
+      $('.js-favorites-forums').data('sum', data.html.forumSum)
+    }
+    if (data.html.topics) {
+      $('.js-favorites-topics').html(data.html.topics)
+      $('.js-favorites-topics').data('sum', data.html.topicSum)
+    }
   })
 }
 
-function displayFavorites() {
-  displayFavoritesForums()
-  displayFavoritesTopics()
-}
+function toggleFavorite() {
+  var action = $(this).hasClass('aside__top-button--favorite') ? 'add' : 'delete'
+    , type = $topicNew ? 'topic': 'forum'
+    , id = $topicNew ? $topicNew : $forum
+    , forumSum = $('.js-favorites-forums').data('sum')
+    , topicSum = $('.js-favorites-topics').data('sum')
 
-function displayFavoritesForums() {
-  if (!isBigScreen) {
-    return
-  }
-  if (!$('#forums_pref').length) {
-    return
-  }
-
-  $('#forums_pref .menu-content').html('') // Suppression
-
-  var hasThisForum = false
-  $.each(favoritesForums, function(_, forum) {
-    $('#forums_pref .menu-content').append('<li><a href="' + forum.lien + '">' + forum.titre + '</a></li>')
-    if ($forum == forum.id) {
-      hasThisForum = true
-    }
-  })
-  if ($forum) {
-    if (hasThisForum) {
-      $('#forums_pref .menu-content').append('<li id="add_or_del_forum"><span><small>− Retirer ce forum</small></span></li>')
-      $('#add_or_del_forum').click(delForum)
+  ajax('favorites_toggle', {
+    id: id,
+    type: type,
+    action: action,
+    forum_sum: forumSum,
+    topic_sum: topicSum,
+  }, function(data) {
+    if (action == 'add') {
+      $('.js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
+      $('.js-favorite-toggle .aside__top-button-label').html('Retirer des favoris')
     }
     else {
-      $('#forums_pref .menu-content').append('<li id="add_or_del_forum"><span><small>+ Ajouter ce forum</small></span></li>')
-      $('#add_or_del_forum').click(addForum)
+      $('.js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
+      $('.js-favorite-toggle .aside__top-button-label').html('Mettre en favoris')
     }
-  }
-  $('#forums_pref').addClass('loaded')
-}
-
-function displayFavoritesTopics() {
-  if (!isBigScreen) {
-    return
-  }
-  if (!$('#topics_pref').length) {
-    return
-  }
-
-  $('#topics_pref .menu-content').html('') // Suppression
-
-  var hasThisTopic = false
-  $.each(favoritesTopics, function(_, topic) {
-    $('#topics_pref .menu-content').append('<li><a href="' + topic.lien + '">' + topic.titre + '</a></li>')
-    if ($topic == topic.id) {
-      hasThisTopic = true
+    if (data.html.forums) {
+      $('.js-favorites-forums').html(data.html.forums)
+      $('.js-favorites-forums').data('sum', data.html.forumSum)
+    }
+    if (data.html.topics) {
+      $('.js-favorites-topics').html(data.html.topics)
+      $('.js-favorites-topics').data('sum', data.html.topicSum)
     }
   })
-  if ($topic) {
-    if (hasThisTopic) {
-      $('#topics_pref .menu-content').append('<li id="add_or_del_topic"><span><small>− Retirer ce topic</small></span></li>')
-      $('#add_or_del_topic').click(delTopic)
-    }
-    else {
-      $('#topics_pref .menu-content').append('<li id="add_or_del_topic"><span><small>+ Ajouter ce topic</small></span></li>')
-      $('#add_or_del_topic').click(addTopic)
-    }
-  }
-  $('#topics_pref').addClass('loaded')
-
-  if ($('.js-slider').length) {
-    sliderTopOffset = $('.js-slider').offset().top - 15
-    makeFavoritesSlideable()
-  }
 }
 
-function displayFavoritesOnIndex() {
-  if (!$('.favorites-index').length) {
-    return
-  }
+/** /Favorites **/
 
-  $('.favorites-index .favorite').remove() // Suppression
 
-  var odd = false
-    , str = ''
-  $.each(favoritesForums, function(_, forum) {
-    str += '<a class="favorite ' + (odd ? 'odd' : '') + '" href="' + forum.lien + '">' + forum.titre + '</a>'
-    odd = !odd
-  })
-  if (str) {
-    $('.favorites-index .favorites-forums').append(str)
-  }
-
-  odd = false
-  str = ''
-  $.each(favoritesTopics, function(_, topic) {
-    str += '<a class="favorite ' + (odd ? 'odd' : '') + '" href="' + topic.lien + '">' + topic.titre + '</a>'
-    odd = !odd
-  })
-  if (str) {
-    $('.favorites-index .favorites-topics').append(str)
-  }
-}
+/** Request form data **/
 
 function request_form_data() {
   if (form_data) {
@@ -240,6 +176,11 @@ function request_edit_form_data(e) {
     }
   })
 }
+
+/** /Request form data **/
+
+
+/** Draft **/
 
 function startDraftWatcher() {
   draftWatcherInterval = setInterval(saveDraft, 500)
@@ -315,61 +256,8 @@ function hideDraftMention() {
   $('.form__draft').removeClass('form__draft--visible')
 }
 
-function addForum() {
-  favoritesForums.push({
-    lien: '/' + $forum + '-' + $slug,
-    id: $forum,
-    titre: $title,
-  })
-  localStorage.favoritesForums = JSON.stringify(favoritesForums)
-  $('#forums_pref .menu-content').html('')
-  displayFavoritesForums()
+/** /Draft **/
 
-  ajax('favorites_update', {id: $forum, type: 'forum', action: 'add'})
-}
-
-function delForum() {
-  var newFavoritesForums = []
-  $.each(favoritesForums, function(_, forum) {
-    if (forum.id != $forum) {
-      newFavoritesForums.push(forum)
-    }
-  })
-  favoritesForums = newFavoritesForums
-  localStorage.favoritesForums = JSON.stringify(favoritesForums)
-  $('#forums_pref .menu-content').html('')
-  displayFavoritesForums()
-
-  ajax('favorites_update', {id: $forum, type: 'forum', action: 'delete'})
-}
-
-function addTopic() {
-  favoritesTopics.push({
-    lien: '/' + $forum + '/' + $topic + '-' + $slug,
-    id: $topic,
-    titre: $title,
-  })
-  localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
-  $('#topics_pref .menu-content').html('')
-  displayFavoritesTopics()
-
-  ajax('favorites_update', {id: $topicNew, type: 'topic', action: 'add'})
-}
-
-function delTopic() {
-  var newFavoritesTopics = []
-  $.each(favoritesTopics, function(_, topic) {
-    if (topic.id != $topic) {
-      newFavoritesTopics.push(topic)
-    }
-  })
-  favoritesTopics = newFavoritesTopics
-  localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
-  $('#topics_pref .menu-content').html('')
-  displayFavoritesTopics()
-
-  ajax('favorites_update', {id: $topicNew, type:'topic', action: 'delete'})
-}
 
 /** Refresh **/
 
@@ -527,6 +415,11 @@ function makeFavoritesSlideable() {
   if (!isBigScreen) {
     return
   }
+  if (!$('.js-slider').length) {
+    return
+  }
+
+  sliderTopOffset = $('.js-slider').offset().top - 15
 
   adjustSliderWidth()
   $(window).resize(adjustSliderWidth)
@@ -843,15 +736,13 @@ if (googleAnalyticsID) {
 
 instantClick.on('change', function(isInitialLoad) {
   FastClick.attach(document.body)
-  updateFavorites()
-  setTimeout(displayFavorites, 0) // Marche pas sans timer (mettre un timer pour IC ?)
-  displayFavoritesOnIndex()
   handleRefreshOnPageChange(isInitialLoad)
   stopDraftWatcher()
   insertDraft()
   handleProfileAvatar()
   handleBlacklist()
-
+  makeFavoritesSlideable()
+  instantClick.timer(updateFavorites, (60 * 10 - $freshness) * 1000)
   instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 
   $('.form').submit(post)
@@ -860,6 +751,7 @@ instantClick.on('change', function(isInitialLoad) {
   $('.form__textarea').focus(startDraftWatcher)
   $('.mobile-menu__opener').click(toggleMobileMenu)
   $('.mobile-menu__item').click(toggleMobileMenu)
+  $('.js-favorite-toggle').click(toggleFavorite)
 
   // Messages
   $('.js-quote').click(quote)
@@ -904,11 +796,3 @@ if (hasTouch) {
 }
 
 document.addEventListener('visibilitychange', handleVisibilityChange)
-
-if (!('id_transition' in localStorage)) {
-  ajax('generate_id', {}, function(data) {
-    if (data > 0 && data < 10) {
-      localStorage.id_transition = 'ok'
-    }
-  })
-}
