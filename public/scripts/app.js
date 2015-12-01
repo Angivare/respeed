@@ -77,7 +77,22 @@ function htmlentities(str) {
 }
 
 function updateFavorites() {
-  ajax('favorites_get', {}, function(data) {
+  var page = 'random'
+  if ($('.js-favorites-index').length) {
+    page = 'index'
+  }
+  else if ($('.js-favorites').length) {
+    page = 'forum_or_topic'
+  }
+  ajax('favorites_get', {page: page}, function(data) {
+    if (page == 'index') {
+      $('.js-favorites-index .favorites-forums').html(data.html.forums)
+      $('.js-favorites-index .favorites-topics').html(data.html.topics)
+    }
+    else if (page == 'forum_or_topic') {
+      $('.js-favorites #forums_pref').html(data.html.forums)
+      $('.js-favorites #topics_pref').html(data.html.topics)
+    }
   })
 }
 
