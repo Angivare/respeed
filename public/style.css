@@ -211,7 +211,7 @@ h1, h2, h3 {
 }
 
 .mobile-menu__opener-icon {
-  background: url('/images/more_vert.svg') center no-repeat;
+  background: url('/images/more_vert_title.svg') center no-repeat;
   width: 24px;
   height: 28px;
   position: absolute;
