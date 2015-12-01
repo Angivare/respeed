@@ -1,5 +1,6 @@
 <?php
 use \Defuse\Crypto\Crypto;
+require_once '../php-encryption/autoload.php';
 require_once 'helpers.php';
 
 /**
