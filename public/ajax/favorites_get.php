@@ -1,7 +1,7 @@
 <?php
 require 'common.php';
 
-arg('page');
+arg('page', 'forum_sum', 'topic_sum');
 
 $favorites = $db->get_favorites($jvc->user_id);
 
@@ -23,5 +23,19 @@ elseif ($page == 'index') {
     'forums' => generate_favorites_forums_markup_index($favorites),
     'topics' => generate_favorites_topics_markup_index($favorites),
   ];
+}
+
+$html = [];
+if (in_array($page, ['forum_or_topic', 'index'])) {
+  $func_forum = $page == 'index' ? 'generate_favorites_forums_markup_index' : 'generate_favorites_forums_markup';
+  $func_topic = $page == 'index' ? 'generate_favorites_topics_markup_index' : 'generate_favorites_topics_markup';
+  if ($forum_sum != get_favorites_sum($favorites['forums'])) {
+    $html['forums'] = $func_forum($favorites);
+    $html['forumSum'] = get_favorites_sum($favorites['forums']);
+  }
+  if ($topic_sum != get_favorites_sum($favorites['topics'])) {
+    $html['topics'] = $func_topic($favorites);
+    $html['topicSum'] = get_favorites_sum($favorites['topics']);
+  }
 }
 echo json_encode(['html' => $html]);

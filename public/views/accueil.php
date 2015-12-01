@@ -2,16 +2,18 @@
 $title = 'JVForum';
 
 $favorites = $db->get_favorites($jvc->user_id);
+$favorites_forums = isset($favorites['forums']) ? $favorites['forums'] : false;
+$favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
 ?>
 <div class="sheet">
   <?php include '_header.php' ?>
 
   <div class="content no-menu">
     <div class="js-favorites-index favorites-index">
-      <div class="favorites-forums">
+      <div class="js-favorites-forums favorites-forums" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
         <?= generate_favorites_forums_markup_index($favorites) ?>
       </div>
-      <div class="favorites-topics">
+      <div class="js-favorites-topics favorites-topics" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
         <?= generate_favorites_topics_markup_index($favorites) ?>
       </div>
     </div>

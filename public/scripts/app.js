@@ -80,20 +80,27 @@ function htmlentities(str) {
 
 function updateFavorites() {
   var page = 'random'
+    , forumSum = $('.js-favorites-forums').data('sum')
+    , topicSum = $('.js-favorites-topics').data('sum')
+
   if ($('.js-favorites-index').length) {
     page = 'index'
   }
   else if ($('.js-favorites').length) {
     page = 'forum_or_topic'
   }
-  ajax('favorites_get', {page: page}, function(data) {
-    if (page == 'index') {
-      $('.js-favorites-index .favorites-forums').html(data.html.forums)
-      $('.js-favorites-index .favorites-topics').html(data.html.topics)
+  ajax('favorites_get', {
+    page: page,
+    forum_sum: forumSum,
+    topic_sum: topicSum,
+  }, function(data) {
+    if (data.html.forums) {
+      $('.js-favorites-forums').html(data.html.forums)
+      $('.js-favorites-forums').data('sum', data.html.forumSum)
     }
-    else if (page == 'forum_or_topic') {
-      $('.js-favorites #forums_pref').html(data.html.forums)
-      $('.js-favorites #topics_pref').html(data.html.topics)
+    if (data.html.topics) {
+      $('.js-favorites-topics').html(data.html.topics)
+      $('.js-favorites-topics').data('sum', data.html.topicSum)
     }
   })
 }
@@ -102,8 +109,8 @@ function toggleFavorite() {
   var action = $(this).hasClass('aside__top-button--favorite') ? 'add' : 'delete'
     , type = $topicNew ? 'topic': 'forum'
     , id = $topicNew ? $topicNew : $forum
-    , forumSum = $('#forums_pref').data('sum')
-    , topicSum = $('#topics_pref').data('sum')
+    , forumSum = $('.js-favorites-forums').data('sum')
+    , topicSum = $('.js-favorites-topics').data('sum')
 
   ajax('favorites_update', {
     id: id,
@@ -121,12 +128,12 @@ function toggleFavorite() {
       $('.js-favorite-toggle .aside__top-button-label').html('Mettre en favoris')
     }
     if (data.html.forums) {
-      $('.js-favorites #forums_pref').html(data.html.forums)
-      $('.js-favorites #forums_pref').data('sum', data.html.forumSum)
+      $('.js-favorites-forums').html(data.html.forums)
+      $('.js-favorites-forums').data('sum', data.html.forumSum)
     }
     if (data.html.topics) {
-      $('.js-favorites #topics_pref').html(data.html.topics)
-      $('.js-favorites #topics_pref').data('sum', data.html.topicSum)
+      $('.js-favorites-topics').html(data.html.topics)
+      $('.js-favorites-topics').data('sum', data.html.topicSum)
     }
   })
 }
