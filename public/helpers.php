@@ -689,3 +689,16 @@ function generate_favorites_topics_markup_index($favorites) {
 
   return $string;
 }
+
+function is_forum_in_favorites($favorites, $wanted) {
+  if (!$favorites) {
+    return false;
+  }
+
+  foreach ($favorites['forums'] as $forum) {
+    if ($forum[0] == $wanted) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -94,8 +94,19 @@ if ($is_in_blacklist) {
   </div>
 
   <aside class="aside">
-    <div class="ouvrir-jvc">
-      <a href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans <span class="jvc">jvc</span></a>
+    <div class="aside__top-buttons">
+<?php if (!is_forum_in_favorites($favorites, $forum)): ?>
+      <span class="aside__top-button aside__top-button--favorite">
+        <span class="aside__top-button-label">Mettre en favoris</span>
+      </span>
+<?php else: ?>
+  <span class="aside__top-button aside__top-button--unfavorite">
+    <span class="aside__top-button-label">Retirer des favoris</span>
+  </span>
+<?php endif ?>
+      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">
+        <span class="aside__top-button-label">Ouvrir sur JVC</span>
+      </a>
     </div>
 
     <div class="js-favorites">

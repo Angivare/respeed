@@ -541,41 +541,52 @@ h1, h2, h3 {
   }
 }
 
-.ouvrir-jvc {
-  text-align: right;
-  margin-bottom: 20px;
+.aside__top-buttons {
+  display: table;
+  margin: 0 0 12px 15px;
+  width: 100%;
+  width: -webkit-calc(100% - 15px);
+  width:         calc(100% - 15px);
 }
 
-@media (MAX-width: 1024px) {
-  .ouvrir-jvc {
-    display: none;
-  }
+.aside__top-button {
+  display: table-cell;
+  background: top no-repeat;
+  width: 100px;
+  height: 42px;
+  cursor: pointer;
+  position: relative;
 }
 
-.ouvrir-jvc a {
-  display: inline-block;
-  border: 1px solid #ddd;
-  padding: 4px 10px;
-  border-radius: 5px;
-  color: #333;
+.aside__top-button--open-jeuxvideocom {
+  background-image: url(/images/open-jeuxvideocom.svg);
 }
 
-.ouvrir-jvc a:hover {
-  border-color: #ccc;
-  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+.aside__top-button--favorite {
+  background-image: url(/images/add-to-favorites.svg);
+}
+
+.aside__top-button--unfavorite {
+  background-image: url(/images/remove-from-favorites.svg);
+}
+
+.aside__top-button-label {
+  display: block;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  overflow: hidden;
+  color: #424242;
 }
 
 .aside .menu {
   background: #ededed;
-  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-bottom: 15px;
   border-radius: 0 10px 0 10px;
-}
-
-@media (min-width: 1025px) {
-  .aside .menu {
-    margin-left: 15px;
-    margin-bottom: 15px;
-  }
 }
 
 .aside .menu .title {
@@ -608,17 +619,11 @@ h1, h2, h3 {
 .aside .menu .menu-content a, .aside .menu .menu-content span {
   color: #014F65;
   display: block;
-  padding: 8px 8px 6px;
+  padding: 2px 8px;
   font-weight: bold;
   font-size: 14px;
   border-bottom: 1px solid #72b4c9;
   cursor: pointer;
-}
-
-@media (min-width: 1025px) {
-  .aside .menu .menu-content a, .aside .menu .menu-content span {
-    padding: 2px 8px;
-  }
 }
 
 .aside .menu .menu-content a:hover, .aside .menu .menu-content span:hover {
