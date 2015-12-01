@@ -422,6 +422,7 @@ class Jvc {
     preg_match_all($regex, $after, $matches, PREG_SET_ORDER);
     for ($i = 0; $i < count($matches); $i++) {
       $topics[] = [
+        (int)$matches[$i]['id'],
         (int)$matches[$i]['forum'],
         ($matches[$i]['mode'] == '1' ? '0' : '') . $matches[$i]['topic'],
         $matches[$i]['slug'],

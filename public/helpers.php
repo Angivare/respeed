@@ -654,7 +654,7 @@ function generate_favorites_topics_markup($favorites) {
   $string .= '<ul class="menu-content">';
 
   foreach ($favorites['topics'] as $topic) {
-    $string .= '<li><a href="/' . $topic[0] . '/' . $topic[1] . '-' . $topic[2] . '">' . $topic[3] . '</a></li>';
+    $string .= '<li><a href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a></li>';
   }
 
   $string .= '</ul>';
@@ -684,7 +684,7 @@ function generate_favorites_topics_markup_index($favorites) {
   $string = '<h3>Topics préférés</h3>';
 
   foreach ($favorites['topics'] as $topic) {
-    $string .= '<a class="favorite" href="/' . $topic[0] . '/' . $topic[1] . '-' . $topic[2] . '">' . $topic[3] . '</a>';
+    $string .= '<a class="favorite" href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a>';
   }
 
   return $string;
@@ -701,4 +701,9 @@ function is_forum_in_favorites($favorites, $wanted) {
     }
   }
   return false;
+}
+
+function halt($message = 0) {
+  http_response_code(500);
+  exit($message);
 }
