@@ -1,7 +1,4 @@
 <?php
-use \Defuse\Crypto\Crypto;
-require_once '../../php-encryption/autoload.php';
-
 require '../../config.php';
 require '../Db.php';
 require '../Auth.php';
