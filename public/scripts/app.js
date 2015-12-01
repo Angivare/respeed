@@ -89,7 +89,7 @@ function updateFavorites() {
   else if ($('.js-favorites').length) {
     page = 'forum_or_topic'
   }
-  ajax('favorites_get', {
+  ajax('favorites_update', {
     page: page,
     forum_sum: forumSum,
     topic_sum: topicSum,
@@ -112,7 +112,7 @@ function toggleFavorite() {
     , forumSum = $('.js-favorites-forums').data('sum')
     , topicSum = $('.js-favorites-topics').data('sum')
 
-  ajax('favorites_update', {
+  ajax('favorites_toggle', {
     id: id,
     type: type,
     action: action,
