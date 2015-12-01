@@ -74,9 +74,20 @@ $favorites = $db->get_favorites($jvc->user_id);
 
   </div>
 
-  <aside class="aside desktop">
-    <div class="ouvrir-jvc">
-      <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans <span class="jvc">jvc</span></a>
+  <aside class="aside">
+    <div class="aside__top-buttons">
+<?php if (!is_topic_in_favorites($favorites, $topicNew)): ?>
+      <span class="js-favorite-toggle aside__top-button aside__top-button--favorite">
+        <span class="aside__top-button-label">Mettre en favoris</span>
+      </span>
+<?php else: ?>
+  <span class="js-favorite-toggle aside__top-button aside__top-button--unfavorite">
+    <span class="aside__top-button-label">Retirer des favoris</span>
+  </span>
+<?php endif ?>
+      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">
+        <span class="aside__top-button-label">Ouvrir sur JVC</span>
+      </a>
     </div>
 
     <div class="js-favorites">

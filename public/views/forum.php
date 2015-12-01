@@ -96,11 +96,11 @@ if ($is_in_blacklist) {
   <aside class="aside">
     <div class="aside__top-buttons">
 <?php if (!is_forum_in_favorites($favorites, $forum)): ?>
-      <span class="js-favorite-toggle-forum aside__top-button aside__top-button--favorite">
+      <span class="js-favorite-toggle aside__top-button aside__top-button--favorite">
         <span class="aside__top-button-label">Mettre en favoris</span>
       </span>
 <?php else: ?>
-  <span class="js-favorite-toggle-forum aside__top-button aside__top-button--unfavorite">
+  <span class="js-favorite-toggle aside__top-button aside__top-button--unfavorite">
     <span class="aside__top-button-label">Retirer des favoris</span>
   </span>
 <?php endif ?>

@@ -98,16 +98,18 @@ function updateFavorites() {
   })
 }
 
-function toggleFavoriteForum() {
+function toggleFavorite() {
   var action = $(this).hasClass('aside__top-button--favorite') ? 'add' : 'delete'
-  ajax('favorites_update', {id: $forum, type: 'forum', action: action}, function(data) {
+  var type = $topicNew ? 'topic': 'forum'
+  var id = $topicNew ? $topicNew : $forum
+  ajax('favorites_update', {id: id, type: type, action: action}, function(data) {
     if (action == 'add') {
-      $('.js-favorite-toggle-forum').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
-      $('.js-favorite-toggle-forum .aside__top-button-label').html('Retirer des favoris')
+      $('.js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
+      $('.js-favorite-toggle .aside__top-button-label').html('Retirer des favoris')
     }
     else {
-      $('.js-favorite-toggle-forum').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
-      $('.js-favorite-toggle-forum .aside__top-button-label').html('Mettre en favoris')
+      $('.js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
+      $('.js-favorite-toggle .aside__top-button-label').html('Mettre en favoris')
     }
     $('.js-favorites #forums_pref').html(data.html.forums)
     $('.js-favorites #topics_pref').html(data.html.topics)
@@ -784,7 +786,7 @@ instantClick.on('change', function(isInitialLoad) {
   $('.form__textarea').focus(startDraftWatcher)
   $('.mobile-menu__opener').click(toggleMobileMenu)
   $('.mobile-menu__item').click(toggleMobileMenu)
-  $('.js-favorite-toggle-forum').click(toggleFavoriteForum)
+  $('.js-favorite-toggle').click(toggleFavorite)
 
   // Messages
   $('.js-quote').click(quote)

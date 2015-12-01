@@ -703,6 +703,19 @@ function is_forum_in_favorites($favorites, $wanted) {
   return false;
 }
 
+function is_topic_in_favorites($favorites, $wanted) {
+  if (!$favorites) {
+    return false;
+  }
+
+  foreach ($favorites['topics'] as $topic) {
+    if ($topic[0] == $wanted) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function halt($message = 0) {
   http_response_code(500);
   exit($message);
