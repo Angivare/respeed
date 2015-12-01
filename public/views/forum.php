@@ -5,7 +5,7 @@ foreach (fetch_forum($forum, $page, $slug) as $k => $v) {
   ${$k} = $v;
 }
 
-$pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
+$favorites = $db->get_favorites($jvc->user_id);
 ?>
 <body class="forum-<?= $forum ?>">
 
@@ -98,7 +98,14 @@ if ($is_in_blacklist) {
       <a href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans <span class="jvc">jvc</span></a>
     </div>
 
-<?= generate_favorites_markup() ?>
+    <div class="js-favorites">
+      <div class="menu" id="forums_pref">
+        <?= generate_favorites_forums_markup($favorites) ?>
+      </div>
+      <div class="menu" id="topics_pref">
+        <?= generate_favorites_topics_markup($favorites) ?>
+      </div>
+    </div>
 
 <?php if ($sous_forums): ?>
     <div class="menu">

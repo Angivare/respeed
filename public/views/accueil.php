@@ -1,11 +1,20 @@
 <?php
 $title = 'JVForum';
+
+$favorites = $db->get_favorites($jvc->user_id);
 ?>
 <div class="sheet">
   <?php include '_header.php' ?>
 
   <div class="content no-menu">
-<?= generate_favorites_markup_index() ?>
+    <div class="js-favorites-index favorites-index">
+      <div class="favorites-forums">
+        <?= generate_favorites_forums_markup_index($favorites) ?>
+      </div>
+      <div class="favorites-topics">
+        <?= generate_favorites_topics_markup_index($favorites) ?>
+      </div>
+    </div>
 
     <form class="rechercheforum-form-accueil" action="/recherche_forum" method="get">
       <input class="rechercheforum-q input" type="text" autocorrect="off" placeholder="Rechercher un forum" name="q">

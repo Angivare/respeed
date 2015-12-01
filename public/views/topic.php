@@ -6,6 +6,8 @@ foreach (fetch_topic($topic, $page, $slug, $forum) as $k => $v) {
 }
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
+
+$favorites = $db->get_favorites($jvc->user_id);
 ?>
 <body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?> body--no-bottom">
 
@@ -77,7 +79,14 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
       <a href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir dans <span class="jvc">jvc</span></a>
     </div>
 
-<?= generate_favorites_markup(null, true) ?>
+    <div class="js-favorites">
+      <div class="menu" id="forums_pref">
+        <?= generate_favorites_forums_markup($favorites) ?>
+      </div>
+      <div class="js-slider menu slider" id="topics_pref">
+        <?= generate_favorites_topics_markup($favorites) ?>
+      </div>
+    </div>
   </aside>
 </div>
 
