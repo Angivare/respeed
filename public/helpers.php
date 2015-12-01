@@ -720,3 +720,7 @@ function halt($message = 0) {
   http_response_code(500);
   exit($message);
 }
+
+function get_favorites_sum($favorites) {
+  return sha1(json_encode($favorites));
+}

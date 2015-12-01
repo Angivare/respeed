@@ -100,9 +100,18 @@ function updateFavorites() {
 
 function toggleFavorite() {
   var action = $(this).hasClass('aside__top-button--favorite') ? 'add' : 'delete'
-  var type = $topicNew ? 'topic': 'forum'
-  var id = $topicNew ? $topicNew : $forum
-  ajax('favorites_update', {id: id, type: type, action: action}, function(data) {
+    , type = $topicNew ? 'topic': 'forum'
+    , id = $topicNew ? $topicNew : $forum
+    , forumSum = $('#forums_pref').data('sum')
+    , topicSum = $('#topics_pref').data('sum')
+
+  ajax('favorites_update', {
+    id: id,
+    type: type,
+    action: action,
+    forum_sum: forumSum,
+    topic_sum: topicSum,
+  }, function(data) {
     if (action == 'add') {
       $('.js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
       $('.js-favorite-toggle .aside__top-button-label').html('Retirer des favoris')
@@ -111,8 +120,14 @@ function toggleFavorite() {
       $('.js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
       $('.js-favorite-toggle .aside__top-button-label').html('Mettre en favoris')
     }
-    $('.js-favorites #forums_pref').html(data.html.forums)
-    $('.js-favorites #topics_pref').html(data.html.topics)
+    if (data.html.forums) {
+      $('.js-favorites #forums_pref').html(data.html.forums)
+      $('.js-favorites #forums_pref').data('sum', data.html.forumSum)
+    }
+    if (data.html.topics) {
+      $('.js-favorites #topics_pref').html(data.html.topics)
+      $('.js-favorites #topics_pref').data('sum', data.html.topicSum)
+    }
   })
 }
 

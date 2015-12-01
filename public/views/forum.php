@@ -6,6 +6,8 @@ foreach (fetch_forum($forum, $page, $slug) as $k => $v) {
 }
 
 $favorites = $db->get_favorites($jvc->user_id);
+$favorites_forums = isset($favorites['forums']) ? $favorites['forums'] : false;
+$favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
 ?>
 <body class="forum-<?= $forum ?>">
 
@@ -110,10 +112,10 @@ if ($is_in_blacklist) {
     </div>
 
     <div class="js-favorites">
-      <div class="menu" id="forums_pref">
+      <div class="menu" id="forums_pref" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
         <?= generate_favorites_forums_markup($favorites) ?>
       </div>
-      <div class="menu" id="topics_pref">
+      <div class="menu" id="topics_pref" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
         <?= generate_favorites_topics_markup($favorites) ?>
       </div>
     </div>

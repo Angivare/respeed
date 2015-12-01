@@ -8,6 +8,8 @@ foreach (fetch_topic($topic, $page, $slug, $forum) as $k => $v) {
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
 $favorites = $db->get_favorites($jvc->user_id);
+$favorites_forums = isset($favorites['forums']) ? $favorites['forums'] : false;
+$favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
 ?>
 <body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?> body--no-bottom">
 
@@ -91,10 +93,10 @@ $favorites = $db->get_favorites($jvc->user_id);
     </div>
 
     <div class="js-favorites">
-      <div class="menu" id="forums_pref">
+      <div class="menu" id="forums_pref" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
         <?= generate_favorites_forums_markup($favorites) ?>
       </div>
-      <div class="js-slider menu slider" id="topics_pref">
+      <div class="js-slider menu slider" id="topics_pref" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
         <?= generate_favorites_topics_markup($favorites) ?>
       </div>
     </div>
