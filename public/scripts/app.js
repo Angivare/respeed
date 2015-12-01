@@ -259,63 +259,6 @@ function hideDraftMention() {
 /** /Draft **/
 
 
-function addForum() {
-  favoritesForums.push({
-    lien: '/' + $forum + '-' + $slug,
-    id: $forum,
-    titre: $title,
-  })
-  localStorage.favoritesForums = JSON.stringify(favoritesForums)
-  $('#forums_pref .menu-content').html('')
-  displayFavoritesForums()
-
-  ajax('favorites_update', {id: $forum, type: 'forum', action: 'add'})
-}
-
-function delForum() {
-  var newFavoritesForums = []
-  $.each(favoritesForums, function(_, forum) {
-    if (forum.id != $forum) {
-      newFavoritesForums.push(forum)
-    }
-  })
-  favoritesForums = newFavoritesForums
-  localStorage.favoritesForums = JSON.stringify(favoritesForums)
-  $('#forums_pref .menu-content').html('')
-  displayFavoritesForums()
-
-  ajax('favorites_update', {id: $forum, type: 'forum', action: 'delete'})
-}
-
-function addTopic() {
-  favoritesTopics.push({
-    lien: '/' + $forum + '/' + $topic + '-' + $slug,
-    id: $topic,
-    titre: $title,
-  })
-  localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
-  $('#topics_pref .menu-content').html('')
-  displayFavoritesTopics()
-
-  ajax('favorites_update', {id: $topicNew, type: 'topic', action: 'add'})
-}
-
-function delTopic() {
-  var newFavoritesTopics = []
-  $.each(favoritesTopics, function(_, topic) {
-    if (topic.id != $topic) {
-      newFavoritesTopics.push(topic)
-    }
-  })
-  favoritesTopics = newFavoritesTopics
-  localStorage.favoritesTopics = JSON.stringify(favoritesTopics)
-  $('#topics_pref .menu-content').html('')
-  displayFavoritesTopics()
-
-  ajax('favorites_update', {id: $topicNew, type:'topic', action: 'delete'})
-}
-
-
 /** Refresh **/
 
 function handleRefreshOnPageChange(isInitialLoad) {
