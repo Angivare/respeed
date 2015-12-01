@@ -76,6 +76,8 @@ function htmlentities(str) {
   })
 }
 
+/** Favorites **/
+
 function updateFavorites() {
   var page = 'random'
   if ($('.js-favorites-index').length) {
@@ -95,6 +97,27 @@ function updateFavorites() {
     }
   })
 }
+
+function toggleFavoriteForum() {
+  var action = $(this).hasClass('aside__top-button--favorite') ? 'add' : 'delete'
+  ajax('favorites_update', {id: $forum, type: 'forum', action: action}, function(data) {
+    if (action == 'add') {
+      $('.js-favorite-toggle-forum').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
+      $('.js-favorite-toggle-forum .aside__top-button-label').html('Retirer des favoris')
+    }
+    else {
+      $('.js-favorite-toggle-forum').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
+      $('.js-favorite-toggle-forum .aside__top-button-label').html('Mettre en favoris')
+    }
+    $('.js-favorites #forums_pref').html(data.html.forums)
+    $('.js-favorites #topics_pref').html(data.html.topics)
+  })
+}
+
+/** /Favorites **/
+
+
+/** Request form data **/
 
 function request_form_data() {
   if (form_data) {
@@ -129,6 +152,11 @@ function request_edit_form_data(e) {
     }
   })
 }
+
+/** /Request form data **/
+
+
+/** Draft **/
 
 function startDraftWatcher() {
   draftWatcherInterval = setInterval(saveDraft, 500)
@@ -204,6 +232,9 @@ function hideDraftMention() {
   $('.form__draft').removeClass('form__draft--visible')
 }
 
+/** /Draft **/
+
+
 function addForum() {
   favoritesForums.push({
     lien: '/' + $forum + '-' + $slug,
@@ -259,6 +290,7 @@ function delTopic() {
 
   ajax('favorites_update', {id: $topicNew, type:'topic', action: 'delete'})
 }
+
 
 /** Refresh **/
 
@@ -752,6 +784,7 @@ instantClick.on('change', function(isInitialLoad) {
   $('.form__textarea').focus(startDraftWatcher)
   $('.mobile-menu__opener').click(toggleMobileMenu)
   $('.mobile-menu__item').click(toggleMobileMenu)
+  $('.js-favorite-toggle-forum').click(toggleFavoriteForum)
 
   // Messages
   $('.js-quote').click(quote)
