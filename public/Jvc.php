@@ -404,8 +404,9 @@ class Jvc {
     $before = substr($rep['body'], 0, $lim);
     $after = substr($rep['body'], $lim);
 
-    $regex =  '#<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">.+' .
-              '<a href="//www.jeuxvideo.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-1-0-1-0-(?P<slug>.+)\.htm" class="lien-jv">[\r\n\s]*?(?P<titre>.+)[\r\n\s]*</a>.+' .
+    $regex =  '#<li class="move line-ellipsis" data-id="(?P<id>[0-9]+)">\s+' .
+              '<a href="//www.jeuxvideo.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-1-0-1-0-(?P<slug>.+)\.htm" class="lien-jv">[\r\n\s]*?(?P<titre>.+)[\r\n\s]*</a>\s+' .
+              '<span class="picto-suppression"></span>\s+' .
               '</li>#Usi';
 
     $forums = $topics = [];
