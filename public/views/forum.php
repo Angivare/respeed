@@ -14,22 +14,23 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
 <div class="sheet">
   <?php include '_header.php' ?>
 
-  <h1 class="page-title page-title--larger">
-    <a class="page-title__link" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a>
-    <div class="mobile-menu">
-      <div class="mobile-menu__opener"><div class="mobile-menu__opener-icon"></div></div>
-        <div class="mobile-menu__items">
-<?php if (!is_forum_in_favorites($favorites, $forum)): ?>
-          <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="add">Mettre en favoris</span>
-<?php else: ?>
-          <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
-<?php endif ?>
-          <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
-        </div>
-    </div>
-  </h1>
-
   <div class="content">
+
+    <h1 class="page-title page-title--larger">
+      <a class="page-title__link" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a>
+      <div class="mobile-menu">
+        <div class="mobile-menu__opener"><div class="mobile-menu__opener-icon"></div></div>
+          <div class="mobile-menu__items">
+<?php if (!is_forum_in_favorites($favorites, $forum)): ?>
+            <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="add">Mettre en favoris</span>
+<?php else: ?>
+            <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
+<?php endif ?>
+            <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
+          </div>
+      </div>
+    </h1>
+
 <?php
 if ($page > 1) {
   include 'forum_pagination.php';
