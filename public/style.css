@@ -1804,7 +1804,8 @@ h1, h2, h3 {
 .noelshack-link__thumb {
   width: 68px;
   height: 51px;
-  vertical-align: bottom;
+  position: relative;
+  top: 3px;
 }
 
 .youtube-link {
@@ -2488,4 +2489,23 @@ h1, h2, h3 {
 .back-button-container {
   text-align: center;
   margin: 30px 0 50px;
+}
+
+
+
+
+.add-to-favorite-mobile-shortcut {
+  margin: auto;
+  text-align: center;
+  padding: 10px 0;
+}
+
+@media (min-width: 1025px) {
+  .add-to-favorite-mobile-shortcut {
+    display: none;
+  }
+}
+
+.add-to-favorite-mobile-shortcut__element {
+  background: white;
 }

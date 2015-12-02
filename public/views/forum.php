@@ -31,6 +31,10 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
       </div>
     </h1>
 
+<?php if (!is_forum_in_favorites($favorites, $forum)): ?>
+    <div class="add-to-favorite-mobile-shortcut" data-action="add"><span class="js-favorite-toggle button button--raised button--large add-to-favorite-mobile-shortcut__element">Mettre en favoris</span></div>
+<?php endif ?>
+
 <?php
 if ($page > 1) {
   include 'forum_pagination.php';
