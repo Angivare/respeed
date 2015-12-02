@@ -1322,7 +1322,6 @@ h1, h2, h3 {
 @media (min-width: 1025px) {
   .message {
     margin: 0 0 14px;
-    display: table;
     width: 100%;
   }
 }
@@ -1698,7 +1697,6 @@ h1, h2, h3 {
 
 .message__content-text {
   margin: 1em 0;
-  word-break: break-all;
 }
 
 .message__content-edit-mention {
