@@ -127,15 +127,15 @@ if ($is_in_blacklist) {
 
 <?php if ($sous_forums): ?>
     <div class="menu">
-      <h3 class="title">Sous-forums</h3>
-      <ul class="menu-content">
+      <h3 class="menu__title">Sous-forums</h3>
+      <ul class="menu__items">
 <?php if ($has_parent): ?>
-        <li><a href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a></li>
+        <li class="menu__item"><a href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a></li>
 <?php else: ?>
-        <li><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></li>
+        <li class="menu__item"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></li>
 <?php endif ?>
 <?php foreach ($sous_forums as $sous_forum): ?>
-        <li><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
+        <li class="menu__item"><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
 <?php endforeach ?>
       </ul>
     </div>

@@ -627,16 +627,16 @@ STRING;
 }
 
 function generate_favorites_forums_markup($favorites) {
-  $string = '<h3 class="title"><span class="mine">Mes</span> forums préférés</h3>';
+  $string = '<h3 class="menu__title">Forums favoris</h3>';
 
   if (!$favorites) {
     return '';
   }
 
-  $string .= '<ul class="menu-content">';
+  $string .= '<ul class="menu__items">';
 
   foreach ($favorites['forums'] as $forum) {
-    $string .= '<li><a href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a></li>';
+    $string .= '<li class="menu__item"><a href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a></li>';
   }
 
   $string .= '</ul>';
@@ -645,16 +645,16 @@ function generate_favorites_forums_markup($favorites) {
 }
 
 function generate_favorites_topics_markup($favorites) {
-  $string = '<h3 class="title"><span class="mine">Mes</span> topics préférés</h3>';
+  $string = '<h3 class="menu__title">Topics favoris</h3>';
 
   if (!$favorites) {
     return '';
   }
 
-  $string .= '<ul class="menu-content">';
+  $string .= '<ul class="menu__items">';
 
   foreach ($favorites['topics'] as $topic) {
-    $string .= '<li><a href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a></li>';
+    $string .= '<li class="menu__item"><a href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a></li>';
   }
 
   $string .= '</ul>';

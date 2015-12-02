@@ -618,53 +618,46 @@ h1, h2, h3 {
   color: #424242;
 }
 
-.aside .menu {
-  background: #ededed;
+.menu {
   margin-left: 15px;
   margin-bottom: 15px;
-  border-radius: 0 10px 0 10px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.25);
+  border-radius: 0 0 3px 3px;
 }
 
-.aside .menu .title {
+.menu__title {
   font-size: 1em;
-  padding: 2px 8px;
-  background: #0da0ca;
-  background-image: linear-gradient(#0ebbed 0, #0da0ca 50%, #0382a6 50%, #0382a6 100%);
-  color: white;
-  text-transform: uppercase;
-  border-radius: 0 10px 0 0;
+  padding: 3px 10px;
+  background: #3949AB;
+  color: #E8EAF6;
   font-size: 15px;
+  border-radius: 3px 3px 0 0;
 }
 
-@media (MAX-width: 1250px) {
-  .aside .menu .title .mine {
-    display: none;
-  }
-}
-
-.aside .menu .menu-content {
+.menu__items {
+  background: #E8EAF6;
   margin: 0;
-  padding: 0;
-  padding-bottom: 10px;
+  padding: 3px 0;
   list-style: none;
-  background: #C7E3F1;
-  background-image: linear-gradient(#97cce5 0, #C7E3F1 60px);
-  border-radius: 0 0 0 10px;
+  border-radius: 0 0 3px 3px;
 }
 
-.aside .menu .menu-content a, .aside .menu .menu-content span {
-  color: #014F65;
+.menu__item {
+  color: #1A237E;
   display: block;
-  padding: 2px 8px;
+  padding: 3px 10px;
   font-weight: bold;
   font-size: 14px;
-  border-bottom: 1px solid #72b4c9;
   cursor: pointer;
 }
 
-.aside .menu .menu-content a:hover, .aside .menu .menu-content span:hover {
+.menu__item a {
+  color: inherit;
+}
+
+.menu__item:hover {
   color: white;
-  background: #59AAC6;
+  background: #5C6BC0;
 }
 
 .slider.sliding {
