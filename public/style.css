@@ -1699,6 +1699,7 @@ h1, h2, h3 {
 
 .message__content-text {
   margin: 1em 0;
+  word-break: break-all;
 }
 
 .message__content-edit-mention {
