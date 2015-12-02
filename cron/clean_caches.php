@@ -1,6 +1,6 @@
 <?php
-require '../config.php';
-require '../public/Db.php';
+require dirname(__FILE__) . '/../config.php';
+require dirname(__FILE__) . '/../public/Db.php';
 
 $db = new Db();
 $db->clean_topic_cache();

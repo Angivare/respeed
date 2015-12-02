@@ -1,7 +1,7 @@
 <?php
-require '../config.php';
-require '../public/Jvc.php';
-require '../public/Db.php';
+require dirname(__FILE__) . '/../config.php';
+require dirname(__FILE__) . '/../public/Jvc.php';
+require dirname(__FILE__) . '/../public/Db.php';
 
 $db = new Db();
 
