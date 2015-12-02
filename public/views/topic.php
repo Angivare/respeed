@@ -21,6 +21,11 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
     <div class="mobile-menu">
       <div class="mobile-menu__opener"><div class="mobile-menu__opener-icon"></div></div>
         <div class="mobile-menu__items">
+<?php if (!is_topic_in_favorites($favorites, $forum)): ?>
+          <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="add">Mettre en favoris</span>
+<?php else: ?>
+          <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
+<?php endif ?>
           <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
         </div>
     </div>
@@ -79,12 +84,12 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
   <aside class="aside">
     <div class="aside__top-buttons">
 <?php if (!is_topic_in_favorites($favorites, $topicNew)): ?>
-      <span class="js-favorite-toggle aside__top-button aside__top-button--favorite">
-        <span class="aside__top-button-label">Mettre en favoris</span>
+      <span class="js-favorite-toggle aside__top-button aside__top-button--favorite" data-action="add">
+        <span class="js-favorite-toggle-label aside__top-button-label">Mettre en favoris</span>
       </span>
 <?php else: ?>
-  <span class="js-favorite-toggle aside__top-button aside__top-button--unfavorite">
-    <span class="aside__top-button-label">Retirer des favoris</span>
+  <span class="js-favorite-toggle aside__top-button aside__top-button--unfavorite" data-action="delete">
+    <span class="js-favorite-toggle-label aside__top-button-label">Retirer des favoris</span>
   </span>
 <?php endif ?>
       <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">

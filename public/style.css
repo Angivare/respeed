@@ -248,6 +248,7 @@ h1, h2, h3 {
   color: #212121;
   display: block;
   padding: 10px 12px;
+  cursor: pointer;
 }
 
 

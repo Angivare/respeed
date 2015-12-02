@@ -106,7 +106,7 @@ function updateFavorites() {
 }
 
 function toggleFavorite() {
-  var action = $(this).hasClass('aside__top-button--favorite') ? 'add' : 'delete'
+  var action = $('.js-favorite-toggle').data('action')
     , type = $topicNew ? 'topic': 'forum'
     , id = $topicNew ? $topicNew : $forum
     , forumSum = $('.js-favorites-forums').data('sum')
@@ -119,13 +119,18 @@ function toggleFavorite() {
     forum_sum: forumSum,
     topic_sum: topicSum,
   }, function(data) {
+    if (!data.html) {
+      return false
+    }
     if (action == 'add') {
-      $('.js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
-      $('.js-favorite-toggle .aside__top-button-label').html('Retirer des favoris')
+      $('.aside .js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
+      $('.js-favorite-toggle-label').html('Retirer des favoris')
+      $('.js-favorite-toggle').data('action', 'delete')
     }
     else {
-      $('.js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
-      $('.js-favorite-toggle .aside__top-button-label').html('Mettre en favoris')
+      $('.aside .js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
+      $('.js-favorite-toggle-label').html('Mettre en favoris')
+      $('.js-favorite-toggle').data('action', 'add')
     }
     if (data.html.forums) {
       $('.js-favorites-forums').html(data.html.forums)
