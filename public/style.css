@@ -614,6 +614,7 @@ h1, h2, h3 {
   left: 0;
   text-align: center;
   overflow: hidden;
+  white-space: nowrap;
   color: #424242;
 }
 
