@@ -920,7 +920,6 @@ h1, h2, h3 {
 
 .topic__main-link {
   display: table;
-  table-layout: fixed;
   width: 100%;
   color: #1565C0;
   min-height: 50px;
@@ -985,7 +984,7 @@ h1, h2, h3 {
   padding: 3px 0 3px 5px;
   vertical-align: middle;
   background: white;
-  word-wrap: break-word;
+  word-break: break-all;
 }
 
 @media (min-width: 400px) {
