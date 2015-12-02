@@ -117,25 +117,25 @@ if ($is_in_blacklist) {
     </div>
 
     <div class="js-favorites">
-      <ul class="js-favorites-forums menu" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
+      <div class="js-favorites-forums menu" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
         <?= generate_favorites_forums_markup($favorites) ?>
-      </ul>
-      <ul class="js-favorites-topics menu" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
+      </div>
+      <div class="js-favorites-topics menu" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
         <?= generate_favorites_topics_markup($favorites) ?>
-      </ul>
+      </div>
     </div>
 
 <?php if ($sous_forums): ?>
-    <ul class="menu">
+    <div class="menu">
 <?php if ($has_parent): ?>
-      <li class="menu__item"><a href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a></li>
+      <a class="menu__item" href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a>
 <?php else: ?>
-      <li class="menu__item"><a href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a></li>
+      <a class="menu__item" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a>
 <?php endif ?>
 <?php foreach ($sous_forums as $sous_forum): ?>
-      <li class="menu__item"><a href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a></li>
+      <a class="menu__item" href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a>
 <?php endforeach ?>
-    </ul>
+    </div>
 <?php endif ?>
 
   </aside>

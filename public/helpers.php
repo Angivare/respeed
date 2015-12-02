@@ -632,11 +632,9 @@ function generate_favorites_forums_markup($favorites) {
   }
 
   $string = '';
-
   foreach ($favorites['forums'] as $forum) {
-    $string .= '<li class="menu__item"><a href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a></li>';
+    $string .= '<a class="menu__item" href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a>';
   }
-
   return $string;
 }
 
@@ -646,11 +644,9 @@ function generate_favorites_topics_markup($favorites) {
   }
 
   $string = '';
-
   foreach ($favorites['topics'] as $topic) {
-    $string .= '<li class="menu__item"><a href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a></li>';
+    $string .= '<a class="menu__item" href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a>';
   }
-
   return $string;
 }
 
