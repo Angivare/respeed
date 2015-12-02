@@ -441,7 +441,7 @@ h1, h2, h3 {
 }
 
 .header__home-link {
-  color: #1565C0;
+  color: hsla(216,85%,30%,1);
   padding: 10px 20px;
   display: inline-block;
 }
@@ -616,7 +616,8 @@ h1, h2, h3 {
 
 .menu {
   margin: 0 0 15px 15px;
-  background: hsla(232,45%,91%,1);
+  background: #CFE8FC;
+  color: hsla(216,85%,25%,1);
   padding: 3px 0;
   list-style: none;
   border-radius: 3px;
@@ -624,7 +625,6 @@ h1, h2, h3 {
 }
 
 .menu__item {
-  color: #1A237E;
   display: block;
   padding: 3px 10px;
   font-weight: bold;
@@ -637,8 +637,8 @@ h1, h2, h3 {
 }
 
 .menu__item:hover {
-  color: white;
-  background: #5C6BC0;
+  color: hsla(216,85%,17%,1);
+  background: #BBDEFB;
 }
 
 .slider.sliding {
