@@ -9,6 +9,7 @@ RewriteRule ^accueil$ /index.php [L]
 RewriteRule ^apropos$ /index.php?apropos [L]
 RewriteRule ^recherche_forum$ /index.php?recherche_forum [L]
 RewriteRule ^smileys$ /index.php?smileys [L]
+RewriteRule ^moderation$ /index.php?moderation [L]
 
 RewriteRule ^([0-9]+)$ /index.php?forum=$1 [L]
 RewriteRule ^([0-9]+)-([a-z0-9-]+)$ /index.php?forum=$1&slug=$2 [L]

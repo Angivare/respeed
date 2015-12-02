@@ -13,6 +13,7 @@ require_once 'helpers.php';
 class Jvc {
   public $user_id = null;
   public $pseudo = null;
+  public $logged_into_moderation = false;
 
   public function __construct() {
     $this->err = 'Indéfinie';
@@ -42,7 +43,11 @@ class Jvc {
     if (isset($_COOKIE['id'], $this->cookie['coniunctio'])) {
       $stated_coniunctio_id = explode('$', $this->cookie['coniunctio'])[0];
       $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
-      list($user_id, $pseudo, $coniunctio_id) = explode(' ', $cookie);
+      $exploded_cookie = explode(' ', $cookie);
+      list($user_id, $pseudo, $coniunctio_id) = $exploded_cookie;
+      if (isset($exploded_cookie[3])) {
+        $this->logged_into_moderation = true;
+      }
       if ($coniunctio_id == $stated_coniunctio_id) {
         $this->user_id = $user_id;
         $this->pseudo = $pseudo;
@@ -582,6 +587,32 @@ class Jvc {
     $this->refresh_cookie($ret['header']);
 
     return $ret;
+  }
+
+  public function log_into_moderation($password) {
+    $req = $this->request('/sso/auth.php', true);
+    $body = $req['body'];
+    $post_data = $this->parse_form($body);
+    $post_data['password'] = $password;
+
+    $req = $this->request('/sso/auth.php', http_build_query($post_data));
+
+    if (strpos($req['body'], '<div class="alert alert-success">') !== false) {
+      $this->mark_as_moderator();
+      return true;
+    }
+
+    if (preg_match('#<div class="alert alert-danger">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err(trim($matches['message']));
+    }
+  }
+
+  private function mark_as_moderator() {
+    $this->logged_into_moderation = true;
+
+    $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
+    $ciphertext = Crypto::encrypt($cookie . ' true', base64_decode(ID_KEY));
+    _setcookie('id', base64_encode($ciphertext));
   }
 
   private function _err($err) {

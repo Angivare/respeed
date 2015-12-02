@@ -7,6 +7,7 @@ $apropos = isset($_GET['apropos']);
 $recherche_forum = isset($_GET['recherche_forum']);
 $smileys = isset($_GET['smileys']);
 $profil = isset($_GET['profil']);
+$moderation = isset($_GET['moderation']);
 
 require_once '../php-encryption/autoload.php';
 require '../config.php';
@@ -48,6 +49,8 @@ elseif ($smileys)
   $view = 'smileys';
 elseif ($profil)
   $view = 'profil';
+elseif ($moderation)
+  $view = 'moderation';
 
 ob_start();
 require 'views/' . $view . '.php';
