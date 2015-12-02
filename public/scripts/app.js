@@ -473,7 +473,7 @@ function makeFavoritesSlide() {
 
 function adjustSliderWidth() {
   // Parce que la taille ne dépend plus du parent en position fixed
-  $('#topics_pref').css('width', $('#forums_pref').width())
+  $('.js-slider').css('width', $('.menu.js-favorites-forums').width())
 }
 
 function showCaptcha(signature) {
