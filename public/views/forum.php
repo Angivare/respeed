@@ -100,6 +100,19 @@ if ($is_in_blacklist) {
     </form>
   </div>
 
+<?php if ($sous_forums): ?>
+  <div class="menu mobile">
+<?php if ($has_parent): ?>
+    <a class="menu__item" href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a>
+<?php else: ?>
+    <a class="menu__item" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a>
+<?php endif ?>
+<?php foreach ($sous_forums as $sous_forum): ?>
+    <a class="menu__item" href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a>
+<?php endforeach ?>
+  </div>
+<?php endif ?>
+
   <aside class="aside">
     <div class="aside__top-buttons">
 <?php if (!is_forum_in_favorites($favorites, $forum)): ?>
