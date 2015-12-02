@@ -638,7 +638,7 @@ h1, h2, h3 {
 
 .menu__item {
   display: block;
-  color: hsla(216,85%,25%,1);
+  color: hsla(216,85%,17%,1);
   padding: 3px 10px;
   font-weight: bold;
   font-size: 14px;
@@ -657,7 +657,7 @@ h1, h2, h3 {
 }
 
 .menu__item:hover {
-  color: hsla(216,85%,17%,1);
+  color: hsla(216,85%,8%,1);
   background: #BBDEFB;
 }
 
