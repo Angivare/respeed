@@ -627,37 +627,29 @@ STRING;
 }
 
 function generate_favorites_forums_markup($favorites) {
-  $string = '<h3 class="menu__title">Forums favoris</h3>';
-
   if (!$favorites) {
     return '';
   }
 
-  $string .= '<ul class="menu__items">';
+  $string = '';
 
   foreach ($favorites['forums'] as $forum) {
     $string .= '<li class="menu__item"><a href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a></li>';
   }
 
-  $string .= '</ul>';
-
   return $string;
 }
 
 function generate_favorites_topics_markup($favorites) {
-  $string = '<h3 class="menu__title">Topics favoris</h3>';
-
   if (!$favorites) {
     return '';
   }
 
-  $string .= '<ul class="menu__items">';
+  $string = '';
 
   foreach ($favorites['topics'] as $topic) {
     $string .= '<li class="menu__item"><a href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a></li>';
   }
-
-  $string .= '</ul>';
 
   return $string;
 }
