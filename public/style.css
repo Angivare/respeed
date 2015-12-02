@@ -435,10 +435,6 @@ h1, h2, h3 {
   }
 }
 
-.header--localhost {
-  text-shadow: 0 0 10px white, 0 0 20px #6200EA, 0 0 30px #6200EA;
-}
-
 .header__home-cell {
   display: table-cell;
   width: 1px;

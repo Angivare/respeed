@@ -1,4 +1,4 @@
-<header class="header <?= $_SERVER['SERVER_NAME'] != 'jvforum.fr' ? 'header--localhost' : '' ?>">
+<header class="header">
   <div class="header__home-cell">
     <a class="header__home-link <?= isset($forum_slug) ? 'header__home-link--accompanied' : '' ?>" href="/accueil">Accueil</a>
   </div>
