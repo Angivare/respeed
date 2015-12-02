@@ -590,11 +590,15 @@ var instantClick
   }
 
   function timer() {
-    $currentPageTimers.push(setTimeout.apply(window, arguments))
+    var timer = setTimeout.apply(window, arguments)
+    $currentPageTimers.push(timer)
+    return timer
   }
 
   function interval() {
-    $currentPageTimers.push(setInterval.apply(window, arguments))
+    var timer = setInterval.apply(window, arguments)
+    $currentPageTimers.push(timer)
+    return timer
   }
 
 
