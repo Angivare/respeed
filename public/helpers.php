@@ -635,6 +635,9 @@ function generate_favorites_forums_markup($favorites) {
   foreach ($favorites['forums'] as $forum) {
     $string .= '<a class="menu__item" href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a>';
   }
+  if (!$string) {
+    $string = '<span class="menu__item menu__item--blank-state">Aucun forum favori</span>';
+  }
   return $string;
 }
 
@@ -646,6 +649,9 @@ function generate_favorites_topics_markup($favorites) {
   $string = '';
   foreach ($favorites['topics'] as $topic) {
     $string .= '<a class="menu__item" href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a>';
+  }
+  if (!$string) {
+    $string = '<span class="menu__item menu__item--blank-state">Aucun topic favori</span>';
   }
   return $string;
 }

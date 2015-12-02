@@ -662,6 +662,19 @@ h1, h2, h3 {
   background: #90CAF9;
 }
 
+.menu__item--blank-state {
+  text-align: center;
+  font-weight: normal;
+  font-size: 11px;
+  color: #1976D2;
+  cursor: default;
+}
+
+.menu__item--blank-state:hover {
+  background: transparent;
+  color: #1976D2;
+}
+
 .slider.sliding {
   position: fixed;
   top: 15px;
