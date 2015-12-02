@@ -9,12 +9,12 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
   <?php include '_header.php' ?>
 
   <div class="content no-menu">
-    <div class="js-favorites-index favorites-index">
-      <div class="js-favorites-forums favorites-forums" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
-        <?= generate_favorites_forums_markup_index($favorites) ?>
+    <div class="js-favorites">
+      <div class="js-favorites-forums menu" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
+        <?= generate_favorites_forums_markup($favorites) ?>
       </div>
-      <div class="js-favorites-topics favorites-topics" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
-        <?= generate_favorites_topics_markup_index($favorites) ?>
+      <div class="js-favorites-topics menu" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
+        <?= generate_favorites_topics_markup($favorites) ?>
       </div>
     </div>
 

@@ -650,34 +650,6 @@ function generate_favorites_topics_markup($favorites) {
   return $string;
 }
 
-function generate_favorites_forums_markup_index($favorites) {
-  if (!$favorites) {
-    return '';
-  }
-
-  $string = '<h3>Forums préférés</h3>';
-
-  foreach ($favorites['forums'] as $forum) {
-    $string .= '<a class="favorite" href="/' . $forum[0] . '-' . $forum[1] . '">' . $forum[2] . '</a>';
-  }
-
-  return $string;
-}
-
-function generate_favorites_topics_markup_index($favorites) {
-  if (!$favorites) {
-    return '';
-  }
-
-  $string = '<h3>Topics préférés</h3>';
-
-  foreach ($favorites['topics'] as $topic) {
-    $string .= '<a class="favorite" href="/' . $topic[1] . '/' . $topic[2] . '-' . $topic[3] . '">' . $topic[4] . '</a>';
-  }
-
-  return $string;
-}
-
 function is_forum_in_favorites($favorites, $wanted) {
   if (!$favorites) {
     return false;

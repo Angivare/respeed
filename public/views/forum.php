@@ -117,16 +117,16 @@ if ($is_in_blacklist) {
     </div>
 
     <div class="js-favorites">
-      <div class="js-favorites-forums menu" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
+      <div class="js-favorites-forums aside__menu menu" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
         <?= generate_favorites_forums_markup($favorites) ?>
       </div>
-      <div class="js-favorites-topics menu" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
+      <div class="js-favorites-topics aside__menu menu" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
         <?= generate_favorites_topics_markup($favorites) ?>
       </div>
     </div>
 
 <?php if ($sous_forums): ?>
-    <div class="menu">
+    <div class="menu aside__menu">
 <?php if ($has_parent): ?>
       <a class="menu__item" href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a>
 <?php else: ?>

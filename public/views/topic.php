@@ -98,12 +98,12 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
     </div>
 
     <div class="js-favorites">
-      <ul class="js-favorites-forums menu" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
+      <div class="js-favorites-forums aside__menu menu" data-sum="<?= get_favorites_sum($favorites_forums) ?>">
         <?= generate_favorites_forums_markup($favorites) ?>
-      </ul>
-      <ul class="js-favorites-topics js-slider menu slider" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
+      </div>
+      <div class="js-favorites-topics js-slider aside__menu menu slider" data-sum="<?= get_favorites_sum($favorites_topics) ?>">
         <?= generate_favorites_topics_markup($favorites) ?>
-      </ul>
+      </div>
     </div>
   </aside>
 </div>

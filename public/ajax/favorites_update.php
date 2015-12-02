@@ -12,29 +12,19 @@ if (!$favorites || !$favorites['is_fresh']) {
 }
 
 $html = [];
-if ($page == 'forum_or_topic') {
-  $html = [
-    'forums' => generate_favorites_forums_markup($favorites),
-    'topics' => generate_favorites_topics_markup($favorites),
-  ];
-}
-elseif ($page == 'index') {
-  $html = [
-    'forums' => generate_favorites_forums_markup_index($favorites),
-    'topics' => generate_favorites_topics_markup_index($favorites),
-  ];
-}
+$html = [
+  'forums' => generate_favorites_forums_markup($favorites),
+  'topics' => generate_favorites_topics_markup($favorites),
+];
 
 $html = [];
-if (in_array($page, ['forum_or_topic', 'index'])) {
-  $func_forum = $page == 'index' ? 'generate_favorites_forums_markup_index' : 'generate_favorites_forums_markup';
-  $func_topic = $page == 'index' ? 'generate_favorites_topics_markup_index' : 'generate_favorites_topics_markup';
+if ($forum_sum && $topic_sum) {
   if ($forum_sum != get_favorites_sum($favorites['forums'])) {
-    $html['forums'] = $func_forum($favorites);
+    $html['forums'] = generate_favorites_forums_markup($favorites);
     $html['forumSum'] = get_favorites_sum($favorites['forums']);
   }
   if ($topic_sum != get_favorites_sum($favorites['topics'])) {
-    $html['topics'] = $func_topic($favorites);
+    $html['topics'] = generate_favorites_topics_markup($favorites);
     $html['topicSum'] = get_favorites_sum($favorites['topics']);
   }
 }
