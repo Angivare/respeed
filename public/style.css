@@ -140,6 +140,40 @@ h1, h2, h3 {
 
 
 
+.toast {
+  position: fixed;
+  top: 4px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  pointer-events: none;
+  -webkit-transform: translateY(-50px);
+          transform: translateY(-50px);
+  -webkit-transition: -webkit-transform .15s ease-out;
+          transition: -webkit-transform .15s ease-out, transform .15s ease-out;
+}
+
+.toast--shown {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.toast__label {
+  display: inline-block;
+  background: #FFECB3;
+  color: hsla(45,110%,20%,1);
+  box-shadow: 0 1px 10px rgba(0,0,0,.3);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 10px 6px;
+  cursor: default;
+  pointer-events: auto;
+}
+
+
+
 .page-title {
   font-size: 1.3em;
   margin: 10px 8px 0;

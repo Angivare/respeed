@@ -15,6 +15,8 @@
 
 <?= $body ?>
 
+<div class="toast"><div class="toast__label"> </div></div>
+
 <?php if (isset($blacklist)): ?>
 <script>
 var $forum = <?= $forum ? $forum : 'false' ?>

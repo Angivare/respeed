@@ -21,6 +21,7 @@ var form_data
   , topicRefreshTimeout
   , draftWatcherInterval
   , lastDraftSaved
+  , toastTimer
 
 
 
@@ -126,11 +127,13 @@ function toggleFavorite() {
       $('.aside .js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
       $('.js-favorite-toggle-label').html('Retirer des favoris')
       $('.js-favorite-toggle').data('action', 'delete')
+      showToast('Mis en favoris', 1.5)
     }
     else {
       $('.aside .js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
       $('.js-favorite-toggle-label').html('Mettre en favoris')
       $('.js-favorite-toggle').data('action', 'add')
+      showToast('Retiré des favoris', 1.5)
     }
     if (data.html.forums) {
       $('.js-favorites-forums').html(data.html.forums)
@@ -144,6 +147,25 @@ function toggleFavorite() {
 }
 
 /** /Favorites **/
+
+
+/** Toast **/
+
+function showToast(message, duration_in_seconds) {
+  clearTimeout(toastTimer)
+  $('.toast').addClass('toast--shown')
+  $('.toast__label').text(message)
+  toastTimer = instantClick.timer(hideToast, duration_in_seconds * 1000)
+}
+
+function hideToast() {
+  $('.toast').removeClass('toast--shown')
+  toastTimer = instantClick.timer(function() {
+    $('.toast__label').text(' ')
+  }, 150)
+}
+
+/** /Toast **/
 
 
 /** Request form data **/
