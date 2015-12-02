@@ -87,7 +87,7 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
     <span class="aside__top-button-label">Retirer des favoris</span>
   </span>
 <?php endif ?>
-      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/0-<?= $forum ?>-0-1-0-1-0-<?= $slug ?>.htm" target="_blank">
+      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">
         <span class="aside__top-button-label">Ouvrir sur JVC</span>
       </a>
     </div>
