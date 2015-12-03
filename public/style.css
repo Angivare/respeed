@@ -1933,10 +1933,6 @@ h1, h2, h3 {
   }
 }
 
-.sticker--unknown {
-  display: none;
-}
-
 /* TOPIC - Message - Actions desktop */
 
 .message__quick-actions {

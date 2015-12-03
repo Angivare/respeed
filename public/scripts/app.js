@@ -698,13 +698,15 @@ function toggleStickerSize() {
   var isAlreadyEnlarged = $(this).hasClass('sticker--enlarged')
     , isBig = $(this).hasClass('sticker--big')
     , urlCode = $(this).prop('src').split('/').pop()
+    , id = $(this).data('sticker-id')
+    , isUnknown = $(this).hasClass('sticker--unknown')
 
   if (!isAlreadyEnlarged) {
-    $(this).prop('src', '/images/stickers/big/' + urlCode)
+    $(this).prop('src', isUnknown ? ('http://jv.stkr.fr/p7s/' + id) : ('/images/stickers/big/' + urlCode))
     $(this).addClass('sticker--enlarged')
   }
   else {
-    $(this).prop('src', '/images/stickers/small/' + urlCode)
+    $(this).prop('src', isUnknown ? ('http://jv.stkr.fr/p3w/' + id) : ('/images/stickers/small/' + urlCode))
     $(this).removeClass('sticker--enlarged')
   }
 }
