@@ -49,16 +49,29 @@ $superlatifs = [
   'sensationnel',
 ];
 $stickers = [
-  'Hap' => [
-    '1kki' => 'pose',
-    '1kkn' => 'prof',
-    '1kkh' => 'ananas',
-    '1kkl' => 'plage',
-    '1kkm' => 'onche',
-    '1kkk' => 'pls2',
-    '1kkg' => 'flaque',
-    '1kkj' => 'btg2',
+  'Duracell' => [
+    '1jc3-fr' => 'salut2',
+    '1jc5' => 'love',
+    '1li5' => 'gg',
+    '1leb' => 'tchin',
+    '1jcg' => 'jmec',
+    '1jch' => 'hahaha2',
+    '1li4' => 'star',
+    '1jcl' => 'aide',
+    '1leq-fr' => 'vacances',
+    '1lej-fr' => 'joel',
+    '1li3' => 'ba',
   ],
+    'Hap' => [
+      '1kki' => 'pose',
+      '1kkn' => 'prof',
+      '1kkh' => 'ananas',
+      '1kkl' => 'plage',
+      '1kkm' => 'onche',
+      '1kkk' => 'pls2',
+      '1kkg' => 'flaque',
+      '1kkj' => 'btg2',
+    ],
   'Noel' => [
     '1kks' => 'pls',
     '1kkq' => 'continue',
