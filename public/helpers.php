@@ -414,7 +414,7 @@ MESSAGE;
     <div class="message__quick-actions">
 MESSAGE;
 if ($is_mod_active && !$mine && !$pseudoDeleted) {
-  $markup .= ' <a class="js-kick message__quick-action message__quick-action--kick" href="/kick/' . $pseudoLowercase . '?message_id=' . $message['id'] . '&amp;pseudo=' . $message['pseudo'] . '" title="Kicker"></a>';
+  $markup .= ' <a class="js-kick message__quick-action message__quick-action--kick" href="/kick/' . $message['pseudo'] . '?message_id=' . $message['id'] . '" title="Kicker"></a>';
 }
 if ($is_mod_active || $mine) {
   $markup .= ' <div class="js-delete message__quick-action message__quick-action--delete" title="Supprimer"></div>';
@@ -692,4 +692,8 @@ function halt($message = 0) {
 
 function get_favorites_sum($favorites) {
   return sha1(json_encode($favorites));
+}
+
+function set_toast_for_next_page($message) {
+  setcookie('toast', $message, time() + 60 * 60 * 24 * 365 * 10, '/');
 }

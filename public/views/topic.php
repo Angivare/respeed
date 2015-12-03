@@ -67,7 +67,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
       <div class="lock-alert__cause"><?= $lock_raison ?></div>
     </div>
 <?php else: ?>
-    <form class="js-form-post form">
+    <form class="js-form-post form form--touches-bottom">
       <div class="form__draft">Brouillon sauvegardé. <span class="form__draft-recover">Récupérer</span></div>
       <div class="form__errors"><p></p></div>
       <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="1"></textarea>

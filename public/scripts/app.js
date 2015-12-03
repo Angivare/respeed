@@ -128,13 +128,13 @@ function toggleFavorite() {
       $('.js-favorite-toggle-label').html('Retirer des favoris')
       $('.js-favorite-toggle').data('action', 'delete')
       $('.add-to-favorite-mobile-shortcut').remove()
-      showToast('Mis en favoris', 1.5)
+      showToast('Mis en favoris')
     }
     else {
       $('.aside .js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
       $('.js-favorite-toggle-label').html('Mettre en favoris')
       $('.js-favorite-toggle').data('action', 'add')
-      showToast('Retiré des favoris', 1.5)
+      showToast('Retiré des favoris')
     }
     if (data.html.forums) {
       $('.js-favorites-forums').html(data.html.forums)
@@ -153,6 +153,9 @@ function toggleFavorite() {
 /** Toast **/
 
 function showToast(message, duration_in_seconds) {
+  if (!duration_in_seconds) {
+    duration_in_seconds = 1.5
+  }
   clearTimeout(toastTimer)
   $('.toast').addClass('toast--shown')
   $('.toast__label').text(message)
@@ -518,6 +521,19 @@ function handleProfileAvatar() {
   })
 }
 
+function showLoadedToast() {
+  // http://stackoverflow.com/questions/10730362/get-cookie-by-name
+  var parts = ("; " + document.cookie).split("; toast=")
+  if (parts.length != 2) {
+    return false
+  }
+  var message = decodeURIComponent(parts.pop().split(";").shift())
+
+  showToast(message)
+
+  document.cookie = 'toast=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+}
+
 function handleBlacklist() {
   if ($blacklistNeedsUpdate) {
     updateBlacklist()
@@ -770,10 +786,11 @@ instantClick.on('change', function(isInitialLoad) {
   handleProfileAvatar()
   handleBlacklist()
   makeFavoritesSlideable()
+  showLoadedToast()
   instantClick.timer(updateFavorites, (60 * 10 - $freshness) * 1000)
   instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 
-  $('.form').submit(post)
+  $('.js-form').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
   $('.form__textarea').focus(startDraftWatcher)

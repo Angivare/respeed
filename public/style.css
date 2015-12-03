@@ -2126,13 +2126,13 @@ h1, h2, h3 {
   background: #E0E0E0;
   padding: 8px;
   border: 0 solid #bdbdbd;
-  border-top-width: 1px;
+  border-width: 1px 0;
   position: relative;
   z-index: 1; /* For FAB */
 }
 
-.form--has-bottom {
-  border-bottom-width: 1px;
+.form--touches-bottom {
+  border-bottom-width: 0;
 }
 
 @media (min-width: 1025px) {
@@ -2171,6 +2171,12 @@ h1, h2, h3 {
 
 .form__draft-recover:hover {
   color: #64b5f6;
+}
+
+.form__error {
+color: #E53935;
+font-size: 14px;
+font-weight: bold;
 }
 
 .form__errors {
