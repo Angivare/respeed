@@ -646,7 +646,7 @@ class Jvc {
 
     $post_data = [
       'action' => 'post',
-      'id_forum' => '800',
+      'id_forum' => '800', // This param must be present but its value apparently doesn't matter
       'id_message' => $message_id,
       'motif_kick' => $category,
       'raison_kick' => $rationale,
@@ -661,7 +661,7 @@ class Jvc {
     }
     $error = $json->erreur;
     if ($error) {
-      return $this->_err('Erreur de JVC : ' . $error);
+      return $this->_err('Erreur de JVC : ' . $error[0]);
     }
     return true;
   }
