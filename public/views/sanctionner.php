@@ -1,11 +1,8 @@
 <?php
 
-$pseudo = h($_GET['kick']);
-$pseudoLowercase = strtolower($pseudo);
+$message_id = (int)$_GET['sanctionner'];
 
-$message_id = isset($_GET['message_id']) ? (int)$_GET['message_id'] : 0;
-
-$title = 'Kicker ' . $pseudo;
+$title = 'Sanctionner message #' . $message_id;
 
 if (!$jvc->logged_into_moderation) {
   header('Location: /moderation');
@@ -17,9 +14,9 @@ if (isset($_POST['category'], $_POST['rationale'], $_POST['referer'], $_POST['me
   $category = (int)$_POST['category'];
   $rationale = $_POST['rationale'];
   $referer = h($_POST['referer']);
-  $kick_result = $jvc->kick($message_id, $category, $rationale);
-  if ($kick_result) {
-    set_toast_for_next_page($pseudo . ' kické');
+  $punish_result = $jvc->punish($message_id, $category, $rationale);
+  if ($punish_result) {
+    set_toast_for_next_page($pseudo . ' sanctionné');
     header('Location: ' . $referer);
     exit;
   }
@@ -34,9 +31,9 @@ if (!isset($referer)) {
 ?>
 <div class="sheet">
   <div class="content no-menu">
-    <h1 class="page-title">Kicker <?= $pseudo ?></h1>
+    <h1 class="page-title">Sanctionner message #<?= $message_id ?></h1>
 
-    <form class="form" action="/kick/<?= $pseudo ?>" method="post">
+    <form class="form" action="/sanctionner/<?= $message_id ?>" method="post">
 <?php if (isset($error)): ?>
       <div class="form__block">
         <div class="form__error"><?= $error ?></div>
@@ -72,19 +69,19 @@ if (!isset($referer)) {
       </div>
 
       <div class="form_block">
-        <textarea class="form__textarea" name="rationale" placeholder="Raison du kick" tabindex="2"></textarea>
+        <textarea class="form__textarea" name="rationale" placeholder="Raison de la sanction" tabindex="2"></textarea>
       </div>
 
       <input type="hidden" name="referer" value="<?= $referer ?>">
       <input type="hidden" name="message_id" value="<?= $message_id ?>">
 
       <div class="form_block">
-        <input class="button button--raised button--danger button--large button--scale" type="submit" value="Kicker" tabindex="3">
+        <input class="button button--raised button--danger button--large button--scale" type="submit" value="Sanctionner" tabindex="3">
       </div>
     </form>
 
     <div class="back-button-container">
-      <a class="button" href="<?= isset($kick_result) ? $referer : 'javascript:history.back()' ?>">Retour</a>
+      <a class="button" href="<?= isset($punish_result) ? $referer : 'javascript:history.back()' ?>">Retour</a>
     </div>
     <div style="height: 1px"><!-- Hack for Safari iOS, otherwise no margin at the bottom --></div>
   </div>

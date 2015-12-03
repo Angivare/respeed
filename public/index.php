@@ -9,6 +9,7 @@ $smileys = isset($_GET['smileys']);
 $profil = isset($_GET['profil']);
 $moderation = isset($_GET['moderation']);
 $kick = isset($_GET['kick']);
+$sanctionner = isset($_GET['sanctionner']);
 
 require_once '../php-encryption/autoload.php';
 require '../config.php';
@@ -54,6 +55,8 @@ elseif ($moderation)
   $view = 'moderation';
 elseif ($kick)
   $view = 'kick';
+elseif ($sanctionner)
+  $view = 'sanctionner';
 
 ob_start();
 require 'views/' . $view . '.php';

@@ -387,11 +387,17 @@ function generate_message_markup($message, $is_mod_active) {
   $default_avatar_modifier = $message['avatar'] ? '' : 'message__byline-author-avatar-image--default';
 
   $actions = [];
+  if ($is_mod_active && !$mine) {
+    $actions[] = ['punish', 'Sanctionner', 'Sanction', '/sanctionner/' . $message['id']];
+  }
   if ($is_mod_active && !$mine && !$pseudoDeleted) {
     $actions[] = ['kick', 'Kicker', 'Kicker', '/kick/' . $message['pseudo'] . '?message_id=' . $message['id']];
   }
-  if ($is_mod_active || $mine) {
+  if ($mine) {
     $actions[] = ['delete', 'Supprimer', 'Suppr.'];
+  }
+  elseif ($is_mod_active) {
+    $actions[] = ['delete-red', 'Supprimer', 'Suppr.'];
   }
   if ($mine) {
     $actions[] = ['edit', 'Modifier'];
@@ -425,17 +431,12 @@ MESSAGE;
     --><div class="js-content message__content">{$message['content']}</div>
     <div class="message__quick-actions">
 MESSAGE;
-if ($is_mod_active && !$mine && !$pseudoDeleted) {
-  $markup .= ' <a class="js-kick message__quick-action message__quick-action--kick" href="/kick/' . $message['pseudo'] . '?message_id=' . $message['id'] . '" title="Kicker"></a>';
-}
-if ($is_mod_active || $mine) {
-  $markup .= ' <div class="js-delete message__quick-action message__quick-action--delete" title="Supprimer"></div>';
-}
-if ($mine) {
-  $markup .= ' <div class="js-edit message__quick-action message__quick-action--edit" title="Modifier"></div>';
-}
+
+  foreach ($actions as $action) {
+    $markup .= ' <' . (isset($action[3]) ? 'a href="' . $action[3] . '"' : 'div') . ' class="js-' . $action[0] . ' message__quick-action message__quick-action--' . $action[0] . '" title="' . $action[1] . '"></' . (isset($action[3]) ? 'a' : 'div') . '>';
+  }
+
   $markup .= <<<MESSAGE
-      <div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>
     </div>
   </div>
   <div class="message__ignored-notice">{$message['pseudo']} <span class="message__ignored-notice_compact">ignoré</span><span class="message__ignored-notice_regular">parle mais se fait ignorer</span>. <strong class="message__ignored-notice_show-message-button">Voir le message</strong></div>

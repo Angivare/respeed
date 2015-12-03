@@ -1583,6 +1583,11 @@ h1, h2, h3 {
             transition: transform .15s ease-out, -webkit-transform .15s ease-out;
   }
 
+  .message--nb-actions-4 {
+    -webkit-transition: -webkit-transform .2s ease-out;
+            transition: transform .2s ease-out, -webkit-transform .2s ease-out;
+  }
+
   .message--menu-opened {
     -webkit-transform: translateX(-62px);
             transform: translateX(-62px);
@@ -1591,6 +1596,11 @@ h1, h2, h3 {
   .message--menu-opened.message--nb-actions-3 {
     -webkit-transform: translateX(-182px);
             transform: translateX(-182px);
+  }
+
+  .message--menu-opened.message--nb-actions-4 {
+    -webkit-transform: translateX(-242px);
+            transform: translateX(-242px);
   }
 
   .message__actions {
@@ -1608,6 +1618,11 @@ h1, h2, h3 {
     -webkit-transform: translateX(-180px);
             transform: translateX(-180px);
   }
+
+  .message--menu-opened.message--nb-actions-4 {
+    -webkit-transform: translateX(-240px);
+            transform: translateX(-240px);
+  }
 }
 
 .message__actions {
@@ -1620,6 +1635,11 @@ h1, h2, h3 {
   right: -192px;
 }
 
+.message__actions--nb-4 {
+  position: absolute;
+  right: -252px;
+}
+
 @media (MAX-width: 399px) {
   .message__actions {
     right: -70px;
@@ -1627,6 +1647,10 @@ h1, h2, h3 {
 
   .message__actions--nb-3 {
     right: -190px;
+  }
+
+  .message__actions--nb-4 {
+    right: -250px;
   }
 }
 
@@ -1661,19 +1685,27 @@ h1, h2, h3 {
 }
 
 .message__actions-action--quote {
-  background-image: url(/images/ic_reply_24px.svg);
+  background-image: url(/images/quote-24px.svg);
 }
 
 .message__actions-action--delete {
-  background-image: url(/images/ic_delete_24px.svg);
+  background-image: url(/images/delete-24px.svg);
+}
+
+.message__actions-action--delete-red {
+  background-image: url(/images/delete-red-24px.svg);
 }
 
 .message__actions-action--edit {
-  background-image: url(/images/edit.svg);
+  background-image: url(/images/edit-24px.svg);
 }
 
 .message__actions-action--kick {
-  background-image: url(/images/kick.svg);
+  background-image: url(/images/kick-24px.svg);
+}
+
+.message__actions-action--punish {
+  background-image: url(/images/punish-24px.svg);
 }
 
 /* TOPIC - Message - content */
@@ -1980,19 +2012,27 @@ h1, h2, h3 {
 }
 
 .message__quick-action--quote {
-  background: url(/images/reply_18px.svg) center no-repeat;
+  background: url(/images/quote.svg) center no-repeat;
 }
 
 .message__quick-action--edit {
-  background: url(/images/edit_18px.svg) center no-repeat;
+  background: url(/images/edit.svg) center no-repeat;
 }
 
 .message__quick-action--delete {
-  background: url(/images/delete_18px.svg) center no-repeat;
+  background: url(/images/delete.svg) center no-repeat;
+}
+
+.message__quick-action--delete-red {
+  background: url(/images/delete-red.svg) center no-repeat;
 }
 
 .message__quick-action--kick {
   background: url(/images/kick.svg) center no-repeat;
+}
+
+.message__quick-action--punish {
+  background: url(/images/punish.svg) center no-repeat;
 }
 
 /* TOPIC - Message - Ignoré */
