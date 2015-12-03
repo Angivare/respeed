@@ -16,8 +16,21 @@ function sub_forums($body) {
   return $matches;
 }
 
+function parse_moderators($got) {
+  $moderators = [];
+  if (preg_match('#<span class="liste-modo-fofo">(.+)</span>#Usi', $got, $matches)) {
+    $split = explode(',', $matches[1]);
+    foreach ($split as $moderator_html) {
+      if (preg_match('#([a-zA-Z0-9-_[\]]{3,15})#', $moderator_html, $matches)) {
+        $moderators[] = $matches[1];
+      }
+    }
+  }
+  return $moderators;
+}
+
 function parse_forum($got) {
-  global $forum, $page, $slug;
+  global $jvc;
   $ret = [];
 
   // Nom du forum
@@ -45,6 +58,8 @@ function parse_forum($got) {
 
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
   $ret['sous_forums'] = sub_forums($got);
+
+  $ret['moderators'] = parse_moderators($got);
 
   return $ret;
 }
@@ -188,6 +203,8 @@ function parse_topic($got) {
   if ($ret['locked']) {
     $ret['lock_raison'] = $matches['raison'];
   }
+
+  $ret['moderators'] = parse_moderators($got);
 
   return $ret;
 }

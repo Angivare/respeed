@@ -10,6 +10,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 $favorites = $db->get_favorites($jvc->user_id);
 $favorites_forums = isset($favorites['forums']) ? $favorites['forums'] : false;
 $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
+
+$is_mod = $moderators && in_array(strtolower($jvc->pseudo), array_map('strtolower', $moderators));
+$is_mod_active = $is_mod && $jvc->logged_into_moderation;
 ?>
 <body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?> body--no-bottom">
 
@@ -47,7 +50,7 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
       <div class="js-poll card card--poll"><?= generate_poll_markup($poll, $topic_mode, $forum, $topic, $slug) ?></div>
 <?php endif ?>
 <?php foreach ($messages as $message): ?>
-<?= generate_message_markup($message) ?>
+<?= generate_message_markup($message, $is_mod_active) ?>
 <?php endforeach ?>
     </div>
 

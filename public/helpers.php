@@ -374,7 +374,7 @@ function delay($f, &$t) {
   return $ret;
 }
 
-function generate_message_markup($message) {
+function generate_message_markup($message, $is_mod_active) {
   $mine = strcasecmp(isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '', $message['pseudo']) == 0;
   $even_modifier = ($message['pos'] % 2 == 0) ? '' : 'message--even';
   $mine_modifier = $mine ? 'message--mine' : '';
@@ -413,11 +413,11 @@ MESSAGE;
     --><div class="js-content message__content">{$message['content']}</div>
     <div class="message__quick-actions">
 MESSAGE;
+if ($is_mod_active) {
+  $markup .= ' <div class="js-delete message__quick-action message__quick-action--delete" title="Supprimer"></div>';
+}
 if ($mine) {
-  $markup .= <<<MESSAGE
-      <div class="js-delete message__quick-action message__quick-action--delete" title="Supprimer"></div>
-      <div class="js-edit message__quick-action message__quick-action--edit" title="Modifier"></div>
-MESSAGE;
+  $markup .= ' <div class="js-edit message__quick-action message__quick-action--edit" title="Modifier"></div>';
 }
   $markup .= <<<MESSAGE
       <div class="js-quote message__quick-action message__quick-action--quote" title="Citer"></div>

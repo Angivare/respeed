@@ -8,6 +8,9 @@ foreach (fetch_forum($forum, $page, $slug) as $k => $v) {
 $favorites = $db->get_favorites($jvc->user_id);
 $favorites_forums = isset($favorites['forums']) ? $favorites['forums'] : false;
 $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
+
+$is_mod = $moderators && in_array(strtolower($jvc->pseudo), array_map('strtolower', $moderators));
+$is_mod_active = $is_mod && $jvc->logged_into_moderation;
 ?>
 <body class="forum-<?= $forum ?>">
 
@@ -33,6 +36,10 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
 
 <?php if (!is_forum_in_favorites($favorites, $forum)): ?>
     <div class="add-to-favorite-mobile-shortcut" data-action="add"><span class="js-favorite-toggle button button--raised button--large add-to-favorite-mobile-shortcut__element">Mettre en favoris</span></div>
+<?php endif ?>
+
+<?php if ($is_mod && !$jvc->logged_into_moderation): ?>
+  <a href="/moderation">Modérer</a>
 <?php endif ?>
 
 <?php
