@@ -666,6 +666,63 @@ class Jvc {
     return true;
   }
 
+  public function punish($message_id, $category, $rationale) {
+    $req = $this->request('/jvforum/forums/message/' . $message_id, 'HEAD');
+    $headers = explode("\n", $req['header']);
+    $http_code = (int)explode(' ', $headers[0])[1];
+    if ($http_code != 301) {
+      return $this->_err('Message introuvable (HTTP ' . $http_code . ').');
+    }
+    foreach ($headers as $header) {
+      if (substr(trim($header), 0, strlen('Location: ')) == 'Location: ') {
+        $location = substr(trim($header), strlen('Location: '));
+      }
+    }
+    if (!isset($location)) {
+      return $this->_err('Lien du message non-trouvé (HTTP ' . $http_code . ').');
+    }
+
+    $req = $this->request($location);
+    preg_match('#<span class="picto-msg-exclam" title="Alerter" data-selector="(?P<url>/gta/signaler\.php\?type=1&amp;idc=' . $message_id . '&amp;idp=[0-9]+&amp;ida=[0-9]+&amp;tv=[0-9]+&amp;hash=[0-9a-f]+)"#Usi', $req['body'], $matches);
+    if (!$matches) {
+      return $this->_err('Message non-trouvé sur la page (HTTP ' . $http_code . ').');
+    }
+    $url = $matches['url'];
+
+    $req = $this->request($url);
+
+    if (preg_match('#<div class="alert alert-danger">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err('Erreur JVC (get) : ' . trim($matches['message']));
+    }
+
+    /**************/
+    return; # Fails above
+    $form = $this->parse_form($req['body']);
+    print_r($form);exit;
+    /**************/
+
+    $post_data = [
+      'action' => 'post',
+      'id_forum' => '800', // This param must be present but its value apparently doesn't matter
+      'id_message' => $message_id,
+      'motif_kick' => $category,
+      'raison_kick' => $rationale,
+      'duree_kick' => '3',
+      'id_alias_a_kick' => $alias_id,
+    ];
+    $post_data = array_merge($post_data, $this->ajax_array('moderation_forum'));
+    $req = $this->request('/forums/ajax_kick.php', http_build_query($post_data));
+    $json = json_decode($req['body']);
+    if (!$json) {
+      return $this->_err('Impossible de parser la réponse JSON.');
+    }
+    $error = $json->erreur;
+    if ($error) {
+      return $this->_err('Erreur de JVC : ' . $error[0]);
+    }
+    return true;
+  }
+
   private function mark_as_moderator() {
     $this->logged_into_moderation = true;
 
