@@ -413,7 +413,10 @@ MESSAGE;
     --><div class="js-content message__content">{$message['content']}</div>
     <div class="message__quick-actions">
 MESSAGE;
-if ($is_mod_active) {
+if ($is_mod_active && !$mine && !$pseudoDeleted) {
+  $markup .= ' <a class="js-kick message__quick-action message__quick-action--kick" href="/kick/' . $pseudoLowercase . '?message_id=' . $message['id'] . '&amp;pseudo=' . $message['pseudo'] . '" title="Kicker"></a>';
+}
+if ($is_mod_active || $mine) {
   $markup .= ' <div class="js-delete message__quick-action message__quick-action--delete" title="Supprimer"></div>';
 }
 if ($mine) {
@@ -684,7 +687,7 @@ function is_topic_in_favorites($favorites, $wanted) {
 
 function halt($message = 0) {
   http_response_code(500);
-  exit($message);
+  exit(htmlentities($message));
 }
 
 function get_favorites_sum($favorites) {

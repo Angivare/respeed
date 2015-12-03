@@ -98,7 +98,7 @@ if ($is_in_blacklist) {
 
 <?php include 'forum_pagination.php' ?>
 
-    <form class="js-form-topic form form--topic">
+    <form class="js-form-topic form form--has-bottom">
       <div class="form__draft">Brouillon sauvegardé. <span class="form__draft-recover">Récupérer</span></div>
       <div class="form__errors"><p></p></div>
       <input class="form__topic" maxlength="100" placeholder="Mon sujet" tabindex="1">

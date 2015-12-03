@@ -90,6 +90,16 @@ h1, h2, h3 {
   text-shadow: 0 0 2px #00e676;
 }
 
+.button--danger {
+  background: #E53935;
+  color: white;
+}
+
+.button--danger:hover, .button--danger:focus {
+  background: #E57373;
+  color: white;
+}
+
 
 .button--raised {
   box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
@@ -783,7 +793,7 @@ h1, h2, h3 {
 }
 
 .logout-container a {
-  color: #ff3b30;
+  color: #E53935;
 }
 
 /* CONNEXION */
@@ -1976,6 +1986,10 @@ h1, h2, h3 {
   background: url(/images/delete_18px.svg) center no-repeat;
 }
 
+.message__quick-action--kick {
+  background: url(/images/kick.svg) center no-repeat;
+}
+
 /* TOPIC - Message - Ignoré */
 
 .message__ignored-notice {
@@ -2117,7 +2131,7 @@ h1, h2, h3 {
   z-index: 1; /* For FAB */
 }
 
-.form--topic {
+.form--has-bottom {
   border-bottom-width: 1px;
 }
 
@@ -2127,6 +2141,10 @@ h1, h2, h3 {
     border-radius: 4px;
     box-shadow: 0 1px 4px rgba(0,0,0,.2)
   }
+}
+
+.form__block {
+  margin: 10px 0;
 }
 
 .form__draft {
@@ -2232,6 +2250,12 @@ h1, h2, h3 {
   padding-left: 2px;
   position: relative;
 }
+
+.form__select {
+  padding: 3px;
+}
+
+
 
 .smileys-link {
   display: inline-block;
