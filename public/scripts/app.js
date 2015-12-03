@@ -527,7 +527,7 @@ function showLoadedToast() {
   if (parts.length != 2) {
     return false
   }
-  var message = decodeURIComponent(parts.pop().split(";").shift())
+  var message = atob(decodeURIComponent(parts.pop().split(";").shift()))
 
   showToast(message)
 

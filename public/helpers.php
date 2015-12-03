@@ -695,5 +695,5 @@ function get_favorites_sum($favorites) {
 }
 
 function set_toast_for_next_page($message) {
-  setcookie('toast', $message, time() + 60 * 60 * 24 * 365 * 10, '/');
+  setcookie('toast', base64_encode(utf8_decode($message)), time() + 60 * 60 * 24 * 365 * 10, '/');
 }
