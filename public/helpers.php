@@ -221,16 +221,21 @@ function adapt_html($message, $date = '', $id = 0) {
     $id = $matches['id'];
     $code = '';
     $shortcut = '';
+    $unknown = true;
     foreach ($stickers as $stickers_category) {
       foreach ($stickers_category as $id_loop => $shortcut_loop) {
         if ($id == $id_loop) {
           $code = $shortcut_loop;
           $shortcut = ':' . $shortcut_loop . ':';
+          $unknown = false;
         }
       }
     }
+    if (!$shortcut) {
+      $shortcut = '[[sticker:p/' . $id . ']]';
+    }
 
-    return '<img class="sticker ' . (!$shortcut ? 'sticker--unknown' : '') . '" src="' . ($code ? ('/images/stickers/small/' . $code . '.png') : ('http://jv.stkr.fr/p3w/' . $id)) . '" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '" alt="' . $shortcut . '">';
+    return '<img class="sticker ' . ($unknown ? 'sticker--unknown' : '') . '" src="' . ($unknown ? ('http://jv.stkr.fr/p3w/' . $id) : ('/images/stickers/small/' . $code . '.png')) . '" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '" alt="' . $shortcut . '">';
   }, $message);
 
   // Rajout de target="_blank" aux liens externes
