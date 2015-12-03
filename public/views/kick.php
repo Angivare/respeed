@@ -1,9 +1,7 @@
 <?php
 
-$pseudo = $pseudoLowercase = strtolower(h($_GET['kick']));
-if (isset($_GET['pseudo'])) {
-  $pseudo = h($_GET['pseudo']);
-}
+$pseudo = h($_GET['kick']);
+$pseudoLowercase = strtolower($pseudo);
 
 $message_id = isset($_GET['message_id']) ? (int)$_GET['message_id'] : 0;
 

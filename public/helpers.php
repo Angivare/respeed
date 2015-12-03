@@ -385,19 +385,31 @@ function generate_message_markup($message, $is_mod_active) {
   $avatar = $message['avatar'] ? $message['avatar'] : ('/images/triangles.php?s=' . $pseudoLowercase);
   $pseudo_modifier = $message['status'] != 'user' ? ('message__byline-author-pseudo--' . $message['status']) : '';
   $default_avatar_modifier = $message['avatar'] ? '' : 'message__byline-author-avatar-image--default';
+
+  $actions = [];
+  if ($is_mod_active && !$mine && !$pseudoDeleted) {
+    $actions[] = ['kick', 'Kicker', 'Kicker', '/kick/' . $message['pseudo'] . '?message_id=' . $message['id']];
+  }
+  if ($is_mod_active || $mine) {
+    $actions[] = ['delete', 'Supprimer', 'Suppr.'];
+  }
+  if ($mine) {
+    $actions[] = ['edit', 'Modifier'];
+  }
+  $actions[] = ['quote', 'Citer'];
+  $nb_actions = count($actions);
+
   $markup = <<<MESSAGE
-<div class="message {$mine_modifier} {$even_modifier} message-by--{$pseudoLowercase}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
-  <div class="message__actions message__ignorable">
+<div class="message {$mine_modifier} {$even_modifier} message-by--{$pseudoLowercase} message--nb-actions-{$nb_actions}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
+  <div class="message__actions message__actions--nb-{$nb_actions} message__ignorable">
 MESSAGE;
-if ($mine) {
+
+  foreach ($actions as $action) {
+    $markup .= '<' . (isset($action[3]) ? 'a href="' . $action[3] . '"' : 'span') . ' class="js-' . $action[0] . ' message__actions-action message__actions-action--' . $action[0] . '">' . $action[isset($action[2]) ? 2 : 1] . '</' . (isset($action[3]) ? 'a' : 'span') . '>';
+  }
+
   $markup .= <<<MESSAGE
-<span class="js-delete message__actions-action message__actions-action--delete">Suppr.</span><!--
---><span class="js-edit message__actions-action message__actions-action--edit">Modifier</span>
-MESSAGE;
-}
-  $markup .= <<<MESSAGE
-<span class="js-quote message__actions-action message__actions-action--quote">Citer</span>
-</div>
+  </div>
   <div class="message__visible message__ignorable">
     <div class="message__byline">
       <div class="message__byline-author">

@@ -1574,11 +1574,11 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .message {
-    -webkit-transition: -webkit-transform .1s ease-out;
-            transition: transform .1s ease-out, -webkit-transform .1s ease-out;
+    -webkit-transition: -webkit-transform .07s ease-out;
+            transition: transform .07s ease-out, -webkit-transform .07s ease-out;
   }
 
-  .message--mine {
+  .message--nb-actions-3 {
     -webkit-transition: -webkit-transform .15s ease-out;
             transition: transform .15s ease-out, -webkit-transform .15s ease-out;
   }
@@ -1588,7 +1588,7 @@ h1, h2, h3 {
             transform: translateX(-62px);
   }
 
-  .message--menu-opened.message--mine {
+  .message--menu-opened.message--nb-actions-3 {
     -webkit-transform: translateX(-182px);
             transform: translateX(-182px);
   }
@@ -1604,7 +1604,7 @@ h1, h2, h3 {
             transform: translateX(-60px);
   }
 
-  .message--menu-opened.message--mine {
+  .message--menu-opened.message--nb-actions-3 {
     -webkit-transform: translateX(-180px);
             transform: translateX(-180px);
   }
@@ -1615,7 +1615,7 @@ h1, h2, h3 {
   right: -72px;
 }
 
-.message--mine .message__actions {
+.message__actions--nb-3 {
   position: absolute;
   right: -192px;
 }
@@ -1625,7 +1625,7 @@ h1, h2, h3 {
     right: -70px;
   }
 
-  .message--mine .message__actions {
+  .message__actions--nb-3 {
     right: -190px;
   }
 }
@@ -1652,6 +1652,7 @@ h1, h2, h3 {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
+  color: #424242;
 }
 
 .message__actions-action:active {
@@ -1669,6 +1670,10 @@ h1, h2, h3 {
 
 .message__actions-action--edit {
   background-image: url(/images/edit.svg);
+}
+
+.message__actions-action--kick {
+  background-image: url(/images/kick.svg);
 }
 
 /* TOPIC - Message - content */

@@ -790,7 +790,7 @@ instantClick.on('change', function(isInitialLoad) {
   instantClick.timer(updateFavorites, (60 * 10 - $freshness) * 1000)
   instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 
-  $('.js-form').submit(post)
+  $('.js-form-topic, .js-form-post').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
   $('.form__textarea').focus(startDraftWatcher)
