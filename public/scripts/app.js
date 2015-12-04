@@ -127,7 +127,7 @@ function toggleFavorite() {
       $('.aside .js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
       $('.js-favorite-toggle-label').html('Retirer des favoris')
       $('.js-favorite-toggle').data('action', 'delete')
-      $('.add-to-favorite-mobile-shortcut').remove()
+      $('.js-add-to-favorite-mobile-shortcut').remove()
       showToast('Mis en favoris')
     }
     else {

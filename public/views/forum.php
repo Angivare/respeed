@@ -35,11 +35,11 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
     </h1>
 
 <?php if (!is_forum_in_favorites($favorites, $forum)): ?>
-    <div class="add-to-favorite-mobile-shortcut" data-action="add"><span class="js-favorite-toggle button button--raised button--large add-to-favorite-mobile-shortcut__element">Mettre en favoris</span></div>
+    <div class="js-add-to-favorite-mobile-shortcut centered-button-container mobile"><span class="js-favorite-toggle button button--raised button--large" data-action="add">Mettre en favoris</span></div>
 <?php endif ?>
 
 <?php if ($is_mod && !$jvc->logged_into_moderation): ?>
-  <a href="/moderation">Modérer</a>
+  <div class="centered-button-container"><a href="/moderation" class="button button--raised button--large">Modérer</a></div>
 <?php endif ?>
 
 <?php

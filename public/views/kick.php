@@ -71,14 +71,14 @@ if (!isset($referer)) {
         </select>
       </div>
 
-      <div class="form_block">
+      <div class="form__block">
         <textarea class="form__textarea" name="rationale" placeholder="Raison du kick" tabindex="2"></textarea>
       </div>
 
       <input type="hidden" name="referer" value="<?= $referer ?>">
       <input type="hidden" name="message_id" value="<?= $message_id ?>">
 
-      <div class="form_block">
+      <div class="form__block">
         <input class="button button--raised button--danger button--large button--scale" type="submit" value="Kicker" tabindex="3">
       </div>
     </form>

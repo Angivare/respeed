@@ -44,19 +44,19 @@ $title = 'Verrouiller topic';
       </div>
 <?php endif ?>
 
-      <div class="form_block">
+      <div class="form__block">
         <textarea class="form__textarea" name="rationale" placeholder="Facultatif : raison du verrouillage" tabindex="2"></textarea>
       </div>
 
       <input type="hidden" name="referer" value="<?= $referer ?>">
 
-      <div class="form_block">
+      <div class="form__block">
         <input class="button button--raised button--danger button--large button--scale" type="submit" value="Verrouiller" tabindex="3">
       </div>
     </form>
 
     <div class="back-button-container">
-      <a class="button" href="<?= isset($punish_result) ? $referer : 'javascript:history.back()' ?>">Retour</a>
+      <a class="button" href="<?= isset($lock_action) ? $referer : 'javascript:history.back()' ?>">Retour</a>
     </div>
     <div style="height: 1px"><!-- Hack for Safari iOS, otherwise no margin at the bottom --></div>
   </div>

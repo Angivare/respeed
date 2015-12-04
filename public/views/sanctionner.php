@@ -73,7 +73,7 @@ $title = 'Sanctionner ' . $pseudo;
         </select>
       </div>
 
-      <div class="form_block">
+      <div class="form__block">
         <textarea class="form__textarea" name="rationale" placeholder="Raison de la sanction" tabindex="2"></textarea>
       </div>
 
@@ -81,7 +81,7 @@ $title = 'Sanctionner ' . $pseudo;
       <input type="hidden" name="message_id" value="<?= $message_id ?>">
       <input type="hidden" name="pseudo" value="<?= $pseudo ?>">
 
-      <div class="form_block">
+      <div class="form__block">
         <input class="button button--raised button--danger button--large button--scale" type="submit" value="Sanctionner" tabindex="3">
       </div>
     </form>
