@@ -8,6 +8,9 @@ foreach (fetch_forum($forum, $page, $slug) as $k => $v) {
 $favorites = $db->get_favorites($jvc->user_id);
 $favorites_forums = isset($favorites['forums']) ? $favorites['forums'] : false;
 $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
+
+$is_mod = $moderators && in_array(strtolower($jvc->pseudo), array_map('strtolower', $moderators));
+$is_mod_active = $is_mod && $jvc->logged_into_moderation;
 ?>
 <body class="forum-<?= $forum ?>">
 
@@ -32,7 +35,11 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
     </h1>
 
 <?php if (!is_forum_in_favorites($favorites, $forum)): ?>
-    <div class="add-to-favorite-mobile-shortcut" data-action="add"><span class="js-favorite-toggle button button--raised button--large add-to-favorite-mobile-shortcut__element">Mettre en favoris</span></div>
+    <div class="js-add-to-favorite-mobile-shortcut centered-button-container mobile"><span class="js-favorite-toggle button button--raised button--large" data-action="add">Mettre en favoris</span></div>
+<?php endif ?>
+
+<?php if ($is_mod && !$jvc->logged_into_moderation): ?>
+  <div class="centered-button-container"><a href="/moderation" class="button button--raised button--large">Modérer</a></div>
 <?php endif ?>
 
 <?php
@@ -91,7 +98,7 @@ if ($is_in_blacklist) {
 
 <?php include 'forum_pagination.php' ?>
 
-    <form class="js-form-topic form form--topic">
+    <form class="js-form-topic form">
       <div class="form__draft">Brouillon sauvegardé. <span class="form__draft-recover">Récupérer</span></div>
       <div class="form__errors"><p></p></div>
       <input class="form__topic" maxlength="100" placeholder="Mon sujet" tabindex="1">

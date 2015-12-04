@@ -13,6 +13,7 @@ require_once 'helpers.php';
 class Jvc {
   public $user_id = null;
   public $pseudo = null;
+  public $logged_into_moderation = false;
 
   public function __construct() {
     $this->err = 'Indéfinie';
@@ -42,7 +43,11 @@ class Jvc {
     if (isset($_COOKIE['id'], $this->cookie['coniunctio'])) {
       $stated_coniunctio_id = explode('$', $this->cookie['coniunctio'])[0];
       $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
-      list($user_id, $pseudo, $coniunctio_id) = explode(' ', $cookie);
+      $exploded_cookie = explode(' ', $cookie);
+      list($user_id, $pseudo, $coniunctio_id) = $exploded_cookie;
+      if (isset($exploded_cookie[3])) {
+        $this->logged_into_moderation = true;
+      }
       if ($coniunctio_id == $stated_coniunctio_id) {
         $this->user_id = $user_id;
         $this->pseudo = $pseudo;
@@ -515,6 +520,11 @@ class Jvc {
     }
 
     $connected = !!$connected_or_post_data;
+    $nobody = false;
+    if ($connected_or_post_data === 'HEAD') { // WTF: if `==` is used it's always considered true
+      $nobody = true;
+      $connected_or_post_data = true;
+    }
     $post_data = is_string($connected_or_post_data) ? $connected_or_post_data : false;
 
     $coniunctio = $dlrowolleh = null;
@@ -551,6 +561,9 @@ class Jvc {
       curl_setopt($ch, CURLOPT_POST, 1);
       curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
     }
+    elseif ($nobody) {
+      curl_setopt($ch, CURLOPT_NOBODY, true);
+    }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT_MS, REQUEST_TIMEOUT);
@@ -583,6 +596,192 @@ class Jvc {
 
     return $ret;
   }
+
+
+  /** Moderation **/
+
+  public function log_into_moderation($password) {
+    $req = $this->request('/sso/auth.php');
+    $body = $req['body'];
+    $post_data = $this->parse_form($body);
+    $post_data['password'] = $password;
+
+    $req = $this->request('/sso/auth.php', http_build_query($post_data));
+
+    if (strpos($req['body'], '<div class="alert alert-success">') !== false) {
+      $this->mark_as_moderator();
+      return true;
+    }
+
+    if (preg_match('#<div class="alert alert-danger">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err(trim($matches['message']));
+    }
+  }
+
+  public function kick($message_id, $category, $rationale) {
+    $req = $this->request('/jvforum/forums/message/' . $message_id, 'HEAD');
+    $headers = explode("\n", $req['header']);
+    $http_code = (int)explode(' ', $headers[0])[1];
+    if ($http_code != 301) {
+      return $this->_err('Message introuvable (HTTP ' . $http_code . ').');
+    }
+    foreach ($headers as $header) {
+      if (substr(trim($header), 0, strlen('Location: ')) == 'Location: ') {
+        $location = substr(trim($header), strlen('Location: '));
+      }
+    }
+    if (!isset($location)) {
+      return $this->_err('Lien du message non-trouvé (HTTP ' . $http_code . ').');
+    }
+
+    $req = $this->request($location);
+    preg_match('#<div class="bloc-message-forum " id="post_' . $message_id . '" data-id="' . $message_id . '">\s+<div class="bloc-outils-modo">\s+<div class="list-outils-modo">\s+<span class="picto-msg-(?P<state>dekick|kick)" title="[^"]+" data-id-alias="(?P<alias_id>[0-9]+)">#Usi', $req['body'], $matches);
+    if (!$matches) {
+      return $this->_err('Message non-trouvé sur la page (HTTP ' . $http_code . ').');
+    }
+    if ($matches['state'] == 'dekick') {
+      return $this->_err('Ce pseudo est déjà kické.');
+    }
+    $alias_id = $matches['alias_id'];
+
+    $post_data = [
+      'action' => 'post',
+      'id_forum' => '800', // This param must be present but its value apparently doesn't matter
+      'id_message' => $message_id,
+      'motif_kick' => $category,
+      'raison_kick' => $rationale,
+      'duree_kick' => '3',
+      'id_alias_a_kick' => $alias_id,
+    ];
+    $post_data = array_merge($post_data, $this->ajax_array('moderation_forum'));
+    $req = $this->request('/forums/ajax_kick.php', http_build_query($post_data));
+    $json = json_decode($req['body']);
+    if (!$json) {
+      return $this->_err('Impossible de parser la réponse JSON.');
+    }
+    $error = $json->erreur;
+    if ($error) {
+      return $this->_err('Erreur de JVC : ' . $error[0]);
+    }
+    return true;
+  }
+
+  public function punish($message_id, $category, $rationale) {
+    $req = $this->request('/jvforum/forums/message/' . $message_id, 'HEAD');
+    $headers = explode("\n", $req['header']);
+    $http_code = (int)explode(' ', $headers[0])[1];
+    if ($http_code != 301) {
+      return $this->_err('Message introuvable (HTTP ' . $http_code . ').');
+    }
+    foreach ($headers as $header) {
+      if (substr(trim($header), 0, strlen('Location: ')) == 'Location: ') {
+        $location = substr(trim($header), strlen('Location: '));
+      }
+    }
+    if (!isset($location)) {
+      return $this->_err('Lien du message non-trouvé (HTTP ' . $http_code . ').');
+    }
+
+    $req = $this->request($location);
+    preg_match('#<span class="picto-msg-exclam" title="Alerter" data-selector="(?P<url>/gta/signaler\.php\?type=1&amp;idc=' . $message_id . '&amp;idp=[0-9]+&amp;ida=[0-9]+&amp;tv=[0-9]+&amp;hash=[0-9a-f]+)"#Usi', $req['body'], $matches);
+    if (!$matches) {
+      return $this->_err('Message non-trouvé sur la page (HTTP ' . $http_code . ').');
+    }
+    $url = str_replace('&amp;', '&', $matches['url']);
+
+    $req = $this->request($url);
+
+    if (preg_match('#<div class="alert alert-danger">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err('Erreur JVC (get) : ' . trim($matches['message']));
+    }
+
+    if (!preg_match('#<form class="form-horizontal" action="(?P<post_url>[^"]+)" method="post" role="form" data-modal="formulaire">#Usi', $req['body'], $matches)) {
+      return $this->_err('URL POST non-trouvée.');
+    }
+    $post_url = str_replace('&amp;', '&', $matches['post_url']);
+
+    $post_data = $this->parse_form($req['body']);
+    $post_data['signalement_motif'] = $category;
+    $post_data['signalement_commentaire'] = $rationale;
+    $post_data['signalement_submit'] = '1'; // Needed?
+
+    $req = $this->request($post_url, http_build_query($post_data));
+
+    if (preg_match('#<div class="alert alert-danger">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err('Erreur JVC (post) : ' . trim($matches['message']));
+    }
+
+    if (!preg_match('#<div class="alert alert-success">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err('POST sans succès.');
+    }
+
+    return true;
+  }
+
+  public function lock($topic_id, $rationale) {
+    $rationale = trim($rationale);
+    if (strlen($rationale) < 4) {
+      $rationale .= '    '; // Non-breaking spaces
+    }
+
+    $post_data = [
+      'id_forum' => '800', // Param must be there but its value doesn't matter
+      'tab_topic[]' => $topic_id,
+      'type' => 'lock',
+      'raison_moderation' => $rationale,
+      'action' => 'post',
+    ];
+    $post_data = array_merge($post_data, $this->ajax_array('moderation_forum'));
+    $req = $this->request('/forums/modal_moderation_topic.php', http_build_query($post_data));
+
+    $json = json_decode($req['body']);
+    if (!$json) {
+      return $this->_err('Impossible de parser la réponse JSON.');
+    }
+    $error = $json->erreur;
+    if ($error) {
+      if ($error[0] == 'Ce sujet est déjà bloqué.') {
+        return true;
+      }
+      return $this->_err('Erreur de JVC : ' . $error[0]);
+    }
+    return true;
+  }
+
+  public function unlock($topic_id) {
+    $post_data = [
+      'id_forum' => '800', // Param must be there but its value doesn't matter
+      'tab_topic[]' => $topic_id,
+      'type' => 'unlock',
+      'action' => 'get',
+    ];
+    $post_data = array_merge($post_data, $this->ajax_array('moderation_forum'));
+    $req = $this->request('/forums/modal_moderation_topic.php', http_build_query($post_data));
+
+    $json = json_decode($req['body']);
+    if (!$json) {
+      return $this->_err('Impossible de parser la réponse JSON.');
+    }
+    $error = $json->erreur;
+    if ($error) {
+      if ($error[0] == "Ce sujet n'est pas bloqué.") {
+        return true;
+      }
+      return $this->_err('Erreur de JVC : ' . $error[0]);
+    }
+    return true;
+  }
+
+  private function mark_as_moderator() {
+    $this->logged_into_moderation = true;
+
+    $cookie = Crypto::decrypt(base64_decode($_COOKIE['id']), base64_decode(ID_KEY));
+    $ciphertext = Crypto::encrypt($cookie . ' true', base64_decode(ID_KEY));
+    _setcookie('id', base64_encode($ciphertext));
+  }
+
+  /** /Moderation **/
+
 
   private function _err($err) {
     $this->err = $err;

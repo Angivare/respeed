@@ -10,6 +10,9 @@ $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 $favorites = $db->get_favorites($jvc->user_id);
 $favorites_forums = isset($favorites['forums']) ? $favorites['forums'] : false;
 $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
+
+$is_mod = $moderators && in_array(strtolower($jvc->pseudo), array_map('strtolower', $moderators));
+$is_mod_active = $is_mod && $jvc->logged_into_moderation;
 ?>
 <body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?> body--no-bottom">
 
@@ -28,6 +31,13 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
 <?php endif ?>
             <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
+<?php if ($is_mod_active): ?>
+<?php if ($locked): ?>
+            <a class="mobile-menu__item" href="/lock/<?= $topicNew ?>?unlock">Déverrouiller</a>
+<?php else: ?>
+            <a class="mobile-menu__item" href="/lock/<?= $topicNew ?>">Verrouiller</a>
+<?php endif ?>
+<?php endif ?>
           </div>
       </div>
     </h1>
@@ -47,7 +57,7 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
       <div class="js-poll card card--poll"><?= generate_poll_markup($poll, $topic_mode, $forum, $topic, $slug) ?></div>
 <?php endif ?>
 <?php foreach ($messages as $message): ?>
-<?= generate_message_markup($message) ?>
+<?= generate_message_markup($message, $is_mod_active) ?>
 <?php endforeach ?>
     </div>
 
@@ -64,7 +74,7 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
       <div class="lock-alert__cause"><?= $lock_raison ?></div>
     </div>
 <?php else: ?>
-    <form class="js-form-post form">
+    <form class="js-form-post form form--touches-bottom">
       <div class="form__draft">Brouillon sauvegardé. <span class="form__draft-recover">Récupérer</span></div>
       <div class="form__errors"><p></p></div>
       <textarea class="form__textarea" placeholder="Mon <?= superlatif() ?> message." tabindex="1"></textarea>
@@ -82,6 +92,16 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
   </div>
 
   <aside class="aside">
+<?php if ($is_mod_active): ?>
+    <div class="aside__moderation-actions">
+<?php if ($locked): ?>
+      <a class="aside__moderation-action" href="/lock/<?= $topicNew ?>?unlock">Déverrouiller</a>
+<?php else: ?>
+      <a class="aside__moderation-action" href="/lock/<?= $topicNew ?>">Verrouiller</a>
+<?php endif ?>
+    </div>
+<?php endif ?>
+
     <div class="aside__top-buttons">
 <?php if (!is_topic_in_favorites($favorites, $topicNew)): ?>
       <span class="js-favorite-toggle aside__top-button aside__top-button--favorite" data-action="add">

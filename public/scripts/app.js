@@ -127,14 +127,14 @@ function toggleFavorite() {
       $('.aside .js-favorite-toggle').removeClass('aside__top-button--favorite').addClass('aside__top-button--unfavorite')
       $('.js-favorite-toggle-label').html('Retirer des favoris')
       $('.js-favorite-toggle').data('action', 'delete')
-      $('.add-to-favorite-mobile-shortcut').remove()
-      showToast('Mis en favoris', 1.5)
+      $('.js-add-to-favorite-mobile-shortcut').remove()
+      showToast('Mis en favoris')
     }
     else {
       $('.aside .js-favorite-toggle').removeClass('aside__top-button--unfavorite').addClass('aside__top-button--favorite')
       $('.js-favorite-toggle-label').html('Mettre en favoris')
       $('.js-favorite-toggle').data('action', 'add')
-      showToast('Retiré des favoris', 1.5)
+      showToast('Retiré des favoris')
     }
     if (data.html.forums) {
       $('.js-favorites-forums').html(data.html.forums)
@@ -153,6 +153,9 @@ function toggleFavorite() {
 /** Toast **/
 
 function showToast(message, duration_in_seconds) {
+  if (!duration_in_seconds) {
+    duration_in_seconds = 1.5
+  }
   clearTimeout(toastTimer)
   $('.toast').addClass('toast--shown')
   $('.toast__label').text(message)
@@ -374,7 +377,7 @@ function topicRefresh() {
 
         $('#' + message.id + ' .js-quote').click(quote)
         $('#' + message.id + ' .js-edit').click(edit)
-        $('#' + message.id + ' .js-delete').click(deleteMessage)
+        $('#' + message.id + ' .js-delete, #' + message.id + ' .js-delete-red').click(deleteMessage)
         $('#' + message.id + ' .js-menu').click(toggleMenu)
         $('#' + message.id + ' .message__ignored-notice_show-message-button').click(showBlacklistedMessage)
         $('#' + message.id).click(closeMenu)
@@ -516,6 +519,19 @@ function handleProfileAvatar() {
       }
     }
   })
+}
+
+function showLoadedToast() {
+  // http://stackoverflow.com/questions/10730362/get-cookie-by-name
+  var parts = ("; " + document.cookie).split("; toast=")
+  if (parts.length != 2) {
+    return false
+  }
+  var message = atob(decodeURIComponent(parts.pop().split(";").shift()))
+
+  showToast(message)
+
+  document.cookie = 'toast=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
 }
 
 function handleBlacklist() {
@@ -772,10 +788,11 @@ instantClick.on('change', function(isInitialLoad) {
   handleProfileAvatar()
   handleBlacklist()
   makeFavoritesSlideable()
+  showLoadedToast()
   instantClick.timer(updateFavorites, (60 * 10 - $freshness) * 1000)
   instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 
-  $('.form').submit(post)
+  $('.js-form-topic, .js-form-post').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
   $('.form__textarea').focus(startDraftWatcher)
@@ -786,7 +803,7 @@ instantClick.on('change', function(isInitialLoad) {
   // Messages
   $('.js-quote').click(quote)
   $('.js-edit').click(edit)
-  $('.js-delete').click(deleteMessage)
+  $('.js-delete, .js-delete-red').click(deleteMessage)
   $('.js-menu').click(toggleMenu)
   $('.message').click(closeMenu)
   $('.spoil').click(toggleSpoil)
