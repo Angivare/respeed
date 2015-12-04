@@ -10,10 +10,13 @@ if (!$page) {
 }
 
 $t = fetch_topic($topic, $page, $slug, $forum);
+
+$is_mod = $t['moderators'] && in_array(strtolower($jvc->pseudo), array_map('strtolower', $t['moderators']));
+
 if ($liste_messages) { // N’est pas là en cas de timeout
   for ($i = 0; $i < count($t['messages']); $i++) {
     if (!in_array($t['messages'][$i]['id'], $liste_messages)) {
-      $t['messages'][$i]['markup'] = generate_message_markup($t['messages'][$i]);
+      $t['messages'][$i]['markup'] = generate_message_markup($t['messages'][$i], $is_mod);
     }
   }
 }
