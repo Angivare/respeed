@@ -22,7 +22,7 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
       <div class="mobile-menu">
         <div class="mobile-menu__opener"><div class="mobile-menu__opener-icon"></div></div>
           <div class="mobile-menu__items">
-<?php if (!is_topic_in_favorites($favorites, $forum)): ?>
+<?php if (!is_topic_in_favorites($favorites, $topicNew)): ?>
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="add">Mettre en favoris</span>
 <?php else: ?>
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
