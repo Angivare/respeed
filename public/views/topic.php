@@ -31,6 +31,13 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
 <?php endif ?>
             <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
+<?php if ($is_mod_active): ?>
+<?php if ($locked): ?>
+            <a class="mobile-menu__item" href="/lock/<?= $topicNew ?>?unlock">Déverrouiller</a>
+<?php else: ?>
+            <a class="mobile-menu__item" href="/lock/<?= $topicNew ?>">Verrouiller</a>
+<?php endif ?>
+<?php endif ?>
           </div>
       </div>
     </h1>
@@ -85,6 +92,16 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
   </div>
 
   <aside class="aside">
+<?php if ($is_mod_active): ?>
+    <div class="aside__moderation-actions">
+<?php if ($locked): ?>
+      <a class="aside__moderation-action" href="/lock/<?= $topicNew ?>?unlock">Déverrouiller</a>
+<?php else: ?>
+      <a class="aside__moderation-action" href="/lock/<?= $topicNew ?>">Verrouiller</a>
+<?php endif ?>
+    </div>
+<?php endif ?>
+
     <div class="aside__top-buttons">
 <?php if (!is_topic_in_favorites($favorites, $topicNew)): ?>
       <span class="js-favorite-toggle aside__top-button aside__top-button--favorite" data-action="add">

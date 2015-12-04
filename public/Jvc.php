@@ -718,6 +718,60 @@ class Jvc {
     return true;
   }
 
+  public function lock($topic_id, $rationale) {
+    $rationale = trim($rationale);
+    if (strlen($rationale) < 4) {
+      $rationale .= '    '; // Non-breaking spaces
+    }
+
+    $post_data = [
+      'id_forum' => '800', // Param must be there but its value doesn't matter
+      'tab_topic[]' => $topic_id,
+      'type' => 'lock',
+      'raison_moderation' => $rationale,
+      'action' => 'post',
+    ];
+    $post_data = array_merge($post_data, $this->ajax_array('moderation_forum'));
+    $req = $this->request('/forums/modal_moderation_topic.php', http_build_query($post_data));
+
+    $json = json_decode($req['body']);
+    if (!$json) {
+      return $this->_err('Impossible de parser la réponse JSON.');
+    }
+    $error = $json->erreur;
+    if ($error) {
+      if ($error[0] == 'Ce sujet est déjà bloqué.') {
+        return true;
+      }
+      return $this->_err('Erreur de JVC : ' . $error[0]);
+    }
+    return true;
+  }
+
+  public function unlock($topic_id) {
+    $post_data = [
+      'id_forum' => '800', // Param must be there but its value doesn't matter
+      'tab_topic[]' => $topic_id,
+      'type' => 'unlock',
+      'action' => 'get',
+    ];
+    $post_data = array_merge($post_data, $this->ajax_array('moderation_forum'));
+    $req = $this->request('/forums/modal_moderation_topic.php', http_build_query($post_data));
+
+    $json = json_decode($req['body']);
+    if (!$json) {
+      return $this->_err('Impossible de parser la réponse JSON.');
+    }
+    $error = $json->erreur;
+    if ($error) {
+      if ($error[0] == "Ce sujet n'est pas bloqué.") {
+        return true;
+      }
+      return $this->_err('Erreur de JVC : ' . $error[0]);
+    }
+    return true;
+  }
+
   private function mark_as_moderator() {
     $this->logged_into_moderation = true;
 
