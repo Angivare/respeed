@@ -118,7 +118,7 @@ CREATE TABLE `topics_positions` (
   `user_id` int unsigned NOT NULL,
   `topic_id` int NOT NULL,
   `message_id` int NOT NULL,
-  `page` smallint NOT NULL,
+  `nb_answers` mediumint NOT NULL,
   `updated_at` int NOT NULL,
   PRIMARY KEY (`user_id`, `topic_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

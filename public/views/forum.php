@@ -75,7 +75,10 @@ if ($is_in_blacklist) {
   $topic_modifier = 'topic--ignored';
 }
 
-list($page, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);
+list($nb_answers, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);
+$page = 1 + floor($nb_answers / 20);
+
+$last_page = 1 + floor($matches['nb_reponses'][$i] / 20);
 
 $link = "/{$forum}/";
 if ($matches['mode'][$i] == 1) {
@@ -83,7 +86,7 @@ if ($matches['mode'][$i] == 1) {
 }
 $link .= $matches['topic'][$i] . '-' . $matches['slug'][$i];
 if ($page > 1) {
-  $link .= "/{$page}";
+  $link .= '/' . min($page, $last_page);
 }
 if ($message_id) {
   $link .= "#{$message_id}";

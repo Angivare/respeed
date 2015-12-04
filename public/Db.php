@@ -315,12 +315,29 @@ class Db {
 
   public function get_topic_position($user_id, $topic_id) {
     $fetched = $this->query(
-      'SELECT page, message_id FROM topics_positions WHERE user_id = ? AND topic_id = ?',
+      'SELECT nb_answers, message_id FROM topics_positions WHERE user_id = ? AND topic_id = ?',
       [$user_id, $topic_id]
     )->fetch();
     if (!$fetched) {
       return [1, 0];
     }
-    return [(int)$fetched['page'], (int)$fetched['message_id']];
+    return [(int)$fetched['nb_answers'], (int)$fetched['message_id']];
+  }
+
+  public function set_topic_position($user_id, $topic_id, $message_id, $nb_answers) {
+    $fetched = $this->query(
+      'SELECT user_id FROM topics_positions WHERE user_id = ? AND topic_id = ?',
+      [$user_id, $topic_id]
+    )->fetch();
+    if (!$fetched) {
+      return $this->query(
+        'INSERT INTO topics_positions(user_id, topic_id, message_id, nb_answers, updated_at) VALUES(?, ?, ?, ?, ?)',
+        [$user_id, $topic_id, $message_id, $nb_answers, time()]
+      );
+    }
+    return $this->query(
+      'UPDATE topics_positions SET message_id = ?, nb_answers = ?, updated_at = ? WHERE user_id = ? AND topic_id = ?',
+      [$message_id, $nb_answers, time(), $user_id, $topic_id]
+    );
   }
 }

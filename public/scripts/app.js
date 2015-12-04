@@ -553,6 +553,19 @@ function isInBlacklist(pseudo) {
   return $.inArray(pseudo.toLowerCase(), $blacklist) > -1
 }
 
+function updateTopicPosition() {
+  if (!$topicNew) {
+    return
+  }
+  var lastMessageId = liste_messages[liste_messages.length - 1]
+  var nbAnswers = ($page - 1) * 20 + liste_messages.length - 1
+  ajax('topic_update_position', {
+    topic_id: $topicNew,
+    message_id: lastMessageId,
+    nb_answers: nbAnswers,
+  })
+}
+
 
 
 /*** Fonctions pour events ***/
@@ -789,6 +802,7 @@ instantClick.on('change', function(isInitialLoad) {
   handleBlacklist()
   makeFavoritesSlideable()
   showLoadedToast()
+  updateTopicPosition()
   instantClick.timer(updateFavorites, (60 * 10 - $freshness) * 1000)
   instantClick.interval(tokenRefresh, 29 * 60 * 1000)
 
