@@ -9,6 +9,7 @@ RewriteRule ^accueil$ /index.php [L]
 RewriteRule ^apropos$ /index.php?apropos [L]
 RewriteRule ^recherche_forum$ /index.php?recherche_forum [L]
 RewriteRule ^smileys$ /index.php?smileys [L]
+RewriteRule ^sondage$ /index.php?sondage [L]
 
 RewriteRule ^moderation$ /index.php?moderation [L]
 RewriteRule ^kick/([0-9a-zA-Z-_[\]]{3,15})$ /index.php?kick=$1 [QSA] [L]

@@ -42,6 +42,10 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
   <div class="centered-button-container"><a href="/moderation" class="button button--raised button--large">Modérer</a></div>
 <?php endif ?>
 
+<?php if ($db->get_poll_vote(1, $jvc->user_id) == -1): ?>
+  <div class="centered-button-container"><a href="/sondage" style="color: #2196f3">Sondage sur le design de JVForum</a></div>
+<?php endif ?>
+
 <?php
 if ($page > 1) {
   include 'forum_pagination.php';

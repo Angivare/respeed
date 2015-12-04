@@ -2207,6 +2207,10 @@ h1, h2, h3 {
   color: #424242;
 }
 
+.form__choice {
+  display: block;
+}
+
 .form__draft {
   display: none;
   font-size: 12px;

@@ -297,4 +297,19 @@ class Db {
       [json_encode($forums), json_encode($topics), time(), $user_id]
     );
   }
+
+  public function get_poll_vote($poll_id, $user_id) {
+    $fetched = $this->query('SELECT choice FROM polls_votes WHERE user_id = ?', [$user_id])->fetch();
+    if (!$fetched) {
+      return -1;
+    }
+    return (int)$fetched['choice'];
+  }
+
+  public function set_poll_vote($poll_id, $user_id, $choice, $comment) {
+    return $this->query(
+      'INSERT INTO polls_votes(poll_id, user_id, choice, comment, ip, voted_at) VALUES(?, ?, ?, ?, ?, ?)',
+      [$poll_id, $user_id, $choice, $comment, $_SERVER['REMOTE_ADDR'], time()]
+    );
+  }
 }

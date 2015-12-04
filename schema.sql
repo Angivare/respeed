@@ -103,3 +103,13 @@ CREATE TABLE `blacklists` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `polls_votes` (
+  `poll_id` smallint NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `choice` tinyint NOT NULL,
+  `comment` varchar(2000) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `voted_at` int NOT NULL,
+  PRIMARY KEY (`poll_id`, `user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

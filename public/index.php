@@ -11,6 +11,7 @@ $moderation = isset($_GET['moderation']);
 $kick = isset($_GET['kick']);
 $sanctionner = isset($_GET['sanctionner']);
 $lock = isset($_GET['lock']);
+$sondage = isset($_GET['sondage']);
 
 require_once '../php-encryption/autoload.php';
 require '../config.php';
@@ -60,6 +61,8 @@ elseif ($sanctionner)
   $view = 'sanctionner';
 elseif ($lock)
   $view = 'lock';
+elseif ($sondage)
+  $view = 'sondage';
 
 ob_start();
 require 'views/' . $view . '.php';
