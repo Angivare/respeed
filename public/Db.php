@@ -312,4 +312,15 @@ class Db {
       [$poll_id, $user_id, $choice, $comment, $_SERVER['REMOTE_ADDR'], time()]
     );
   }
+
+  public function get_topic_position($user_id, $topic_id) {
+    $fetched = $this->query(
+      'SELECT page, message_id FROM topics_positions WHERE user_id = ? AND topic_id = ?',
+      [$user_id, $topic_id]
+    )->fetch();
+    if (!$fetched) {
+      return [1, 0];
+    }
+    return [(int)$fetched['page'], (int)$fetched['message_id']];
+  }
 }

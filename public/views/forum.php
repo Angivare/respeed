@@ -74,9 +74,23 @@ $is_in_blacklist = is_in_blacklist($matches['pseudo'][$i]);
 if ($is_in_blacklist) {
   $topic_modifier = 'topic--ignored';
 }
+
+list($page, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);
+
+$link = "/{$forum}/";
+if ($matches['mode'][$i] == 1) {
+  $link .= "0";
+}
+$link .= $matches['topic'][$i] . '-' . $matches['slug'][$i];
+if ($page > 1) {
+  $link .= "/{$page}";
+}
+if ($message_id) {
+  $link .= "#{$message_id}";
+}
 ?>
         <div class="topic <?= $topic_modifier ?>">
-          <a class="topic__main-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?>">
+          <a class="topic__main-link" href="<?= $link ?>">
             <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
             <div class="topic__main-info">
 <?php if (!$is_in_blacklist): ?>
