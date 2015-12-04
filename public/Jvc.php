@@ -695,6 +695,10 @@ class Jvc {
       return $this->_err('Erreur JVC (get) : ' . trim($matches['message']));
     }
 
+    if (preg_match('#<p>\s+Ce contenu a déjà été modéré par un administrateur.\s+</p>#U', $req['body'], $matches)) {
+      return $this->_err('Ce contenu a déjà été modéré par un administrateur.');
+    }
+
     if (!preg_match('#<form class="form-horizontal" action="(?P<post_url>[^"]+)" method="post" role="form" data-modal="formulaire">#Usi', $req['body'], $matches)) {
       return $this->_err('URL POST non-trouvée.');
     }
