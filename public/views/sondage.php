@@ -25,6 +25,7 @@ $title = 'Sondage : Aimeriez-vous un design sombre ?';
     <form class="form" action="/sondage" method="post">
       <div class="form__block">
         <p class="form__text">Un design sombre a l’avantage de ne pas faire mal aux yeux le soir.</p>
+        <p class="form__text">Il est question ici de <em>remplacer</em> le thème actuel par un sombre.</p>
       </div>
 
       <div class="form__block">
