@@ -43,7 +43,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 <?php endif ?>
 
 <?php if ($db->get_poll_vote(1, $jvc->user_id) == -1): ?>
-  <div class="centered-button-container"><a href="/sondage" style="color: #2196f3">Sondage sur le design de JVForum</a></div>
+  <div class="centered-button-container"><a href="/sondage" style="color: #2196f3">&bull; Sondage sur le design de JVForum &bull;</a></div>
 <?php endif ?>
 
 <?php
