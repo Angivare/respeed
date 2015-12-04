@@ -78,6 +78,16 @@ h1, h2, h3 {
 }
 
 
+.button--raised {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+  background: white;
+}
+
+.button--raised:hover, .button--raised:focus {
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,.15);
+}
+
+
 .button--danger {
   background: #E53935;
   color: white;
@@ -86,16 +96,6 @@ h1, h2, h3 {
 .button--danger:hover, .button--danger:focus {
   background: #E57373;
   color: white;
-}
-
-
-.button--raised {
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
-  background: white;
-}
-
-.button--raised:hover, .button--raised:focus {
-  box-shadow: 0 3px 8px 0 rgba(0,0,0,.15);
 }
 
 
