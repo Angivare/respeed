@@ -49,6 +49,16 @@ $superlatifs = [
   'sensationnel',
 ];
 $stickers = [
+  'DomDeVill' => [
+    '1ljl' => 'chevalier',
+    '1ljj' => 'hop',
+    '1ljm' => 'bide',
+    '1ljn' => 'photo',
+    '1ljo' => 'bescherelle',
+    '1ljp' => '+1',
+    '1ljr' => 'master',
+    '1ljq' => 'thug',
+  ],
   'Duracell' => [
     '1jc3-fr' => 'salut2',
     '1jc5' => 'love',
@@ -106,7 +116,7 @@ $stickers = [
     'zu6' => 'oklm',
     '1f8e' => 'oklm2',
     '1f89' => 'poker',
-    'zuc' => '+1',
+    'zuc' => 'bud+1',
     'zu2' => 'hahah',
     '1f8a' => 'dur',
     'zub' => 'hin',
