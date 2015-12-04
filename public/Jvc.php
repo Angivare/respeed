@@ -687,7 +687,7 @@ class Jvc {
     if (!$matches) {
       return $this->_err('Message non-trouvé sur la page (HTTP ' . $http_code . ').');
     }
-    $url = $matches['url'];
+    $url = str_replace('&amp;', '&', $matches['url']);
 
     $req = $this->request($url);
 
@@ -695,31 +695,26 @@ class Jvc {
       return $this->_err('Erreur JVC (get) : ' . trim($matches['message']));
     }
 
-    /**************/
-    return; # Fails above
-    $form = $this->parse_form($req['body']);
-    print_r($form);exit;
-    /**************/
+    if (!preg_match('#<form class="form-horizontal" action="(?P<post_url>[^"]+)" method="post" role="form" data-modal="formulaire">#Usi', $req['body'], $matches)) {
+      return $this->_err('URL POST non-trouvée.');
+    }
+    $post_url = str_replace('&amp;', '&', $matches['post_url']);
 
-    $post_data = [
-      'action' => 'post',
-      'id_forum' => '800', // This param must be present but its value apparently doesn't matter
-      'id_message' => $message_id,
-      'motif_kick' => $category,
-      'raison_kick' => $rationale,
-      'duree_kick' => '3',
-      'id_alias_a_kick' => $alias_id,
-    ];
-    $post_data = array_merge($post_data, $this->ajax_array('moderation_forum'));
-    $req = $this->request('/forums/ajax_kick.php', http_build_query($post_data));
-    $json = json_decode($req['body']);
-    if (!$json) {
-      return $this->_err('Impossible de parser la réponse JSON.');
+    $post_data = $this->parse_form($req['body']);
+    $post_data['signalement_motif'] = $category;
+    $post_data['signalement_commentaire'] = $rationale;
+    $post_data['signalement_submit'] = '1'; // Needed?
+
+    $req = $this->request($post_url, http_build_query($post_data));
+
+    if (preg_match('#<div class="alert alert-danger">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err('Erreur JVC (post) : ' . trim($matches['message']));
     }
-    $error = $json->erreur;
-    if ($error) {
-      return $this->_err('Erreur de JVC : ' . $error[0]);
+
+    if (!preg_match('#<div class="alert alert-success">\s+<div class="alert-row">(?P<message>.+)</div>#U', $req['body'], $matches)) {
+      return $this->_err('POST sans succès.');
     }
+
     return true;
   }
 

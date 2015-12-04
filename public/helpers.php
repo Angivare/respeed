@@ -388,7 +388,7 @@ function generate_message_markup($message, $is_mod_active) {
 
   $actions = [];
   if ($is_mod_active && !$mine) {
-    $actions[] = ['punish', 'Sanctionner', 'Sanction', '/sanctionner/' . $message['id']];
+    $actions[] = ['punish', 'Sanctionner', 'Sanction', '/sanctionner/' . $message['id'] . '?pseudo=' . $message['pseudo']];
   }
   if ($is_mod_active && !$mine && !$pseudoDeleted) {
     $actions[] = ['kick', 'Kicker', 'Kicker', '/kick/' . $message['pseudo'] . '?message_id=' . $message['id']];

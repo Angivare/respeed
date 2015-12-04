@@ -2,18 +2,17 @@
 
 $message_id = (int)$_GET['sanctionner'];
 
-$title = 'Sanctionner message #' . $message_id;
-
 if (!$jvc->logged_into_moderation) {
   header('Location: /moderation');
   exit;
 }
 
-if (isset($_POST['category'], $_POST['rationale'], $_POST['referer'], $_POST['message_id'])) {
+if (isset($_POST['category'], $_POST['rationale'], $_POST['referer'], $_POST['message_id'], $_POST['pseudo'])) {
   $message_id = (int)$_POST['message_id'];
   $category = (int)$_POST['category'];
   $rationale = $_POST['rationale'];
   $referer = h($_POST['referer']);
+  $pseudo = h($_POST['pseudo']);
   $punish_result = $jvc->punish($message_id, $category, $rationale);
   if ($punish_result) {
     set_toast_for_next_page($pseudo . ' sanctionné');
@@ -28,10 +27,16 @@ if (isset($_POST['category'], $_POST['rationale'], $_POST['referer'], $_POST['me
 if (!isset($referer)) {
   $referer = isset($_SERVER['HTTP_REFERER']) ? h($_SERVER['HTTP_REFERER']) : '/';
 }
+
+if (!isset($pseudo)) {
+  $pseudo = isset($_GET['pseudo']) ? h($_GET['pseudo']) : '';
+}
+
+$title = 'Sanctionner ' . $pseudo;
 ?>
 <div class="sheet">
   <div class="content no-menu">
-    <h1 class="page-title">Sanctionner message #<?= $message_id ?></h1>
+    <h1 class="page-title"><?= $title ?></h1>
 
     <form class="form" action="/sanctionner/<?= $message_id ?>" method="post">
 <?php if (isset($error)): ?>
@@ -74,6 +79,7 @@ if (!isset($referer)) {
 
       <input type="hidden" name="referer" value="<?= $referer ?>">
       <input type="hidden" name="message_id" value="<?= $message_id ?>">
+      <input type="hidden" name="pseudo" value="<?= $pseudo ?>">
 
       <div class="form_block">
         <input class="button button--raised button--danger button--large button--scale" type="submit" value="Sanctionner" tabindex="3">
