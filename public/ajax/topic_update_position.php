@@ -3,7 +3,7 @@ require 'common.php';
 
 arg('topic_id', 'message_id', 'nb_answers');
 
-if (!$topic_id || !$message_id || !$nb_answers) {
+if (!$topic_id || !$message_id) {
   halt('no params');
 }
 

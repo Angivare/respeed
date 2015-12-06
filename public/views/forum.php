@@ -53,7 +53,6 @@ if ($page > 1) {
 ?>
 
     <div class="liste-topics">
-      <div class="liste-topics__container">
 <?php for ($i = 0; $i < count($matches['topic']); $i++): ?>
 <?php
 $pseudo_modifier = '';
@@ -91,30 +90,51 @@ if ($page > 1) {
 if ($message_id) {
   $link .= "#{$message_id}";
 }
+
+if ($message_id) {
+  if ($nb_answers < $matches['nb_reponses'][$i]) {
+    $topic_modifier .= ' topic--new-messages';
+  }
+  else {
+    $topic_modifier .= ' topic--visited';
+  }
+}
 ?>
-        <div class="topic <?= $topic_modifier ?>">
-          <a class="topic__main-link" href="<?= $link ?>">
-            <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
-            <div class="topic__main-info">
-<?php if (!$is_in_blacklist): ?>
-              <div class="topic__title"><?= $matches['title'][$i] ?></div>
-              <div class="topic__pseudo <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
-<?php else: ?>
-              <div class="topic__ignored-notice"><span title="<?= $matches['title'][$i] ?>">Topic ignoré de <?= $matches['pseudo'][$i] ?></span></div>
-<?php endif ?>
-            </div>
-          </a>
-          <a class="topic__last-page-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
-<?php if (!$is_in_blacklist): ?>
-            <div class="topic__last-page-info">
-              <div class="topic__answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
-              <div class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
-            </div>
-<?php endif ?>
-          </a>
+      <a class="topic <?= $topic_modifier ?>" href="<?= $link ?>">
+        <div class="topic__label-container">
+          <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
         </div>
+        <div class="topic__text-container">
+          <div class="topic__title"><?= $matches['title'][$i] ?></div>
+          <div class="topic__infos">
+            <div class="topic__date-and-nb-answers-container">
+              <div class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
+              <div class="topic__nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
+            </div>
+            <div class="topic__author <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
+          </div>
+        </div>
+<!--        <a class="topic__main-link" href="<?= $link ?>">
+          <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
+          <div class="topic__main-info">
+<?php if (!$is_in_blacklist): ?>
+            <div class="topic__title"><?= $matches['title'][$i] ?></div>
+            <div class="topic__pseudo <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
+<?php else: ?>
+            <div class="topic__ignored-notice"><span title="<?= $matches['title'][$i] ?>">Topic ignoré de <?= $matches['pseudo'][$i] ?></span></div>
+<?php endif ?>
+          </div>
+        </a>
+        <a class="topic__last-page-link" href="/<?= $forum ?>/<?= $matches['mode'][$i] == 1 ? '0' : '' ?><?= $matches['topic'][$i] ?>-<?= $matches['slug'][$i] ?><?= $matches['nb_reponses'][$i] >= 20 ? ('/' . (1 + floor($matches['nb_reponses'][$i] / 20))) : '' ?>">
+<?php if (!$is_in_blacklist): ?>
+          <div class="topic__last-page-info">
+            <div class="topic__answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
+            <div class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
+          </div>
+<?php endif ?>
+        </a>-->
+      </a>
 <?php endfor ?>
-      </div>
     </div>
 
 <?php include 'forum_pagination.php' ?>
