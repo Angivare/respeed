@@ -568,6 +568,7 @@ function updateTopicPosition() {
     topic_id: $topicNew,
     message_id: topicPositionLastMessageId,
     nb_answers: nbAnswers,
+    last_page: lastPage,
   })
 }
 
