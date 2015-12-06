@@ -71,7 +71,7 @@ if (looks_spammy($matches['title'][$i])) {
 }
 $is_in_blacklist = is_in_blacklist($matches['pseudo'][$i]);
 if ($is_in_blacklist) {
-  $topic_modifier = 'topic--ignored';
+  $topic_modifier = 'topic--blacklisted';
 }
 
 list($nb_answers, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);
@@ -109,6 +109,9 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
         <div class="topic__label-container">
           <div class="topic__label topic__label--<?= $label ?>"></div>
         </div>
+<?php if ($is_in_blacklist): ?>
+        <div class="topic__blacklist">Topic ignoré de <?= $matches['pseudo'][$i] ?></div>
+<?php else: ?>
         <div class="topic__text-container">
           <div class="topic__title"><?= $matches['title'][$i] ?></div>
           <div class="topic__infos">
@@ -123,6 +126,7 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
         <div class="topic__author <?= $pseudo_modifier ?> topic__author--desktop"><?= $matches['pseudo'][$i] ?></div>
         <div class="topic__nb-answers topic__nb-answers--desktop"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
         <div class="topic__date topic__date--desktop"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
+<?php endif ?>
 <!--        <a class="topic__main-link" href="<?= $link ?>">
           <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
           <div class="topic__main-info">

@@ -962,6 +962,10 @@ h1, h2, h3 {
   }
 }
 
+.topic--blacklisted .topic__label-container {
+  height: 28px;
+}
+
 .topic__label {
   width: 8px;
   height: 8px;
@@ -1002,6 +1006,14 @@ h1, h2, h3 {
 
 .topic__label--favorite {
   background: #F360CC;
+}
+
+.topic__blacklist {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 14px;
+  font-style: italic;
+  color: #757575;
 }
 
 .topic__text-container {
