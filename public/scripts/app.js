@@ -22,6 +22,7 @@ var form_data
   , draftWatcherInterval
   , lastDraftSaved
   , toastTimer
+  , topicPositionLastMessageId = 0
 
 
 
@@ -393,6 +394,8 @@ function topicRefresh() {
     }
 
     topicRefreshTimeout = setTimeout(topicRefresh, 2000)
+
+    updateTopicPosition()
   })
 }
 
@@ -556,11 +559,14 @@ function updateTopicPosition() {
   if (!$topicNew) {
     return
   }
-  var lastMessageId = liste_messages[liste_messages.length - 1]
+  if (topicPositionLastMessageId >= liste_messages[liste_messages.length - 1]) {
+    return
+  }
+  topicPositionLastMessageId = liste_messages[liste_messages.length - 1]
   var nbAnswers = ($page - 1) * 20 + liste_messages.length - 1
   ajax('topic_update_position', {
     topic_id: $topicNew,
-    message_id: lastMessageId,
+    message_id: topicPositionLastMessageId,
     nb_answers: nbAnswers,
   })
 }
