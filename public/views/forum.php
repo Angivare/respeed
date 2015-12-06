@@ -112,11 +112,12 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
         <div class="topic__text-container">
           <div class="topic__title"><?= $matches['title'][$i] ?></div>
           <div class="topic__infos">
+          <div class="topic__author <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
             <div class="topic__date-and-nb-answers-container">
-              <div class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
-              <div class="topic__nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
+              <span class="topic__nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></span>
+
+              <span class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></span>
             </div>
-            <div class="topic__author <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
           </div>
         </div>
 <!--        <a class="topic__main-link" href="<?= $link ?>">

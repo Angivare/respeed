@@ -1023,6 +1023,8 @@ h1, h2, h3 {
 .topic__infos {
   font-size: 11px;
   padding: 1px 0 2px;
+  display: table;
+  width: 100%;
 }
 
 @media (min-width: 1025px) {
@@ -1035,23 +1037,30 @@ h1, h2, h3 {
   padding: 0;
 }
 
+.topic__author {
+  display: table-cell;
+}
+
 .topic__date-and-nb-answers-container {
-  display: inline-block;
-  min-width: 110px;
+  display: table-cell;
+  text-align: right;
+  padding-right: 8px;
+}
+
+@media (min-width: 1025px) {
+  .topic__date-and-nb-answers-container {
+    padding-right: 10px;
+  }
 }
 
 .topic__date {
   display: inline-block;
-  min-width: 60px;
+  font-weight: bold;
 }
 
 .topic__nb-answers {
   display: inline-block;
-  font-weight: bold;
-}
-
-.topic__author {
-  display: inline-block;
+  margin-right: 5px;
 }
 
 /* FORUM - Topic ignoré */
