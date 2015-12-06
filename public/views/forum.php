@@ -112,14 +112,17 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
         <div class="topic__text-container">
           <div class="topic__title"><?= $matches['title'][$i] ?></div>
           <div class="topic__infos">
-          <div class="topic__author <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
+            <div class="topic__author <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
             <div class="topic__date-and-nb-answers-container">
               <span class="topic__nb-answers"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></span>
-
               <span class="topic__date"><?= relative_date_topic_list($matches['date'][$i]) ?></span>
             </div>
           </div>
         </div>
+        <div class="topic__title topic__title--desktop"><?= $matches['title'][$i] ?></div>
+        <div class="topic__author <?= $pseudo_modifier ?> topic__author--desktop"><?= $matches['pseudo'][$i] ?></div>
+        <div class="topic__nb-answers topic__nb-answers--desktop"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
+        <div class="topic__date topic__date--desktop"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
 <!--        <a class="topic__main-link" href="<?= $link ?>">
           <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
           <div class="topic__main-info">
