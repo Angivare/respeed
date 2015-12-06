@@ -1217,6 +1217,10 @@ h1, h2, h3 {
   position: relative;
 }
 
+.pagination-topic__page-link:visited {
+  color: #616161;
+}
+
 .pagination-topic__page-link:hover {
   background: rgba(255,87,34,.1); /* 500 */
 }
