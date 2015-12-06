@@ -22,7 +22,7 @@ var form_data
   , draftWatcherInterval
   , lastDraftSaved
   , toastTimer
-  , topicPositionLastMessageId = 0
+  , topicPositionLastMessageId
 
 
 
@@ -799,6 +799,8 @@ if (googleAnalyticsID) {
 }
 
 instantClick.on('change', function(isInitialLoad) {
+  topicPositionLastMessageId = 0
+
   FastClick.attach(document.body)
   handleRefreshOnPageChange(isInitialLoad)
   stopDraftWatcher()
