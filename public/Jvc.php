@@ -509,6 +509,10 @@ class Jvc {
   }
 
   public function request($url, $connected_or_post_data = true, $retry_id = null, $retry_count = 0) {
+    if (false) { # for use during debugging, when loading a page from JVC is challenging
+      return ['header' => '', 'body' => file_get_contents('page-samples/')];
+    }
+
     $db = new Db();
     if (!$db->is_another_concurrent_request_allowed()) {
       if (!$retry_id) {
