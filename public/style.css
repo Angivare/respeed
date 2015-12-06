@@ -974,6 +974,7 @@ h1, h2, h3 {
   .topic__label {
     width: 10px;
     height: 10px;
+    margin-left: 10px;
   }
 }
 
