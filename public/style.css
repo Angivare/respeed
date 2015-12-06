@@ -987,10 +987,10 @@ h1, h2, h3 {
   background: #4e342e;
 }
 .topic__label--marque-on {
-  background: #2E7D32;
+  background: #1B5E20;
 }
 .topic__label--marque-off {
-  background: #B71C1C;
+  background: hsla(0,73%,31%,1);
 }
 .topic__label--resolu {
   background: #00E676;
