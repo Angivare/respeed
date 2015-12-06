@@ -1,6 +1,7 @@
 <?php
 
-$choice = $db->get_poll_vote(1, $jvc->user_id);
+#$choice = $db->get_poll_vote(1, $jvc->user_id);
+$choice = 0;
 
 if ($choice == -1) {
   if (isset($_POST['choice'], $_POST['referer'], $_POST['comment'])) {
