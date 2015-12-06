@@ -75,7 +75,7 @@ if ($is_in_blacklist) {
 }
 
 list($nb_answers, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);
-$page = 1 + floor($nb_answers / 20);
+$topic_page = 1 + floor($nb_answers / 20);
 
 $last_page = 1 + floor($matches['nb_reponses'][$i] / 20);
 
@@ -84,8 +84,8 @@ if ($matches['mode'][$i] == 1) {
   $link .= "0";
 }
 $link .= $matches['topic'][$i] . '-' . $matches['slug'][$i];
-if ($page > 1) {
-  $link .= '/' . min($page, $last_page);
+if ($topic_page > 1) {
+  $link .= '/' . min($topic_page, $last_page);
 }
 if ($message_id) {
   $link .= "#{$message_id}";
