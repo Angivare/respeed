@@ -369,7 +369,6 @@ function topicRefresh() {
       else {
         // Création
         $('.js-listeMessages').append(message.markup)
-        liste_messages.push(message.id)
 
         if (message.pseudo.toLowerCase() != myPseudo.toLowerCase() && !isInBlacklist(message.pseudo)) {
           triggerTabAlertForNewPosts()
