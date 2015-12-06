@@ -967,7 +967,6 @@ h1, h2, h3 {
   height: 8px;
   border-radius: 2px;
   margin-left: 8px;
-  background: red;
   box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 
@@ -979,10 +978,10 @@ h1, h2, h3 {
 }
 
 .topic__label--dossier1 {
-  background: #eeff41;
+  background: #FFEB3B;
 }
 .topic__label--dossier2 {
-  background: #FF6F00;
+  background: #D50000;
 }
 .topic__label--lock {
   background: #4e342e;
