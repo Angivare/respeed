@@ -1224,6 +1224,7 @@ h1, h2, h3 {
   background: #ff5722;
 }
 
+.pagination-topic--top .pagination-topic__page-link--last,
 .pagination-topic--bottom .pagination-topic__page-link--next {
   font-weight: bold;
   font-size: 1.2em;

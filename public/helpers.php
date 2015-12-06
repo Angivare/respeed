@@ -504,7 +504,7 @@ function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $to
       $markup .= '<span class="pagination-topic__page"><span class="pagination-topic__page-link pagination-topic__page-link--active">' . $page . '</span></span>';
     }
     else {
-      $markup .= '<span class="pagination-topic__page"><a class="pagination-topic__page-link ' . ($i == $page + 1 ? 'pagination-topic__page-link--next' : '') . '" href="/' . $forum . '/' . $topic_id . '-' . $slug . ($i > 1 ? ('/' . $i) : '') . '">' . $i . '</a></span>';
+      $markup .= '<span class="pagination-topic__page"><a class="pagination-topic__page-link ' . ($i == $page + 1 ? 'pagination-topic__page-link--next' : ($i == $last_page ? 'pagination-topic__page-link--last' : '')) . '" href="/' . $forum . '/' . $topic_id . '-' . $slug . ($i > 1 ? ('/' . $i) : '') . '">' . $i . '</a></span>';
     }
   }
 
