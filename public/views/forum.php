@@ -99,10 +99,15 @@ if ($message_id) {
     $topic_modifier .= ' topic--visited';
   }
 }
+
+$label = $matches['label'][$i];
+if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
+  $label = 'favorite';
+}
 ?>
       <a class="topic <?= $topic_modifier ?>" href="<?= $link ?>">
         <div class="topic__label-container">
-          <div class="topic__label topic__label--<?= $matches['label'][$i] ?>"></div>
+          <div class="topic__label topic__label--<?= $label ?>"></div>
         </div>
         <div class="topic__text-container">
           <div class="topic__title"><?= $matches['title'][$i] ?></div>

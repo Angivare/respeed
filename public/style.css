@@ -999,6 +999,10 @@ h1, h2, h3 {
   background: #757575;
 }
 
+.topic__label--favorite {
+  background: #F360CC;
+}
+
 .topic__text-container {
   display: table-cell;
   word-break: break-all;
