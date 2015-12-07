@@ -1981,6 +1981,15 @@ h1, h2, h3 {
   }
 }
 
+.long-link:after {
+  content: '…';
+}
+
+.long-link__hidden-part {
+  position: fixed;
+  left: 999em;
+}
+
 /* TOPIC - Message - Actions desktop */
 
 .message__quick-actions {

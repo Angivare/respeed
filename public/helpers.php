@@ -163,6 +163,16 @@ function adapt_html($message, $date = '', $id = 0) {
   // JVCare
   $message = jvcare($message);
 
+  // Rétrécir liens
+  $message = preg_replace_callback('#<a ([^>]+)>([^>]+)<i></i><span>([^>]+)</span>([^>]+)</a>#Usi', function($matches) {
+    $url = $matches[2] . $matches[3] . $matches[4];
+    if (strlen($url) > 100) {
+      $url = substr($url, 0, 80) . '<span class="long-link__hidden-part">' . substr($url, 80) . '</span>';
+    }
+    $new_str = '<a class="long-link" ' . $matches[1] . '>' . $url . '</a>';
+    return $new_str;
+  }, $message);
+
   // Vire la signature qui apparaît parfois
   $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
   if ($pos_signature !== false) {
@@ -287,7 +297,7 @@ function adapt_html($message, $date = '', $id = 0) {
 function jvcare($str) {
   return preg_replace_callback('#<span class="JvCare ([0-9A-F]+)"[^>]*>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function($matches) {
     $new_str = $matches[0];
-    $new_str = str_replace('<span class="JvCare ' . $matches[1], '<a href="' . strip_tags($matches[2]) . '" class="xXx', $new_str);
+    $new_str = str_replace('<span class="JvCare ' . $matches[1], '<a href="' . strip_tags($matches[2]), $new_str);
     $new_str = substr($new_str, 0, -strlen('</span>'));
     $new_str .= '</a>';
     return $new_str;
