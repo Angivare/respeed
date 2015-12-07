@@ -931,45 +931,45 @@ h1, h2, h3 {
   background: #E3F2FD;
 }
 
-.topic__label-container {
+.topic__label {
   display: table-cell;
   vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
   height: 44px;
-  width: 34px;
+  width: 30px;
 }
 
-@media (min-width: 1025px) {
-  .topic__label-container {
-    height: 32px;
-    width: 36px;
+@media (min-width: 360px) {
+  .topic__label {
+    width: 32px;
   }
 }
 
-.topic--visited .topic__label-container {
+@media (min-width: 400px) {
+  .topic__label {
+    width: 34px;
+  }
+}
+
+@media (min-width: 600px) {
+  .topic__label {
+    width: 38px;
+  }
+}
+
+.topic--visited .topic__label {
   height: 40px;
 }
 
 @media (min-width: 1025px) {
-  .topic--visited .topic__label-container {
+  .topic--visited .topic__label {
     height: 28px;
   }
 }
 
-.topic--blacklisted .topic__label-container {
+.topic--blacklisted .topic__label {
   height: 28px;
-}
-
-.topic__label {
-  width: 18px;
-  height: 18px;
-  border-radius: 2px;
-  margin-left: 8px;
-}
-
-@media (min-width: 1025px) {
-  .topic__label {
-    margin-left: 10px;
-  }
 }
 
 .topic__label--dossier1 {

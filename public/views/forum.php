@@ -113,9 +113,7 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
 }
 ?>
       <a class="topic <?= $topic_modifier ?>" href="<?= $link ?>">
-        <div class="topic__label-container">
-          <div class="topic__label topic__label--<?= $label ?>"></div>
-        </div>
+        <div class="topic__label topic__label--<?= $label ?>"></div>
 <?php if ($is_in_blacklist): ?>
         <div class="topic__blacklist">Topic ignoré de <?= $matches['pseudo'][$i] ?></div>
 <?php else: ?>
