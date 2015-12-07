@@ -411,7 +411,7 @@ function generate_message_markup($message, $is_mod_active) {
   $authorLinkTag = $pseudoDeleted ? 'span' : 'a';
   $authorLinkClass = $pseudoDeleted ? 'message__byline-author-link--no-link' : 'js-profile';
   $avatar = $message['avatar'] ? $message['avatar'] : ('/images/triangles.php?s=' . $pseudoLowercase);
-  $pseudo_modifier = $message['status'] != 'user' ? ('message__byline-author-pseudo--' . $message['status']) : '';
+  $pseudo_modifier = $message['status'] != 'user' ? ('pseudo--' . $message['status']) : '';
   $default_avatar_modifier = $message['avatar'] ? '' : 'message__byline-author-avatar-image--default';
 
   $actions = [];

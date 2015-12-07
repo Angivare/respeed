@@ -55,7 +55,7 @@ $pseudo_modifier = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $start = substr($matches['pseudo_span'][$i], $pos + 6);
   $status = substr($start, 0, strpos($start, '"'));
-  $pseudo_modifier = 'topic__pseudo--' . $status;
+  $pseudo_modifier = 'pseudo--' . $status;
 }
 
 $topic_modifier = '';

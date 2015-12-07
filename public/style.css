@@ -2148,16 +2148,12 @@ h1, h2, h3 {
 
 /* FORUM/TOPIC - Couleurs pseudos modos/admins */
 
-.topic__pseudo--modo {
-  color: hsl(145, 100%, 34%); /* 39% normalement */
-}
-
-.message__byline-author-pseudo--modo {
+.pseudo--modo {
   color: #00c853;
 }
 
-.topic__pseudo--admin, .message__byline-author-pseudo--admin,
-.topic__pseudo--staff, .message__byline-author-pseudo--staff {
+.pseudo--admin,
+.pseudo--staff {
   color: #D50000;
 }
 
