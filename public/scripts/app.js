@@ -705,6 +705,7 @@ function deleteMessage() {
   }
   $('#' + id).remove()
   ajax('message_delete', {id_message: id})
+  updateTopicPosition()
 }
 
 function toggleMenu() {
