@@ -77,6 +77,10 @@ if ($last_page - $go_to_page >= 2) {
   // At least two new pages: jump to the end
   $go_to_page = $last_page;
 }
+elseif ($nb_answers % 20 == 19) {
+  // New message on a new page: jump to that new page
+  $go_to_page++;
+}
 
 $link = "/{$forum}/";
 if ($matches['mode'][$i] == 1) {
