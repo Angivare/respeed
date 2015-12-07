@@ -958,6 +958,12 @@ h1, h2, h3 {
   }
 }
 
+@media (min-width: 1025px) {
+  .topic__label {
+    height: 32px;
+  }
+}
+
 .topic--visited .topic__label {
   height: 40px;
 }
