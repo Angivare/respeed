@@ -1029,6 +1029,7 @@ h1, h2, h3 {
 .topic__title {
   font-size: 14px;
   font-weight: bold;
+  padding-right: 4px;
 }
 
 .topic--visited .topic__title {
@@ -1087,6 +1088,7 @@ h1, h2, h3 {
     word-break: break-all;
     word-break: break-word;
     font-size: 15px;
+    padding-right: 0;
   }
 
   .topic__author--desktop, .topic__nb-answers--desktop, .topic__date--desktop {
