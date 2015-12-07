@@ -935,13 +935,13 @@ h1, h2, h3 {
   display: table-cell;
   vertical-align: middle;
   height: 44px;
-  width: 24px;
+  width: 34px;
 }
 
 @media (min-width: 1025px) {
   .topic__label-container {
-    width: 30px;
     height: 32px;
+    width: 36px;
   }
 }
 
@@ -960,42 +960,38 @@ h1, h2, h3 {
 }
 
 .topic__label {
-  width: 8px;
-  height: 8px;
+  width: 18px;
+  height: 18px;
   border-radius: 2px;
   margin-left: 8px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 
 @media (min-width: 1025px) {
   .topic__label {
-    width: 10px;
-    height: 10px;
     margin-left: 10px;
   }
 }
 
 .topic__label--dossier1 {
-  background: #FFEB3B;
+  background-image: url('/images/topic-list-icons/dossier1.svg');
 }
 .topic__label--dossier2 {
-  background: #D50000;
+  background-image: url('/images/topic-list-icons/dossier2.svg');
 }
 .topic__label--lock {
-  background: #4e342e;
+  background-image: url('/images/topic-list-icons/lock.svg');
 }
 .topic__label--marque-on {
-  background: #1B5E20;
+  background-image: url('/images/topic-list-icons/marque-on.svg');
 }
 .topic__label--marque-off {
-  background: hsla(0,73%,31%,1);
+  background-image: url('/images/topic-list-icons/marque-off.svg');
 }
 .topic__label--resolu {
-  background: #00E676;
+  background-image: url('/images/topic-list-icons/resolu.svg');
 }
-
 .topic__label--favorite {
-  background: #F360CC;
+  background-image: url('/images/topic-list-icons/favorite.svg');
 }
 
 .topic__blacklist {
