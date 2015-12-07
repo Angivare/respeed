@@ -993,9 +993,6 @@ h1, h2, h3 {
 .topic__label--resolu {
   background: #00E676;
 }
-.topic__label--ghost {
-  background: #757575;
-}
 
 .topic__label--favorite {
   background: #F360CC;

@@ -51,6 +51,10 @@ if ($page > 1) {
     <div class="liste-topics">
 <?php for ($i = 0; $i < count($matches['topic']); $i++): ?>
 <?php
+if ($matches['label'][$i] == 'ghost') {
+  continue;
+}
+
 $pseudo_modifier = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $start = substr($matches['pseudo_span'][$i], $pos + 6);
@@ -59,7 +63,7 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
 }
 
 $topic_modifier = '';
-if (in_array($matches['label'][$i], ['marque-on', 'marque-off', 'ghost', 'lock'])) {
+if (in_array($matches['label'][$i], ['marque-on', 'marque-off', 'lock'])) {
   $topic_modifier = 'topic--small';
 }
 $is_in_blacklist = is_in_blacklist($matches['pseudo'][$i]);
