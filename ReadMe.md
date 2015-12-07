@@ -7,6 +7,4 @@ Pour démarrer :
 - [Installez une version de développement](docs/Install.md) ;
 - [Familiarisez-vous avec le code](docs/CodeArchitecture.md) ;
 - [Apprenez Git](docs/LearnGit.md), le logiciel de révision de version le plus utilisé ;
-- [Regardez de quoi le projet a besoin](https://github.com/dieulot/jvforum/issues) ;
-- [Lisez de quelle manière contribuer](Contributing.md) ;
-- Puis contribuez vos pull requests !
+- [Contribuez !](Contributing.md)
