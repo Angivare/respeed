@@ -536,34 +536,6 @@ function adapt_message_to_post($message) {
   return $message;
 }
 
-/* From http://stackoverflow.com/a/24755772/921889 */
-function mb_ord($char, $encoding = 'UTF-8') {
-  if ($encoding === 'UCS-4BE') {
-    list(, $ord) = (strlen($char) === 4) ? @unpack('N', $char) : @unpack('n', $char);
-    return $ord;
-  }
-  else {
-    return mb_ord(mb_convert_encoding($char, 'UCS-4BE', $encoding), 'UCS-4BE');
-  }
-}
-
-function looks_spammy($title) {
-  $hangul_syllables = $cjk_ideographs = 0;
-  foreach (preg_split('//u', $title, -1, PREG_SPLIT_NO_EMPTY) as $c) {
-    $ord = mb_ord($c);
-    if ($ord >= 0xAC00 && $ord <= 0xD7AF) {
-      $hangul_syllables++;
-    }
-    if ($ord >= 0x4E00 && $ord <= 0x9FFF) {
-      $cjk_ideographs++;
-    }
-  }
-  if ($hangul_syllables >= 6 || $cjk_ideographs >= 6) {
-    return true;
-  }
-  return false;
-}
-
 function _setcookie($name, $value) {
   setcookie($name, $value, time() + 60 * 60 * 24 * 365 * 10, '/', null, false, true);
 }

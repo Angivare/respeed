@@ -62,9 +62,6 @@ $topic_modifier = '';
 if (in_array($matches['label'][$i], ['marque-on', 'marque-off', 'ghost', 'lock'])) {
   $topic_modifier = 'topic--small';
 }
-if (looks_spammy($matches['title'][$i])) {
-  $topic_modifier = 'topic--small topic--extra-small';
-}
 $is_in_blacklist = is_in_blacklist($matches['pseudo'][$i]);
 if ($is_in_blacklist) {
   $topic_modifier = 'topic--blacklisted';
