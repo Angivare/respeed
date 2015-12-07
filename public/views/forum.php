@@ -81,7 +81,7 @@ if ($topic_page > 1) {
   $link .= '/' . min($topic_page, $last_page);
 }
 if ($message_id) {
-  $link .= "#{$message_id}";
+  $link .= "#after{$message_id}";
 }
 
 if ($message_id) {

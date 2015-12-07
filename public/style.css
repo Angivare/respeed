@@ -2073,6 +2073,17 @@ h1, h2, h3 {
   }
 }
 
+.message__end-anchor {
+  position: relative;
+  top: 5px;
+}
+
+@media (min-width: 600px) {
+  .message__end-anchor {
+    _top: 7px;
+  }
+}
+
 /* TOPIC - Motif de lock */
 
 .lock-alert {

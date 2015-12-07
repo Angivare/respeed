@@ -468,6 +468,7 @@ MESSAGE;
     </div>
   </div>
   <div class="message__ignored-notice">{$message['pseudo']} <span class="message__ignored-notice_compact">ignoré</span><span class="message__ignored-notice_regular">parle mais se fait ignorer</span>. <strong class="message__ignored-notice_show-message-button">Voir le message</strong></div>
+  <div class="message__end-anchor" id="after{$message['id']}"></div>
 </div>
 <script>liste_messages.push({$message['id']})</script>
 MESSAGE;
