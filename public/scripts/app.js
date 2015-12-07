@@ -494,35 +494,6 @@ function showErrors(errors) {
   $('.form .form__textarea').focus()
 }
 
-function handleProfileAvatar() {
-  var avatarElement = $('.js-profile-avatar')
-  if (!avatarElement.length) {
-    return
-  }
-
-  var avatar = new Image()
-  avatar.src = avatarElement.data('src')
-  $(avatar).load(function() {
-    avatarElement.prop('src', avatar.src)
-    avatarElement.addClass('profile-avatar--loaded')
-
-    var naturalHeight = Math.min($(document).width(), 600) / avatar.width * avatar.height
-      , maxAcceptableHeight = Math.min($(window).height() * .75, 600)
-    if (naturalHeight > maxAcceptableHeight) {
-      avatarElement.css('height', maxAcceptableHeight)
-      avatarElement.css('width', (maxAcceptableHeight * avatar.width / avatar.height) + 'px')
-    }
-    else if (avatar.height > avatar.width) {
-      if (naturalHeight > 600) {
-        avatarElement.css('width', (600 * avatar.width / avatar.height) + 'px')
-      }
-      else if (avatar.width > $(document).width()) {
-        avatarElement.css('width', $(document).width())
-      }
-    }
-  })
-}
-
 function showLoadedToast() {
   // http://stackoverflow.com/questions/10730362/get-cookie-by-name
   var parts = ("; " + document.cookie).split("; toast=")
@@ -807,7 +778,6 @@ instantClick.on('change', function(isInitialLoad) {
   handleRefreshOnPageChange(isInitialLoad)
   stopDraftWatcher()
   insertDraft()
-  handleProfileAvatar()
   handleBlacklist()
   makeFavoritesSlideable()
   showLoadedToast()

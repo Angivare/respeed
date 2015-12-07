@@ -44,7 +44,7 @@ $profile_card_modifier = isset($couverture) ? 'profile-card--transparent' : '';
 <?php endif ?>
 
 <?php if (isset($avatar)): ?>
-  <img class="js-profile-avatar profile-avatar" data-src="<?= $avatar ?>">
+  <img class="profile-avatar" src="<?= $avatar ?>">
 <?php endif ?>
 
 <?php if (isset($signature)): ?>
