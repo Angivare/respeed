@@ -911,13 +911,6 @@ h1, h2, h3 {
 
 .topic--visited {
   color: #757575;
-  font-size: 13px;
-}
-
-@media (min-width: 1025px) {
-  .topic--visited {
-    font-size: 14px;
-  }
 }
 
 .topic--small {
@@ -1037,6 +1030,16 @@ h1, h2, h3 {
 .topic__title {
   font-size: 14px;
   font-weight: bold;
+}
+
+.topic--visited .topic__title {
+  font-size: 13px;
+}
+
+@media (min-width: 1025px) {
+  .topic--visited .topic__title {
+    font-size: 14px;
+  }
 }
 
 .topic__infos {
