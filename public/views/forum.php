@@ -68,23 +68,27 @@ if ($is_in_blacklist) {
 }
 
 list($nb_answers, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);
-$topic_page = 1 + floor($nb_answers / 20);
+
+$go_to_page = 1 + floor($nb_answers / 20);
 
 $last_page = 1 + floor($matches['nb_reponses'][$i] / 20);
+
+if ($last_page - $go_to_page >= 2) {
+  // At least two new pages: jump to the end
+  $go_to_page = $last_page;
+}
 
 $link = "/{$forum}/";
 if ($matches['mode'][$i] == 1) {
   $link .= "0";
 }
 $link .= $matches['topic'][$i] . '-' . $matches['slug'][$i];
-if ($topic_page > 1) {
-  $link .= '/' . min($topic_page, $last_page);
+if ($go_to_page > 1) {
+  $link .= '/' . min($go_to_page, $last_page);
 }
 if ($message_id) {
   $link .= "#after{$message_id}";
-}
 
-if ($message_id) {
   if ($nb_answers < $matches['nb_reponses'][$i]) {
     $topic_modifier .= ' topic--new-messages';
   }
