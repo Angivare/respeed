@@ -589,6 +589,10 @@ var instantClick
 
   function on(eventType, callback) {
     $eventsCallbacks[eventType].push(callback)
+
+    if ($hasBeenInitialized && eventType == 'change') {
+      callback(true)
+    }
   }
 
   function timer() {
