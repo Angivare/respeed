@@ -911,16 +911,6 @@ h1, h2, h3 {
   color: #757575;
 }
 
-.topic--small {
-  font-size: 13px;
-}
-
-@media (min-width: 1025px) {
-  .topic--small {
-    font-size: 14px;
-  }
-}
-
 .topic:nth-child(even) {
   background: hsl(207, 90%, 98%);
 }
@@ -1028,12 +1018,14 @@ h1, h2, h3 {
   padding-right: 4px;
 }
 
-.topic--visited .topic__title {
+.topic--visited .topic__title,
+.topic--small .topic__title {
   font-size: 13px;
 }
 
 @media (min-width: 1025px) {
-  .topic--visited .topic__title {
+  .topic--visited .topic__title,
+  .topic--small .topic__title {
     font-size: 14px;
   }
 }
