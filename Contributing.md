@@ -2,7 +2,7 @@
 
 ## Proposer une amélioration
 
-Ça se passe sur le [topic officiel](http://jvforum.fr/1000021/39674315-appli-jvforum-topic-officiel). Précisez que vous pourriez la coder.
+Ça se passe sur le [topic officiel](http://jvforum.fr/1000021/39674315-appli-jvforum-topic-officiel), précisez que vous pourriez la coder si vous le souhaitez. Les demandes sont à faire sur le topic et non sur GitHub car je n’ai pas le temps de me justifier correctement sur chaque amélioration potentielle.
 
 ## Choses à faire
 
