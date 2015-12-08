@@ -8,6 +8,7 @@ var instantClick
     , $urlToPreload
     , $preloadTimer
     , $lastTouchTimestamp
+    , $hasBeenInitialized
 
   // Preloading-related variables
     , $history = {}
@@ -538,10 +539,11 @@ var instantClick
   */
 
   function init(preloadingMode) {
-    if ($currentLocationWithoutHash) {
-      /* Already initialized */
+    if ($hasBeenInitialized) {
       return
     }
+    $hasBeenInitialized = true
+
     if (!supported) {
       triggerPageEvent('change', true)
       return
