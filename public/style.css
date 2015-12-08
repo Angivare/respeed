@@ -1978,7 +1978,7 @@ h1, h2, h3 {
 }
 
 .long-link:after {
-  content: '…';
+  content: '[…]';
 }
 
 .long-link__hidden-part {
