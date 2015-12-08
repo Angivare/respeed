@@ -40,3 +40,4 @@ var $forum = <?= $forum ? $forum : 'false' ?>
 <script src="/scripts/loading-indicator-<?= REVISION_NUMBER_JS_LOADING_INDICATOR ?>.js" data-no-instant data-instant-track></script>
 <script src="/scripts/jvcode-<?= REVISION_NUMBER_JS_JVCODE ?>.js" data-no-instant data-instant-track></script>
 <script src="/scripts/app-<?= REVISION_NUMBER_JS_APP ?>.js" data-no-instant data-instant-track></script>
+<script src="/scripts/drafts-<?= REVISION_NUMBER_JS_DRAFTS ?>.js" data-no-instant data-instant-track></script>

@@ -19,8 +19,6 @@ var form_data
   , handleRefreshInterval
   , handleRefreshTimeout
   , topicRefreshTimeout
-  , draftWatcherInterval
-  , lastDraftSaved
   , toastTimer
   , topicPositionLastMessageId
 
@@ -210,85 +208,6 @@ function request_edit_form_data(e) {
 }
 
 /** /Request form data **/
-
-
-/** Draft **/
-
-function startDraftWatcher() {
-  draftWatcherInterval = setInterval(saveDraft, 500)
-  $('.form__textarea').blur(stopDraftWatcher)
-}
-
-function stopDraftWatcher() {
-  clearInterval(draftWatcherInterval)
-}
-
-function getDraftName() {
-  if ($topic) {
-    return 'draft_' + $topic
-  }
-  if ($forum) {
-    return 'draft_f' + $forum
-  }
-}
-
-function saveDraft() {
-  var val = $('.form__textarea').val()
-  if (val.trim()) {
-    localStorage.setItem(getDraftName(), val)
-  }
-  else {
-    localStorage.removeItem(getDraftName())
-  }
-  lastDraftSaved = getDraftName()
-}
-
-function clearDraft() {
-  localStorage.removeItem(getDraftName())
-}
-
-function insertDraft() {
-  var draftName = getDraftName()
-    , shouldDisplayImmediately = false
-
-  if (lastDraftSaved && lastDraftSaved == getDraftName()) {
-    shouldDisplayImmediately = true
-  }
-  else {
-    lastDraftSaved = false
-  }
-
-  if (!draftName) {
-    return
-  }
-
-  var draft = localStorage.getItem(draftName)
-  lastTopic = $topic
-  if (draft) {
-    if (!$('.form__draft').hasClass('form__draft--visible')) {
-      $('.form__textarea').on('input', hideDraftMention)
-    }
-
-    if (shouldDisplayImmediately) {
-      $('.form__textarea').val(draft)
-    }
-    else {
-      $('.form__draft').addClass('form__draft--visible')
-      $('.form__draft-recover').click(function() {
-        $('.form__draft').removeClass('form__draft--visible')
-        $('.form__textarea').focus()
-        $('.form__textarea').val(draft)
-      })
-    }
-  }
-}
-
-function hideDraftMention() {
-  $('.form__textarea').off('keypress', hideDraftMention)
-  $('.form__draft').removeClass('form__draft--visible')
-}
-
-/** /Draft **/
 
 
 /** Refresh **/
@@ -776,8 +695,6 @@ instantClick.on('change', function(isInitialLoad) {
 
   FastClick.attach(document.body)
   handleRefreshOnPageChange(isInitialLoad)
-  stopDraftWatcher()
-  insertDraft()
   handleBlacklist()
   makeFavoritesSlideable()
   showLoadedToast()
@@ -788,7 +705,6 @@ instantClick.on('change', function(isInitialLoad) {
   $('.js-form-topic, .js-form-post').submit(post)
   $('.js-form-topic .form__topic').focus(request_form_data)
   $('.js-form-post .form__textarea').focus(request_form_data)
-  $('.form__textarea').focus(startDraftWatcher)
   $('.mobile-menu__opener').click(toggleMobileMenu)
   $('.mobile-menu__item').click(toggleMobileMenu)
   $('.js-favorite-toggle').click(toggleFavorite)
