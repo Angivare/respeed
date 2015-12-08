@@ -168,8 +168,11 @@ function adapt_html($message, $date = '', $id = 0) {
     $url = $matches[2] . $matches[3] . $matches[4];
     if (strlen($url) > 100) {
       $url = substr($url, 0, 80) . '<span class="long-link__hidden-part">' . substr($url, 80) . '</span>';
+      $new_str = '<a class="long-link" ' . $matches[1] . '>' . $url . '</a>';
     }
-    $new_str = '<a class="long-link" ' . $matches[1] . '>' . $url . '</a>';
+    else {
+      $new_str = '<a ' . $matches[1] . '>' . $url . '</a>';
+    }
     return $new_str;
   }, $message);
 
