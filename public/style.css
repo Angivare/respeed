@@ -672,7 +672,7 @@ h1, h2, h3 {
 
 @media (MAX-width: 1024px) {
   .menu__item {
-    padding: 9px 10px;
+    padding: 12px 10px;
   }
 }
 
