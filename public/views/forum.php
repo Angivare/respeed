@@ -62,15 +62,6 @@ if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $pseudo_modifier = 'pseudo--' . $status;
 }
 
-$topic_modifier = '';
-if (in_array($matches['label'][$i], ['marque-on', 'marque-off', 'lock'])) {
-  $topic_modifier = 'topic--small';
-}
-$is_in_blacklist = is_in_blacklist($matches['pseudo'][$i]);
-if ($is_in_blacklist) {
-  $topic_modifier = 'topic--blacklisted';
-}
-
 list($nb_answers, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);
 
 $go_to_page = 1 + floor($nb_answers / 20);
@@ -88,6 +79,7 @@ if ($message_id) {
   }
 }
 
+$topic_modifier = '';
 $link = "/{$forum}/";
 if ($matches['mode'][$i] == 1) {
   $link .= "0";
@@ -114,7 +106,7 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
 ?>
       <a class="topic <?= $topic_modifier ?>" href="<?= $link ?>">
         <div class="topic__label topic__label--<?= $label ?>"></div>
-<?php if ($is_in_blacklist): ?>
+<?php if (is_in_blacklist($matches['pseudo'][$i])): ?>
         <div class="topic__blacklist">Topic ignoré de <?= $matches['pseudo'][$i] ?></div>
 <?php else: ?>
         <div class="topic__text-container">

@@ -952,20 +952,6 @@ h1, h2, h3 {
   }
 }
 
-.topic--visited .topic__label {
-  height: 40px;
-}
-
-@media (min-width: 1025px) {
-  .topic--visited .topic__label {
-    height: 28px;
-  }
-}
-
-.topic--blacklisted .topic__label {
-  height: 28px;
-}
-
 .topic__label--dossier1 {
   background-image: url('/images/topic-list-icons/dossier1.svg');
 }
@@ -1009,25 +995,9 @@ h1, h2, h3 {
   }
 }
 
-.topic--visited .topic__text-container {
-  padding: 1px 0;
-}
-
 .topic__title {
   font-weight: bold;
   padding-right: 4px;
-}
-
-.topic--visited .topic__title,
-.topic--small .topic__title {
-  font-size: 13px;
-}
-
-@media (min-width: 1025px) {
-  .topic--visited .topic__title,
-  .topic--small .topic__title {
-    font-size: 14px;
-  }
 }
 
 .topic__infos {
@@ -1035,10 +1005,6 @@ h1, h2, h3 {
   padding: 1px 0 2px;
   display: table;
   width: 100%;
-}
-
-.topic--visited .topic__infos {
-  padding: 0;
 }
 
 .topic__author {
