@@ -166,8 +166,8 @@ function adapt_html($message, $date = '', $id = 0) {
   // Rétrécir liens
   $message = preg_replace_callback('#<a ([^>]+)>([^>]+)<i></i><span>([^>]+)</span>([^>]+)</a>#Usi', function($matches) {
     $url = $matches[2] . $matches[3] . $matches[4];
-    if (strlen($url) > 100) {
-      $url = substr($url, 0, 80) . '<span class="long-link__hidden-part">' . substr($url, 80) . '</span>';
+    if (strlen($url) > 110) {
+      $url = substr($url, 0, 105) . '<span class="long-link__hidden-part">' . substr($url, 80) . '</span>';
       $new_str = '<a class="long-link" ' . $matches[1] . '>' . $url . '</a>';
     }
     else {
