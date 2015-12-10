@@ -1699,7 +1699,8 @@ h1, h2, h3 {
 }
 
 .message__content-edit-mention {
-  font-size: 12.8px;
+  font-size: 12px;
+  margin-top: -3px;
   color: rgba(0,0,0,.5);
 }
 
