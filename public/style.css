@@ -1730,7 +1730,11 @@ h1, h2, h3 {
 }
 
 .message__content-text > .quote {
-  background: rgba(33,150,243,.05);
+  background: rgba(33,150,243,.1);
+}
+
+.message--even .message__content-text > .quote {
+  background: rgba(33,150,243,.08);
 }
 
 .quote > p {
