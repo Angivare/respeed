@@ -665,7 +665,7 @@ h1, h2, h3 {
   font-weight: bold;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  padding: 12px 10px;
+  padding: 13px 10px;
 }
 
 @media (min-width: 1025px) {
