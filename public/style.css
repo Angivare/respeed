@@ -662,15 +662,15 @@ h1, h2, h3 {
 .menu__item {
   display: block;
   color: hsla(216,85%,17%,1);
-  padding: 3px 10px;
   font-weight: bold;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  padding: 12px 10px;
 }
 
-@media (MAX-width: 1024px) {
+@media (min-width: 1025px) {
   .menu__item {
-    padding: 12px 10px;
+    padding: 6px 10px;
   }
 }
 
