@@ -805,7 +805,8 @@ class Jvc {
 
           <p>{$message}</p>
 
-          <p><a href="{$_SERVER['REQUEST_URI']}" data-no-instant>Réessayer</a></p>
+          <p><a id="retry_url" href="{$_SERVER['REQUEST_URI']}" data-no-instant>Réessayer</a></p>
+          <script>document.getElementById('retry_url').href = location.href</script>
         </div>
       </div>
 HTML;
