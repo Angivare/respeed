@@ -798,18 +798,10 @@ class Jvc {
 
   private function fatal_err($title, $message, $http_status_code = 200) {
     http_response_code($http_status_code);
-    $body = <<<HTML
-      <div class="sheet">
-        <div class="timeout">
-          <h3>{$title}</h3>
-
-          <p>{$message}</p>
-
-          <p><a id="retry_url" href="{$_SERVER['REQUEST_URI']}" data-no-instant>Réessayer</a></p>
-          <script>document.getElementById('retry_url').href = location.href</script>
-        </div>
-      </div>
-HTML;
+    ob_start();
+    require 'views/timeout.php';
+    $body = ob_get_contents();
+    ob_end_clean();
     $jvc = new Jvc();
     $forum = $topic = $topicNew = $slug = $page = null;
     $token = [];

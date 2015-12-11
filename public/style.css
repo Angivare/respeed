@@ -569,14 +569,21 @@ h1, h2, h3 {
   }
 }
 
+/* TIMEOUT */
+
 .timeout {
   padding: 10px;
+  font-size: 16px;
 }
 
 @media (min-width: 1025px) {
   .timeout {
     padding: 30px;
   }
+}
+
+.timeout-title {
+  color: #B71C1C;
 }
 
 /* MENU */
