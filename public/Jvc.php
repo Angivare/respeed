@@ -806,6 +806,16 @@ class Jvc {
     $forum = $topic = $topicNew = $slug = $page = null;
     $token = [];
     $title = 'Erreur';
+    $db = new Db();
+    $blacklist_query = get_blacklist_from_db();
+    if ($blacklist_query) {
+      $blacklist = explode(',', $blacklist_query['blacklist']);
+      $blacklist_is_fresh = (bool)$blacklist_query['is_fresh'];
+    }
+    else {
+      $blacklist = [];
+      $blacklist_is_fresh = false;
+    }
     include 'views/layout.php';
     exit;
   }

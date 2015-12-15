@@ -20,15 +20,12 @@ foreach ($files as $file) {
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#1E88E5">
-<?php if (isset($blacklist)): ?>
 <style id="blacklist-style"><?= generate_blacklist_style($blacklist) ?></style>
-<?php endif ?>
 
 <?= $body ?>
 
 <div class="toast"><div class="toast__label"> </div></div>
 
-<?php if (isset($blacklist)): ?>
 <script>
 var $forum = <?= $forum ? $forum : 'false' ?>
   , $topic = <?= $topic ? ("'" . ($_GET['topic'][0] == '0' ? '0' : '') . $topic . "'") : 'false' ?>
@@ -43,7 +40,6 @@ var $forum = <?= $forum ? $forum : 'false' ?>
   , $blacklistNeedsUpdate = <?= !$blacklist_is_fresh ? 'true' : 'false' ?>
   , $freshness = <?= $db->get_favorites_freshness($jvc->user_id) ?>
 </script>
-<?php endif ?>
 
 <?php
 $files = scandir(dirname(__FILE__) . '/../scripts');
