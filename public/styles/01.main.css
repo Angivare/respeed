@@ -924,7 +924,7 @@ h1, h2, h3 {
 }
 
 .topic--new-messages {
-  color: #039BE5;
+  color: hsl(165, 82%, 41%);
 }
 
 .topic--visited {
