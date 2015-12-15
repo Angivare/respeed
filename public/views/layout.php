@@ -34,10 +34,15 @@ var $forum = <?= $forum ? $forum : 'false' ?>
 </script>
 <?php endif ?>
 
-<?php if (file_exists(dirname(__FILE__) . '/../scripts/compressed.js')): ?>
-<script src="/scripts/compressed-<?= filemtime(dirname(__FILE__) . '/../scripts/compressed.js') ?>.js" data-no-instant data-instant-track></script>
-<?php else: ?>
-<?php foreach (['jquery', 'fastclick', 'instantclick', 'loading-indicator', 'jvcode', 'app', 'drafts'] as $js_file): ?>
-<script src="/scripts/<?= $js_file ?>-<?= filemtime(dirname(__FILE__) . '/../scripts/' . $js_file . '.js') ?>.js" data-no-instant data-instant-track></script>
-<?php endforeach ?>
-<?php endif ?>
+<?php
+$files = scandir(dirname(__FILE__) . '/../scripts');
+foreach ($files as $file) {
+  if (substr($file, -3) != '.js') {
+    continue;
+  }
+  $file_id = substr($file, 0, -3);
+?>
+<script src="/scripts/<?= $file_id ?>.<?= filemtime(dirname(__FILE__) . '/../scripts/' . $file) ?>.js" data-no-instant data-instant-track></script>
+<?php
+}
+?>
