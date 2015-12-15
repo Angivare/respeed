@@ -31,4 +31,4 @@ RewriteRule ^profil/([0-9a-zA-Z-_[\]]{3,15})$ /index.php?profil=$1 [L]
 RewriteRule ^@([0-9a-zA-Z-_[\]]{3,15})$ /index.php?profil=$1 [L]
 
 RewriteRule ^scripts/(.+)\.([0-9]+)\.js$ /scripts/$1.js [L]
-RewriteRule ^style-([0-9]+)\.css$ /style.css [L]
+RewriteRule ^styles/(.+)\.([0-9]+)\.css$ /styles/$1.css [L]

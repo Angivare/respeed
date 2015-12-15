@@ -3,7 +3,18 @@
 <meta charset="utf-8">
 <title><?= $title ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="/style-<?= REVISION_NUMBER_STYLE ?>.css" data-instant-track>
+<?php
+$files = scandir(dirname(__FILE__) . '/../styles');
+foreach ($files as $file) {
+  if (substr($file, -4) != '.css') {
+    continue;
+  }
+  $file_id = substr($file, 0, -4);
+?>
+<link rel="stylesheet" href="/styles/<?= $file_id ?>.<?= filemtime(dirname(__FILE__) . '/../styles/' . $file) ?>.css" data-instant-track>
+<?php
+}
+?>
 <meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
