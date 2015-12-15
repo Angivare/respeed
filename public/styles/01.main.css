@@ -945,19 +945,7 @@ h1, h2, h3 {
   background-repeat: no-repeat;
   background-position: center;
   height: 44px;
-  width: 30px;
-}
-
-@media (min-width: 360px) {
-  .topic__label {
-    width: 32px;
-  }
-}
-
-@media (min-width: 400px) {
-  .topic__label {
-    width: 34px;
-  }
+  width: 34px;
 }
 
 @media (min-width: 600px) {
