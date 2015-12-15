@@ -192,7 +192,7 @@ function request_form_data() {
   })
 }
 
-function request_edit_form_data(e) {
+function request_edit_form_data() {
   if (edit_form_data) {
     return
   }
@@ -212,7 +212,7 @@ function request_edit_form_data(e) {
 
 /** Refresh **/
 
-function handleRefreshOnPageChange(isInitialLoad) {
+function handleRefreshOnPageChange() {
   clearTimeout(handleRefreshTimeout)
   clearInterval(handleRefreshInterval)
   clearTimeout(topicRefreshTimeout)
@@ -401,7 +401,7 @@ function adjustSliderWidth() {
   $('.js-slider').css('width', $('.menu.js-favorites-forums').width())
 }
 
-function showCaptcha(signature) {
+function showCaptcha() {
   $('.form__captcha-container')
   .html('<small>Un captcha est présent.</small>')
   .addClass('shown')
@@ -507,7 +507,7 @@ function post(e) {
   })
 }
 
-function postEdit(e) {
+function postEdit() {
   if (!edit_form_data) {
     $('#editmessage').focus()
     return
@@ -622,7 +622,6 @@ function toggleSpoil(event) {
 
 function toggleStickerSize() {
   var isAlreadyEnlarged = $(this).hasClass('sticker--enlarged')
-    , isBig = $(this).hasClass('sticker--big')
     , urlCode = $(this).prop('src').split('/').pop()
     , id = $(this).data('sticker-id')
     , isUnknown = $(this).hasClass('sticker--unknown')
