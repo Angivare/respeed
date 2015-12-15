@@ -571,19 +571,32 @@ h1, h2, h3 {
 
 /* TIMEOUT */
 
-.timeout {
+.content--timeout {
   padding: 15px;
   font-size: 16px;
 }
 
 @media (min-width: 1025px) {
-  .timeout {
+  .content--timeout {
     padding: 30px;
   }
 }
 
-.timeout-title {
-  color: #B71C1C;
+.page-title--timeout {
+  margin: 0;
+  font-size: 21px;
+}
+
+@media (min-width: 400px) {
+  .page-title--timeout {
+    font-size: 23px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .page-title--timeout {
+    font-size: 25px;
+  }
 }
 
 /* MENU */
