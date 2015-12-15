@@ -1,2 +1,4 @@
 config.php
-page-samples
+page-samples/
+public/scripts/compressed.js
+public/scripts/compressed.map

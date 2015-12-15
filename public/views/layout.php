@@ -34,10 +34,10 @@ var $forum = <?= $forum ? $forum : 'false' ?>
 </script>
 <?php endif ?>
 
-<script src="/scripts/jquery-<?= REVISION_NUMBER_JS_JQUERY ?>.js" data-no-instant data-instant-track></script>
-<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" data-no-instant data-instant-track></script>
-<script src="/scripts/instantclick-<?= REVISION_NUMBER_JS_INSTANTCLICK ?>.js" data-no-instant data-instant-track></script>
-<script src="/scripts/loading-indicator-<?= REVISION_NUMBER_JS_LOADING_INDICATOR ?>.js" data-no-instant data-instant-track></script>
-<script src="/scripts/jvcode-<?= REVISION_NUMBER_JS_JVCODE ?>.js" data-no-instant data-instant-track></script>
-<script src="/scripts/app-<?= REVISION_NUMBER_JS_APP ?>.js" data-no-instant data-instant-track></script>
-<script src="/scripts/drafts-<?= REVISION_NUMBER_JS_DRAFTS ?>.js" data-no-instant data-instant-track></script>
+<?php if (file_exists(dirname(__FILE__) . '/../scripts/compressed.js')): ?>
+<script src="/scripts/compressed-<?= filemtime(dirname(__FILE__) . '/../scripts/compressed.js') ?>.js" data-no-instant data-instant-track></script>
+<?php else: ?>
+<?php foreach (['jquery', 'fastclick', 'instantclick', 'loading-indicator', 'jvcode', 'app', 'drafts'] as $js_file): ?>
+<script src="/scripts/<?= $js_file ?>-<?= filemtime(dirname(__FILE__) . '/../scripts/' . $js_file . '.js') ?>.js" data-no-instant data-instant-track></script>
+<?php endforeach ?>
+<?php endif ?>
