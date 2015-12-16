@@ -923,8 +923,20 @@ h1, h2, h3 {
   color: #1976D2;
 }
 
-.topic--new-messages {
-  color: hsl(175, 82%, 36%);
+.topic__new-messages-indicator {
+  background: #64FFDA;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 99px;
+  margin-right: 1px;
+}
+
+@media (min-width: 1025px) {
+  .topic__new-messages-indicator {
+    width: 9px;
+    height: 9px;
+  }
 }
 
 .topic--visited {

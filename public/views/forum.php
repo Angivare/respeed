@@ -79,6 +79,8 @@ if ($message_id) {
   }
 }
 
+$new_messages = false;
+
 $topic_modifier = '';
 $link = "/{$forum}/";
 if ($matches['mode'][$i] == 1) {
@@ -92,7 +94,7 @@ if ($message_id) {
   $link .= "#after{$message_id}";
 
   if ($nb_answers < $matches['nb_reponses'][$i]) {
-    $topic_modifier .= ' topic--new-messages';
+    $new_messages = true;
   }
   else {
     $topic_modifier .= ' topic--visited';
@@ -110,7 +112,10 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
         <div class="topic__blacklist">Topic ignoré de <?= $matches['pseudo'][$i] ?></div>
 <?php else: ?>
         <div class="topic__text-container">
-          <div class="topic__title"><?= $matches['title'][$i] ?></div>
+          <div class="topic__title">
+            <?= $new_messages ? '<span class="topic__new-messages-indicator"></span>' : '' ?>
+            <?= $matches['title'][$i] ?>
+          </div>
           <div class="topic__infos">
             <div class="topic__author <?= $pseudo_modifier ?>"><?= $matches['pseudo'][$i] ?></div>
             <div class="topic__date-and-nb-answers-container">
@@ -119,7 +124,10 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
             </div>
           </div>
         </div>
-        <div class="topic__title topic__title--desktop"><?= $matches['title'][$i] ?></div>
+        <div class="topic__title topic__title--desktop">
+          <?= $new_messages ? '<span class="topic__new-messages-indicator"></span>' : '' ?>
+          <?= $matches['title'][$i] ?>
+        </div>
         <div class="topic__author <?= $pseudo_modifier ?> topic__author--desktop"><?= $matches['pseudo'][$i] ?></div>
         <div class="topic__nb-answers topic__nb-answers--desktop"><?= number_format($matches['nb_reponses'][$i], 0, ',', ' ') ?></div>
         <div class="topic__date topic__date--desktop"><?= relative_date_topic_list($matches['date'][$i]) ?></div>
