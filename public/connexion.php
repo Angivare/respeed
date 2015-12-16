@@ -36,7 +36,7 @@ if (isset($nick, $pass, $ccode, $hash, $ts, $rand)) {
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <meta name="theme-color" content="#4FC3F7">
 
-<style><?= file_get_contents('style_notconnected.css') ?></style>
+<style><?= file_get_contents('styles/special/not-connected.css') ?></style>
 
 <body class="body--connexion">
 

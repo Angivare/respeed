@@ -16,7 +16,7 @@ if ($jvc->is_connected()) {
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <meta name="theme-color" content="#4FC3F7">
 
-<style><?= file_get_contents('style_notconnected.css') ?></style>
+<style><?= file_get_contents('styles/special/not-connected.css') ?></style>
 
 <article class="article">
   <h1 class="article__headline">Pas satisfait de Respawn ?</h1>
@@ -29,7 +29,7 @@ if ($jvc->is_connected()) {
 
   <div class="mobile-twist">
     <h2 class="article__subheadline"><span class="article__subheadline-number">1</span> Version mobile complète</h2>
-    
+
     <figure class="article__image article__image--options-mobile"></figure>
 
     <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Messages en temps réel</h2>
@@ -43,7 +43,7 @@ if ($jvc->is_connected()) {
     <p>Plus besoin de rafraîchir.</p>
 
     <h2 class="article__subheadline"><span class="article__subheadline-number">2</span> Version mobile complète</h2>
-    
+
     <figure class="article__image article__image--options-mobile"></figure>
   </div>
 
@@ -58,11 +58,11 @@ if ($jvc->is_connected()) {
   <h2 class="article__subheadline article__subheadline--gnap_gnap">L’avis de Gnap_Gnap :</h2>
 
   <iframe class="gnap_gnap-youtube" width="420" height="315" src="https://www.youtube.com/embed/U0QA6OMEP1c?rel=0&amp;showinfo=0&amp;cc_load_policy=1" frameborder="0" allowfullscreen></iframe>
-  
+
   <p class="article__nb-messages">Plus de <span class="number number--important">500 000</span> messages déjà postés</p>
 
   <a class="article__cta" id="cta" href="/connexion">Démarrez l’expérience JVForum</a>
-  
+
   <div class="legalese">JVForum n’est pas affilié à <a class="legalese__link" href="http://www.jeuxvideo.com/">jeuxvideo.com</a>.</div>
 </article>
 
