@@ -19,15 +19,6 @@
   word-spacing: -1px;
 }
 
-.pseudo--modo {
-  color: #00c853;
-}
-
-.pseudo--admin,
-.pseudo--staff {
-  color: #D50000;
-}
-
 .back-button-container {
   text-align: center;
   margin: 30px 0 50px;

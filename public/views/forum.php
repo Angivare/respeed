@@ -59,7 +59,7 @@ $pseudo_modifier = '';
 if ($pos = strpos($matches['pseudo_span'][$i], ' text-')) {
   $start = substr($matches['pseudo_span'][$i], $pos + 6);
   $status = substr($start, 0, strpos($start, '"'));
-  $pseudo_modifier = 'pseudo--' . $status;
+  $pseudo_modifier = 'topic__author--' . $status;
 }
 
 list($nb_answers, $message_id) = $db->get_topic_position($jvc->user_id, $matches['id'][$i]);

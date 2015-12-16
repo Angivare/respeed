@@ -217,6 +217,15 @@
   }
 }
 
+.message__byline-author-pseudo--modo {
+  color: #00c853;
+}
+
+.message__byline-author-pseudo--admin,
+.message__byline-author-pseudo--staff {
+  color: #D50000;
+}
+
 /* Actions */
 
 .message__byline-date {

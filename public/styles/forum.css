@@ -187,6 +187,15 @@
   display: table-cell;
 }
 
+.topic__author--modo {
+  color: #00c853;
+}
+
+.topic__author--admin,
+.topic__author--staff {
+  color: #D50000;
+}
+
 .topic__date-and-nb-answers-container {
   display: table-cell;
   text-align: right;
