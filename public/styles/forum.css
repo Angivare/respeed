@@ -1,0 +1,239 @@
+/* Pagination */
+
+.pagination-forum {
+  position: relative;
+  margin: 10px;
+}
+
+@media (min-width: 1025px) {
+  .pagination-forum {
+    margin: 10px 0;
+  }
+}
+
+.pagination-forum .precedent {
+  text-align: left;
+  position: absolute;
+}
+
+.pagination-forum .precedent a.debut {
+  display: inline-block;
+  padding-left: 16px;
+  background: url(/images/page_debut.svg) -6px no-repeat;
+  margin-right: 20px;
+}
+
+.pagination-forum .precedent a.precedent-lien {
+  display: inline-block;
+  padding-left: 16px;
+  background: url(/images/page_prec.svg) -8px no-repeat;
+}
+
+.pagination-forum .page {
+  text-align: center;
+  width: 100%;
+}
+
+.pagination-forum .page.hidden {
+  visibility: hidden;
+}
+
+.pagination-forum .page span {
+  background: #f60;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 3px 5px;
+}
+
+.pagination-forum .suivant {
+  text-align: right;
+  position: absolute;
+  right: 0;
+}
+
+.pagination-forum .suivant a {
+  display: inline-block;
+  padding-right: 16px;
+  background: url(/images/page_suiv.svg) right -8px center no-repeat;
+}
+
+/* Topic list */
+
+.liste-topics {
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  background: white;
+  display: table;
+  width: 100%;
+  margin: 10px 0;
+}
+
+@media (min-width: 1025px) {
+  .liste-topics {
+    border-radius: 2px;
+  }
+}
+
+.topic {
+  display: table-row;
+  color: #1976D2;
+}
+
+.topic__new-messages-indicator {
+  background: #64FFDA;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 99px;
+  margin-right: 1px;
+}
+
+@media (min-width: 1025px) {
+  .topic__new-messages-indicator {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+.topic--visited {
+  color: #757575;
+}
+
+.topic:nth-child(even) {
+  background: hsl(207, 90%, 98%);
+}
+
+.topic:hover {
+  background: #E3F2FD;
+}
+
+.topic__label {
+  display: table-cell;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 44px;
+  width: 34px;
+}
+
+@media (min-width: 600px) {
+  .topic__label {
+    width: 38px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .topic__label {
+    height: 32px;
+  }
+}
+
+.topic__label--dossier1 {
+  background-image: url('/images/topic-list-icons/dossier1.2.svg');
+}
+.topic__label--dossier2 {
+  background-image: url('/images/topic-list-icons/dossier2.2.svg');
+}
+.topic__label--lock {
+  background-image: url('/images/topic-list-icons/lock.2.svg');
+}
+.topic__label--marque-on {
+  background-image: url('/images/topic-list-icons/marque-on.2.svg');
+}
+.topic__label--marque-off {
+  background-image: url('/images/topic-list-icons/marque-off.2.svg');
+}
+.topic__label--resolu {
+  background-image: url('/images/topic-list-icons/resolu.2.svg');
+}
+.topic__label--favorite {
+  background-image: url('/images/topic-list-icons/favorite.svg');
+}
+
+.topic__blacklist {
+  display: table-cell;
+  vertical-align: middle;
+  font-style: italic;
+  color: #757575;
+}
+
+.topic__text-container {
+  display: table-cell;
+  word-break: break-all;
+  word-break: break-word;
+  padding: 3px 0;
+  vertical-align: middle;
+}
+
+@media (min-width: 1025px) {
+  .topic__text-container {
+    display: none;
+  }
+}
+
+.topic__title {
+  font-weight: bold;
+  padding-right: 4px;
+}
+
+.topic__infos {
+  font-size: 11px;
+  padding: 1px 0 2px;
+  display: table;
+  width: 100%;
+}
+
+.topic__author {
+  display: table-cell;
+}
+
+.topic__date-and-nb-answers-container {
+  display: table-cell;
+  text-align: right;
+  padding-right: 8px;
+}
+
+.topic__date {
+  display: inline-block;
+  font-weight: bold;
+}
+
+.topic__nb-answers {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.topic__title--desktop,
+.topic__author--desktop,
+.topic__nb-answers--desktop,
+.topic__date--desktop {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .topic__title--desktop {
+    display: table-cell;
+    vertical-align: middle;
+    width: 60%;
+    word-break: break-all;
+    word-break: break-word;
+    font-size: 15px;
+    padding-right: 0;
+  }
+
+  .topic__author--desktop, .topic__nb-answers--desktop, .topic__date--desktop {
+    display: table-cell;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .topic__nb-answers {
+    margin-right: 0;
+  }
+
+  .topic__date {
+    text-align: center;
+    font-weight: normal;
+  }
+}

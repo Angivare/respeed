@@ -1,0 +1,13 @@
+.homepage-links {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.logout-container {
+  margin: 20px 0 10px;
+  text-align: center;
+}
+
+.logout-container a {
+  color: #E53935;
+}

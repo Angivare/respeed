@@ -1,0 +1,18 @@
+.rechercheforum {
+  padding: 10px;
+}
+
+@media (min-width: 1025px) {
+  .rechercheforum {
+    padding: 30px;
+  }
+}
+
+.rechercheforum-q {
+  width: calc(100% - 50px);
+  vertical-align: middle;
+}
+
+.rechercheforum-form-accueil {
+  margin: 20px 0;
+}

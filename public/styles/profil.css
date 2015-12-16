@@ -1,0 +1,68 @@
+.profile-avatar {
+  display: block;
+  max-height: 600px;
+  max-width: 100%;
+  margin: 10px auto 12px;
+  background: #bdbdbd;
+  background-image: -webkit-radial-gradient(#e0e0e0, #bdbdbd);
+  background-image:         radial-gradient(#e0e0e0, #bdbdbd);
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+}
+
+@media (min-width: 640px) {
+  .profile-avatar {
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  }
+}
+
+.profile-ban-mention {
+  color: #D32F2F;
+  font-weight: bold;
+  text-align: center;
+  margin: 40px auto;
+  font-size: 32px;
+}
+
+@media (min-width: 400px) {
+  .profile-ban-mention {
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 640px) {
+  .profile-card {
+    max-width: 600px;
+    margin: 15px auto;
+  }
+}
+
+.profile-card--transparent {
+  background: rgba(255,255,255,.7);
+  color: black;
+}
+
+.profile-card--text {
+  padding-bottom: 1px;
+}
+
+.profile-card__number {
+  word-spacing: -.05em;
+}
+
+.profile-card__messages, .profile-card__days, .profile-card__ratio {
+  text-align: center;
+}
+
+.profile-card__messages {
+  font-size: 28px;
+  margin: 5px 0;
+}
+
+.profile-card__days {
+  font-size: 18px;
+  margin: 9px 0;
+}
+
+.profile-card__ratio {
+  margin: 12px 0;
+}

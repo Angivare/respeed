@@ -1,0 +1,166 @@
+/* Pagination */
+
+.pagination-topic {
+  display: table;
+  margin: 1em 10px;
+  width: 100%;
+  width: -webkit-calc(100% - 20px);
+  width:         calc(100% - 20px);
+}
+
+@media (min-width: 1025px) {
+  .pagination-topic {
+    margin: 1em 0;
+    width: 100%;
+  }
+}
+
+.pagination-topic--top {
+  margin-top: 10px;
+}
+
+.pagination-topic__action-button {
+  display: table-cell;
+  width: 1px; /* Pour que la case reste aussi petite que possible et que celle d’a côté ai l’air plus ou moins centrée sur tablette/desktop */
+}
+
+@media (MAX-width: 1024px) {
+  .pagination-topic__action-button-additional-text {
+    display: none;
+  }
+
+  .pagination-topic__action-button--post {
+    display: none;
+  }
+}
+
+.pagination-topic__pages {
+  display: table-cell;
+  text-align: center;
+  cursor: default;
+}
+
+.pagination-topic__page {
+  display: inline-block;
+  min-width: 34px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 15.2px;
+  border-radius: 9em;
+}
+
+@media (min-width: 560px) {
+  .pagination-topic__page {
+    min-width: 44px;
+    height: 44px;
+    line-height: 44px;
+  }
+}
+
+.pagination-topic__page + .pagination-topic__page {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  padding-left: 2px;
+}
+
+.pagination-topic__page-link {
+  display: block;
+  border-radius: 9em;
+  margin: -5px;
+  padding: 5px 7px;
+  position: relative;
+}
+
+.pagination-topic__page-link:hover {
+  background: rgba(255,87,34,.1); /* 500 */
+}
+
+.pagination-topic__page-link--active {
+  background: #ff5722;
+  color: white;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 2px;
+}
+
+.pagination-topic__page-link--active:hover {
+  background: #ff5722;
+}
+
+.pagination-topic--top .pagination-topic__page-link--last,
+.pagination-topic--bottom .pagination-topic__page-link--next {
+  font-weight: bold;
+  font-size: 19px;
+}
+
+/* Lock notice */
+
+.lock-alert {
+  border: 0 solid #4e342e;
+  margin-top: 1em;
+}
+
+@media (min-width: 1025px) {
+  .lock-alert {
+    border-width: 1px;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  }
+}
+
+.lock-alert__title {
+  padding: 8px 10px;
+  padding-left: 35px;
+  background-color: #4e342e;
+  background-image: url(/images/lock_18px.svg);
+  background-repeat: no-repeat;
+  background-position: center left 10px;
+  color: #d7ccc8;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.lock-alert__cause {
+  padding: 1em 10px;
+  background: #efebe9;
+  color: #3e2723;
+}
+
+/* Floating post button */
+
+.fab-post {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  font-size: 14.4px;
+  letter-spacing: .5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  color: white;
+  cursor: pointer;
+}
+
+.fab-post__inner {
+  background: hsl(198, 100%, 80%); /* Light Blue A100 is 75%, too eye-catching */
+  text-shadow: 0 0 2px #80D8FF;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+  padding: 5px 10px;
+  -webkit-transition: all .1s ease-out;
+          transition: all .1s ease-out;
+}
+
+.fab-post:hover .fab-post__inner {
+  background: hsl(198, 100%, 87.5%); /* 75% by default */
+  text-shadow: 0 0 2px hsl(198, 100%, 80%);
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,.15)
+}
+
+@media (min-width: 1025px) {
+  .fab-post {
+    display: none;
+  }
+}

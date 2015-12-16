@@ -1,0 +1,39 @@
+html {
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+body {
+  font: 14px/1.4 -apple-system, sans-serif;
+  margin: 0;
+  overflow-y: scroll;
+  color: #333;
+  -webkit-text-size-adjust: 100%;
+  background: #ECEFF1;
+  height: 100%;
+}
+
+.body--no-bottom {
+  padding-bottom: 0;
+}
+
+@media (min-width: 1025px) {
+  body {
+    background: #444349;
+  }
+}
+
+a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}

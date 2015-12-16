@@ -1,0 +1,259 @@
+/* HEADER */
+
+.header {
+  display: table;
+  width: 100%;
+  margin-top: -5px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #90CAF9;
+  box-shadow: inset 0 -2px 3px rgba(0,0,0,.1);
+}
+
+@media (min-width: 1025px) {
+  .header {
+    margin-top: -10px;
+    margin-left: -30px;
+    width: 110%;
+  }
+}
+
+.header__home-cell {
+  display: table-cell;
+  width: 1px;
+}
+
+.header__home-link {
+  color: hsla(216,85%,30%,1);
+  padding: 10px 20px;
+  display: inline-block;
+}
+
+.header__home-link--accompanied {
+  box-shadow: inset -2px 0 3px rgba(0,0,0,.05);
+}
+
+.header__forum-cell {
+  display: table-cell;
+  text-transform: none;
+  background: #BBDEFB;
+  box-shadow: inset 0 -2px 3px rgba(0,0,0,0.08), inset 1px 0 1px rgba(255,255,255,.2);
+  white-space: nowrap;
+}
+
+.header__forum-link {
+  color: #1565C0;
+  padding: 10px 20px;
+  display: inline-block;
+}
+
+@media (MAX-width: 399px) {
+  .header__home-link--accompanied,
+  .header__forum-link {
+    padding: 10px 10px;
+  }
+}
+
+/* SHEET */
+
+.sheet {
+  background: #ECEFF1;
+  padding: 5px 0 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.body--no-bottom .sheet {
+  padding-bottom: 0;
+}
+
+.sheet--nothing-over {
+  border-width: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 1025px) {
+  .sheet {
+    margin: auto;
+    max-width: 1400px;
+    box-shadow: 0 0 100px rgba(0,0,0,.5);
+    padding: 10px 30px;
+    min-height: 100%;
+  }
+
+  .body--no-bottom .sheet {
+    padding-bottom: 10px;
+  }
+
+  .sheet--nothing-over {
+    border-width: 0;
+    padding-top: 0;
+    margin-top: 15px;
+  }
+}
+
+.sheet-title {
+  padding: 0 10px;
+  margin: 5px 0 10px;
+  word-wrap: break-word;
+}
+
+@media (min-width: 1025px) {
+  .sheet-title {
+    padding: 0;
+    margin: 5px -10px 10px;
+  }
+}
+
+.sheet-title a {
+  color: #333;
+}
+
+@media (min-width: 1025px) {
+  .sheet-title a {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .sheet > .content {
+    width: calc(80% - 15px);
+    margin-right: 15px;
+    float: left;
+  }
+
+  .sheet > .content.no-menu {
+    width: initial;
+    margin-right: initial;
+    float: initial;
+  }
+
+  .sheet > .content.login-fake-table {
+    display: table;
+    width: 100%;
+  }
+}
+
+/* TITLE */
+
+.page-title {
+  font-size: 21px;
+  margin: 10px 8px 0;
+  text-shadow: 0 1px 0 white;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.page-title--larger {
+  font-size: 24px;
+}
+
+@media (min-width: 400px) {
+  .page-title {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 24px;
+  }
+
+  .page-title--larger {
+    font-size: 27px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .page-title {
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 29px;
+  }
+
+  .page-title--larger {
+    font-size: 32px;
+  }
+}
+
+.page-title__link {
+  display: inline-block;
+  padding: 10px;
+  margin: -10px;
+  color: #455A64;
+}
+
+.page-title--topic {
+  color: #455A64;
+}
+
+/* ASIDE */
+
+.aside {
+  display: none;
+}
+
+@media (min-width: 1025px) {
+  .aside {
+    display: block;
+    width: 20%;
+    float: left;
+    margin: 10px 0;
+  }
+}
+
+.aside__moderation-actions {
+  text-align: right;
+  margin: 10px 0;
+}
+
+.aside__top-buttons {
+  display: table;
+  margin: 0 0 12px 15px;
+  width: 100%;
+  width: -webkit-calc(100% - 15px);
+  width:         calc(100% - 15px);
+}
+
+.aside__top-button {
+  display: table-cell;
+  background: top no-repeat;
+  width: 100px;
+  height: 42px;
+  cursor: pointer;
+  position: relative;
+}
+
+.aside__top-button--open-jeuxvideocom {
+  background-image: url(/images/open-jeuxvideocom.svg);
+}
+
+.aside__top-button--favorite {
+  background-image: url(/images/add-to-favorites.svg);
+}
+
+.aside__top-button--unfavorite {
+  background-image: url(/images/remove-from-favorites.svg);
+}
+
+.aside__top-button-label {
+  display: block;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #424242;
+}
+
+.aside__menu {
+  margin: 0 0 15px 15px;
+}
+
+.slider.sliding {
+  position: fixed;
+  top: 15px;
+  max-height: 90%;
+  max-height: -webkit-calc(100% - 30px);
+  max-height:         calc(100% - 30px);
+  overflow-y: auto;
+}
