@@ -973,22 +973,22 @@ h1, h2, h3 {
 }
 
 .topic__label--dossier1 {
-  background-image: url('/images/topic-list-icons/dossier1.svg');
+  background-image: url('/images/topic-list-icons/dossier1.2.svg');
 }
 .topic__label--dossier2 {
-  background-image: url('/images/topic-list-icons/dossier2.svg');
+  background-image: url('/images/topic-list-icons/dossier2.2.svg');
 }
 .topic__label--lock {
-  background-image: url('/images/topic-list-icons/lock.svg');
+  background-image: url('/images/topic-list-icons/lock.2.svg');
 }
 .topic__label--marque-on {
-  background-image: url('/images/topic-list-icons/marque-on.svg');
+  background-image: url('/images/topic-list-icons/marque-on.2.svg');
 }
 .topic__label--marque-off {
-  background-image: url('/images/topic-list-icons/marque-off.svg');
+  background-image: url('/images/topic-list-icons/marque-off.2.svg');
 }
 .topic__label--resolu {
-  background-image: url('/images/topic-list-icons/resolu.svg');
+  background-image: url('/images/topic-list-icons/resolu.2.svg');
 }
 .topic__label--favorite {
   background-image: url('/images/topic-list-icons/favorite.svg');
