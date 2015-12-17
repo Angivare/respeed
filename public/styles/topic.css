@@ -72,19 +72,19 @@
 }
 
 .pagination-topic__page-link:hover {
-  background: hsla(194, 100%, 43%, .1);
+  background: hsla(166, 100%, 40%, .1);
 }
 
 .pagination-topic__page-link--active {
-  background: hsl(0, 0%, 67%);
-  color: hsl(0, 0%, 7%);
+  background: hsla(166, 100%, 40%, .2);
+  color: hsla(0, 0%, 100%, .73);
   font-weight: bold;
   margin: 0;
   padding: 0 2px;
 }
 
 .pagination-topic__page-link--active:hover {
-  background: hsl(0, 0%, 67%);
+  background: hsla(166, 100%, 40%, .2);
 }
 
 .pagination-topic--top .pagination-topic__page-link--last,

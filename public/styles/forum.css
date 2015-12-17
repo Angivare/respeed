@@ -79,7 +79,7 @@
 
 .topic__new-messages-indicator {
   background: hsl(190, 80%, 58%);
-  box-shadow: 0 0 3px 1px hsla(0, 100%, 100%, .5);
+  box-shadow: 0 0 3px 1px hsla(0, 100%, 100%, .25);
   display: inline-block;
   width: 7px;
   height: 7px;

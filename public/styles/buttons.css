@@ -45,7 +45,7 @@
 
 .button--cta {
   background: hsl(255, 100%, 60%);
-  color: white;
+  color: hsla(0, 100%, 100%, .73);
 }
 
 .button--cta:hover {
