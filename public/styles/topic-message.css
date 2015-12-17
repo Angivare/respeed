@@ -257,7 +257,7 @@
   cursor: pointer;
   padding: 10px;
   padding-right: 20px;
-  background: url(/images/more_vert.svg) no-repeat right 3px center;
+  background: url(/images/more_vert.2.svg) no-repeat right 3px center;
   color: hsl(166, 100%, 70%);
   font-size: 13px;
   vertical-align: top;
@@ -397,15 +397,15 @@
 }
 
 .message__actions-action--quote {
-  background-image: url(/images/quote-24px.svg);
+  background-image: url(/images/quote-24px.2.svg);
 }
 
 .message__actions-action--delete {
-  background-image: url(/images/delete-24px.svg);
+  background-image: url(/images/delete-24px.2.svg);
 }
 
 .message__actions-action--edit {
-  background-image: url(/images/edit-24px.svg);
+  background-image: url(/images/edit-24px.2.svg);
 }
 
 .message__actions-action--kick {
@@ -445,15 +445,15 @@
 }
 
 .message__quick-action--quote {
-  background: url(/images/quote.svg) center no-repeat;
+  background: url(/images/quote.2.svg) center no-repeat;
 }
 
 .message__quick-action--edit {
-  background: url(/images/edit.svg) center no-repeat;
+  background: url(/images/edit.2.svg) center no-repeat;
 }
 
 .message__quick-action--delete {
-  background: url(/images/delete.svg) center no-repeat;
+  background: url(/images/delete.2.svg) center no-repeat;
 }
 
 .message__quick-action--kick {
