@@ -13,9 +13,9 @@ body {
   font: 14px/1.4 -apple-system, sans-serif;
   margin: 0;
   overflow-y: scroll;
-  color: #333;
+  color: hsl(0, 0%, 87%);
   -webkit-text-size-adjust: 100%;
-  background: #ECEFF1;
+  background: black;
   height: 100%;
 }
 
@@ -25,12 +25,12 @@ body {
 
 @media (min-width: 1025px) {
   body {
-    background: #444349;
+    background: hsl(250,4%,10%);
   }
 }
 
 a {
-  color: #1976d2;
+  color: hsl(166, 100%, 70%);
   text-decoration: none;
 }
 

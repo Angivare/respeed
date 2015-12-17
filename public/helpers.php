@@ -434,11 +434,8 @@ function generate_message_markup($message, $is_mod_active) {
   if ($is_mod_active && !$mine && !$pseudoDeleted) {
     $actions[] = ['kick', 'Kicker', 'Kicker', '/kick/' . $message['pseudo'] . '?message_id=' . $message['id']];
   }
-  if ($mine) {
+  if ($mine || $is_mod_active) {
     $actions[] = ['delete', 'Supprimer', 'Suppr.'];
-  }
-  elseif ($is_mod_active) {
-    $actions[] = ['delete-red', 'Supprimer', 'Suppr.'];
   }
   if ($mine) {
     $actions[] = ['edit', 'Modifier'];

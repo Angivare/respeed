@@ -296,7 +296,7 @@ function topicRefresh() {
 
         $('#' + message.id + ' .js-quote').click(quote)
         $('#' + message.id + ' .js-edit').click(edit)
-        $('#' + message.id + ' .js-delete, #' + message.id + ' .js-delete-red').click(deleteMessage)
+        $('#' + message.id + ' .js-delete').click(deleteMessage)
         $('#' + message.id + ' .js-menu').click(toggleMenu)
         $('#' + message.id + ' .message__ignored-notice_show-message-button').click(showBlacklistedMessage)
         $('#' + message.id).click(closeMenu)
@@ -711,7 +711,7 @@ instantClick.on('change', function(isInitialLoad) {
   // Messages
   $('.js-quote').click(quote)
   $('.js-edit').click(edit)
-  $('.js-delete, .js-delete-red').click(deleteMessage)
+  $('.js-delete').click(deleteMessage)
   $('.js-menu').click(toggleMenu)
   $('.message').click(closeMenu)
   $('.spoil').click(toggleSpoil)

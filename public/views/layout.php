@@ -19,7 +19,7 @@ foreach ($files as $file) {
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/appicon.png">
 <meta name="format-detection" content="telephone=no">
-<meta name="theme-color" content="#1E88E5">
+<meta name="theme-color" content="hsl(0, 0%, 0%)">
 <style id="blacklist-style"><?= generate_blacklist_style($blacklist) ?></style>
 
 <?= $body ?>

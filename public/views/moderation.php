@@ -48,7 +48,7 @@ if (!isset($referer)) {
       <input type="hidden" name="referer" value="<?= $referer ?>">
 
       <div class="form__block">
-        <input class="button button--raised button--large button--scale" type="submit" value="Modérer" tabindex="2">
+        <input class="button button--raised button--large button--scale button--lighter" type="submit" value="Modérer" tabindex="2">
       </div>
     </form>
 

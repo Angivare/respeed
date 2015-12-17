@@ -1,9 +1,8 @@
 .menu {
   margin: 15px 10px;
-  background: #BBDEFB;
+  background: hsl(214, 27%, 40%);
   padding: 2px 0;
   border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.25);
 }
 
 @media (min-width: 1025px) {
@@ -14,7 +13,7 @@
 
 .menu__item {
   display: block;
-  color: hsla(216,85%,17%,1);
+  color: hsl(214, 27%, 5%);
   font-weight: bold;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -28,23 +27,22 @@
 }
 
 .menu__item + .menu__item {
-  border-top: 1px solid #90CAF9;
+  border-top: 1px solid hsl(214, 27%, 33%);
 }
 
 .menu__item:hover {
-  color: hsla(216,85%,8%,1);
-  background: #90CAF9;
+  background: hsl(214, 37%, 55%);
 }
 
 .menu__item--blank-state {
   text-align: center;
   font-weight: normal;
   font-size: 11px;
-  color: #1976D2;
+  color: hsl(166, 100%, 70%);
   cursor: default;
 }
 
 .menu__item--blank-state:hover {
   background: transparent;
-  color: #1976D2;
+  color: hsl(166, 100%, 70%);
 }

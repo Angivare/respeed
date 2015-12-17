@@ -44,7 +44,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 
     <div class="pagination-topic pagination-topic--top">
 <?php if (!$locked): ?>
-      <div class="pagination-topic__action-button pagination-topic__action-button--post"><span class="js-button-go-to-form button button--raised button--cta button--scale">Poster</span></div>
+      <div class="pagination-topic__action-button pagination-topic__action-button--post"><span class="js-button-go-to-form button button--raised button--cta button--scale">Répondre</span></div>
 <?php endif ?>
       <div class="pagination-topic__pages">
 <?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
@@ -86,7 +86,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
       </div>
     </form>
 
-    <div class="js-button-go-to-form fab-post"><div class="fab-post__inner">Poster</div></div>
+    <div class="js-button-go-to-form fab-post"><div class="fab-post__inner">Répondre</div></div>
 <?php endif ?>
 
   </div>

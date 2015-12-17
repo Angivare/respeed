@@ -5,7 +5,7 @@ $title = 'Smileys';
 <div class="sheet sheet--nothing-over">
 <?php foreach ($stickers as $id => $stickers_category): ?>
 <?php $i = 0 ?>
-<table class="smileys-card">
+<table class="card smileys-card">
 <?php foreach ($stickers_category as $id => $code): ?>
 <?php if ($i % 4 == 0):?>
   <tr>

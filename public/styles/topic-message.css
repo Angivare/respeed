@@ -56,18 +56,13 @@
 
 .message__visible {
   border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.2);
-  background: white;
-}
-
-.message--even .message__visible {
-  background: hsl(207, 90%, 98%);
+  background: hsl(0, 0%, 16%);
+  color: hsl(0, 0%, 87%);
 }
 
 @media (min-width: 1025px) {
   .message__visible, .message--even .message__visible {
     background: transparent;
-    box-shadow: none;
     border-radius: none;
   }
 }
@@ -205,7 +200,7 @@
 }
 
 .message__byline-author-pseudo {
-  color: #212121;
+  color: hsl(0, 0%, 73%);
   font-weight: bold;
   line-height: 30px;
 }
@@ -263,7 +258,7 @@
   padding: 10px;
   padding-right: 20px;
   background: url(/images/more_vert.svg) no-repeat right 3px center;
-  color: #1976d2;
+  color: hsl(166, 100%, 70%);
   font-size: 13px;
   vertical-align: top;
 }
@@ -280,20 +275,11 @@
     cursor: default;
   }
 
-  .message__byline-date-inline:hover {
-    color: #111;
-  }
-
   .message__byline-date-inline {
-    background: white;
-    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background: hsl(0, 0%, 20%);
     padding: 2px 4px;
-    color: #333;
+    color: hsl(0, 0%, 73%);
     border-radius: 2px;
-  }
-
-  .message--even .message__byline-date-inline {
-    background: hsl(207, 90%, 99%);
   }
 }
 
@@ -393,7 +379,7 @@
   padding-top: 30px;
   padding-bottom: 5px;
   border-radius: 4px;
-  background: white;
+  background: hsl(0, 0%, 20%);
   background-position: center 5px;
   background-repeat: no-repeat;
   box-shadow: 0 1px 2px rgba(0,0,0,.2);
@@ -403,7 +389,6 @@
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-  color: #424242;
 }
 
 .message__actions-action:active {
@@ -417,10 +402,6 @@
 
 .message__actions-action--delete {
   background-image: url(/images/delete-24px.svg);
-}
-
-.message__actions-action--delete-red {
-  background-image: url(/images/delete-red-24px.svg);
 }
 
 .message__actions-action--edit {
@@ -454,13 +435,13 @@
   width: 28px;
   height: 28px;
   cursor: pointer;
-  opacity: .2;
+  opacity: .5;
   display: inline-block;
   margin-left: 5px;
 }
 
 .message__quick-action:hover {
-  opacity: .75;
+  opacity: 1;
 }
 
 .message__quick-action--quote {
@@ -473,10 +454,6 @@
 
 .message__quick-action--delete {
   background: url(/images/delete.svg) center no-repeat;
-}
-
-.message__quick-action--delete-red {
-  background: url(/images/delete-red.svg) center no-repeat;
 }
 
 .message__quick-action--kick {
@@ -553,13 +530,9 @@
   .message__content {
     display: block;
     margin-left: 200px;
-    background: white;
+    background: hsl(0, 0%, 16%);
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
     border-radius: 2px;
-  }
-
-  .message--even .message__content {
-    background: hsl(207, 90%, 98%);
   }
 }
 
@@ -570,12 +543,12 @@
 .message__content-edit-mention {
   font-size: 12px;
   margin-top: -3px;
-  color: rgba(0,0,0,.5);
+  color: hsl(0, 0%, 53%);
 }
 
 .quote {
   margin: 1em 0;
-  border-left: 3px solid rgba(33,150,243,.25); /* Blue 500 */
+  border-left: 3px solid rgba(33,150,243,.2); /* Blue 500 */
   padding: 1px 7px;
   background: rgba(33,150,243,.03);
 }
@@ -630,7 +603,7 @@
 }
 
 .spoil {
-  background: #EF9A9A;
+  background: #EF5350;
   display: inline-block;
   width: 80px;
   height: 22px;
@@ -647,8 +620,9 @@
 
 .spoil--revealed {
   overflow: visible;
-  background: #FFEBEE;
+  background: #EF9A9A;
   display: inline;
+  color: hsl(0, 0%, 13%);
 }
 
 .spoil--block.spoil--revealed {
