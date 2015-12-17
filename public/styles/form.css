@@ -40,7 +40,7 @@
 }
 
 .form__draft-recover {
-  color: hsl(166, 100%, 70%);
+  color: hsl(166, 100%, 40%);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   -webkit-transition: color .1s ease-out;

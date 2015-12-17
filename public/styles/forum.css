@@ -75,7 +75,6 @@
 
 .topic {
   display: table-row;
-  color: hsl(166, 100%, 70%);
 }
 
 .topic__new-messages-indicator {

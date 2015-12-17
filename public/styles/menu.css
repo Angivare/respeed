@@ -38,11 +38,11 @@
   text-align: center;
   font-weight: normal;
   font-size: 11px;
-  color: hsl(166, 100%, 70%);
+  color: hsl(166, 100%, 40%);
   cursor: default;
 }
 
 .menu__item--blank-state:hover {
   background: transparent;
-  color: hsl(166, 100%, 70%);
+  color: hsl(166, 100%, 40%);
 }
