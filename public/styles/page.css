@@ -151,12 +151,11 @@
   display: inline-block;
   padding: 10px;
   margin: -10px;
-  color: #AED257;
 }
 
 .page-title__link,
 .page-title--topic {
-  color: hsl(111, 90%, 44%);
+  color: hsl(0, 0%, 67%);
 }
 
 /* ASIDE */
