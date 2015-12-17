@@ -9,11 +9,7 @@ foreach (fetch_profile($pseudo) as $k => $v) {
 
 $title = $pseudo;
 ?>
-<?php if (isset($couverture)): ?>
-<body class="body--no-bottom body--sheet" style="background: black url(<?= $couverture ?>) top center;">
-<?php else: ?>
 <body class="body--no-bottom body--sheet">
-<?php endif ?>
 
 <?php if (strcasecmp($pseudo, $_COOKIE['pseudo']) != 0 && is_in_blacklist($pseudo)): ?>
   <div class="card profile-card">

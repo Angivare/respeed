@@ -266,10 +266,6 @@ function parse_profile($body) {
     }
   }
 
-  if (preg_match('#<div id="content" style="background: url\(\'(?P<couverture>.+)\'#Usi', $body, $matches)) {
-    $ret['couverture'] = $matches['couverture'];
-  }
-
   if (preg_match('#<div class="info-lib">Messages Forums :</div><div class="info-value">(?P<messages>[0-9.]+) messages?</div>#Usi', $body, $matches)) {
     $ret['messages'] = str_replace('.', '', $matches['messages']);
   }
