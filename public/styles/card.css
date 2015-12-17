@@ -1,5 +1,5 @@
 .card {
-  background: hsla(0, 0%, 100%, .2);
+  background: hsl(0, 0%, 20%);
   margin: 10px 8px;
   position: relative;
   border-radius: 2px;
