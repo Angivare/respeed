@@ -3,7 +3,10 @@
 <meta charset="utf-8">
 <title><?= $title ?></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<?php if (file_exists(dirname(__FILE__) . '/../styles/special/combined.css')): ?>
+<link rel="stylesheet" href="/styles/special/combined.<?= filemtime(dirname(__FILE__) . '/../styles/special/combined.css') ?>.css" data-instant-track>
 <?php
+else:
 $files = scandir(dirname(__FILE__) . '/../styles');
 foreach ($files as $file) {
   if (substr($file, -4) != '.css') {
@@ -14,6 +17,7 @@ foreach ($files as $file) {
 <link rel="stylesheet" href="/styles/<?= $file_id ?>.<?= filemtime(dirname(__FILE__) . '/../styles/' . $file) ?>.css" data-instant-track>
 <?php
 }
+endif;
 ?>
 <meta name="google-analytics-id" content="<?= GOOGLE_ANALYTICS_ID ?>">
 <link class="js-favicon" rel="icon" href="/images/favicon.png">
