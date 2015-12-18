@@ -415,6 +415,12 @@
   background-image: url(/images/punish-24px.svg);
 }
 
+.message__actions-action--delete,
+.message__actions-action--kick,
+.message__actions-action--punish {
+  color: #F44336;
+}
+
 /* Desktop actions */
 
 .message__quick-actions {
