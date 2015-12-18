@@ -147,7 +147,7 @@ body {
 
   background: url(/images/salespage/options_mobile.png) right;
   background-size: 360px;
-  height: 71px;
+  height: 70px;
   max-width: 360px;
 }
 
@@ -161,6 +161,10 @@ body {
   font-weight: bold;
   margin: 2em 0;
   _text-decoration: underline;
+}
+
+.inner-link {
+  color: #333;
 }
 
 .number {

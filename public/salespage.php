@@ -53,13 +53,17 @@ if ($jvc->is_connected()) {
 
   <h2 class="article__subheadline"><span class="article__subheadline-number">4</span> Et plus</h2>
 
-  <p>Liens directs NoelShack. Avatars en grand. Design qui s’étire pour les grands écrans… Tout est repensé.</p>
+  <p>Thème noir pour ne pas s’éclater les yeux le soir, codes pour écrire les stickers rapidement, liens directs NoelShack, avatars en grand, position sur les topics sauvegardée, etc.</p>
+
+  <h2 class="article__subheadline"><span class="article__subheadline-number">5</span> Open source</h2>
+
+  <p>Les développeurs peuvent aider à améliorer JVForum sur <a class="inner-link" href="https://github.com/dieulot/jvforum" target="_blank">GitHub</a>.</p>
 
   <h2 class="article__subheadline article__subheadline--gnap_gnap">L’avis de Gnap_Gnap :</h2>
 
   <iframe class="gnap_gnap-youtube" width="420" height="315" src="https://www.youtube.com/embed/U0QA6OMEP1c?rel=0&amp;showinfo=0&amp;cc_load_policy=1" frameborder="0" allowfullscreen></iframe>
 
-  <p class="article__nb-messages">Plus de <span class="number number--important">500 000</span> messages déjà postés</p>
+  <p class="article__nb-messages">Plus de <span class="number number--important">850 000</span> messages déjà postés</p>
 
   <a class="article__cta" id="cta" href="/connexion">Démarrez l’expérience JVForum</a>
 
