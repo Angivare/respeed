@@ -19,8 +19,7 @@
   padding: 0 0 5px;
   text-transform: uppercase;
   font-weight: bold;
-  border-bottom: 1px solid #EEEEEE;
-  border-bottom-color: rgba(0,0,0,.067);
+  border-bottom: 1px solid hsla(0, 0%, 0%, .125);
   margin: 0 -10px;
   text-indent: 10px;
 }
