@@ -84,4 +84,4 @@ ga('send', 'pageview')
 <script>
 localStorage.clear()
 </script>
-<script src="/scripts/fastclick-<?= REVISION_NUMBER_JS_FASTCLICK ?>.js" onload="FastClick.attach(document.body)"></script>
+<script src="/scripts/02.fastclick.<?= filemtime(dirname(__FILE__) . '/scripts/02.fastclick.js') ?>.js" onload="FastClick.attach(document.body)" async></script>
