@@ -708,6 +708,9 @@
   min-height: 16px;
   position: relative;
   top: 1px;
+  -ms-interpolation-mode: nearest-neighbor;
+  -webkit-image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 .smiley--17 { min-height: 12px; } /* :gba: */
