@@ -1,4 +1,4 @@
-﻿Ce document détaille l’installation d’une version de développement de JVForum sous Windows.
+Ce document détaille l’installation d’une version de développement de JVForum sous Windows.
 
 # Git
 
@@ -15,6 +15,8 @@ Copiez `git clone https://github.com/dieulot/jvforum.git .` dans votre presse-pa
 Votre version de développement est maintenant installée.
 
 # WAMP
+
+Note si vous utilisez Skype : Par défaut, Skype est en conflit avec WAMP car il utilise le même port qu’Apache. Pour régler ça, rendez-vous dans la barre de menu de Skype dans Outils → Options… → Avancées → Connexion et décochez « Utiliser les ports 80 et 443 pour les connexions entrantes supplémentaires », puis quittez Skype (et relancez-le si vous voulez).
 
 Rendez-vous sur [le site de WAMP](http://www.wampserver.com/#download-wrapper) et téléchargez la version 32 bits (en haut du formulaire qui s’affiche, cliquez sur « passer au téléchargement direct ») puis installez la.
 
