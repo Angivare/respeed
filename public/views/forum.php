@@ -91,13 +91,10 @@ if ($go_to_page > 1) {
   $link .= '/' . min($go_to_page, $last_page);
 }
 if ($message_id) {
+  $topic_modifier .= ' topic--visited';
   $link .= "#after{$message_id}";
-
   if ($nb_answers < $matches['nb_reponses'][$i]) {
     $new_messages = true;
-  }
-  else {
-    $topic_modifier .= ' topic--visited';
   }
 }
 
