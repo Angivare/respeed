@@ -196,7 +196,7 @@ function parse_topic($got) {
 
   preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
   if ($matches_id) {
-    $ret['topicNew'] = $matches_id['id_topic'];
+    $ret['topic_id_new'] = $matches_id['id_topic'];
   }
 
   $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches);

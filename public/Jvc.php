@@ -803,7 +803,7 @@ class Jvc {
     $body = ob_get_contents();
     ob_end_clean();
     $jvc = new Jvc();
-    $forum = $topic = $topicNew = $slug = $page = null;
+    $forum = $topic = $topic_id_new = $slug = $page = null;
     $token = [];
     $title = 'Erreur';
     $db = new Db();

@@ -33,7 +33,7 @@ endif;
 <script>
 var $forum = <?= $forum ? $forum : 'false' ?>
   , $topic = <?= $topic ? ("'" . ($_GET['topic'][0] == '0' ? '0' : '') . $topic . "'") : 'false' ?>
-  , $topicNew = <?= isset($topicNew) ? $topicNew : 'false' ?>
+  , $topicIdNew = <?= isset($topic_id_new) ? $topic_id_new : 'false' ?>
   , $slug = '<?= $slug ?>'
   , $title = <?= $title ? "'{$title}'" : 'false' ?>
   , $page = <?= $page ? $page : 'false' ?>

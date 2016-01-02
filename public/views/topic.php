@@ -25,7 +25,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
       <div class="mobile-menu">
         <div class="mobile-menu__opener"><div class="mobile-menu__opener-icon"></div></div>
           <div class="mobile-menu__items">
-<?php if (!is_topic_in_favorites($favorites, $topicNew)): ?>
+<?php if (!is_topic_in_favorites($favorites, $topic_id_new)): ?>
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="add">Mettre en favoris</span>
 <?php else: ?>
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
@@ -33,9 +33,9 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
             <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
 <?php if ($is_mod_active): ?>
 <?php if ($locked): ?>
-            <a class="mobile-menu__item" href="/lock/<?= $topicNew ?>?unlock">Déverrouiller</a>
+            <a class="mobile-menu__item" href="/lock/<?= $topic_id_new ?>?unlock">Déverrouiller</a>
 <?php else: ?>
-            <a class="mobile-menu__item" href="/lock/<?= $topicNew ?>">Verrouiller</a>
+            <a class="mobile-menu__item" href="/lock/<?= $topic_id_new ?>">Verrouiller</a>
 <?php endif ?>
 <?php endif ?>
           </div>
@@ -95,15 +95,15 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 <?php if ($is_mod_active): ?>
     <div class="aside__moderation-actions">
 <?php if ($locked): ?>
-      <a class="aside__moderation-action" href="/lock/<?= $topicNew ?>?unlock">Déverrouiller</a>
+      <a class="aside__moderation-action" href="/lock/<?= $topic_id_new ?>?unlock">Déverrouiller</a>
 <?php else: ?>
-      <a class="aside__moderation-action" href="/lock/<?= $topicNew ?>">Verrouiller</a>
+      <a class="aside__moderation-action" href="/lock/<?= $topic_id_new ?>">Verrouiller</a>
 <?php endif ?>
     </div>
 <?php endif ?>
 
     <div class="aside__top-buttons">
-<?php if (!is_topic_in_favorites($favorites, $topicNew)): ?>
+<?php if (!is_topic_in_favorites($favorites, $topic_id_new)): ?>
       <span class="js-favorite-toggle aside__top-button aside__top-button--favorite" data-action="add">
         <span class="js-favorite-toggle-label aside__top-button-label">Mettre en favoris</span>
       </span>

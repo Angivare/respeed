@@ -107,8 +107,8 @@ function updateFavorites() {
 
 function toggleFavorite() {
   var action = $('.js-favorite-toggle').data('action')
-    , type = $topicNew ? 'topic': 'forum'
-    , id = $topicNew ? $topicNew : $forum
+    , type = $topicIdNew ? 'topic': 'forum'
+    , id = $topicIdNew ? $topicIdNew : $forum
     , forumSum = $('.js-favorites-forums').data('sum')
     , topicSum = $('.js-favorites-topics').data('sum')
 
@@ -250,7 +250,7 @@ function topicRefresh() {
 
     data = data.rep
 
-    if (data.topicNew != $topicNew || data.page != $page) {
+    if (data.topic_id_new != $topicIdNew || data.page != $page) {
       // On est plus sur le topic, ou alors plus sur la même page, quand la requête se termine
       return
     }
@@ -446,7 +446,7 @@ function isInBlacklist(pseudo) {
 }
 
 function updateTopicPosition() {
-  if (!$topicNew) {
+  if (!$topicIdNew) {
     return
   }
   if (topicPositionLastMessageId >= liste_messages[liste_messages.length - 1]) {
@@ -455,7 +455,7 @@ function updateTopicPosition() {
   topicPositionLastMessageId = liste_messages[liste_messages.length - 1]
   var nbAnswers = ($page - 1) * 20 + liste_messages.length - 1
   ajax('topic_update_position', {
-    topic_id: $topicNew,
+    topic_id_new: $topicIdNew,
     message_id: topicPositionLastMessageId,
     nb_answers: nbAnswers,
     last_page: lastPage,
