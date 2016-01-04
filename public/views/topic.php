@@ -83,9 +83,9 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
     </div>
 
 <?php if ($locked): ?>
-    <div class="lock-notice">
-      <div class="lock-notice__title">Sujet verrouillé</div>
-      <div class="lock-notice__cause"><?= $lock_rationale ?></div>
+    <div class="card">
+      <div class="card__header">Sujet verrouillé</div>
+      <div class="card__body"><?= $lock_rationale ?></div>
     </div>
 <?php else: ?>
     <form class="js-form-post form form--touches-bottom">
