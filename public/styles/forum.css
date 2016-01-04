@@ -75,6 +75,7 @@
 
 .topic {
   display: table-row;
+  overflow: hidden;
 }
 
 .topic__new-messages-indicator {

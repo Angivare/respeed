@@ -517,6 +517,7 @@
   word-wrap: break-word;
   border: 1px solid transparent; /* pour prendre en compte margin de .message__content-text > p */
   min-height: 48px; /* A message can be empty when there’s only an unknown sticker in it */
+  overflow: hidden;
 }
 
 @media (min-width: 400px) {

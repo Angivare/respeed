@@ -117,6 +117,7 @@
   margin: 10px 8px 0;
   position: relative;
   word-wrap: break-word;
+  overflow: hidden;
 }
 
 .page-title--larger {
