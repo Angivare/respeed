@@ -141,6 +141,7 @@ $stickers = [
     '1kh0' => 'pls3',
   ],
 ];
+$javascripts_after_files = [];
 
 function h($string) {
   return htmlspecialchars($string, ENT_QUOTES | ENT_HTML5);
@@ -719,4 +720,9 @@ function get_favorites_sum($favorites) {
 
 function set_toast_for_next_page($message) {
   setcookie('toast', base64_encode(utf8_decode($message)), time() + 60 * 60 * 24 * 365 * 10, '/');
+}
+
+function add_javascript_after_files($script) {
+  global $javascripts_after_files;
+  $javascripts_after_files[] = $script;
 }

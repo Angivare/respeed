@@ -340,4 +340,20 @@ class Db {
       [$message_id, $nb_answers, time(), $user_id, $topic_id]
     );
   }
+
+  public function is_topic_page_visited($user_id, $topic_id_new, $page) {
+    $fetched = $this->query(
+      'SELECT first_visited_at FROM topics_visited_pages WHERE user_id = ? AND topic_id_new = ? AND page = ?',
+      [$user_id, $topic_id_new, $page]
+    )->fetch();
+    return !!$fetched;
+  }
+
+  public function add_topic_visited_page($user_id, $topic_id_new, $page) {
+    return $this->query(
+      'INSERT INTO topics_visited_pages(user_id, topic_id_new, page, first_visited_at) VALUES(?, ?, ?, ?)',
+      [$user_id, $topic_id_new, $page, time()]
+    );
+  }
+
 }

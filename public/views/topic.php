@@ -3,7 +3,7 @@ $topic_id_url_jvf = $_GET['topic'];
 $topic_id_old = $topic_id_new = null;
 if ($topic_id_url_jvf[0] === '0') {
   $topic_id_url_jvf = '0' . (int)$topic_id_url_jvf; // Sanitizing
-  $topic_id_old = (int)$topic_id_url;
+  $topic_id_old = (int)$topic_id_url_jvf;
   $topic_mode = 1;
   $topic_id_old_or_new = $topic_id_old;
 }
@@ -150,3 +150,9 @@ var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= 
   , myPseudo = '<?= $pseudo ?>'
   , pollAnswers = <?= $poll ? $poll['answer_count'] : -1 ?>
 </script>
+
+<?php
+if (!$db->is_topic_page_visited($jvc->user_id, $topic_id_new, $page)) {
+  add_javascript_after_files('addTopicVisitedPage()');
+}
+?>

@@ -462,6 +462,13 @@ function updateTopicPosition() {
   })
 }
 
+function addTopicVisitedPage() {
+  ajax('topic_add_visited_page', {
+    topic_id_new: $topicIdNew,
+    page: $page,
+  })
+}
+
 
 
 /*** Fonctions pour events ***/

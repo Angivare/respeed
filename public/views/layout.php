@@ -57,3 +57,7 @@ foreach ($files as $file) {
 <?php
 }
 ?>
+
+<?php foreach ($javascripts_after_files as $script): ?>
+<script><?= $script ?></script>
+<?php endforeach ?>
