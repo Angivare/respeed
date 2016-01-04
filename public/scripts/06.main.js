@@ -221,7 +221,7 @@ function handleRefreshOnPageChange() {
     refreshXhr = undefined // pour pas que cette condition soit true à chaque changement de page après la première
     lastRefreshTimestamp = 0
   }
-  if ($topic) {
+  if ($topicIdNew) {
     handleRefreshInterval = setInterval(handleRefresh, 2000)
   }
 }
@@ -236,7 +236,8 @@ function topicRefresh() {
   lastRefreshTimestamp = +new Date
   refreshXhr = ajax('topic_get', {
     forum: $forum,
-    topic: $topic,
+    topic_mode: $topicMode,
+    topic_id_old_or_new: $topicIdOldOrNew,
     slug: $slug,
     page: $page,
     last_page: lastPage,

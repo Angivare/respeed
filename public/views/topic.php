@@ -13,7 +13,7 @@ else {
   $topic_mode = 42;
   $topic_id_old_or_new = $topic_id_new;
 }
-$topic_id_array = compact('topic_id_url_jvf', 'topic_id_old_or_new', 'topic_id_old', 'topic_id_new', 'topic_mode');
+$topic_id_array = compact('topic_id_url_jvf', 'topic_mode', 'topic_id_old_or_new', 'topic_id_old', 'topic_id_new');
 
 require 'parser.php';
 
