@@ -100,34 +100,30 @@
 /* Lock notice */
 
 .lock-alert {
-  border: 0 solid #4e342e;
   margin-top: 1em;
+  background: #3E2723;
+  color: #d7ccc8;
 }
 
 @media (min-width: 1025px) {
   .lock-alert {
-    border-width: 1px;
     border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.2);
   }
 }
 
 .lock-alert__title {
   padding: 8px 10px;
   padding-left: 35px;
-  background-color: #4e342e;
   background-image: url(/images/lock_18px.svg);
   background-repeat: no-repeat;
   background-position: center left 10px;
-  color: #d7ccc8;
   font-weight: bold;
   margin-top: 0;
 }
 
 .lock-alert__cause {
   padding: 1em 10px;
-  background: #efebe9;
-  color: #3e2723;
+  border-top: 1px solid hsla(0, 0%, 0%, .125);
 }
 
 /* Floating post button */
