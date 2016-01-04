@@ -1,16 +1,4 @@
 <?php
-$forum = isset($_GET['forum']) ? $_GET['forum'] : false;
-$slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$apropos = isset($_GET['apropos']);
-$recherche_forum = isset($_GET['recherche_forum']);
-$smileys = isset($_GET['smileys']);
-$profil = isset($_GET['profil']);
-$moderation = isset($_GET['moderation']);
-$kick = isset($_GET['kick']);
-$sanctionner = isset($_GET['sanctionner']);
-$lock = isset($_GET['lock']);
-$sondage = isset($_GET['sondage']);
 
 require_once '../php-encryption/autoload.php';
 require '../config.php';
@@ -39,29 +27,12 @@ else {
   $blacklist_is_fresh = false;
 }
 
+$allowed_pages = ['accueil', 'apropos', 'forum', 'kick', 'lock', 'moderation', 'recherche_forum', 'sanctionner', 'sondage', 'topic', 'smileys', 'profil'];
+$param_page = isset($_GET['page']) ? $_GET['page'] : '';
 $view = 'accueil';
-if ($forum && isset($_GET['topic']))
-  $view = 'topic';
-elseif ($forum)
-  $view = 'forum';
-elseif ($apropos)
-  $view = 'apropos';
-elseif ($recherche_forum)
-  $view = 'recherche_forum';
-elseif ($smileys)
-  $view = 'smileys';
-elseif ($profil)
-  $view = 'profil';
-elseif ($moderation)
-  $view = 'moderation';
-elseif ($kick)
-  $view = 'kick';
-elseif ($sanctionner)
-  $view = 'sanctionner';
-elseif ($lock)
-  $view = 'lock';
-elseif ($sondage)
-  $view = 'sondage';
+if (in_array($param_page, $allowed_pages)) {
+  $view = $param_page;
+}
 
 ob_start();
 require 'views/' . $view . '.php';

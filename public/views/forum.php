@@ -1,4 +1,8 @@
 <?php
+$forum = isset($_GET['forum']) ? $_GET['forum'] : false;
+$slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
+$page = isset($_GET['forum_page']) ? $_GET['forum_page'] : 1;
+
 require 'parser.php';
 
 foreach (fetch_forum($forum, $page, $slug) as $k => $v) {

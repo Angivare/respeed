@@ -1,5 +1,9 @@
 <?php
-$topic_id_url_jvf = $_GET['topic'];
+$forum = isset($_GET['forum']) ? $_GET['forum'] : false;
+$slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
+$page = isset($_GET['topic_page']) ? $_GET['topic_page'] : 1;
+$topic_id_url_jvf = isset($_GET['topic']) ? $_GET['topic'] : '0';
+
 $topic_id_old = $topic_id_new = null;
 if ($topic_id_url_jvf[0] === '0') {
   $topic_id_url_jvf = '0' . (int)$topic_id_url_jvf; // Sanitizing

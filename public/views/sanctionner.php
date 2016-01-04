@@ -1,6 +1,6 @@
 <?php
 
-$message_id = (int)$_GET['sanctionner'];
+$message_id = isset($_GET['message_id']) ? (int)$_GET['message_id'] : 0;
 
 if (!$jvc->logged_into_moderation) {
   header('Location: /moderation');
