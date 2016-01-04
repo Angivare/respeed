@@ -28,7 +28,7 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
     </div>
 
     <div class="logout-container">
-      <a class="logout2" href="/deconnexion/<?= $token['hash'] ?>-<?= $token['ts'] ?>-<?= $token['rand'] ?>" data-no-instant>Déconnexion</a>
+      <a class="logout2" href="/deconnexion?hash=<?= $token['hash'] ?>&amp;ts=<?= $token['ts'] ?>&amp;rand=<?= $token['rand'] ?>" data-no-instant>Déconnexion</a>
     </div>
   </div>
 </div>
