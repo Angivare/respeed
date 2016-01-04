@@ -75,7 +75,6 @@
 
 .topic {
   display: table-row;
-  overflow: hidden;
 }
 
 .topic__new-messages-indicator {
@@ -167,6 +166,7 @@
 .topic__title {
   font-weight: bold;
   padding-right: 4px;
+  overflow: hidden;
 }
 
 .topic__infos {
