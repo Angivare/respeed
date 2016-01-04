@@ -87,6 +87,10 @@
   background: hsla(166, 100%, 40%, .2);
 }
 
+.pagination-topic__page-link--visited {
+  color: hsl(0, 0%, 57%);
+}
+
 .pagination-topic--top .pagination-topic__page-link--last,
 .pagination-topic--bottom .pagination-topic__page-link--next {
   font-weight: bold;

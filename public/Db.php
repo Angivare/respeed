@@ -356,4 +356,16 @@ class Db {
     );
   }
 
+  public function get_topic_visited_pages($user_id, $topic_id_new) {
+    $array = $this->query(
+      'SELECT page FROM topics_visited_pages WHERE user_id = ? AND topic_id_new = ?',
+      [$user_id, $topic_id_new]
+    )->fetchAll();
+    $array2 = [];
+    foreach ($array as $item) {
+      $array2[$item[0]] = true;
+    }
+    return $array2;
+  }
+
 }

@@ -485,37 +485,42 @@ MESSAGE;
   return $markup;
 }
 
-function generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) {
+function generate_topic_pagination_markup($current_page, $last_page, $forum, $topic_id_array, $slug) {
+  global $db, $jvc;
+
+  extract($topic_id_array);
+
   $pages = [];
 
-  if ($page > 4) {
+  if ($current_page > 4) {
     $pages[] = 1;
   }
 
-  for ($i = max(1, $page - 3); $i < $page; $i++) {
+  for ($i = max(1, $current_page - 3); $i < $current_page; $i++) {
     $pages[] = $i;
   }
 
-  $pages[] = $page;
+  $pages[] = $current_page;
 
-  if ($page != $last_page) {
-    for ($i = $page + 1; $i < min($page + 4, $last_page); $i++) {
+  if ($current_page != $last_page) {
+    for ($i = $current_page + 1; $i < min($current_page + 4, $last_page); $i++) {
       $pages[] = $i;
     }
 
     $pages[] .= $last_page;
   }
 
+  $visited_pages = $db->get_topic_visited_pages($jvc->user_id, $topic_id_old_or_new);
+
   $markup = '';
-  $topic_id = ($topic_mode == 1 ? '0' : '') . $topic;
   $page_trail = $i > 1 ? "/{$i}" : '';
   foreach ($pages as $i) {
     $markup .= "        ";
-    if ($i == $page) {
-      $markup .= '<span class="pagination-topic__page"><span class="pagination-topic__page-link pagination-topic__page-link--active">' . $page . '</span></span>';
+    if ($i == $current_page) {
+      $markup .= '<span class="pagination-topic__page"><span class="pagination-topic__page-link pagination-topic__page-link--active">' . $current_page . '</span></span>';
     }
     else {
-      $markup .= '<span class="pagination-topic__page"><a class="pagination-topic__page-link ' . ($i == $page + 1 ? 'pagination-topic__page-link--next' : ($i == $last_page ? 'pagination-topic__page-link--last' : '')) . '" href="/' . $forum . '/' . $topic_id . '-' . $slug . ($i > 1 ? ('/' . $i) : '') . '">' . $i . '</a></span>';
+      $markup .= '<span class="pagination-topic__page"><a class="pagination-topic__page-link ' . ($i == $current_page + 1 ? 'pagination-topic__page-link--next' : ($i == $last_page ? 'pagination-topic__page-link--last' : '')) . ' ' . (isset($visited_pages[$i]) ? 'pagination-topic__page-link--visited' : '') . '" href="/' . $forum . '/' . $topic_id_url_jvf . '-' . $slug . ($i > 1 ? ('/' . $i) : '') . '">' . $i . '</a></span>';
     }
   }
 

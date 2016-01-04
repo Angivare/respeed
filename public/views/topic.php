@@ -61,7 +61,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
       <div class="pagination-topic__action-button pagination-topic__action-button--post"><span class="js-button-go-to-form button button--raised button--cta button--scale">Répondre</span></div>
 <?php endif ?>
       <div class="pagination-topic__pages">
-<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic_id_old_or_new, $topic_mode, $slug) ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic_id_array, $slug) ?>
       </div>
     </div>
 
@@ -78,7 +78,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
     <div class="pagination-topic pagination-topic--bottom">
       <div class="pagination-topic__action-button"><a class="button button--scale" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour<span class="pagination-topic__action-button-additional-text"> forum</span></a></div>
       <div class="pagination-topic__pages">
-<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic_id_old_or_new, $topic_mode, $slug) ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic_id_array, $slug) ?>
       </div>
     </div>
 
