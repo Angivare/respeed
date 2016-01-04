@@ -239,9 +239,6 @@ function fetch_topic($topic_id_array, $page, $slug, $forum) {
       $db->set_topic_cache($topic_id_old_or_new, $page, $topic_mode, $forum, json_encode($ret));
     }
   }
-
-  $ret['topic_mode'] = $topic_mode;
-  $ret['topic_id_new'] = $topic_id_new;
   return $ret;
 }
 
