@@ -99,19 +99,19 @@
 
 /* Lock notice */
 
-.lock-alert {
+.lock-notice {
   margin-top: 1em;
   background: #3E2723;
   color: #d7ccc8;
 }
 
 @media (min-width: 1025px) {
-  .lock-alert {
+  .lock-notice {
     border-radius: 2px;
   }
 }
 
-.lock-alert__title {
+.lock-notice__title {
   padding: 8px 10px;
   padding-left: 35px;
   background-image: url(/images/lock_18px.svg);
@@ -121,7 +121,7 @@
   margin-top: 0;
 }
 
-.lock-alert__cause {
+.lock-notice__cause {
   padding: 1em 10px;
   border-top: 1px solid hsla(0, 0%, 0%, .125);
 }
