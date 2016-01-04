@@ -20,7 +20,7 @@ if ($q) {
   foreach ($replace_patterns as $k => $v) {
     $replace_patterns[$k] = '#' . str_replace('#', '\#', preg_quote($v)) . '#i';
   }
-  
+
   if ($count > 100) {
 ?>
   <p>Plus de 100 résultats. Affinez votre recherche.
@@ -36,7 +36,7 @@ if ($q) {
   <li>
     <a href="/<?= $result['forum_id'] ?>-<?= $result['slug'] ?>"><?= $name ?></a>
 <?php if ($result['parent_human']): ?>
-    <small style="color: #424242">(<?= $result['parent_human'] ?>)</small>
+    <small style="color: #888">(<?= $result['parent_human'] ?>)</small>
 <?php endif ?>
   </li>
 <?php }
