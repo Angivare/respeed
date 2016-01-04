@@ -31,6 +31,10 @@
   }
 }
 
+.card__body {
+  padding-top: 10px;
+}
+
 
 
 .card--poll {

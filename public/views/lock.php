@@ -1,6 +1,6 @@
 <?php
 
-$topic_id = (int)$_GET['lock'];
+$topic_id = isset($_GET['topic_id']) ? (int)$_GET['topic_id'] : 0;
 $unlock = isset($_GET['unlock']);
 
 if (!$jvc->logged_into_moderation) {

@@ -1,7 +1,7 @@
 <?php
 require 'parser.php';
 
-$pseudo = h($_GET['profil']);
+$pseudo = isset($_GET['pseudo']) ? h($_GET['pseudo']) : '';
 
 foreach (fetch_profile($pseudo) as $k => $v) {
   ${$k} = $v;

@@ -97,35 +97,6 @@
   font-size: 19px;
 }
 
-/* Lock notice */
-
-.lock-notice {
-  margin-top: 1em;
-  background: #3E2723;
-  color: #d7ccc8;
-}
-
-@media (min-width: 1025px) {
-  .lock-notice {
-    border-radius: 2px;
-  }
-}
-
-.lock-notice__title {
-  padding: 8px 10px;
-  padding-left: 35px;
-  background-image: url(/images/lock_18px.svg);
-  background-repeat: no-repeat;
-  background-position: center left 10px;
-  font-weight: bold;
-  margin-top: 0;
-}
-
-.lock-notice__cause {
-  padding: 1em 10px;
-  border-top: 1px solid hsla(0, 0%, 0%, .125);
-}
-
 /* Floating post button */
 
 .fab-post {

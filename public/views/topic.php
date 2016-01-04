@@ -1,5 +1,9 @@
 <?php
-$topic_id_url_jvf = $_GET['topic'];
+$forum = isset($_GET['forum']) ? $_GET['forum'] : false;
+$slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
+$page = isset($_GET['topic_page']) ? $_GET['topic_page'] : 1;
+$topic_id_url_jvf = isset($_GET['topic']) ? $_GET['topic'] : '0';
+
 $topic_id_old = $topic_id_new = null;
 if ($topic_id_url_jvf[0] === '0') {
   $topic_id_url_jvf = '0' . (int)$topic_id_url_jvf; // Sanitizing
@@ -83,9 +87,9 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
     </div>
 
 <?php if ($locked): ?>
-    <div class="lock-notice">
-      <div class="lock-notice__title">Sujet verrouillé</div>
-      <div class="lock-notice__cause"><?= $lock_rationale ?></div>
+    <div class="card">
+      <div class="card__header">Sujet verrouillé</div>
+      <div class="card__body"><?= $lock_rationale ?></div>
     </div>
 <?php else: ?>
     <form class="js-form-post form form--touches-bottom">

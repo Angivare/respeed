@@ -1,6 +1,6 @@
 <?php
 
-$pseudo = h($_GET['kick']);
+$pseudo = isset($_GET['pseudo']) ? h($_GET['pseudo']) : '';
 $pseudoLowercase = strtolower($pseudo);
 
 $message_id = isset($_GET['message_id']) ? (int)$_GET['message_id'] : 0;

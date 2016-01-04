@@ -31,14 +31,14 @@ endif;
 <div class="toast"><div class="toast__label"> </div></div>
 
 <script>
-var $forum = <?= $forum ? $forum : 'false' ?>
+var $forum = <?= isset($forum) ? $forum : 'false' ?>
   , $topicMode = <?= isset($topic_mode) ? $topic_mode : 'false' ?>
   , $topicIdOldOrNew = <?= isset($topic_id_old_or_new) ? $topic_id_old_or_new : 'false' ?>
   , $topicIdNew = <?= isset($topic_id_new) ? $topic_id_new : 'false' ?>
   , $topicIdUrlJvf = <?= isset($topic_id_url_jvf) ? ("'{$topic_id_url_jvf}'") : 'false' ?>
-  , $slug = '<?= $slug ?>'
+  , $slug = <?= isset($slug) ? ("'{$slug}'") : 'false' ?>
   , $title = <?= $title ? "'{$title}'" : 'false' ?>
-  , $page = <?= $page ? $page : 'false' ?>
+  , $page = <?= isset($page) ? $page : 'false' ?>
 <?php foreach ($token as $k => $v): ?>
   , $<?= $k ?> = '<?= $v ?>'
 <?php endforeach ?>
