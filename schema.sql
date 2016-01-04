@@ -128,5 +128,5 @@ CREATE TABLE `topics_visited_pages` (
   `topic_id_new` int NOT NULL,
   `page` smallint NOT NULL,
   `first_visited_at` int NOT NULL,
-  PRIMARY KEY (`user_id`, `topic_id_new`)
+  INDEX `index1` (`user_id`, `topic_id_new`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
