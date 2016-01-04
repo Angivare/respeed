@@ -105,13 +105,11 @@ function parse_topic($got) {
   global $forum, $topic, $topic_mode, $page, $slug;
   $ret = [];
 
-  // Titre du topic
   $ret['title'] = false;
   if (preg_match('#<span id="bloc-title-forum">(.+)</span>#Usi', $got, $matches)) {
       $ret['title'] = $matches[1];
   }
 
-  // Slug et nom du forum
   $ret['forum_slug'] = 'slug';
   $ret['forum_name'] = 'Forum';
   if (preg_match('#<span><a href="/forums/0-' . $forum . '-0-1-0-1-0-(.+)\.htm">Forum (.+)</a></span>#Usi', $got, $matches)) {
@@ -119,7 +117,6 @@ function parse_topic($got) {
       $ret['forum_name'] = $matches[2];
   }
 
-  // Sondages
   $ret['poll'] = false;
   if (strpos($got, '<span class="page-active">1</span>') !== false // Only get them on first page
   && preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches)) {
@@ -138,17 +135,14 @@ function parse_topic($got) {
         ];
       }
     }
-    $ret['poll']['ans_count'] = 0;
+    $ret['poll']['answers_count'] = 0;
     if (preg_match('#<div class="pied-result">.+([0-9]+)\s+vote.+?</div>#Usi', $got, $matches)) {
-      $ret['poll']['ans_count'] = $matches[1];
+      $ret['poll']['answers_count'] = $matches[1];
     }
-    $ret['poll']['closed'] = false;
-    if (preg_match('#<div class="bloc-options-sondage">.+<span>Sondage fermé</span>.+</div>#Usi', $got)) {
-      $ret['poll']['closed'] = true;
-    }
+    $ret['poll']['closed'] = preg_match('#<div class="bloc-options-sondage">.+<span>Sondage fermé</span>.+</div>#Usi', $got);
   }
 
-  // Messages
+  $ret['messages'] = [];
   $regex = '#<div class="bloc-message-forum " id="post_(?P<post>.+)".+>\s+<div class="conteneur-message">\s+' .
            '(<div class="bloc-avatar-msg">\s+<div class="back-img-msg">\s+<div>\s+<span[^>]+>\s+<img src="(?P<avatar>.+)"[^>]+>\s+</span>\s+</div>\s+</div>\s+</div>\s+)?' .
            '<div class="inner-head-content">.+(<span class="JvCare [0-9A-F]+ bloc-pseudo-msg text-(?P<status>.+)"|<div class="bloc-pseudo-msg").+' .
@@ -157,8 +151,6 @@ function parse_topic($got) {
            '<div class="txt-msg  text-enrichi-forum ">(?P<message>.*)</div>' .
            '</div>\s+</div>\s+</div>\s+</div>#Usi';
   preg_match_all($regex, $got, $matches);
-
-  $ret['messages'] = [];
   for ($i = 0; $i < count($matches[0]); $i++) {
     $dateRaw = strip_tags(trim($matches['date'][$i]));
     $avatar = $avatarBig = false;
@@ -169,7 +161,6 @@ function parse_topic($got) {
     $id = (int)$matches['post'][$i];
     $content = adapt_html($matches['message'][$i], $dateRaw, $id);
     $ret['messages'][] = [
-      'pos' => $i,
       'pseudo' => htmlspecialchars(trim($matches['pseudo'][$i])),
       'avatar' => $avatar,
       'avatarBig' => $avatarBig,
@@ -182,7 +173,6 @@ function parse_topic($got) {
     ];
   }
 
-  // Pagination
   $ret['last_page'] = 1;
   if (preg_match_all('#<span><a href="/forums/[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9a-z-]+\.htm" class="lien-jv">([0-9]+)</a></span>#Usi', $got, $matches2)) {
     $ret['last_page'] = array_pop($matches2[1]);
@@ -194,14 +184,14 @@ function parse_topic($got) {
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
   $ret['has_parent'] = strip_matches($ret['has_parent']);
 
-  preg_match('#var id_topic = (?P<id_topic>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
+  preg_match('#var id_topic = (?P<topic_id_new>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
   if ($matches_id) {
-    $ret['topic_id_new'] = $matches_id['id_topic'];
+    $ret['topic_id_new'] = $matches_id['topic_id_new'];
   }
 
-  $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<raison>.+)</span></b>`Usi', $got, $matches);
+  $ret['locked'] = preg_match('`<span style="color: #FF6600;">(?P<lock_rationale>.+)</span></b>`Usi', $got, $matches);
   if ($ret['locked']) {
-    $ret['lock_raison'] = $matches['raison'];
+    $ret['lock_rationale'] = $matches['lock_rationale'];
   }
 
   $ret['moderators'] = parse_moderators($got);
@@ -209,17 +199,16 @@ function parse_topic($got) {
   return $ret;
 }
 
-function fetch_topic($topic, $page, $slug, $forum) {
-  $path = "/$forum/$topic-$slug/$page";
+function fetch_topic($topic_id_array, $page, $slug, $forum) {
+  extract($topic_id_array);
 
-  $topic_mode = $topic[0] === '0' ? 1 : 42;
-  $topic = (int) $topic;
-  $url = "/forums/{$topic_mode}-{$forum}-{$topic}-{$page}-0-1-0-{$slug}.htm";
+  $path = "/$forum/$topic_id_url_jvf-$slug/$page";
+  $url = "/forums/{$topic_mode}-{$forum}-{$topic_id_old_or_new}-{$page}-0-1-0-{$slug}.htm";
 
   $jvc = new Jvc();
   $db = new Db();
 
-  if ($forum != 103 && ($cache = $db->get_topic_cache($topic, $page, $topic_mode, $forum)) && $cache['fetched_at'] > microtime(true) - 2) {
+  if ($forum != 103 && ($cache = $db->get_topic_cache($topic_id_old_or_new, $page, $topic_mode, $forum)) && $cache['fetched_at'] > microtime(true) - 2) {
     $ret = json_decode($cache['vars'], true);
   }
   else {
@@ -247,12 +236,12 @@ function fetch_topic($topic, $page, $slug, $forum) {
 
     $ret = parse_topic($got);
     if ($forum != 103) {
-      $db->set_topic_cache($topic, $page, $topic_mode, $forum, json_encode($ret));
+      $db->set_topic_cache($topic_id_old_or_new, $page, $topic_mode, $forum, json_encode($ret));
     }
   }
 
   $ret['topic_mode'] = $topic_mode;
-  $ret['topic'] = $topic;
+  $ret['topic_id_new'] = $topic_id_new;
   return $ret;
 }
 

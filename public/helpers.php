@@ -417,7 +417,6 @@ function delay($f, &$t) {
 
 function generate_message_markup($message, $is_mod_active) {
   $mine = strcasecmp(isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : '', $message['pseudo']) == 0;
-  $even_modifier = ($message['pos'] % 2 == 0) ? '' : 'message--even';
   $mine_modifier = $mine ? 'message--mine' : '';
   $pseudoLowercase = strtolower($message['pseudo']);
   $pseudoDeleted = strpos($pseudoLowercase, ' ') !== false;
@@ -444,7 +443,7 @@ function generate_message_markup($message, $is_mod_active) {
   $nb_actions = count($actions);
 
   $markup = <<<MESSAGE
-<div class="message {$mine_modifier} {$even_modifier} message-by--{$pseudoLowercase} message--nb-actions-{$nb_actions}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
+<div class="message {$mine_modifier} message-by--{$pseudoLowercase} message--nb-actions-{$nb_actions}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
   <div class="message__actions message__actions--nb-{$nb_actions} message__ignorable">
 MESSAGE;
 
@@ -641,10 +640,10 @@ STRING;
   <div class="poll__info">
 STRING;
   if ($poll['closed']) {
-    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] >= 2 ? 'votes' : 'vote') . ', clôt.';
+    $string .= '<span class="number">' . n($poll['answer_count']) . '</span> ' . ($poll['answer_count'] >= 2 ? 'votes' : 'vote') . ', clôt.';
   }
   else {
-    $string .= '<span class="number">' . n($poll['ans_count']) . '</span> ' . ($poll['ans_count'] >= 2 ? 'votes' : 'vote') . '. <a class="poll__go-vote" href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
+    $string .= '<span class="number">' . n($poll['answer_count']) . '</span> ' . ($poll['answer_count'] >= 2 ? 'votes' : 'vote') . '. <a class="poll__go-vote" href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
   }
   $string .= <<<STRING
   </div>

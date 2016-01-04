@@ -25,9 +25,9 @@ if ($last_page != $t['last_page']) {
   $t['paginationMarkup'] = generate_topic_pagination_markup($page, $t['last_page'], $forum, $topic, $topic_mode, $slug);
 }
 
-if ($poll_answers > -1 && $t['poll'] && $t['poll']['ans_count'] != $poll_answers) {
+if ($poll_answers > -1 && $t['poll'] && $t['poll']['answer_count'] != $poll_answers) {
   $t['poll'] = generate_poll_markup($t['poll'], $topic_mode, $forum, $topic, $slug);
-  $t['poll_answers'] = $t['poll']['ans_count'];
+  $t['poll_answers'] = $t['poll']['answer_count'];
 }
 else {
   unset($t['poll']);

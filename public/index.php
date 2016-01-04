@@ -1,6 +1,5 @@
 <?php
 $forum = isset($_GET['forum']) ? $_GET['forum'] : false;
-$topic = isset($_GET['topic']) ? $_GET['topic'] : false;
 $slug = isset($_GET['slug']) && preg_match('#^[a-zA-Z0-9-]{1,200}$#', $_GET['slug']) ? $_GET['slug'] : '0';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $apropos = isset($_GET['apropos']);
@@ -41,7 +40,7 @@ else {
 }
 
 $view = 'accueil';
-if ($forum && $topic)
+if ($forum && isset($_GET['topic']))
   $view = 'topic';
 elseif ($forum)
   $view = 'forum';

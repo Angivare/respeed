@@ -1,9 +1,23 @@
 <?php
+$topic_id_url_jvf = $_GET['topic'];
+$topic_id_old = $topic_id_new = null;
+if ($topic_id_url_jvf[0] === '0') {
+  $topic_id_url_jvf = '0' . (int)$topic_id_url_jvf; // Sanitizing
+  $topic_id_old = (int)$topic_id_url;
+  $topic_mode = 1;
+  $topic_id_old_or_new = $topic_id_old;
+}
+else {
+  $topic_id_url_jvf = (int)$topic_id_url_jvf; // Sanitizing
+  $topic_id_new = $topic_id_url_jvf;
+  $topic_mode = 42;
+  $topic_id_old_or_new = $topic_id_new;
+}
+$topic_id_array = compact('topic_id_url_jvf', 'topic_id_old_or_new', 'topic_id_old', 'topic_id_new', 'topic_mode');
+
 require 'parser.php';
 
-foreach (fetch_topic($topic, $page, $slug, $forum) as $k => $v) {
-  ${$k} = $v;
-}
+extract(fetch_topic($topic_id_array, $page, $slug, $forum));
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 
@@ -14,7 +28,7 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
 $is_mod = $moderators && in_array(strtolower($jvc->pseudo), array_map('strtolower', $moderators));
 $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 ?>
-<body class="forum-<?= $forum ?> topic-<?= ($topic_mode == 1 ? '0' : '') . $topic ?> body--no-bottom">
+<body class="forum-<?= $forum ?> topic-<?= $topic_id_url_jvf ?> body--no-bottom">
 
 <div class="sheet">
   <?php include '_header.php' ?>
@@ -30,7 +44,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 <?php else: ?>
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
 <?php endif ?>
-            <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
+            <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic_id_old_or_new ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
 <?php if ($is_mod_active): ?>
 <?php if ($locked): ?>
             <a class="mobile-menu__item" href="/lock/<?= $topic_id_new ?>?unlock">Déverrouiller</a>
@@ -47,14 +61,14 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
       <div class="pagination-topic__action-button pagination-topic__action-button--post"><span class="js-button-go-to-form button button--raised button--cta button--scale">Répondre</span></div>
 <?php endif ?>
       <div class="pagination-topic__pages">
-<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic_id_old_or_new, $topic_mode, $slug) ?>
       </div>
     </div>
 
 <script>var liste_messages = []</script>
     <div class="js-listeMessages liste-messages">
 <?php if ($poll): ?>
-      <div class="js-poll card card--poll"><?= generate_poll_markup($poll, $topic_mode, $forum, $topic, $slug) ?></div>
+      <div class="js-poll card card--poll"><?= generate_poll_markup($poll, $topic_mode, $forum, $topic_id_old_or_new, $slug) ?></div>
 <?php endif ?>
 <?php foreach ($messages as $message): ?>
 <?= generate_message_markup($message, $is_mod_active) ?>
@@ -64,14 +78,14 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
     <div class="pagination-topic pagination-topic--bottom">
       <div class="pagination-topic__action-button"><a class="button button--scale" href="/<?= $forum ?>-<?= $forum_slug ?>">Retour<span class="pagination-topic__action-button-additional-text"> forum</span></a></div>
       <div class="pagination-topic__pages">
-<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic, $topic_mode, $slug) ?>
+<?= generate_topic_pagination_markup($page, $last_page, $forum, $topic_id_old_or_new, $topic_mode, $slug) ?>
       </div>
     </div>
 
 <?php if ($locked): ?>
     <div class="lock-alert">
       <div class="lock-alert__title">Sujet verrouillé</div>
-      <div class="lock-alert__cause"><?= $lock_raison ?></div>
+      <div class="lock-alert__cause"><?= $lock_rationale ?></div>
     </div>
 <?php else: ?>
     <form class="js-form-post form form--touches-bottom">
@@ -112,7 +126,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
     <span class="js-favorite-toggle-label aside__top-button-label">Retirer des favoris</span>
   </span>
 <?php endif ?>
-      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">
+      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic_id_old_or_new ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">
         <span class="aside__top-button-label">Ouvrir sur JVC</span>
       </a>
     </div>
@@ -129,10 +143,10 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 </div>
 
 <script>
-var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm'
+var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic_id_old_or_new ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm'
   , tokens = <?= json_encode($jvc->tokens()) ?>
   , tokens_last_update = <?= $jvc->tokens_last_update() ?>
   , lastPage = <?= $last_page ?>
   , myPseudo = '<?= $pseudo ?>'
-  , pollAnswers = <?= $poll ? $poll['ans_count'] : -1 ?>
+  , pollAnswers = <?= $poll ? $poll['answer_count'] : -1 ?>
 </script>
