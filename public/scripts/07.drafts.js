@@ -11,8 +11,8 @@ function stopDraftWatcher() {
 }
 
 function getDraftName() {
-  if ($topic) {
-    return 'draft_' + $topic
+  if ($topicIdUrlJvf) {
+    return 'draft_' + $topicIdUrlJvf
   }
   if ($forum) {
     return 'draft_f' + $forum
@@ -50,7 +50,6 @@ function insertDraft() {
   }
 
   var draft = localStorage.getItem(draftName)
-  lastTopic = $topic
   if (draft) {
     if (!$('.form__draft').hasClass('form__draft--visible')) {
       $('.form__textarea').on('input', hideDraftMention)

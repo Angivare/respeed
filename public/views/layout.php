@@ -35,6 +35,7 @@ var $forum = <?= $forum ? $forum : 'false' ?>
   , $topicMode = <?= isset($topic_mode) ? $topic_mode : 'false' ?>
   , $topicIdOldOrNew = <?= isset($topic_id_old_or_new) ? $topic_id_old_or_new : 'false' ?>
   , $topicIdNew = <?= isset($topic_id_new) ? $topic_id_new : 'false' ?>
+  , $topicIdUrlJvf = <?= isset($topic_id_url_jvf) ? ("'{$topic_id_url_jvf}'") : 'false' ?>
   , $slug = '<?= $slug ?>'
   , $title = <?= $title ? "'{$title}'" : 'false' ?>
   , $page = <?= $page ? $page : 'false' ?>
