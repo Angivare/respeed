@@ -197,7 +197,7 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = str_replace('<blockquote class="blockquote-jv">', '<blockquote class="quote">', $message);
 
   // Transformations liens vers topics en liens internes
-  $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm)"#Usi', function($matches) {
+  $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm(\#(?P<hash>.+))?)"[^>]+>(?P<text>.+)</a>#Usi', function($matches) {
     $new_str = $matches[0];
     $path = '/' . $matches['forum'];
     if ($matches['topic']) {
@@ -209,8 +209,11 @@ function adapt_html($message, $date = '', $id = 0) {
     if ($matches['page'] != 1) {
       $path .= '/' . $matches['page'];
     }
-    $new_str = str_replace($matches['url'], $path, $new_str);
-    $new_str .= ' data-link-jvc="' . $matches['url'] . '"';
+    if (substr($matches['hash'], 0, 5) == 'post_') {
+      $path .= '#' . substr($matches['hash'], 5);
+    }
+    $new_str = str_replace('>' . $matches['text'] . '<', ' data-link-jvc="' . $matches['url'] . '">' . 'jvforum.fr' . $path . '<', $new_str);
+    $new_str = str_replace('href="' . $matches['url'] . '"', 'href="' . $path . '"', $new_str);
     return $new_str;
   }, $message);
 
