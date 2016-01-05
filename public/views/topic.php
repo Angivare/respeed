@@ -152,7 +152,7 @@ var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= 
   , tokens_last_update = <?= $jvc->tokens_last_update() ?>
   , lastPage = <?= $last_page ?>
   , myPseudo = '<?= $pseudo ?>'
-  , pollAnswers = <?= $poll ? $poll['answer_count'] : -1 ?>
+  , pollAnswers = <?= $poll ? $poll['answers_count'] : -1 ?>
 </script>
 
 <?php

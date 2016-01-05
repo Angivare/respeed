@@ -646,10 +646,10 @@ STRING;
   <div class="poll__info">
 STRING;
   if ($poll['closed']) {
-    $string .= '<span class="number">' . n($poll['answer_count']) . '</span> ' . ($poll['answer_count'] >= 2 ? 'votes' : 'vote') . ', clôt.';
+    $string .= '<span class="number">' . n($poll['answers_count']) . '</span> ' . ($poll['answers_count'] >= 2 ? 'votes' : 'vote') . ', clôt.';
   }
   else {
-    $string .= '<span class="number">' . n($poll['answer_count']) . '</span> ' . ($poll['answer_count'] >= 2 ? 'votes' : 'vote') . '. <a class="poll__go-vote" href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
+    $string .= '<span class="number">' . n($poll['answers_count']) . '</span> ' . ($poll['answers_count'] >= 2 ? 'votes' : 'vote') . '. <a class="poll__go-vote" href="http://www.jeuxvideo.com/forums/' . $topic_mode . '-' . $forum . '-' . $topic . '-1-0-1-0-' . $slug . '.htm#forum-main-col">Voter sur <span class="jvc">jvc</span></a>';
   }
   $string .= <<<STRING
   </div>
