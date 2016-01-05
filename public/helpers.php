@@ -218,7 +218,7 @@ function adapt_html($message, $date = '', $id = 0) {
   }, $message);
 
   // Transformations liens CDV
-  $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([a-z0-9-_[\]]+)(?:\.html)?(?:\?mode=[a-z_]+)?)"#Usi', '<a data-link-jvc="$1" href="/@$2"', $message);
+  $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([^"]+)(?:\.html)?(?:\?mode=[a-z_]+)?)"([^>]*)>(.+)</a>#Usi', '<a data-link-jvc="$1" href="/@$2"$3>jvforum.fr/@$2</a>', $message);
 
   // Transformation des liens NoelShack en liens directs
   $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function($matches) {
