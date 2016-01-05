@@ -1,21 +1,5 @@
 <?php
 
-function sub_forums($body) {
-  $beg = strpos($body, '<ul class="liste-sous-forums">');
-  $end = strpos($body, '<div class="panel panel-jv-forum">');
-  $body = substr($body, $beg, $end - $beg);
-  $re = '#<li class="line-ellipsis">.+' .
-        '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
-        '(?:\s+<span .+>)??' .
-        '\s*?(?P<human>.+)\s*?' .
-        '(?:</span>.+)??</a>.+</li>#Usi';
-  preg_match_all($re, $body, $matches, PREG_SET_ORDER);
-  foreach ($matches as $k => $v) {
-    $matches[$k] = strip_matches($matches[$k]);
-  }
-  return $matches;
-}
-
 function parse_moderators($got) {
   $moderators = [];
   if (preg_match('#<span class="liste-modo-fofo">(.+)</span>#Usi', $got, $matches)) {
@@ -57,7 +41,22 @@ function parse_forum($got) {
   $ret['has_next_page'] = strpos($got, '<div class="pagi-after">') !== false;
 
   preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
-  $ret['sous_forums'] = sub_forums($got);
+
+  $ret['subforums'] = false;
+  $beg = strpos($got, '<ul class="liste-sous-forums">');
+  $end = strpos($got, '<div class="panel panel-jv-forum">');
+  $body = substr($got, $beg, $end - $beg);
+  $re = '#<li class="line-ellipsis">.+' .
+        '<a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>.+).htm" .+>' .
+        '(?:\s+<span .+>)??' .
+        '\s*?(?P<name>.+)\s*?' .
+        '(?:</span>.+)??</a>.+</li>#Usi';
+  if (preg_match_all($re, $body, $matches, PREG_SET_ORDER)) {
+    foreach ($matches as $k => $v) {
+      $matches[$k] = strip_matches($matches[$k]);
+    }
+    $ret['subforums'] = $matches;
+  }
 
   $ret['moderators'] = parse_moderators($got);
 

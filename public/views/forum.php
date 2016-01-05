@@ -153,15 +153,15 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
     </form>
   </div>
 
-<?php if ($sous_forums): ?>
+<?php if ($subforums): ?>
   <div class="menu mobile">
 <?php if ($has_parent): ?>
     <a class="menu__item" href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a>
 <?php else: ?>
     <a class="menu__item" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a>
 <?php endif ?>
-<?php foreach ($sous_forums as $sous_forum): ?>
-    <a class="menu__item" href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a>
+<?php foreach ($subforums as $subforum): ?>
+    <a class="menu__item" href="/<?= $subforum['id'] ?>-<?= $subforum['slug'] ?>"><?= $subforum['name'] ?></a>
 <?php endforeach ?>
   </div>
 <?php endif ?>
@@ -191,15 +191,15 @@ if (is_topic_in_favorites($favorites, $matches['id'][$i])) {
       </div>
     </div>
 
-<?php if ($sous_forums): ?>
+<?php if ($subforums): ?>
     <div class="menu aside__menu">
 <?php if ($has_parent): ?>
       <a class="menu__item" href="/<?= $has_parent['id'] ?>-<?= $has_parent['slug'] ?>"><?= $has_parent['human'] ?></a>
 <?php else: ?>
       <a class="menu__item" href="/<?= $forum ?>-<?= $slug ?>"><?= $title ?></a>
 <?php endif ?>
-<?php foreach ($sous_forums as $sous_forum): ?>
-      <a class="menu__item" href="/<?= $sous_forum['id'] ?>-<?= $sous_forum['slug'] ?>"><?= $sous_forum['human'] ?></a>
+<?php foreach ($subforums as $subforum): ?>
+      <a class="menu__item" href="/<?= $subforum['id'] ?>-<?= $subforum['slug'] ?>"><?= $subforum['name'] ?></a>
 <?php endforeach ?>
     </div>
 <?php endif ?>
