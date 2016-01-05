@@ -541,13 +541,21 @@ function replace_stickers_shortcuts_to_code($message) {
 }
 
 function adapt_message_to_post($message) {
+  // Forum and topic links
   $message = preg_replace_callback('#https?://' . $_SERVER['HTTP_HOST'] . '/(?P<forum>[0-9]+)(/(?P<mode>0)?(?P<topic>[0-9]+))?-(?P<slug>[a-z0-9]+(-[a-z0-9]+)*)(/(?P<page>[0-9]+))?(\#(?P<message>[0-9]+))?(?:\#after[0-9]+)?#i', function($m) {
     $mode = '0';
-    if ($m['topic'] !== '') {
-      $mode = ($m['mode'] === '0') ? '1' : '42';
+    if ($matches['topic'] !== '') {
+      $mode = ($matches['mode'] === '0') ? '1' : '42';
     }
-    return 'http://www.jeuxvideo.com/forums/' . $mode . '-' . $m['forum'] . '-' . ($m['topic'] === '' ? '0' : $m['topic']) . '-'
-    . (isset($m['page']) ? $m['page'] : '1') . '-0-1-0-' . $m['slug'] . '.htm' . (isset($m['message']) ? ('#post_'.$m['message']) : '');
+    return 'http://www.jeuxvideo.com/forums/' . $mode . '-' . $matches['forum'] . '-' . ($matches['topic'] === '' ? '0' : $matches['topic']) . '-'
+    . (isset($matches['page']) ? $matches['page'] : '1') . '-0-1-0-' . $matches['slug'] . '.htm' . (isset($matches['message']) ? ('#post_'.$matches['message']) : '');
+  }, $message);
+
+  // Profile links
+  $message = preg_replace_callback('#https?://' . $_SERVER['HTTP_HOST'] . '/@(?P<pseudo>[-_[\]0-9a-z]+)#i', function($matches) {
+    $pseudo = strtolower($matches['pseudo']);
+    $pseudo = str_replace(['[', ']'], ['%5B', '%5D'], $pseudo); // JVC bug: links stop being links when encountering one of these two characters
+    return 'http://www.jeuxvideo.com/profil/' . $pseudo . '?mode=infos';
   }, $message);
 
   $message = replace_stickers_shortcuts_to_code($message);
