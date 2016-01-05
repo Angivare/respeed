@@ -542,7 +542,7 @@ function replace_stickers_shortcuts_to_code($message) {
 
 function adapt_message_to_post($message) {
   // Forum and topic links
-  $message = preg_replace_callback('#https?://' . $_SERVER['HTTP_HOST'] . '/(?P<forum>[0-9]+)(/(?P<mode>0)?(?P<topic>[0-9]+))?-(?P<slug>[a-z0-9]+(-[a-z0-9]+)*)(/(?P<page>[0-9]+))?(\#(?P<message>[0-9]+))?(?:\#after[0-9]+)?#i', function($m) {
+  $message = preg_replace_callback('#https?://' . $_SERVER['HTTP_HOST'] . '/(?P<forum>[0-9]+)(/(?P<mode>0)?(?P<topic>[0-9]+))?-(?P<slug>[a-z0-9]+(-[a-z0-9]+)*)(/(?P<page>[0-9]+))?(\#(?P<message>[0-9]+))?(?:\#after[0-9]+)?#i', function($matches) {
     $mode = '0';
     if ($matches['topic'] !== '') {
       $mode = ($matches['mode'] === '0') ? '1' : '42';
