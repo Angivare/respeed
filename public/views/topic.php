@@ -31,6 +31,8 @@ $favorites_topics = isset($favorites['topics']) ? $favorites['topics'] : false;
 
 $is_mod = $moderators && in_array(strtolower($jvc->pseudo), array_map('strtolower', $moderators));
 $is_mod_active = $is_mod && $jvc->logged_into_moderation;
+
+$jvc_url = "http://www.jeuxvideo.com/forums/{$topic_mode}-{$forum}-{$topic_id_old_or_new}-{$page}-0-1-0-{$slug}.htm";
 ?>
 <body class="forum-<?= $forum ?> topic-<?= $topic_id_url_jvf ?> body--no-bottom">
 
@@ -48,7 +50,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 <?php else: ?>
             <span class="js-favorite-toggle js-favorite-toggle-label mobile-menu__item" data-action="delete">Retirer des favoris</span>
 <?php endif ?>
-            <a class="mobile-menu__item" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic_id_old_or_new ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">Ouvrir sur JVC</a>
+            <a class="mobile-menu__item" href="<?= $jvc_url ?>" target="_blank">Ouvrir sur JVC</a>
 <?php if ($is_mod_active): ?>
 <?php if ($locked): ?>
             <a class="mobile-menu__item" href="/lock/<?= $topic_id_new ?>?unlock">Déverrouiller</a>
@@ -72,7 +74,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 <script>var liste_messages = []</script>
     <div class="js-listeMessages liste-messages">
 <?php if ($poll): ?>
-      <div class="js-poll card card--poll"><?= generate_poll_markup($poll, $topic_mode, $forum, $topic_id_old_or_new, $slug) ?></div>
+      <div class="topic-poll-notice">Ce topic a un sondage nommé <strong><?= $poll ?></strong>.</div>
 <?php endif ?>
 <?php foreach ($messages as $message): ?>
 <?= generate_message_markup($message, $is_mod_active) ?>
@@ -130,7 +132,7 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
     <span class="js-favorite-toggle-label aside__top-button-label">Retirer des favoris</span>
   </span>
 <?php endif ?>
-      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic_id_old_or_new ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm" target="_blank">
+      <a class="aside__top-button aside__top-button--open-jeuxvideocom" href="<?= $jvc_url ?>" target="_blank">
         <span class="aside__top-button-label">Ouvrir sur JVC</span>
       </a>
     </div>
@@ -147,12 +149,11 @@ $is_mod_active = $is_mod && $jvc->logged_into_moderation;
 </div>
 
 <script>
-var url = 'http://www.jeuxvideo.com/forums/<?= $topic_mode ?>-<?= $forum ?>-<?= $topic_id_old_or_new ?>-<?= $page ?>-0-1-0-<?= $slug ?>.htm'
+var url = '<?= $jvc_url ?>'
   , tokens = <?= json_encode($jvc->tokens()) ?>
   , tokens_last_update = <?= $jvc->tokens_last_update() ?>
   , lastPage = <?= $last_page ?>
   , myPseudo = '<?= $pseudo ?>'
-  , pollAnswers = <?= $poll ? $poll['answers_count'] : -1 ?>
 </script>
 
 <?php

@@ -120,26 +120,7 @@ function parse_topic($got) {
   $ret['poll'] = false;
   if (strpos($got, '<span class="page-active">1</span>') !== false // Only get them on first page
   && preg_match('#<div class="intitule-sondage">(.+?)</div>#', $got, $matches)) {
-    $ret['poll'] = ['question' => $matches[1]];
-    $regex = '#<tr>.+' .
-             '<td class="result-pourcent">.+' .
-             '<div class="pourcent">(?P<pourcent>[0-9]{1,3})\s*%</div>.+' .
-             '</td>.+<td class="reponse">(?P<human>.+)</td>.+' .
-             '</tr>#Usi';
-    $ret['poll']['answers'] = [];
-    if (preg_match_all($regex, $got, $matches)) {
-      for ($i = 0; $i < count($matches[0]); $i++) {
-        $ret['poll']['answers'][] = [
-          'value' => $matches['pourcent'][$i],
-          'human' => $matches['human'][$i],
-        ];
-      }
-    }
-    $ret['poll']['answers_count'] = 0;
-    if (preg_match('#<div class="pied-result">.+([0-9]+)\s+vote.+?</div>#Usi', $got, $matches)) {
-      $ret['poll']['answers_count'] = $matches[1];
-    }
-    $ret['poll']['closed'] = preg_match('#<div class="bloc-options-sondage">.+<span>Sondage fermé</span>.+</div>#Usi', $got);
+    $ret['poll'] = $matches[1];
   }
 
   $ret['messages'] = [];

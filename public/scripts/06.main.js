@@ -242,7 +242,6 @@ function topicRefresh() {
     page: $page,
     last_page: lastPage,
     liste_messages: liste_messages,
-    poll_answers: pollAnswers,
   }, function(data) {
     if (!data.rep) {
       // Erreur
@@ -261,12 +260,6 @@ function topicRefresh() {
       $title = data.title
       $('.js-topicTitle').html($title)
       $('title').html($title)
-    }
-
-    // Sondage
-    if ('poll' in data) {
-      $('.js-poll').html(data.poll)
-      pollAnswers = data.poll_answers
     }
 
     // Messages

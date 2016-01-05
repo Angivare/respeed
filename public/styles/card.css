@@ -34,24 +34,3 @@
 .card__body {
   padding-top: 10px;
 }
-
-
-
-.card--poll {
-  margin-top: 0;
-  margin-bottom: 16px;
-  background: #EDE7F6;
-}
-
-@media (min-width: 600px) {
-  .card--poll {
-    margin-bottom: 20px;
-  }
-}
-
-@media (min-width: 1025px) {
-  .card--poll {
-    margin-left: 200px;
-    margin-right: 0;
-  }
-}

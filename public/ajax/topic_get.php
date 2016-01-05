@@ -3,7 +3,7 @@ require 'common.php';
 
 require '../parser.php';
 
-arg('forum', 'topic_mode', 'topic_id_old_or_new', 'slug', 'page', 'last_page', 'liste_messages', 'poll_answers');
+arg('forum', 'topic_mode', 'topic_id_old_or_new', 'slug', 'page', 'last_page', 'liste_messages');
 
 $topic_id_url_jvf = $topic_id_old_or_new;
 $topic_id_old = $topic_id_new = null;
@@ -30,14 +30,6 @@ if ($liste_messages) { // N’est pas là en cas de timeout
 $t['page'] = (int)$page; // Pour vérifier simplement qu’on a la bonne page dans app.js
 if ($last_page != $t['last_page']) {
   $t['paginationMarkup'] = generate_topic_pagination_markup($page, $t['last_page'], $forum, $topic_id_array, $slug);
-}
-
-if ($poll_answers > -1 && $t['poll'] && $t['poll']['answers_count'] != $poll_answers) {
-  $t['poll'] = generate_poll_markup($t['poll'], $topic_mode, $forum, $topic_id_old_or_new, $slug);
-  $t['poll_answers'] = $t['poll']['answers_count'];
-}
-else {
-  unset($t['poll']);
 }
 
 echo json_encode([
