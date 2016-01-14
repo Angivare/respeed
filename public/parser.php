@@ -206,7 +206,7 @@ function fetch_topic($topic_id_array, $page, $slug, $forum, $allow_old_cache = f
     }
 
     $ret = parse_topic($got);
-    if ($forum != 103) {
+    if ($ret['title'] && $forum != 103) {
       $db->set_topic_cache($topic_id_old_or_new, $page, $topic_mode, $forum, json_encode($ret));
     }
   }
