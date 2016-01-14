@@ -64,8 +64,6 @@ function parse_forum($got) {
 }
 
 function fetch_forum($forum, $page, $slug) {
-  $path = "/$forum-$slug/$page";
-
   $jvc = new Jvc();
   $db = new Db();
 
@@ -182,7 +180,6 @@ function parse_topic($got) {
 function fetch_topic($topic_id_array, $page, $slug, $forum) {
   extract($topic_id_array);
 
-  $path = "/$forum/$topic_id_url_jvf-$slug/$page";
   $url = "/forums/{$topic_mode}-{$forum}-{$topic_id_old_or_new}-{$page}-0-1-0-{$slug}.htm";
 
   $jvc = new Jvc();
