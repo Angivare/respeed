@@ -156,9 +156,6 @@ function parse_topic($got) {
     $ret['last_page'] = $page;
   }
 
-  preg_match('#<span><a href="/forums/0-(?P<id>[0-9]+)-0-1-0-1-0-(?P<slug>[a-z0-9-]+).htm">Forum principal (?P<human>.+)</a></span>#Usi', $got, $ret['has_parent']);
-  $ret['has_parent'] = strip_matches($ret['has_parent']);
-
   preg_match('#var id_topic = (?P<topic_id_new>[0-9]+);\s+// ]]>\s+</script>#Usi', $got, $matches_id);
   if ($matches_id) {
     $ret['topic_id_new'] = $matches_id['topic_id_new'];
