@@ -2,51 +2,50 @@
 
 ## /
 
-- `generate_id_key.php` est un script pour générer une `ID_KEY` utilisée dans `config.php`
+- `generate_id_key.php` est un script pour gï¿½nï¿½rer une `ID_KEY` utilisï¿½e dans `config.php`
 
-Le dossier `cron` contient des scripts à exécuter via cron. Ils sont seulement utiles pour JVForum en production, vous n’avez pas besoin de vous en préoccuper.
+Le dossier `cron` contient des scripts ï¿½ exï¿½cuter via cron. Ils sont seulement utiles pour JVForum en production, vous nï¿½avez pas besoin de vous en prï¿½occuper.
 
 Le dossier `docs` contient de la documentation.
 
-Le dossier `php-encryption` contient le code de [php-encryption](https://github.com/defuse/php-encryption), une classe pour faire du chiffrage symétrique.
+Le dossier `php-encryption` contient le code de [php-encryption](https://github.com/defuse/php-encryption), une classe pour faire du chiffrage symï¿½trique.
 
-Le dossier `public` contient le plus intéressant : tous les fichiers exposés sur le web.
+Le dossier `public` contient le plus intï¿½ressantï¿½: tous les fichiers exposï¿½s sur le web.
 
 ## /public
 
-`index.php` est le fichier qui gère l’affichage des pages.
+`index.php` est le fichier qui gï¿½re lï¿½affichage des pages.
 
-`Auth.php`, `Db.php` et `Jvc.php` contiennent les classes `Auth`, `Db` et `Jvc`. `Auth` s’occupe de la gestion des tokens pour éviter le CSRF. `Db` contient les fonctions qui interagissent avec la base de données. `Jvc` contient les fonctions qui interagissent avec JVC.
+`Auth.php`, `Db.php` et `Jvc.php` contiennent les classes `Auth`, `Db` et `Jvc`. `Auth` sï¿½occupe de la gestion des tokens pour ï¿½viter le CSRF. `Db` contient les fonctions qui interagissent avec la base de donnï¿½es. `Jvc` contient les fonctions qui interagissent avec JVC.
 
-`salespage.php` est la page de présentation de JVForum. `connexion.php` la page de connexion. Ces deux pages sont celles accessibles en étant non-connectée, et ne passent pas par `index.php`. `deconnexion` aussi ne passe pas par `index.php`.
+`salespage.php` est la page de prï¿½sentation de JVForum. `connexion.php` la page de connexion. Ces deux pages sont celles accessibles en ï¿½tant non-connectï¿½e, et ne passent pas par `index.php`. `deconnexion` aussi ne passe pas par `index.php`.
 
 `helpers.php` est le fichier contenant des fonctions diverses, un peu fourre-tout.
 
-`parser.php` contient les fonctions pour récupérer et parser les forums, topics et CDVs.
+`parser.php` contient les fonctions pour rï¿½cupï¿½rer et parser les forums, topics et CDVs.
 
-`collect_icstats.php` est un script pour récupérer des stats en rapport avec InstantClick. `stats.php` est le fichier qui montre le nombre de messages postés chaque jour. Vous n’avez pas besoin de vous en préoccuper.
+`collect_icstats.php` est un script pour rï¿½cupï¿½rer des stats en rapport avec InstantClick. `stats.php` est le fichier qui montre le nombre de messages postï¿½s chaque jour. Vous nï¿½avez pas besoin de vous en prï¿½occuper.
 
 ## /public/scripts
 
-Contient les scripts JavaScript utilisés.
+Contient les scripts JavaScript utilisï¿½s.
 
-Scripts de tierce-partie :
+Scripts de tierce-partieï¿½:
 
-- jQuery est une bibliothèque bien connu pour faciliter des opérations courantes en JavaScript.
-- FastClick permet de supprimer le délai entre le toucher et l’affichage de la page sur iOS et Android.
-- InstantClick (`instantclick.js` ainsi que `loading-indicator.js`) s’occupe du préchargement des pages. J’en suis le développeur, JVForum est utilisé comme projet réel pour l’améliorer.
+- jQuery est une bibliothï¿½que bien connu pour faciliter des opï¿½rations courantes en JavaScript.
+- FastClick permet de supprimer le dï¿½lai entre le toucher et lï¿½affichage de la page sur iOS et Android.
+- InstantClick (`instantclick.js` ainsi que `loading-indicator.js`) sï¿½occupe du prï¿½chargement des pages. Jï¿½en suis le dï¿½veloppeur, JVForum est utilisï¿½ comme projet rï¿½el pour lï¿½amï¿½liorer.
 
-JVCode est le parser du HTML des messages en JVcode, pour permettre aux fonctions citer et modifier d’être instantanées.
+JVCode est le parser du HTML des messages en JVcode, pour permettre aux fonctions citer et modifier dï¿½ï¿½tre instantanï¿½es.
 
 `app.js` est le fichier JavaScript principal.
 
 ## /public/ajax
 
-Contient les scripts appelés via Ajax.
+Contient les scripts appelï¿½s via Ajax.
 
-## /public/views
+## /public/pages
 
-Contient les pages affichées lorsque l’on est connecté.
+Contient les pages affichï¿½es lorsque lï¿½on est connectï¿½.
 
-Exceptions : `_header.php` est le header, `layout.php` est le squelette des pages. `forum_pagination.php` est un morceau de page inclue dans `forum.php`.
-
+Exceptionsï¿½: `_header.php` est le header, `layout.php` est le squelette des pages. `forum_pagination.php` est un morceau de page inclue dans `forum.php`.

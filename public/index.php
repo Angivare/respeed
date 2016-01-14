@@ -35,7 +35,7 @@ if (in_array($param_page, $allowed_pages)) {
 }
 
 ob_start();
-require 'views/' . $view . '.php';
+require 'pages/' . $view . '.php';
 $body = ob_get_contents();
 ob_end_clean();
-require 'views/layout.php';
+require 'pages/layout.php';

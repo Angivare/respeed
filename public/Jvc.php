@@ -799,7 +799,7 @@ class Jvc {
   private function fatal_err($title, $message, $http_status_code = 200) {
     http_response_code($http_status_code);
     ob_start();
-    require 'views/timeout.php';
+    require 'pages/timeout.php';
     $body = ob_get_contents();
     ob_end_clean();
     $jvc = new Jvc();
@@ -816,7 +816,7 @@ class Jvc {
       $blacklist = [];
       $blacklist_is_fresh = false;
     }
-    include 'views/layout.php';
+    include 'pages/layout.php';
     exit;
   }
 
