@@ -21,7 +21,7 @@ $topic_id_array = compact('topic_id_url_jvf', 'topic_mode', 'topic_id_old_or_new
 
 require 'parser.php';
 
-extract(fetch_topic($topic_id_array, $page, $slug, $forum));
+extract(fetch_topic($topic_id_array, $page, $slug, $forum, true));
 
 $pseudo = isset($_COOKIE['pseudo']) ? $_COOKIE['pseudo'] : false;
 

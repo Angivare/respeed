@@ -177,7 +177,7 @@ function parse_topic($got) {
   return $ret;
 }
 
-function fetch_topic($topic_id_array, $page, $slug, $forum) {
+function fetch_topic($topic_id_array, $page, $slug, $forum, $allow_old_cache = false) {
   extract($topic_id_array);
 
   $url = "/forums/{$topic_mode}-{$forum}-{$topic_id_old_or_new}-{$page}-0-1-0-{$slug}.htm";
@@ -185,7 +185,7 @@ function fetch_topic($topic_id_array, $page, $slug, $forum) {
   $jvc = new Jvc();
   $db = new Db();
 
-  if ($forum != 103 && ($cache = $db->get_topic_cache($topic_id_old_or_new, $page, $topic_mode, $forum)) && $cache['fetched_at'] > microtime(true) - 2) {
+  if ($forum != 103 && ($cache = $db->get_topic_cache($topic_id_old_or_new, $page, $topic_mode, $forum)) && ($allow_old_cache || $cache['fetched_at'] > microtime(true) - 2)) {
     $ret = json_decode($cache['vars'], true);
   }
   else {
