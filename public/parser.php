@@ -131,22 +131,20 @@ function parse_topic($got) {
   preg_match_all($regex, $got, $matches);
   for ($i = 0; $i < count($matches[0]); $i++) {
     $dateRaw = strip_tags(trim($matches['date'][$i]));
-    $avatar = $avatarBig = false;
+    $avatar = false;
     if ($matches['avatar'][$i] && strrpos($matches['avatar'][$i], '/default.jpg') === false) {
       $avatar = $matches['avatar'][$i];
-      $avatarBig = str_replace(['/avatars-sm/', '/avatar-sm/'], ['/avatars/', '/avatar/'], $matches['avatar'][$i]);
     }
     $id = (int)$matches['post'][$i];
     $content = adapt_html($matches['message'][$i], $dateRaw, $id);
     $ret['messages'][] = [
       'pseudo' => htmlspecialchars(trim($matches['pseudo'][$i])),
+      'status' => $matches['status'][$i],
       'avatar' => $avatar,
-      'avatarBig' => $avatarBig,
       'dateRaw' => $dateRaw,
       'content' => $content,
       'contentChecksum' => md5($content),
       'id' => $id,
-      'status' => $matches['status'][$i],
     ];
   }
 
