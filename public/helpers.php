@@ -170,7 +170,7 @@ function adapt_html($message, $date = '', $id = 0) {
   // Normalize JvCare links
   $message = preg_replace_callback('#<span class="JvCare ([0-9A-F]+)"[^>]*>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function($matches) {
     $new_str = $matches[0];
-    $new_str = str_replace(' rel="nofollow', '', $new_str);
+    $new_str = str_replace(' rel="nofollow"', '', $new_str);
     $new_str = str_replace('<span class="JvCare ' . $matches[1], '<a href="' . strip_tags($matches[2]), $new_str);
     $new_str = substr($new_str, 0, -strlen('</span>'));
     $new_str .= '</a>';
