@@ -18,14 +18,14 @@ $topic_id_array = compact('topic_id_url_jvf', 'topic_mode', 'topic_id_old_or_new
 
 $t = fetch_topic($topic_id_array, $page, $slug, $forum);
 
+$is_mod = $t['moderators'] && in_array(strtolower($jvc->pseudo), array_map('strtolower', $t['moderators']));
+
 for ($i = 0; $i < count($t['messages']); $i++) {
   $t['messages'][$i]['date'] = relative_date_messages($t['messages'][$i]['dateRaw']);
   if (!in_array($t['messages'][$i]['id'], $liste_messages)) {
     $t['messages'][$i]['markup'] = generate_message_markup($t['messages'][$i], $is_mod);
   }
 }
-
-$is_mod = $t['moderators'] && in_array(strtolower($jvc->pseudo), array_map('strtolower', $t['moderators']));
 
 if ($last_page != $t['last_page']) {
   $t['paginationMarkup'] = generate_topic_pagination_markup($page, $t['last_page'], $forum, $topic_id_array, $slug);
