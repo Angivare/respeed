@@ -32,7 +32,6 @@ for ($i = 0; $i < count($t['messages']); $i++) {
 
 $is_mod = $t['moderators'] && in_array(strtolower($jvc->pseudo), array_map('strtolower', $t['moderators']));
 
-$t['page'] = (int)$page; // Pour vérifier simplement qu’on a la bonne page dans app.js
 if ($last_page != $t['last_page']) {
   $t['paginationMarkup'] = generate_topic_pagination_markup($page, $t['last_page'], $forum, $topic_id_array, $slug);
 }

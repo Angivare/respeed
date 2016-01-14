@@ -251,11 +251,6 @@ function topicRefresh() {
 
     data = data.rep
 
-    if (data.topic_id_new != $topicIdNew || data.page != $page) {
-      // On est plus sur le topic, ou alors plus sur la même page, quand la requête se termine
-      return
-    }
-
     // Titre du topic
     if (data.title != $title) {
       $title = data.title
@@ -311,6 +306,7 @@ function topicRefresh() {
 
     updateTopicPosition()
   })
+  instantClick.trackXhr(refreshXhr)
 }
 
 /** /Refresh **/
