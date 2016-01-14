@@ -249,7 +249,7 @@ function adapt_html($message, $date = '', $id = 0) {
   $message = preg_replace('#<a href="(https?://youtu\.be/([a-zA-Z0-9-_]{11})([^"])*)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$2/mqdefault.jpg" alt="$1"></a>', $message);
 
   // Show Dailymotion thumbnails
-  $message = preg_replace('#<a href="(https?://www\.dailymotion\.com/video/([a-z0-9]{7})[^"]+)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://www.dailymotion.com/thumbnail/video/$2" alt="$1"></a>', $message);
+  $message = preg_replace('#<a href="(https?://www\.dailymotion\.com/video/([a-z0-9]+)[^"]+)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://www.dailymotion.com/thumbnail/video/$2" alt="$1"></a>', $message);
   $message = preg_replace('#<a href="(https?://dai\.ly/([^"+]))"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb)" src="http://www.dailymotion.com/thumbnail/video/$2" alt="$1"></a>', $message);
 
   // Format YouTube/Dailymotion thumbnails to JVF style
