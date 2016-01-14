@@ -152,19 +152,35 @@ function n($number, $decimals = 0) {
 }
 
 function adapt_html($message, $date = '', $id = 0) {
+  // Signature sometimes appear (JVC bug), let's remove it
+  $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
+  if ($pos_signature !== false) {
+    $message = substr($message, 0, $pos_signature);
+  }
+
   $message = '<div class="message__content-text">' . $message . '</div>';
 
-  // Mise en forme édition
+  // Format edit
   preg_match('#</div><div class="info-edition-msg">\s*Message édité le (?P<date>.+) par\s*<span class="JvCare [0-9A-F]*" target="_blank">(?P<pseudo>.*)</span>#Usi', $message, $matches_edit);
   if ($matches_edit) {
     $message = str_replace($matches_edit[0], '', $message);
     $message .= '<p class="message__content-edit-mention"><span title="' . $date . '">Modifié après ' . edit_date_difference($date, $matches_edit['date']) . '</span></p>';
   }
 
-  // JVCare
-  $message = jvcare($message);
+  // Normalize JvCare links
+  $message = preg_replace_callback('#<span class="JvCare ([0-9A-F]+)"[^>]*>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function($matches) {
+    $new_str = $matches[0];
+    $new_str = str_replace(' rel="nofollow', '', $new_str);
+    $new_str = str_replace('<span class="JvCare ' . $matches[1], '<a href="' . strip_tags($matches[2]), $new_str);
+    $new_str = substr($new_str, 0, -strlen('</span>'));
+    $new_str .= '</a>';
+    return $new_str;
+  }, $message);
 
-  // Rétrécir liens
+  // Fix mail links missing a "mailto:" due to our JvCare conversion
+  $message = preg_replace('`<a href="((&#[x0-9a-f]+;)+)"`Usi', '<a href="mailto:$1"', $message);
+
+  // Normalize cut links, and re-cut them
   $message = preg_replace_callback('#<a ([^>]+)>([^>]+)<i></i><span>([^>]+)</span>([^>]+)</a>#Usi', function($matches) {
     $url = $matches[2] . $matches[3] . $matches[4];
     if (strlen($url) > 110) {
@@ -177,26 +193,28 @@ function adapt_html($message, $date = '', $id = 0) {
     return $new_str;
   }, $message);
 
-  // Vire la signature qui apparaît parfois
-  $pos_signature = strpos($message, '</div><div class="signature-msg  text-enrichi-forum ">');
-  if ($pos_signature !== false) {
-    $message = substr($message, 0, $pos_signature) . '</div>'; // </div> pour .message__content-text
-  }
-
-  // Fix JVC : Ajout des miniatures NoelShack pour fichiers SWF et PSD
-  $message = preg_replace('#\.(swf|psd)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="[^"]+"#Usi', '.$1" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="//www.noelshack.com/pics/mini_$1.png"', $message);
-
-  // Conversion miniatures NoelShack
+  // Normalize NoelShack thumbnails
   $message = preg_replace('#<a href="([^"]+)" data-def="NOELSHACK" target="_blank"><img class="img-shack" width="68" height="51" src="([^"]+)" alt="[^"]+"/></a>#Usi', '<a class="noelshack-link" href="$1" target="_blank"><img class="noelshack-link__thumb" src="$2" alt="$1"></a>', $message);
 
-  // Conversion spoils
+  // Make NoelShack links go straight to the image
+  $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function($matches) {
+    $new_str = $matches[0];
+    $path = 'http://image.noelshack.com/fichiers/' . $matches['year'] . '/' . $matches['container'] . '/' . $matches['path'];
+    $new_str = str_replace($matches['url'], $path, $new_str);
+    return $new_str;
+  }, $message);
+
+  // Add good NoelShack thumbnail for SWF and PSD files (JVC bug)
+  $message = preg_replace('#<img class="noelshack-link__thumb" src=".+\.(swf|psd)"#Usi', '<img class="noelshack-link__thumb" src="//www.noelshack.com/pics/mini_$1.png"', $message);
+
+  // Normalize spoils
   $message = str_replace('<span class="bloc-spoil-jv en-ligne"><span class="contenu-spoil">', '<span class="spoil spoil--inline"><span class="spoil__content">', $message);
   $message = str_replace('<span class="bloc-spoil-jv"><span class="contenu-spoil">', '<span class="spoil spoil--block"><span class="spoil__content">', $message);
 
-  // Conversion citations
+  // Normalize citations
   $message = str_replace('<blockquote class="blockquote-jv">', '<blockquote class="quote">', $message);
 
-  // Transformations liens vers topics en liens internes
+  // Transform forums/topics links to JVForum links
   $message = preg_replace_callback('#<a href="(?P<url>https?://(www|m)\.jeuxvideo\.com/forums/(?P<mode>[0-9]+)-(?P<forum>[0-9]+)-(?P<topic>[0-9]+)-(?P<page>[0-9]+)-0-1-0-(?P<slug>[0-9a-z-]+)\.htm(\#(?P<hash>.+))?)"[^>]+>(?P<text>.+)</a>#Usi', function($matches) {
     $new_str = $matches[0];
     $path = '/' . $matches['forum'];
@@ -217,42 +235,31 @@ function adapt_html($message, $date = '', $id = 0) {
     return $new_str;
   }, $message);
 
-  // Transformations liens CDV
+  // Transform profile links to JVForum links
   $message = preg_replace('#<a href="(http://www.jeuxvideo.com/profil/([^"]+)(?:\.html)?(?:\?mode=[a-z_]+)?)"([^>]*)>(.+)</a>#Usi', '<a data-link-jvc="$1" href="/@$2"$3>jvforum.fr/@$2</a>', $message);
 
-  // Transformation des liens NoelShack en liens directs
-  $message = preg_replace_callback('#<a class="noelshack-link" href="(?P<url>https?://www\.noelshack\.com/(?P<year>[0-9]+)-(?P<container>[0-9]+)-(?P<path>.+))"#Usi', function($matches) {
-    $new_str = $matches[0];
-    $path = 'http://image.noelshack.com/fichiers/' . $matches['year'] . '/' . $matches['container'] . '/' . $matches['path'];
-    $new_str = str_replace($matches['url'], $path, $new_str);
-    return $new_str;
-  }, $message);
-
-  // Fix liens mails, il manque le "mailto:" car on prend le contenu de l’élement a (pour outrepasser JvCare) et pas son attribut href
-  $message = preg_replace('`<a href="((&#[x0-9a-f]+;)+)"`Usi', '<a href="mailto:$1"', $message);
-
-  // Affichage des miniatures YouTube
+  // Show YouTube thumbnails
   $message = preg_replace('#<a href="(https?://(?:[a-z]+\.)?youtube\.com/watch[^"]*(?:\?|&amp;)v=([a-zA-Z0-9-_]{11})([^"])*)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$2/mqdefault.jpg" alt="$1"></a>', $message);
   $message = preg_replace('#<a href="(https?://youtu\.be/([a-zA-Z0-9-_]{11})([^"])*)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$2/mqdefault.jpg" alt="$1"></a>', $message);
 
-  // Affichage des miniatures Dailymotion
+  // Show Dailymotion thumbnails
   $message = preg_replace('#<a href="(https?://www\.dailymotion\.com/video/([a-z0-9]{7})[^"]+)"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb" src="http://www.dailymotion.com/thumbnail/video/$2" alt="$1"></a>', $message);
   $message = preg_replace('#<a href="(https?://dai\.ly/([^"+]))"[^>]+>.+</a>#U', '<a class="youtube-link" href="$1" target="_blank"><img class="youtube-link__thumb)" src="http://www.dailymotion.com/thumbnail/video/$2" alt="$1"></a>', $message);
 
-  // Transformation des miniatures vidéos
+  // Format YouTube/Dailymotion thumbnails to JVF style
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.youtube.com/embed/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a class="youtube-link" href="http://youtu.be/$1" target="_blank"><img class="youtube-link__thumb" src="http://img.youtube.com/vi/$1/mqdefault.jpg" alt="http://youtu.be/$1"></a>', $message);
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//www.dailymotion.com/embed/video/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a class="youtube-link" href="http://dai.ly/$1" target="_blank"><img class="youtube-link__thumb" src="http://www.dailymotion.com/thumbnail/video/$1" alt="http://dai.ly/$1"></a>', $message);
 
-  // Suppression des miniatures Vimeo
+  // Remove JVC's Vimeo thumbnails
   $message = preg_replace('#<div class="player-contenu"><div class="embed-responsive embed-responsive-16by9"><iframe src="//player.vimeo.com/video/([^"]+)" allowfullscreen></iframe></div></div>#Usi', '<a href="https://vimeo.com/$1" class="xXx" rel="nofollow" target="_blank">https://vimeo.com/$1</a>', $message);
 
-  // Suppression des miniatures JVC
+  // Remove JVC's own videos thumbnails
   $message = preg_replace('#<div class="player-contenu">\s+<div class="embed-responsive embed-responsive-16by9">\s+<div class="embed-responsive-item" >\s+<div class="player-jv" id="player-jv-[0-9]+-[0-9]+" data-src="[^"]+">Chargement du lecteur vidéo...</div>\s+</div>\s+</div>\s+</div>#Usi', '<p><a href="http://www.jeuxvideo.com/___/forums/message/' . $id . '" class="xXx" target="_blank" title="http://www.jeuxvideo.com/___/forums/message/' . $id . '">Miniature vidéo sur JVC</a></p>', $message);
 
-  // Conversion smileys
+  // Normalize smileys
   $message = preg_replace('#<img src="//image\.jeuxvideo\.com/smileys_img/([^.]+)\.gif" alt="([^"]+)" data-def="SMILEYS" data-code="[^"]+" title="[^"]+" />#Usi', '<img class="smiley smiley--$1" src="//image.jeuxvideo.com/smileys_img/$1.gif" data-code="$2" title="$2" alt="$2">', $message);
 
-  // Conversion stickers
+  // Normalize stickers
   $message = preg_replace_callback('#<img class="img-stickers" src="http://jv.stkr.fr/p/(?P<id>[^"]+)"/>#Usi', function($matches) {
     global $stickers;
 
@@ -278,7 +285,7 @@ function adapt_html($message, $date = '', $id = 0) {
     return '<img class="sticker ' . ($unknown ? 'sticker--unknown' : '') . '" src="' . ($unknown ? ('http://jv.stkr.fr/p3w/' . $id) : ('/images/stickers/small/' . $code . '.png')) . '" data-sticker-id="' . $id . '" data-code="' . $shortcut . '" title="' . $shortcut . '" alt="' . $shortcut . '">';
   }, $message);
 
-  // Rajout de target="_blank" aux liens externes
+  // Add target="_blank" to non-JVForum links
   $message = preg_replace_callback('#<a.*href="(?P<url>.*)".*>#Usi', function($matches) {
     $ret = $matches[0];
     $has_blank = (strpos($ret, 'target="_blank"') !== false) ? true : false;
@@ -295,20 +302,10 @@ function adapt_html($message, $date = '', $id = 0) {
     return $ret;
   }, $message);
 
-  // Suppression de potentielles failles
+  // Remove some potential vulnerabilities
   $message = str_ireplace(['<style>', '<script>'], '', $message);
 
   return $message;
-}
-
-function jvcare($str) {
-  return preg_replace_callback('#<span class="JvCare ([0-9A-F]+)"[^>]*>([^<]*(?:<i></i><span>[^<]+</span>)?[^<]+)</span>#Usi', function($matches) {
-    $new_str = $matches[0];
-    $new_str = str_replace('<span class="JvCare ' . $matches[1], '<a href="' . strip_tags($matches[2]), $new_str);
-    $new_str = substr($new_str, 0, -strlen('</span>'));
-    $new_str .= '</a>';
-    return $new_str;
-  }, $str);
 }
 
 function relative_date_timestamp($timestamp, $topicList = false) {
