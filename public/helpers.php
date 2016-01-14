@@ -429,6 +429,7 @@ function generate_message_markup($message, $is_mod_active) {
   $avatar = $message['avatar'] ? $message['avatar'] : ('/images/triangles.php?s=' . $pseudoLowercase);
   $pseudo_modifier = $message['status'] != 'user' ? ('message__byline-author-pseudo--' . $message['status']) : '';
   $default_avatar_modifier = $message['avatar'] ? '' : 'message__byline-author-avatar-image--default';
+  $date = relative_date_messages($message['dateRaw']);
 
   $actions = [];
   if ($is_mod_active && !$mine) {
@@ -466,7 +467,7 @@ MESSAGE;
         </{$authorLinkTag}>
       </div>
       <div class="message__byline-date">
-        <span class="js-menu js-date message__byline-date-inline" title="{$message['dateRaw']}">{$message['date']}</span>
+        <span class="js-menu js-date message__byline-date-inline" title="{$message['dateRaw']}">{$date}</span>
       </div>
     </div><!--
     --><div class="js-content message__content">{$message['content']}</div>

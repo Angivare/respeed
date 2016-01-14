@@ -143,7 +143,6 @@ function parse_topic($got) {
       'avatar' => $avatar,
       'avatarBig' => $avatarBig,
       'dateRaw' => $dateRaw,
-      'date' => relative_date_messages($dateRaw),
       'content' => $content,
       'contentMd5' => md5($content),
       'id' => $id,
