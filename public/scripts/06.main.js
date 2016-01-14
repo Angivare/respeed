@@ -235,7 +235,7 @@ function handleRefresh() {
 
 function topicRefresh() {
   lastRefreshTimestamp = +new Date
-  refreshXhr = ajax('topic_get', {
+  refreshXhr = ajax('topic_refresh', {
     forum: $forum,
     topic_mode: $topicMode,
     topic_id_old_or_new: $topicIdOldOrNew,
