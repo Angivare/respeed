@@ -177,8 +177,14 @@ function adapt_html($message, $date = '', $id = 0) {
     return $new_str;
   }, $message);
 
-  // Fix mail links missing a "mailto:" due to our JvCare conversion
-  $message = preg_replace('`<a href="((&#[x0-9a-f]+;)+)"`Usi', '<a href="mailto:$1"', $message);
+  // Normalize mail links, add missing "mailto:" due to JvCare normalization
+  // Mail addresses are encoded using two styles of HTML entities, one style is randomly chosen
+  // for each character. This must be normalized, otherwise the content checksum changes everytime
+  // and it looks to JVForum like the message has been updated.
+  $message = preg_replace_callback('`<a href="((&#[x0-9a-f]+;)+)">([^<]+)</a>`Usi', function ($matches) {
+    $decoded = html_entity_decode($matches[1]);
+    return '<a href="mailto:' . $decoded . '" target="_blank">' . $decoded . '</a>';
+  }, $message);
 
   // Normalize cut links, and re-cut them
   $message = preg_replace_callback('#<a ([^>]+)>([^>]+)<i></i><span>([^>]+)</span>([^>]+)</a>#Usi', function($matches) {
