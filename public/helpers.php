@@ -448,7 +448,7 @@ function generate_message_markup($message, $is_mod_active) {
   $nb_actions = count($actions);
 
   $markup = <<<MESSAGE
-<div class="message {$mine_modifier} message-by--{$pseudoLowercase} message--nb-actions-{$nb_actions}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-md5="{$message['contentMd5']}">
+<div class="message {$mine_modifier} message-by--{$pseudoLowercase} message--nb-actions-{$nb_actions}" id="{$message['id']}" data-pseudo="{$message['pseudo']}" data-content-checksum="{$message['contentChecksum']}">
   <div class="message__actions message__actions--nb-{$nb_actions} message__ignorable">
 MESSAGE;
 

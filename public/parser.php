@@ -144,7 +144,7 @@ function parse_topic($got) {
       'avatarBig' => $avatarBig,
       'dateRaw' => $dateRaw,
       'content' => $content,
-      'contentMd5' => md5($content),
+      'contentChecksum' => md5($content),
       'id' => $id,
       'status' => $matches['status'][$i],
     ];

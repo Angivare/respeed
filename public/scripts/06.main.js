@@ -273,9 +273,9 @@ function topicRefresh() {
         $('#' + message.id + ' .js-date').html(message.date)
 
         // Message
-        if ($('#' + message.id).data('contentMd5') != message.contentMd5) {
+        if ($('#' + message.id).data('contentChecksum') != message.contentChecksum) {
           // Mise à jour
-          $('#' + message.id).data('contentMd5', message.contentMd5)
+          $('#' + message.id).data('contentChecksum', message.contentChecksum)
           $('#' + message.id + ' .js-content').html(message.content)
           $('#' + message.id + ' .spoil').click(toggleSpoil)
           $('#' + message.id + ' .sticker').click(toggleStickerSize)
