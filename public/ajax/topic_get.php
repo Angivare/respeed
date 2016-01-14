@@ -5,7 +5,7 @@ require '../parser.php';
 
 arg('forum', 'topic_mode', 'topic_id_old_or_new', 'slug', 'page', 'last_page', 'liste_messages');
 
-if (!is_array($liste_messages)) {
+if (!$forum || !$topic_mode || !$topic_id_old_or_new || !$slug || !$page || !$last_page || !is_array($liste_messages)) {
   exit;
 }
 
@@ -16,12 +16,7 @@ if ($topic_mode == 1) {
 }
 $topic_id_array = compact('topic_id_url_jvf', 'topic_mode', 'topic_id_old_or_new', 'topic_id_old', 'topic_id_new');
 
-if (!$page) {
-  $page = 1;
-}
-
 $t = fetch_topic($topic_id_array, $page, $slug, $forum);
-
 
 for ($i = 0; $i < count($t['messages']); $i++) {
   $t['messages'][$i]['date'] = relative_date_messages($t['messages'][$i]['dateRaw']);
