@@ -222,6 +222,7 @@ function handleRefreshOnPageChange() {
     lastRefreshTimestamp = 0
   }
   if ($topicIdNew) {
+    topicRefresh()
     handleRefreshInterval = setInterval(handleRefresh, 2000)
   }
 }
