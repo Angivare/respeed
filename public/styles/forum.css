@@ -95,7 +95,7 @@
   }
 }
 
-.topic--visited {
+.topic--visited, .topic:visited {
   color: hsl(0, 0%, 57%);
 }
 
