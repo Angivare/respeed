@@ -11,6 +11,8 @@ require_once 'helpers.php';
  * @package default
  */
 class Jvc {
+  static private $ch = null;
+
   public $user_id = null;
   public $pseudo = null;
   public $logged_into_moderation = false;
@@ -19,6 +21,10 @@ class Jvc {
     $this->err = 'Indéfinie';
     $this->cookie_pre = '_JVCCOK_';
     $this->tokens_pre = '_JVCTOK_';
+
+    if (self::$ch === null) {
+      self::$ch = curl_init();
+    }
 
     $this->cookie = [];
     foreach ($_COOKIE as $k => $v) {
@@ -559,24 +565,23 @@ class Jvc {
     $log_id = $db->log_request_start($url, !!$post_data, $connected);
     $start = microtime(true);
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt(self::$ch, CURLOPT_URL, $url);
     if ($post_data) {
-      curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+      curl_setopt(self::$ch, CURLOPT_POST, 1);
+      curl_setopt(self::$ch, CURLOPT_POSTFIELDS, $post_data);
     }
     elseif ($nobody) {
-      curl_setopt($ch, CURLOPT_NOBODY, true);
+      curl_setopt(self::$ch, CURLOPT_NOBODY, true);
     }
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT_MS, REQUEST_TIMEOUT);
+    curl_setopt(self::$ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt(self::$ch, CURLOPT_HEADER, true);
+    curl_setopt(self::$ch, CURLOPT_TIMEOUT_MS, REQUEST_TIMEOUT);
 
-    curl_setopt($ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['X-Forwarded-For: ' . $_SERVER['REMOTE_ADDR']]);
+    curl_setopt(self::$ch, CURLOPT_COOKIE, $this->cookie_string(['coniunctio' => $coniunctio, 'dlrowolleh' => $dlrowolleh]));
+    curl_setopt(self::$ch, CURLOPT_HTTPHEADER, ['X-Forwarded-For: ' . $_SERVER['REMOTE_ADDR']]);
 
-    $rep = curl_exec($ch);
-    $errno = curl_errno($ch);
+    $rep = curl_exec(self::$ch);
+    $errno = curl_errno(self::$ch);
 
     $timing = (int)((microtime(true) - $start) * 1000);
     $db->remove_concurrent_request($concurrent_id);
@@ -591,10 +596,10 @@ class Jvc {
       }
     }
     $ret = [
-      'header' => substr($rep, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
-      'body' => substr($rep, curl_getinfo($ch, CURLINFO_HEADER_SIZE)),
+      'header' => substr($rep, 0, curl_getinfo(self::$ch, CURLINFO_HEADER_SIZE)),
+      'body' => substr($rep, curl_getinfo(self::$ch, CURLINFO_HEADER_SIZE)),
     ];
-    curl_close($ch);
+    curl_reset(self::$ch);
 
     $this->refresh_cookie($ret['header']);
 
