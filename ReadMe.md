@@ -8,3 +8,6 @@ Pour démarrer :
 - [Familiarisez-vous avec le code](docs/CodeArchitecture.md) ;
 - [Apprenez Git](docs/LearnGit.md), le logiciel de révision de version le plus utilisé ;
 - [Contribuez !](Contributing.md)
+
+Ceci est une version dépréciée de JVForum.
+Svp voir la dernière version sur https://github.com/Angivare/jvforum
